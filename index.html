@@ -263,6 +263,64 @@
   .coord-popover label { font-size: 10px; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.3px; }
   .coord-popover input { width: 80px; background: var(--bg-secondary); border: 0.5px solid var(--border-tertiary); padding: 4px 6px; border-radius: 5px; color: var(--text-primary); font-family: inherit; font-size: 12px; }
   .coord-popover button { padding: 5px 10px; font-size: 12px; }
+
+  /* ============== Modal / Dialog ============== */
+  .modal-backdrop {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.5);
+    display: none; align-items: center; justify-content: center; z-index: 1000;
+  }
+  .modal-backdrop.open { display: flex; }
+  .modal {
+    background: var(--bg-primary); border-radius: var(--border-radius-lg);
+    max-width: 560px; width: calc(100% - 40px); max-height: calc(100vh - 80px);
+    overflow: auto; padding: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    border: 0.5px solid var(--border-secondary);
+  }
+  .modal h2 { font-size: 16px; font-weight: 500; margin: 0 0 4px; color: var(--text-primary); }
+  .modal .modal-sub { font-size: 12px; color: var(--text-secondary); margin: 0 0 16px; }
+  .modal .field { margin: 0 0 12px; }
+  .modal .field label { display: block; font-size: 11px; font-weight: 500; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.3px; margin: 0 0 4px; }
+  .modal .field input, .modal .field textarea {
+    width: 100%; background: var(--bg-secondary); border: 0.5px solid var(--border-tertiary);
+    padding: 7px 9px; border-radius: 6px; font-size: 13px; color: var(--text-primary); font-family: inherit;
+  }
+  .modal .field input:focus, .modal .field textarea:focus { outline: none; border-color: var(--info); }
+  .modal .field .hint { font-size: 11px; color: var(--text-tertiary); margin: 4px 0 0; }
+  .modal .warning {
+    background: var(--p2-bg); color: var(--text-primary); padding: 8px 10px;
+    border-radius: 6px; font-size: 12px; margin: 0 0 14px; border-left: 3px solid var(--p2);
+  }
+  .modal .actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 16px; flex-wrap: wrap; }
+  .version-list { max-height: 340px; overflow-y: auto; border: 0.5px solid var(--border-tertiary); border-radius: 6px; margin: 8px 0; }
+  .version-item {
+    padding: 10px 12px; border-bottom: 0.5px solid var(--border-tertiary); cursor: pointer;
+    display: flex; justify-content: space-between; align-items: flex-start; gap: 10px;
+  }
+  .version-item:last-child { border-bottom: none; }
+  .version-item:hover { background: var(--bg-secondary); }
+  .version-item.selected { background: var(--p2-bg); }
+  .version-msg { font-size: 13px; color: var(--text-primary); font-weight: 500; margin: 0 0 2px; flex: 1; overflow-wrap: anywhere; }
+  .version-meta { font-size: 11px; color: var(--text-secondary); white-space: nowrap; font-family: ui-monospace, monospace; }
+  .version-date { font-size: 11px; color: var(--text-tertiary); margin-top: 2px; }
+  .modal .loading { text-align: center; padding: 20px; color: var(--text-secondary); font-size: 13px; }
+
+  /* ============== Version picker dropdown in toolbar ============== */
+  .version-picker {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--bg-primary); border: 0.5px solid var(--border-secondary);
+    border-radius: var(--border-radius-md); padding: 2px 4px 2px 10px;
+    height: 32px;
+  }
+  .version-picker label {
+    font-size: 11px; color: var(--text-secondary); text-transform: uppercase;
+    letter-spacing: 0.3px; font-weight: 500;
+  }
+  .version-picker select {
+    background: transparent; border: none; outline: none;
+    color: var(--text-primary); font-size: 13px; font-family: inherit;
+    padding: 4px 2px; cursor: pointer; max-width: 280px;
+  }
+  .version-picker button.icon-btn { padding: 2px 6px; font-size: 13px; line-height: 1; }
 </style>
 </head>
 <body>
@@ -278,7 +336,16 @@
       <button onclick="exportCSV()">Export CSV</button>
       <button onclick="document.getElementById('import-file').click()">Import</button>
       <input type="file" id="import-file" accept=".json,.csv" style="display:none" onchange="importFile(event)">
-      <button class="danger" onclick="resetToDefaults()">Reset to defaults</button>
+      <div class="version-picker" id="version-picker" style="display:none">
+        <label title="Switch to a previous version">Version</label>
+        <select id="version-select" onchange="ghLoadFromDropdown(this.value)">
+          <option value="">— current (unsaved) —</option>
+        </select>
+        <button class="icon-btn" onclick="ghRefreshDropdown()" title="Refresh version list">↻</button>
+      </div>
+      <button class="primary" onclick="ghSave()" title="Commit current sites + hubs + assumptions to GitHub as a new version">⇧ Save version</button>
+      <button onclick="ghConfig()" title="Configure GitHub repository and token">⚙ GitHub</button>
+      <button class="danger" onclick="resetToDefaults()">Reset</button>
     </div>
   </header>
 
@@ -537,6 +604,93 @@
   </div>
 </div>
 
+<!-- GitHub settings modal -->
+<div class="modal-backdrop" id="gh-config-modal" onclick="if(event.target===this)closeModal('gh-config-modal')">
+  <div class="modal">
+    <h2>GitHub settings</h2>
+    <p class="modal-sub">Configure where versions are saved. All values stored locally in this browser only.</p>
+    <div class="warning">
+      Your Personal Access Token is stored in browser localStorage. Use a <strong>fine-grained PAT</strong> scoped to only this repo with <strong>Contents: Read &amp; write</strong> permission. Do not share this browser session.
+    </div>
+    <div class="field">
+      <label>Repository owner</label>
+      <input type="text" id="gh-owner" placeholder="your-github-username">
+      <div class="hint">GitHub username or organization that owns the repo</div>
+    </div>
+    <div class="field">
+      <label>Repository name</label>
+      <input type="text" id="gh-repo" placeholder="homefab-plan">
+    </div>
+    <div class="field">
+      <label>Branch</label>
+      <input type="text" id="gh-branch" placeholder="main" value="main">
+    </div>
+    <div class="field">
+      <label>File path</label>
+      <input type="text" id="gh-path" placeholder="sites.json" value="sites.json">
+      <div class="hint">Path inside the repo. Each save commits to this file.</div>
+    </div>
+    <div class="field">
+      <label>Personal access token</label>
+      <input type="password" id="gh-token" placeholder="github_pat_…" autocomplete="off">
+      <div class="hint">Create at github.com/settings/personal-access-tokens — scope: Contents (Read &amp; write) on this single repo.</div>
+    </div>
+    <div class="actions">
+      <button onclick="ghTestConnection()">Test connection</button>
+      <button class="danger" onclick="ghClearConfig()">Clear saved token</button>
+      <button onclick="closeModal('gh-config-modal')">Cancel</button>
+      <button class="primary" onclick="ghSaveConfig()">Save settings</button>
+    </div>
+  </div>
+</div>
+
+<!-- GitHub save/commit modal -->
+<div class="modal-backdrop" id="gh-save-modal" onclick="if(event.target===this)closeModal('gh-save-modal')">
+  <div class="modal">
+    <h2>Save version to GitHub</h2>
+    <p class="modal-sub" id="gh-save-target">—</p>
+    <div class="field">
+      <label>Version name</label>
+      <input type="text" id="gh-version-name" placeholder="e.g. v1.2-investor-pitch" oninput="ghUpdateCommitPreview()">
+      <div class="hint">Short label shown in the version dropdown. Letters, numbers, dashes, dots, underscores.</div>
+    </div>
+    <div class="field">
+      <label>Description (optional)</label>
+      <input type="text" id="gh-commit-msg" placeholder="e.g. Adjusted Y3 CAPEX down to $2.5M per Fab" oninput="ghUpdateCommitPreview()">
+      <div class="hint">Longer context — shows in GitHub commit log and as a tooltip.</div>
+    </div>
+    <div class="field">
+      <label>What will be saved</label>
+      <div class="hint" id="gh-save-summary">—</div>
+    </div>
+    <div class="field">
+      <label>Commit preview</label>
+      <div class="hint" id="gh-commit-preview" style="font-family:ui-monospace,monospace; color:var(--text-secondary); padding:6px 8px; background:var(--bg-secondary); border-radius:4px; word-break:break-all">—</div>
+    </div>
+    <div class="actions">
+      <button onclick="closeModal('gh-save-modal')">Cancel</button>
+      <button class="primary" onclick="ghDoCommit()" id="gh-commit-btn">Commit to GitHub</button>
+    </div>
+  </div>
+</div>
+
+<!-- GitHub load/version picker modal -->
+<div class="modal-backdrop" id="gh-load-modal" onclick="if(event.target===this)closeModal('gh-load-modal')">
+  <div class="modal">
+    <h2>Load version from GitHub</h2>
+    <p class="modal-sub" id="gh-load-target">—</p>
+    <div id="gh-version-list-container">
+      <div class="loading" id="gh-load-status">Loading commit history…</div>
+      <div class="version-list" id="gh-version-list" style="display:none"></div>
+    </div>
+    <div class="actions">
+      <button onclick="ghRefreshVersions()">↻ Refresh</button>
+      <button onclick="closeModal('gh-load-modal')">Cancel</button>
+      <button class="primary" onclick="ghLoadSelected()" id="gh-load-btn" disabled>Load selected version</button>
+    </div>
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
@@ -549,6 +703,7 @@ const GEOCODE_DB = [{"name":"Fresno","state":"CA","lat":36.7378,"lon":-119.7871}
 const STORAGE_KEY = 'homefab_sites_v3';
 const HUB_STORAGE_KEY = 'homefab_hubs_v3';
 const ASM_STORAGE_KEY = 'homefab_assumptions_v3';
+const GH_CONFIG_KEY = 'homefab_gh_config_v1';
 
 /* ============== 4 FBX Core hubs (default seed) ============== */
 const SEED_HUBS = [
@@ -1734,6 +1889,490 @@ function play() {
   }, 800);
 }
 
+/* ============================================================
+   GitHub versioning module
+   ------------------------------------------------------------
+   Commits the full plan (sites + hubs + assumptions) to a file
+   in a user-configured GitHub repo. Uses the GitHub Contents API
+   with a fine-grained Personal Access Token stored locally.
+   ============================================================ */
+
+function ghLoadConfig() {
+  try {
+    const raw = localStorage.getItem(GH_CONFIG_KEY);
+    if (!raw) return null;
+    return JSON.parse(raw);
+  } catch(e) { return null; }
+}
+
+function ghSaveConfigData(cfg) {
+  try { localStorage.setItem(GH_CONFIG_KEY, JSON.stringify(cfg)); } catch(e) {}
+}
+
+function ghConfig() {
+  const cfg = ghLoadConfig() || {};
+  document.getElementById('gh-owner').value = cfg.owner || '';
+  document.getElementById('gh-repo').value = cfg.repo || '';
+  document.getElementById('gh-branch').value = cfg.branch || 'main';
+  document.getElementById('gh-path').value = cfg.path || 'sites.json';
+  document.getElementById('gh-token').value = cfg.token || '';
+  openModal('gh-config-modal');
+}
+
+function ghSaveConfig() {
+  const cfg = {
+    owner: document.getElementById('gh-owner').value.trim(),
+    repo: document.getElementById('gh-repo').value.trim(),
+    branch: document.getElementById('gh-branch').value.trim() || 'main',
+    path: document.getElementById('gh-path').value.trim() || 'sites.json',
+    token: document.getElementById('gh-token').value.trim()
+  };
+  if (!cfg.owner || !cfg.repo) { toast('Owner and repo are required'); return; }
+  ghSaveConfigData(cfg);
+  closeModal('gh-config-modal');
+  toast('GitHub settings saved');
+  ghRefreshDropdown();
+}
+
+function ghClearConfig() {
+  if (!confirm('Remove saved GitHub token and config from this browser?')) return;
+  localStorage.removeItem(GH_CONFIG_KEY);
+  document.getElementById('gh-owner').value = '';
+  document.getElementById('gh-repo').value = '';
+  document.getElementById('gh-branch').value = 'main';
+  document.getElementById('gh-path').value = 'sites.json';
+  document.getElementById('gh-token').value = '';
+  const picker = document.getElementById('version-picker');
+  if (picker) picker.style.display = 'none';
+  toast('GitHub config cleared');
+}
+
+async function ghTestConnection() {
+  const cfg = {
+    owner: document.getElementById('gh-owner').value.trim(),
+    repo: document.getElementById('gh-repo').value.trim(),
+    token: document.getElementById('gh-token').value.trim()
+  };
+  if (!cfg.owner || !cfg.repo || !cfg.token) { toast('Fill in owner, repo, and token first'); return; }
+  try {
+    const r = await fetch(`https://api.github.com/repos/${cfg.owner}/${cfg.repo}`, {
+      headers: { 'Authorization': `Bearer ${cfg.token}`, 'Accept': 'application/vnd.github+json' }
+    });
+    if (r.ok) {
+      const repo = await r.json();
+      toast(`✓ Connected to ${repo.full_name} (${repo.private ? 'private' : 'public'})`);
+    } else if (r.status === 401) {
+      toast('✗ Token invalid or expired');
+    } else if (r.status === 404) {
+      toast('✗ Repo not found — check owner/repo name, and that the token has access');
+    } else {
+      toast(`✗ GitHub API error: ${r.status}`);
+    }
+  } catch(e) {
+    toast('✗ Network error: ' + e.message);
+  }
+}
+
+function ghRequireConfig() {
+  const cfg = ghLoadConfig();
+  if (!cfg || !cfg.owner || !cfg.repo || !cfg.token) {
+    toast('Configure GitHub settings first');
+    ghConfig();
+    return null;
+  }
+  return cfg;
+}
+
+function ghBuildPayload() {
+  // Mirror the exportJSON payload shape so the file is compatible with
+  // the existing sites.json fetch flow and Import.
+  const cleanSites = sites.map(({_id, ...rest}) => rest);
+  const cleanHubs = hubs.map(({_id, ...rest}) => rest);
+  return {
+    version: 2,
+    exported_at: new Date().toISOString(),
+    sites: cleanSites,
+    hubs: cleanHubs,
+    assumptions: assumptions
+  };
+}
+
+// base64-encode a UTF-8 string (needed for GitHub Contents API)
+function ghB64Encode(str) {
+  return btoa(unescape(encodeURIComponent(str)));
+}
+function ghB64Decode(b64) {
+  return decodeURIComponent(escape(atob(b64.replace(/\n/g, ''))));
+}
+
+/* ----- Custom version name handling -----
+   Commit messages are formatted as "[<name>] <description>" so the dropdown
+   can parse a friendly label back out of git history without needing a
+   separate tagging API. Name is constrained to URL-safe chars to keep it
+   tidy in the UI. ---------------------------------------------------------- */
+
+function ghSanitizeVersionName(raw) {
+  return (raw || '').trim()
+    .replace(/[^A-Za-z0-9._-]/g, '-')
+    .replace(/-+/g, '-')
+    .replace(/^[-.]+|[-.]+$/g, '')
+    .slice(0, 60);
+}
+
+function ghBuildCommitMessage(name, desc) {
+  const clean = ghSanitizeVersionName(name);
+  const d = (desc || '').trim();
+  if (clean && d) return `[${clean}] ${d}`;
+  if (clean) return `[${clean}]`;
+  if (d) return d;
+  return '';
+}
+
+// Extract the [name] prefix from a commit message. Returns { name, desc }.
+function ghParseCommitMessage(msg) {
+  if (!msg) return { name: '', desc: '' };
+  const firstLine = msg.split('\n')[0];
+  const m = firstLine.match(/^\[([A-Za-z0-9._-]{1,60})\]\s*(.*)$/);
+  if (m) return { name: m[1], desc: m[2] };
+  return { name: '', desc: firstLine };
+}
+
+function ghUpdateCommitPreview() {
+  const name = document.getElementById('gh-version-name').value;
+  const desc = document.getElementById('gh-commit-msg').value;
+  const msg = ghBuildCommitMessage(name, desc);
+  const el = document.getElementById('gh-commit-preview');
+  if (!el) return;
+  el.textContent = msg || '(commit message will be empty — enter a version name or description)';
+}
+
+function ghSave() {
+  const cfg = ghRequireConfig();
+  if (!cfg) return;
+  document.getElementById('gh-save-target').textContent = `${cfg.owner}/${cfg.repo} · ${cfg.branch} · ${cfg.path}`;
+  // Suggest a default version name from the timestamp so users can hit Save
+  // with no manual typing if they want. Format: v2026-04-19-1542
+  const now = new Date();
+  const pad = n => String(n).padStart(2, '0');
+  const suggested = `v${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())}-${pad(now.getHours())}${pad(now.getMinutes())}`;
+  document.getElementById('gh-version-name').value = suggested;
+  document.getElementById('gh-commit-msg').value = '';
+  const summary = `${sites.length} Fabs · ${hubs.length} Core hubs · ${Object.keys(assumptions).length} assumptions`;
+  document.getElementById('gh-save-summary').textContent = summary;
+  ghUpdateCommitPreview();
+  openModal('gh-save-modal');
+  setTimeout(() => document.getElementById('gh-version-name').select(), 50);
+}
+
+async function ghDoCommit() {
+  const cfg = ghRequireConfig();
+  if (!cfg) return;
+  const name = document.getElementById('gh-version-name').value.trim();
+  const desc = document.getElementById('gh-commit-msg').value.trim();
+  const msg = ghBuildCommitMessage(name, desc);
+  if (!msg) { toast('Enter a version name or description'); return; }
+
+  const btn = document.getElementById('gh-commit-btn');
+  btn.disabled = true; btn.textContent = 'Committing…';
+
+  try {
+    // 1. Get current file SHA (if it exists) — required for updates
+    let existingSha = null;
+    try {
+      const getUrl = `https://api.github.com/repos/${cfg.owner}/${cfg.repo}/contents/${encodeURIComponent(cfg.path)}?ref=${encodeURIComponent(cfg.branch)}`;
+      const getResp = await fetch(getUrl, {
+        headers: { 'Authorization': `Bearer ${cfg.token}`, 'Accept': 'application/vnd.github+json' }
+      });
+      if (getResp.ok) {
+        const existing = await getResp.json();
+        existingSha = existing.sha;
+      } else if (getResp.status !== 404) {
+        throw new Error(`GET failed: ${getResp.status}`);
+      }
+      // 404 = file doesn't exist yet, that's fine — we'll create it
+    } catch(e) {
+      // If GET truly fails we let PUT try anyway
+      console.warn('SHA lookup failed, attempting PUT anyway:', e);
+    }
+
+    // 2. PUT the new content
+    const payload = ghBuildPayload();
+    const content = ghB64Encode(JSON.stringify(payload, null, 2));
+    const putUrl = `https://api.github.com/repos/${cfg.owner}/${cfg.repo}/contents/${encodeURIComponent(cfg.path)}`;
+    const body = {
+      message: msg,
+      content: content,
+      branch: cfg.branch
+    };
+    if (existingSha) body.sha = existingSha;
+
+    const putResp = await fetch(putUrl, {
+      method: 'PUT',
+      headers: {
+        'Authorization': `Bearer ${cfg.token}`,
+        'Accept': 'application/vnd.github+json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(body)
+    });
+
+    if (!putResp.ok) {
+      const err = await putResp.json().catch(() => ({}));
+      throw new Error(err.message || `PUT failed: ${putResp.status}`);
+    }
+
+    const result = await putResp.json();
+    const sha = result.commit && result.commit.sha ? result.commit.sha.slice(0, 7) : '';
+    closeModal('gh-save-modal');
+    const label = name ? ghSanitizeVersionName(name) : sha;
+    toast(`✓ Saved "${label}" (${sha})`);
+    // Refresh the dropdown so the new version appears immediately
+    ghRefreshDropdown();
+  } catch(e) {
+    toast('✗ Commit failed: ' + e.message);
+  } finally {
+    btn.disabled = false; btn.textContent = 'Commit to GitHub';
+  }
+}
+
+let ghSelectedSha = null;
+
+async function ghLoad() {
+  const cfg = ghRequireConfig();
+  if (!cfg) return;
+  document.getElementById('gh-load-target').textContent = `${cfg.owner}/${cfg.repo} · ${cfg.branch} · ${cfg.path}`;
+  ghSelectedSha = null;
+  document.getElementById('gh-load-btn').disabled = true;
+  openModal('gh-load-modal');
+  await ghRefreshVersions();
+}
+
+async function ghRefreshVersions() {
+  const cfg = ghRequireConfig();
+  if (!cfg) return;
+  const status = document.getElementById('gh-load-status');
+  const list = document.getElementById('gh-version-list');
+  status.textContent = 'Loading commit history…';
+  status.style.display = 'block';
+  list.style.display = 'none';
+  list.innerHTML = '';
+
+  try {
+    const url = `https://api.github.com/repos/${cfg.owner}/${cfg.repo}/commits?path=${encodeURIComponent(cfg.path)}&sha=${encodeURIComponent(cfg.branch)}&per_page=50`;
+    const resp = await fetch(url, {
+      headers: { 'Authorization': `Bearer ${cfg.token}`, 'Accept': 'application/vnd.github+json' }
+    });
+    if (!resp.ok) {
+      if (resp.status === 404) {
+        status.textContent = `No commits found for ${cfg.path}. Save a version first.`;
+        return;
+      }
+      throw new Error(`${resp.status}`);
+    }
+    const commits = await resp.json();
+    if (!commits.length) {
+      status.textContent = `No commits yet for ${cfg.path}. Save a version first.`;
+      return;
+    }
+    commits.forEach(c => {
+      const sha = c.sha;
+      const shortSha = sha.slice(0, 7);
+      const msg = c.commit && c.commit.message ? c.commit.message : '(no message)';
+      const author = c.commit && c.commit.author ? c.commit.author.name : '';
+      const date = c.commit && c.commit.author && c.commit.author.date
+        ? new Date(c.commit.author.date).toLocaleString() : '';
+      const div = document.createElement('div');
+      div.className = 'version-item';
+      div.dataset.sha = sha;
+      div.innerHTML = `
+        <div style="flex:1; min-width:0">
+          <div class="version-msg">${escapeHtml(msg.split('\n')[0])}</div>
+          <div class="version-date">${escapeHtml(author)} · ${escapeHtml(date)}</div>
+        </div>
+        <div class="version-meta">${shortSha}</div>`;
+      div.onclick = () => ghSelectVersion(sha, div);
+      list.appendChild(div);
+    });
+    status.style.display = 'none';
+    list.style.display = 'block';
+  } catch(e) {
+    status.textContent = '✗ Failed to load commits: ' + e.message;
+  }
+}
+
+function ghSelectVersion(sha, el) {
+  ghSelectedSha = sha;
+  document.querySelectorAll('.version-item').forEach(n => n.classList.remove('selected'));
+  if (el) el.classList.add('selected');
+  document.getElementById('gh-load-btn').disabled = false;
+}
+
+async function ghLoadSelected() {
+  if (!ghSelectedSha) return;
+  const cfg = ghRequireConfig();
+  if (!cfg) return;
+  const btn = document.getElementById('gh-load-btn');
+  btn.disabled = true; btn.textContent = 'Loading…';
+  try {
+    await ghLoadBySha(ghSelectedSha, cfg);
+    closeModal('gh-load-modal');
+  } catch(e) {
+    toast('✗ Load failed: ' + e.message);
+  } finally {
+    btn.disabled = false; btn.textContent = 'Load selected version';
+  }
+}
+
+async function ghLoadBySha(sha, cfg) {
+  // Fetch the file at a specific commit using Contents API with ref=<sha>
+  const url = `https://api.github.com/repos/${cfg.owner}/${cfg.repo}/contents/${encodeURIComponent(cfg.path)}?ref=${encodeURIComponent(sha)}`;
+  const resp = await fetch(url, {
+    headers: { 'Authorization': `Bearer ${cfg.token}`, 'Accept': 'application/vnd.github+json' }
+  });
+  if (!resp.ok) throw new Error(`GET failed: ${resp.status}`);
+  const data = await resp.json();
+  const raw = ghB64Decode(data.content);
+  const payload = JSON.parse(raw);
+  ghApplyPayload(payload);
+  toast(`✓ Loaded version ${sha.slice(0, 7)}`);
+}
+
+function ghApplyPayload(payload) {
+  if (!payload || typeof payload !== 'object') throw new Error('Invalid payload shape');
+  if (Array.isArray(payload.sites)) {
+    sites = JSON.parse(JSON.stringify(payload.sites));
+    ensureIds();
+    saveSites();
+  }
+  if (Array.isArray(payload.hubs) && payload.hubs.length > 0) {
+    hubs = JSON.parse(JSON.stringify(payload.hubs));
+    ensureIds();
+    saveHubs();
+  }
+  if (payload.assumptions && typeof payload.assumptions === 'object') {
+    assumptions = { ...DEFAULT_ASSUMPTIONS, ...payload.assumptions };
+    applyAssumptionsToUI();
+    saveAssumptions();
+  }
+  dataSource = 'local-edits';
+  updateSourceIndicator();
+  render();
+}
+
+// URL deep-linking: ?v=<sha> loads that specific commit on page load
+async function ghMaybeLoadFromURL() {
+  const params = new URLSearchParams(location.search);
+  const sha = params.get('v');
+  if (!sha) return;
+  const cfg = ghLoadConfig();
+  if (!cfg || !cfg.owner || !cfg.repo || !cfg.token) {
+    toast('URL requests version ' + sha.slice(0, 7) + ' but GitHub is not configured');
+    return;
+  }
+  try {
+    await ghLoadBySha(sha, cfg);
+  } catch(e) {
+    toast('Could not load version from URL: ' + e.message);
+  }
+}
+
+/* ============== Version picker dropdown ============== */
+
+// In-memory cache of the last-fetched commits so the dropdown load handler
+// can look up the SHA for a selected version without re-fetching.
+let ghCommitCache = [];
+
+async function ghRefreshDropdown() {
+  const picker = document.getElementById('version-picker');
+  const select = document.getElementById('version-select');
+  const cfg = ghLoadConfig();
+  if (!cfg || !cfg.owner || !cfg.repo || !cfg.token) {
+    // No GitHub config yet — keep dropdown hidden
+    if (picker) picker.style.display = 'none';
+    return;
+  }
+  if (picker) picker.style.display = 'inline-flex';
+
+  try {
+    const url = `https://api.github.com/repos/${cfg.owner}/${cfg.repo}/commits?path=${encodeURIComponent(cfg.path)}&sha=${encodeURIComponent(cfg.branch)}&per_page=30`;
+    const resp = await fetch(url, {
+      headers: { 'Authorization': `Bearer ${cfg.token}`, 'Accept': 'application/vnd.github+json' }
+    });
+    if (!resp.ok) {
+      // 404 likely means the file doesn't exist yet. Reset dropdown to empty.
+      select.innerHTML = '<option value="">— no versions yet —</option>';
+      ghCommitCache = [];
+      return;
+    }
+    const commits = await resp.json();
+    ghCommitCache = commits;
+    if (!commits.length) {
+      select.innerHTML = '<option value="">— no versions yet —</option>';
+      return;
+    }
+    // Build options: "version name · short description · date"
+    const opts = ['<option value="">— current (live) —</option>'];
+    commits.forEach(c => {
+      const sha = c.sha;
+      const msg = c.commit && c.commit.message ? c.commit.message : '';
+      const { name, desc } = ghParseCommitMessage(msg);
+      const date = c.commit && c.commit.author && c.commit.author.date
+        ? new Date(c.commit.author.date) : null;
+      const dateStr = date ? date.toLocaleDateString(undefined, { month: 'short', day: 'numeric' }) : '';
+      // Label priority: custom name > first line of description > short SHA
+      const label = name || (desc ? desc.slice(0, 40) : sha.slice(0, 7));
+      const suffix = desc && name ? ` · ${desc.slice(0, 40)}` : '';
+      const dateSuffix = dateStr ? ` · ${dateStr}` : '';
+      const fullText = `${label}${suffix}${dateSuffix}`;
+      // escapeHtml is available globally
+      opts.push(`<option value="${sha}" title="${escapeHtml(msg)}">${escapeHtml(fullText)}</option>`);
+    });
+    // Preserve selection if the same SHA is still in the list
+    const prev = select.value;
+    select.innerHTML = opts.join('');
+    if (prev && [...select.options].some(o => o.value === prev)) select.value = prev;
+  } catch(e) {
+    // Silent fail — don't hide the dropdown, just log
+    console.warn('Version dropdown refresh failed:', e);
+  }
+}
+
+async function ghLoadFromDropdown(sha) {
+  if (!sha) return;  // "— current —" selection
+  const cfg = ghRequireConfig();
+  if (!cfg) return;
+  // If there are localStorage edits, confirm before overwriting
+  // (We don't have a clean "is dirty" flag, so always confirm when switching versions)
+  if (!confirm('Load this version? Any unsaved changes in the current view will be replaced.')) {
+    // Reset dropdown to empty selection
+    document.getElementById('version-select').value = '';
+    return;
+  }
+  try {
+    await ghLoadBySha(sha, cfg);
+  } catch(e) {
+    toast('✗ Load failed: ' + e.message);
+    document.getElementById('version-select').value = '';
+  }
+}
+
+/* ============== Modal helpers ============== */
+function openModal(id) {
+  const m = document.getElementById(id);
+  if (m) m.classList.add('open');
+}
+function closeModal(id) {
+  const m = document.getElementById(id);
+  if (m) m.classList.remove('open');
+}
+// ESC closes any open modal
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    document.querySelectorAll('.modal-backdrop.open').forEach(m => m.classList.remove('open'));
+  }
+});
+
+
 (async function init() {
   // Load local hubs + assumptions synchronously (they're in localStorage / seeds)
   hubs = loadHubs();
@@ -1779,6 +2418,13 @@ function play() {
   });
 
   render();
+
+  // If the URL contains ?v=<sha>, try to load that specific GitHub version
+  // after the initial render. Errors are non-fatal — user still sees a plan.
+  ghMaybeLoadFromURL();
+
+  // Populate the version dropdown from GitHub (silently skips if not configured)
+  ghRefreshDropdown();
 })();
 </script>
 </body>
