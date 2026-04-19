@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "exported_at": "2026-04-19T17:36:02.276Z",
+  "exported_at": "2026-04-19T17:39:28.996Z",
   "sites": [
     {
       "yr": 1,
@@ -29,14 +29,6 @@
     {
       "yr": 2,
       "phase": 1,
-      "name": "Los Angeles",
-      "state": "CA",
-      "lat": 34.0522,
-      "lon": -118.2437
-    },
-    {
-      "yr": 2,
-      "phase": 1,
       "name": "San Diego",
       "state": "CA",
       "lat": 32.7157,
@@ -61,10 +53,10 @@
     {
       "yr": 2,
       "phase": 1,
-      "name": "Bakersfield",
-      "state": "CA",
-      "lat": 35.3733,
-      "lon": -119.0187
+      "name": "Phoenix",
+      "state": "AZ",
+      "lat": 33.4484,
+      "lon": -112.074
     },
     {
       "yr": 2,
@@ -73,6 +65,30 @@
       "state": "CA",
       "lat": 38.4405,
       "lon": -122.7144
+    },
+    {
+      "yr": 2,
+      "phase": 1,
+      "name": "Worcester",
+      "state": "MA",
+      "lat": 42.2626,
+      "lon": -71.8023
+    },
+    {
+      "yr": 2,
+      "phase": 1,
+      "name": "Honolulu",
+      "state": "HI",
+      "lat": 21.3099,
+      "lon": -157.8581
+    },
+    {
+      "yr": 2,
+      "phase": 1,
+      "name": "Las Vegas",
+      "state": "NV",
+      "lat": 36.1699,
+      "lon": -115.1398
     },
     {
       "yr": 3,
@@ -93,14 +109,6 @@
     {
       "yr": 3,
       "phase": 1,
-      "name": "Worcester",
-      "state": "MA",
-      "lat": 42.2626,
-      "lon": -71.8023
-    },
-    {
-      "yr": 3,
-      "phase": 1,
       "name": "Rochester",
       "state": "NY",
       "lat": 43.1566,
@@ -113,14 +121,6 @@
       "state": "CO",
       "lat": 39.7392,
       "lon": -104.9903
-    },
-    {
-      "yr": 3,
-      "phase": 1,
-      "name": "Phoenix",
-      "state": "AZ",
-      "lat": 33.4484,
-      "lon": -112.074
     },
     {
       "yr": 4,
@@ -193,14 +193,6 @@
       "state": "AZ",
       "lat": 32.2226,
       "lon": -110.9747
-    },
-    {
-      "yr": 4,
-      "phase": 2,
-      "name": "Las Vegas",
-      "state": "NV",
-      "lat": 36.1699,
-      "lon": -115.1398
     },
     {
       "yr": 4,
@@ -813,14 +805,6 @@
     {
       "yr": 10,
       "phase": 3,
-      "name": "Honolulu",
-      "state": "HI",
-      "lat": 21.3099,
-      "lon": -157.8581
-    },
-    {
-      "yr": 10,
-      "phase": 3,
       "name": "Hilo",
       "state": "HI",
       "lat": 19.7241,
@@ -911,15 +895,6 @@
       "opens_yr": 3
     },
     {
-      "name": "Mountain-Southwest Core",
-      "city": "Denver",
-      "state": "CO",
-      "lat": 39.7392,
-      "lon": -104.9903,
-      "capex": 15,
-      "opens_yr": 3
-    },
-    {
       "name": "Sun Belt Core",
       "city": "amarillo",
       "state": "TX",
@@ -930,10 +905,10 @@
     },
     {
       "name": "Midwest Core",
-      "city": "Indianapolis",
-      "state": "IN",
-      "lat": 39.7684,
-      "lon": -86.1581,
+      "city": "Huntsville",
+      "state": "AL",
+      "lat": 34.7304,
+      "lon": -86.5861,
       "capex": 15,
       "opens_yr": 6
     }
