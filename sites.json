@@ -1,1130 +1,1181 @@
-[
-  {
-    "yr": 1,
-    "phase": 1,
-    "name": "Los Angeles",
-    "state": "CA",
-    "lat": 34.05,
-    "lon": -118.24
-  },
-  {
-    "yr": 1,
-    "phase": 1,
-    "name": "Bay Area/Stockton",
-    "state": "CA",
-    "lat": 37.96,
-    "lon": -121.29
-  },
-  {
-    "yr": 1,
-    "phase": 1,
-    "name": "Fresno",
-    "state": "CA",
-    "lat": 36.74,
-    "lon": -119.78
-  },
-  {
-    "yr": 2,
-    "phase": 1,
-    "name": "San Diego",
-    "state": "CA",
-    "lat": 32.72,
-    "lon": -117.16
-  },
-  {
-    "yr": 2,
-    "phase": 1,
-    "name": "Sacramento",
-    "state": "CA",
-    "lat": 38.58,
-    "lon": -121.49
-  },
-  {
-    "yr": 2,
-    "phase": 1,
-    "name": "Riverside",
-    "state": "CA",
-    "lat": 33.95,
-    "lon": -117.4
-  },
-  {
-    "yr": 3,
-    "phase": 2,
-    "name": "Dallas-Ft Worth",
-    "state": "TX",
-    "lat": 32.78,
-    "lon": -96.8
-  },
-  {
-    "yr": 3,
-    "phase": 2,
-    "name": "Houston",
-    "state": "TX",
-    "lat": 29.76,
-    "lon": -95.37
-  },
-  {
-    "yr": 3,
-    "phase": 2,
-    "name": "Austin",
-    "state": "TX",
-    "lat": 30.27,
-    "lon": -97.74
-  },
-  {
-    "yr": 3,
-    "phase": 2,
-    "name": "Phoenix",
-    "state": "AZ",
-    "lat": 33.45,
-    "lon": -112.07
-  },
-  {
-    "yr": 3,
-    "phase": 2,
-    "name": "Tucson",
-    "state": "AZ",
-    "lat": 32.22,
-    "lon": -110.93
-  },
-  {
-    "yr": 3,
-    "phase": 2,
-    "name": "Denver",
-    "state": "CO",
-    "lat": 39.74,
-    "lon": -104.99
-  },
-  {
-    "yr": 3,
-    "phase": 2,
-    "name": "Colorado Springs",
-    "state": "CO",
-    "lat": 38.83,
-    "lon": -104.82
-  },
-  {
-    "yr": 3,
-    "phase": 2,
-    "name": "Miami",
-    "state": "FL",
-    "lat": 25.76,
-    "lon": -80.19
-  },
-  {
-    "yr": 3,
-    "phase": 2,
-    "name": "Orlando",
-    "state": "FL",
-    "lat": 28.54,
-    "lon": -81.38
-  },
-  {
-    "yr": 3,
-    "phase": 2,
-    "name": "Tampa",
-    "state": "FL",
-    "lat": 27.95,
-    "lon": -82.46
-  },
-  {
-    "yr": 4,
-    "phase": 2,
-    "name": "Charlotte",
-    "state": "NC",
-    "lat": 35.23,
-    "lon": -80.84
-  },
-  {
-    "yr": 4,
-    "phase": 2,
-    "name": "Raleigh",
-    "state": "NC",
-    "lat": 35.78,
-    "lon": -78.64
-  },
-  {
-    "yr": 4,
-    "phase": 2,
-    "name": "Atlanta",
-    "state": "GA",
-    "lat": 33.75,
-    "lon": -84.39
-  },
-  {
-    "yr": 4,
-    "phase": 2,
-    "name": "Savannah",
-    "state": "GA",
-    "lat": 32.08,
-    "lon": -81.1
-  },
-  {
-    "yr": 4,
-    "phase": 2,
-    "name": "Seattle",
-    "state": "WA",
-    "lat": 47.61,
-    "lon": -122.33
-  },
-  {
-    "yr": 4,
-    "phase": 2,
-    "name": "Spokane",
-    "state": "WA",
-    "lat": 47.66,
-    "lon": -117.43
-  },
-  {
-    "yr": 4,
-    "phase": 2,
-    "name": "Las Vegas",
-    "state": "NV",
-    "lat": 36.17,
-    "lon": -115.14
-  },
-  {
-    "yr": 4,
-    "phase": 2,
-    "name": "Reno",
-    "state": "NV",
-    "lat": 39.53,
-    "lon": -119.81
-  },
-  {
-    "yr": 4,
-    "phase": 2,
-    "name": "Jacksonville",
-    "state": "FL",
-    "lat": 30.33,
-    "lon": -81.66
-  },
-  {
-    "yr": 4,
-    "phase": 2,
-    "name": "San Antonio",
-    "state": "TX",
-    "lat": 29.42,
-    "lon": -98.49
-  },
-  {
-    "yr": 5,
-    "phase": 2,
-    "name": "Salt Lake City",
-    "state": "UT",
-    "lat": 40.76,
-    "lon": -111.89
-  },
-  {
-    "yr": 5,
-    "phase": 2,
-    "name": "Provo",
-    "state": "UT",
-    "lat": 40.23,
-    "lon": -111.66
-  },
-  {
-    "yr": 5,
-    "phase": 2,
-    "name": "Nashville",
-    "state": "TN",
-    "lat": 36.16,
-    "lon": -86.78
-  },
-  {
-    "yr": 5,
-    "phase": 2,
-    "name": "Memphis",
-    "state": "TN",
-    "lat": 35.15,
-    "lon": -90.05
-  },
-  {
-    "yr": 5,
-    "phase": 2,
-    "name": "Boise",
-    "state": "ID",
-    "lat": 43.62,
-    "lon": -116.21
-  },
-  {
-    "yr": 5,
-    "phase": 2,
-    "name": "Portland",
-    "state": "OR",
-    "lat": 45.51,
-    "lon": -122.68
-  },
-  {
-    "yr": 5,
-    "phase": 2,
-    "name": "Eugene",
-    "state": "OR",
-    "lat": 44.05,
-    "lon": -123.09
-  },
-  {
-    "yr": 5,
-    "phase": 2,
-    "name": "El Paso",
-    "state": "TX",
-    "lat": 31.76,
-    "lon": -106.49
-  },
-  {
-    "yr": 5,
-    "phase": 2,
-    "name": "Ft Lauderdale",
-    "state": "FL",
-    "lat": 26.12,
-    "lon": -80.14
-  },
-  {
-    "yr": 5,
-    "phase": 2,
-    "name": "Gainesville",
-    "state": "FL",
-    "lat": 29.65,
-    "lon": -82.32
-  },
-  {
-    "yr": 6,
-    "phase": 3,
-    "name": "Chicago",
-    "state": "IL",
-    "lat": 41.88,
-    "lon": -87.63
-  },
-  {
-    "yr": 6,
-    "phase": 3,
-    "name": "Rockford",
-    "state": "IL",
-    "lat": 42.27,
-    "lon": -89.09
-  },
-  {
-    "yr": 6,
-    "phase": 3,
-    "name": "Columbus",
-    "state": "OH",
-    "lat": 39.96,
-    "lon": -82.99
-  },
-  {
-    "yr": 6,
-    "phase": 3,
-    "name": "Cleveland",
-    "state": "OH",
-    "lat": 41.5,
-    "lon": -81.69
-  },
-  {
-    "yr": 6,
-    "phase": 3,
-    "name": "Cincinnati",
-    "state": "OH",
-    "lat": 39.1,
-    "lon": -84.51
-  },
-  {
-    "yr": 6,
-    "phase": 3,
-    "name": "Detroit",
-    "state": "MI",
-    "lat": 42.33,
-    "lon": -83.05
-  },
-  {
-    "yr": 6,
-    "phase": 3,
-    "name": "Grand Rapids",
-    "state": "MI",
-    "lat": 42.96,
-    "lon": -85.67
-  },
-  {
-    "yr": 6,
-    "phase": 3,
-    "name": "Pittsburgh",
-    "state": "PA",
-    "lat": 40.44,
-    "lon": -79.99
-  },
-  {
-    "yr": 6,
-    "phase": 3,
-    "name": "Philadelphia",
-    "state": "PA",
-    "lat": 39.95,
-    "lon": -75.16
-  },
-  {
-    "yr": 6,
-    "phase": 3,
-    "name": "Harrisburg",
-    "state": "PA",
-    "lat": 40.27,
-    "lon": -76.88
-  },
-  {
-    "yr": 6,
-    "phase": 3,
-    "name": "Albany",
-    "state": "NY",
-    "lat": 42.65,
-    "lon": -73.76
-  },
-  {
-    "yr": 6,
-    "phase": 3,
-    "name": "Buffalo",
-    "state": "NY",
-    "lat": 42.89,
-    "lon": -78.88
-  },
-  {
-    "yr": 6,
-    "phase": 3,
-    "name": "Syracuse",
-    "state": "NY",
-    "lat": 43.05,
-    "lon": -76.15
-  },
-  {
-    "yr": 6,
-    "phase": 3,
-    "name": "Boston",
-    "state": "MA",
-    "lat": 42.36,
-    "lon": -71.06
-  },
-  {
-    "yr": 6,
-    "phase": 3,
-    "name": "Springfield MA",
-    "state": "MA",
-    "lat": 42.1,
-    "lon": -72.59
-  },
-  {
-    "yr": 6,
-    "phase": 3,
-    "name": "Indianapolis",
-    "state": "IN",
-    "lat": 39.77,
-    "lon": -86.16
-  },
-  {
-    "yr": 6,
-    "phase": 3,
-    "name": "Fort Wayne",
-    "state": "IN",
-    "lat": 41.08,
-    "lon": -85.14
-  },
-  {
-    "yr": 6,
-    "phase": 3,
-    "name": "Louisville",
-    "state": "KY",
-    "lat": 38.25,
-    "lon": -85.76
-  },
-  {
-    "yr": 6,
-    "phase": 3,
-    "name": "Milwaukee",
-    "state": "WI",
-    "lat": 43.04,
-    "lon": -87.91
-  },
-  {
-    "yr": 6,
-    "phase": 3,
-    "name": "Albuquerque",
-    "state": "NM",
-    "lat": 35.08,
-    "lon": -106.65
-  },
-  {
-    "yr": 6,
-    "phase": 3,
-    "name": "Oklahoma City",
-    "state": "OK",
-    "lat": 35.47,
-    "lon": -97.52
-  },
-  {
-    "yr": 7,
-    "phase": 3,
-    "name": "Richmond",
-    "state": "VA",
-    "lat": 37.54,
-    "lon": -77.44
-  },
-  {
-    "yr": 7,
-    "phase": 3,
-    "name": "Norfolk",
-    "state": "VA",
-    "lat": 36.85,
-    "lon": -76.29
-  },
-  {
-    "yr": 7,
-    "phase": 3,
-    "name": "Baltimore",
-    "state": "MD",
-    "lat": 39.29,
-    "lon": -76.61
-  },
-  {
-    "yr": 7,
-    "phase": 3,
-    "name": "DC Suburbs",
-    "state": "MD",
-    "lat": 39.0,
-    "lon": -77.1
-  },
-  {
-    "yr": 7,
-    "phase": 3,
-    "name": "Charleston SC",
-    "state": "SC",
-    "lat": 32.78,
-    "lon": -79.93
-  },
-  {
-    "yr": 7,
-    "phase": 3,
-    "name": "Greenville",
-    "state": "SC",
-    "lat": 34.85,
-    "lon": -82.39
-  },
-  {
-    "yr": 7,
-    "phase": 3,
-    "name": "Birmingham",
-    "state": "AL",
-    "lat": 33.52,
-    "lon": -86.81
-  },
-  {
-    "yr": 7,
-    "phase": 3,
-    "name": "Huntsville",
-    "state": "AL",
-    "lat": 34.73,
-    "lon": -86.59
-  },
-  {
-    "yr": 7,
-    "phase": 3,
-    "name": "Mobile",
-    "state": "AL",
-    "lat": 30.69,
-    "lon": -88.04
-  },
-  {
-    "yr": 7,
-    "phase": 3,
-    "name": "Jackson",
-    "state": "MS",
-    "lat": 32.3,
-    "lon": -90.18
-  },
-  {
-    "yr": 7,
-    "phase": 3,
-    "name": "Gulfport",
-    "state": "MS",
-    "lat": 30.37,
-    "lon": -89.09
-  },
-  {
-    "yr": 7,
-    "phase": 3,
-    "name": "New Orleans",
-    "state": "LA",
-    "lat": 29.95,
-    "lon": -90.07
-  },
-  {
-    "yr": 7,
-    "phase": 3,
-    "name": "Baton Rouge",
-    "state": "LA",
-    "lat": 30.45,
-    "lon": -91.19
-  },
-  {
-    "yr": 7,
-    "phase": 3,
-    "name": "Shreveport",
-    "state": "LA",
-    "lat": 32.52,
-    "lon": -93.75
-  },
-  {
-    "yr": 7,
-    "phase": 3,
-    "name": "Knoxville",
-    "state": "TN",
-    "lat": 35.96,
-    "lon": -83.92
-  },
-  {
-    "yr": 7,
-    "phase": 3,
-    "name": "Chattanooga",
-    "state": "TN",
-    "lat": 35.05,
-    "lon": -85.31
-  },
-  {
-    "yr": 7,
-    "phase": 3,
-    "name": "Tallahassee",
-    "state": "FL",
-    "lat": 30.44,
-    "lon": -84.28
-  },
-  {
-    "yr": 7,
-    "phase": 3,
-    "name": "Pensacola",
-    "state": "FL",
-    "lat": 30.42,
-    "lon": -87.22
-  },
-  {
-    "yr": 7,
-    "phase": 3,
-    "name": "Augusta",
-    "state": "GA",
-    "lat": 33.47,
-    "lon": -82.01
-  },
-  {
-    "yr": 7,
-    "phase": 3,
-    "name": "Columbus GA",
-    "state": "GA",
-    "lat": 32.46,
-    "lon": -84.99
-  },
-  {
-    "yr": 7,
-    "phase": 3,
-    "name": "Macon",
-    "state": "GA",
-    "lat": 32.84,
-    "lon": -83.63
-  },
-  {
-    "yr": 8,
-    "phase": 3,
-    "name": "Minneapolis",
-    "state": "MN",
-    "lat": 44.98,
-    "lon": -93.27
-  },
-  {
-    "yr": 8,
-    "phase": 3,
-    "name": "Duluth",
-    "state": "MN",
-    "lat": 46.79,
-    "lon": -92.1
-  },
-  {
-    "yr": 8,
-    "phase": 3,
-    "name": "Rochester MN",
-    "state": "MN",
-    "lat": 44.02,
-    "lon": -92.47
-  },
-  {
-    "yr": 8,
-    "phase": 3,
-    "name": "Madison",
-    "state": "WI",
-    "lat": 43.07,
-    "lon": -89.4
-  },
-  {
-    "yr": 8,
-    "phase": 3,
-    "name": "Green Bay",
-    "state": "WI",
-    "lat": 44.51,
-    "lon": -88.02
-  },
-  {
-    "yr": 8,
-    "phase": 3,
-    "name": "Des Moines",
-    "state": "IA",
-    "lat": 41.59,
-    "lon": -93.62
-  },
-  {
-    "yr": 8,
-    "phase": 3,
-    "name": "Cedar Rapids",
-    "state": "IA",
-    "lat": 41.98,
-    "lon": -91.66
-  },
-  {
-    "yr": 8,
-    "phase": 3,
-    "name": "St. Louis",
-    "state": "MO",
-    "lat": 38.63,
-    "lon": -90.2
-  },
-  {
-    "yr": 8,
-    "phase": 3,
-    "name": "Kansas City",
-    "state": "MO",
-    "lat": 39.1,
-    "lon": -94.58
-  },
-  {
-    "yr": 8,
-    "phase": 3,
-    "name": "Springfield MO",
-    "state": "MO",
-    "lat": 37.21,
-    "lon": -93.29
-  },
-  {
-    "yr": 8,
-    "phase": 3,
-    "name": "Wichita",
-    "state": "KS",
-    "lat": 37.69,
-    "lon": -97.34
-  },
-  {
-    "yr": 8,
-    "phase": 3,
-    "name": "Topeka",
-    "state": "KS",
-    "lat": 39.05,
-    "lon": -95.68
-  },
-  {
-    "yr": 8,
-    "phase": 3,
-    "name": "Tulsa",
-    "state": "OK",
-    "lat": 36.15,
-    "lon": -95.99
-  },
-  {
-    "yr": 8,
-    "phase": 3,
-    "name": "Lincoln",
-    "state": "NE",
-    "lat": 40.81,
-    "lon": -96.7
-  },
-  {
-    "yr": 8,
-    "phase": 3,
-    "name": "Sioux Falls",
-    "state": "SD",
-    "lat": 43.55,
-    "lon": -96.73
-  },
-  {
-    "yr": 8,
-    "phase": 3,
-    "name": "Fargo",
-    "state": "ND",
-    "lat": 46.88,
-    "lon": -96.79
-  },
-  {
-    "yr": 8,
-    "phase": 3,
-    "name": "Billings",
-    "state": "MT",
-    "lat": 45.78,
-    "lon": -108.5
-  },
-  {
-    "yr": 8,
-    "phase": 3,
-    "name": "Cheyenne",
-    "state": "WY",
-    "lat": 41.14,
-    "lon": -104.82
-  },
-  {
-    "yr": 8,
-    "phase": 3,
-    "name": "Toledo",
-    "state": "OH",
-    "lat": 41.66,
-    "lon": -83.55
-  },
-  {
-    "yr": 8,
-    "phase": 3,
-    "name": "Akron",
-    "state": "OH",
-    "lat": 41.08,
-    "lon": -81.52
-  },
-  {
-    "yr": 8,
-    "phase": 3,
-    "name": "Lansing",
-    "state": "MI",
-    "lat": 42.73,
-    "lon": -84.55
-  },
-  {
-    "yr": 9,
-    "phase": 3,
-    "name": "Hartford",
-    "state": "CT",
-    "lat": 41.76,
-    "lon": -72.67
-  },
-  {
-    "yr": 9,
-    "phase": 3,
-    "name": "New Haven",
-    "state": "CT",
-    "lat": 41.31,
-    "lon": -72.92
-  },
-  {
-    "yr": 9,
-    "phase": 3,
-    "name": "Newark",
-    "state": "NJ",
-    "lat": 40.74,
-    "lon": -74.17
-  },
-  {
-    "yr": 9,
-    "phase": 3,
-    "name": "Trenton",
-    "state": "NJ",
-    "lat": 40.22,
-    "lon": -74.76
-  },
-  {
-    "yr": 9,
-    "phase": 3,
-    "name": "Atlantic City",
-    "state": "NJ",
-    "lat": 39.36,
-    "lon": -74.42
-  },
-  {
-    "yr": 9,
-    "phase": 3,
-    "name": "Portland ME",
-    "state": "ME",
-    "lat": 43.66,
-    "lon": -70.26
-  },
-  {
-    "yr": 9,
-    "phase": 3,
-    "name": "Bangor",
-    "state": "ME",
-    "lat": 44.8,
-    "lon": -68.78
-  },
-  {
-    "yr": 9,
-    "phase": 3,
-    "name": "Manchester NH",
-    "state": "NH",
-    "lat": 42.99,
-    "lon": -71.46
-  },
-  {
-    "yr": 9,
-    "phase": 3,
-    "name": "Missoula",
-    "state": "MT",
-    "lat": 46.87,
-    "lon": -113.99
-  },
-  {
-    "yr": 9,
-    "phase": 3,
-    "name": "Bozeman",
-    "state": "MT",
-    "lat": 45.68,
-    "lon": -111.04
-  },
-  {
-    "yr": 9,
-    "phase": 3,
-    "name": "Casper",
-    "state": "WY",
-    "lat": 42.85,
-    "lon": -106.31
-  },
-  {
-    "yr": 9,
-    "phase": 3,
-    "name": "Las Cruces",
-    "state": "NM",
-    "lat": 32.32,
-    "lon": -106.76
-  },
-  {
-    "yr": 9,
-    "phase": 3,
-    "name": "Bismarck",
-    "state": "ND",
-    "lat": 46.81,
-    "lon": -100.78
-  },
-  {
-    "yr": 9,
-    "phase": 3,
-    "name": "Rapid City",
-    "state": "SD",
-    "lat": 44.08,
-    "lon": -103.23
-  },
-  {
-    "yr": 9,
-    "phase": 3,
-    "name": "Fayetteville AR",
-    "state": "AR",
-    "lat": 36.06,
-    "lon": -94.16
-  },
-  {
-    "yr": 9,
-    "phase": 3,
-    "name": "Little Rock",
-    "state": "AR",
-    "lat": 34.74,
-    "lon": -92.29
-  },
-  {
-    "yr": 9,
-    "phase": 3,
-    "name": "Lexington",
-    "state": "KY",
-    "lat": 38.04,
-    "lon": -84.5
-  },
-  {
-    "yr": 9,
-    "phase": 3,
-    "name": "Charleston WV",
-    "state": "WV",
-    "lat": 38.35,
-    "lon": -81.63
-  },
-  {
-    "yr": 9,
-    "phase": 3,
-    "name": "Hagerstown",
-    "state": "MD",
-    "lat": 39.64,
-    "lon": -77.72
-  },
-  {
-    "yr": 9,
-    "phase": 3,
-    "name": "Wilmington DE",
-    "state": "DE",
-    "lat": 39.74,
-    "lon": -75.55
-  },
-  {
-    "yr": 9,
-    "phase": 3,
-    "name": "Providence",
-    "state": "RI",
-    "lat": 41.82,
-    "lon": -71.41
-  },
-  {
-    "yr": 10,
-    "phase": 3,
-    "name": "Anchorage",
-    "state": "AK",
-    "lat": 61.22,
-    "lon": -149.9
-  },
-  {
-    "yr": 10,
-    "phase": 3,
-    "name": "Fairbanks",
-    "state": "AK",
-    "lat": 64.84,
-    "lon": -147.72
-  },
-  {
-    "yr": 10,
-    "phase": 3,
-    "name": "Honolulu",
-    "state": "HI",
-    "lat": 21.31,
-    "lon": -157.86
-  },
-  {
-    "yr": 10,
-    "phase": 3,
-    "name": "Hilo",
-    "state": "HI",
-    "lat": 19.7,
-    "lon": -155.09
-  },
-  {
-    "yr": 10,
-    "phase": 3,
-    "name": "Burlington VT",
-    "state": "VT",
-    "lat": 44.48,
-    "lon": -73.21
-  },
-  {
-    "yr": 10,
-    "phase": 3,
-    "name": "Morgantown",
-    "state": "WV",
-    "lat": 39.63,
-    "lon": -79.96
-  },
-  {
-    "yr": 10,
-    "phase": 3,
-    "name": "Huntington WV",
-    "state": "WV",
-    "lat": 38.42,
-    "lon": -82.45
-  },
-  {
-    "yr": 10,
-    "phase": 3,
-    "name": "Fort Smith",
-    "state": "AR",
-    "lat": 35.39,
-    "lon": -94.4
-  },
-  {
-    "yr": 10,
-    "phase": 3,
-    "name": "Jonesboro",
-    "state": "AR",
-    "lat": 35.84,
-    "lon": -90.7
-  },
-  {
-    "yr": 10,
-    "phase": 3,
-    "name": "Bowling Green",
-    "state": "KY",
-    "lat": 36.97,
-    "lon": -86.48
-  },
-  {
-    "yr": 10,
-    "phase": 3,
-    "name": "Owensboro",
-    "state": "KY",
-    "lat": 37.77,
-    "lon": -87.11
-  },
-  {
-    "yr": 10,
-    "phase": 3,
-    "name": "Omaha",
-    "state": "NE",
-    "lat": 41.26,
-    "lon": -95.93
-  },
-  {
-    "yr": 10,
-    "phase": 3,
-    "name": "Grand Island",
-    "state": "NE",
-    "lat": 40.93,
-    "lon": -98.34
-  },
-  {
-    "yr": 10,
-    "phase": 3,
-    "name": "Dover",
-    "state": "DE",
-    "lat": 39.16,
-    "lon": -75.52
-  },
-  {
-    "yr": 10,
-    "phase": 3,
-    "name": "Lafayette LA",
-    "state": "LA",
-    "lat": 30.22,
-    "lon": -92.02
-  },
-  {
-    "yr": 10,
-    "phase": 3,
-    "name": "Lake Charles",
-    "state": "LA",
-    "lat": 30.23,
-    "lon": -93.22
-  },
-  {
-    "yr": 10,
-    "phase": 3,
-    "name": "Hattiesburg",
-    "state": "MS",
-    "lat": 31.33,
-    "lon": -89.29
-  },
-  {
-    "yr": 10,
-    "phase": 3,
-    "name": "Tupelo",
-    "state": "MS",
-    "lat": 34.26,
-    "lon": -88.7
-  },
-  {
-    "yr": 10,
-    "phase": 3,
-    "name": "Florence SC",
-    "state": "SC",
-    "lat": 34.2,
-    "lon": -79.77
-  },
-  {
-    "yr": 10,
-    "phase": 3,
-    "name": "Bend",
-    "state": "OR",
-    "lat": 44.06,
-    "lon": -121.31
-  },
-  {
-    "yr": 10,
-    "phase": 3,
-    "name": "Yakima",
-    "state": "WA",
-    "lat": 46.6,
-    "lon": -120.51
+{
+  "version": 2,
+  "sites": [
+    {
+      "yr": 1,
+      "phase": 1,
+      "name": "Los Angeles",
+      "state": "CA",
+      "lat": 34.05,
+      "lon": -118.24
+    },
+    {
+      "yr": 1,
+      "phase": 1,
+      "name": "Bay Area/Stockton",
+      "state": "CA",
+      "lat": 37.96,
+      "lon": -121.29
+    },
+    {
+      "yr": 1,
+      "phase": 1,
+      "name": "Fresno",
+      "state": "CA",
+      "lat": 36.74,
+      "lon": -119.78
+    },
+    {
+      "yr": 2,
+      "phase": 1,
+      "name": "San Diego",
+      "state": "CA",
+      "lat": 32.72,
+      "lon": -117.16
+    },
+    {
+      "yr": 2,
+      "phase": 1,
+      "name": "Sacramento",
+      "state": "CA",
+      "lat": 38.58,
+      "lon": -121.49
+    },
+    {
+      "yr": 2,
+      "phase": 1,
+      "name": "Riverside",
+      "state": "CA",
+      "lat": 33.95,
+      "lon": -117.4
+    },
+    {
+      "yr": 3,
+      "phase": 2,
+      "name": "Dallas-Ft Worth",
+      "state": "TX",
+      "lat": 32.78,
+      "lon": -96.8
+    },
+    {
+      "yr": 3,
+      "phase": 2,
+      "name": "Houston",
+      "state": "TX",
+      "lat": 29.76,
+      "lon": -95.37
+    },
+    {
+      "yr": 3,
+      "phase": 2,
+      "name": "Austin",
+      "state": "TX",
+      "lat": 30.27,
+      "lon": -97.74
+    },
+    {
+      "yr": 3,
+      "phase": 2,
+      "name": "Phoenix",
+      "state": "AZ",
+      "lat": 33.45,
+      "lon": -112.07
+    },
+    {
+      "yr": 3,
+      "phase": 2,
+      "name": "Tucson",
+      "state": "AZ",
+      "lat": 32.22,
+      "lon": -110.93
+    },
+    {
+      "yr": 3,
+      "phase": 2,
+      "name": "Denver",
+      "state": "CO",
+      "lat": 39.74,
+      "lon": -104.99
+    },
+    {
+      "yr": 3,
+      "phase": 2,
+      "name": "Colorado Springs",
+      "state": "CO",
+      "lat": 38.83,
+      "lon": -104.82
+    },
+    {
+      "yr": 3,
+      "phase": 2,
+      "name": "Miami",
+      "state": "FL",
+      "lat": 25.76,
+      "lon": -80.19
+    },
+    {
+      "yr": 3,
+      "phase": 2,
+      "name": "Orlando",
+      "state": "FL",
+      "lat": 28.54,
+      "lon": -81.38
+    },
+    {
+      "yr": 3,
+      "phase": 2,
+      "name": "Tampa",
+      "state": "FL",
+      "lat": 27.95,
+      "lon": -82.46
+    },
+    {
+      "yr": 4,
+      "phase": 2,
+      "name": "Charlotte",
+      "state": "NC",
+      "lat": 35.23,
+      "lon": -80.84
+    },
+    {
+      "yr": 4,
+      "phase": 2,
+      "name": "Raleigh",
+      "state": "NC",
+      "lat": 35.78,
+      "lon": -78.64
+    },
+    {
+      "yr": 4,
+      "phase": 2,
+      "name": "Atlanta",
+      "state": "GA",
+      "lat": 33.75,
+      "lon": -84.39
+    },
+    {
+      "yr": 4,
+      "phase": 2,
+      "name": "Savannah",
+      "state": "GA",
+      "lat": 32.08,
+      "lon": -81.1
+    },
+    {
+      "yr": 4,
+      "phase": 2,
+      "name": "Seattle",
+      "state": "WA",
+      "lat": 47.61,
+      "lon": -122.33
+    },
+    {
+      "yr": 4,
+      "phase": 2,
+      "name": "Spokane",
+      "state": "WA",
+      "lat": 47.66,
+      "lon": -117.43
+    },
+    {
+      "yr": 4,
+      "phase": 2,
+      "name": "Las Vegas",
+      "state": "NV",
+      "lat": 36.17,
+      "lon": -115.14
+    },
+    {
+      "yr": 4,
+      "phase": 2,
+      "name": "Reno",
+      "state": "NV",
+      "lat": 39.53,
+      "lon": -119.81
+    },
+    {
+      "yr": 4,
+      "phase": 2,
+      "name": "Jacksonville",
+      "state": "FL",
+      "lat": 30.33,
+      "lon": -81.66
+    },
+    {
+      "yr": 4,
+      "phase": 2,
+      "name": "San Antonio",
+      "state": "TX",
+      "lat": 29.42,
+      "lon": -98.49
+    },
+    {
+      "yr": 5,
+      "phase": 2,
+      "name": "Salt Lake City",
+      "state": "UT",
+      "lat": 40.76,
+      "lon": -111.89
+    },
+    {
+      "yr": 5,
+      "phase": 2,
+      "name": "Provo",
+      "state": "UT",
+      "lat": 40.23,
+      "lon": -111.66
+    },
+    {
+      "yr": 5,
+      "phase": 2,
+      "name": "Nashville",
+      "state": "TN",
+      "lat": 36.16,
+      "lon": -86.78
+    },
+    {
+      "yr": 5,
+      "phase": 2,
+      "name": "Memphis",
+      "state": "TN",
+      "lat": 35.15,
+      "lon": -90.05
+    },
+    {
+      "yr": 5,
+      "phase": 2,
+      "name": "Boise",
+      "state": "ID",
+      "lat": 43.62,
+      "lon": -116.21
+    },
+    {
+      "yr": 5,
+      "phase": 2,
+      "name": "Portland",
+      "state": "OR",
+      "lat": 45.51,
+      "lon": -122.68
+    },
+    {
+      "yr": 5,
+      "phase": 2,
+      "name": "Eugene",
+      "state": "OR",
+      "lat": 44.05,
+      "lon": -123.09
+    },
+    {
+      "yr": 5,
+      "phase": 2,
+      "name": "El Paso",
+      "state": "TX",
+      "lat": 31.76,
+      "lon": -106.49
+    },
+    {
+      "yr": 5,
+      "phase": 2,
+      "name": "Ft Lauderdale",
+      "state": "FL",
+      "lat": 26.12,
+      "lon": -80.14
+    },
+    {
+      "yr": 5,
+      "phase": 2,
+      "name": "Gainesville",
+      "state": "FL",
+      "lat": 29.65,
+      "lon": -82.32
+    },
+    {
+      "yr": 6,
+      "phase": 3,
+      "name": "Chicago",
+      "state": "IL",
+      "lat": 41.88,
+      "lon": -87.63
+    },
+    {
+      "yr": 6,
+      "phase": 3,
+      "name": "Rockford",
+      "state": "IL",
+      "lat": 42.27,
+      "lon": -89.09
+    },
+    {
+      "yr": 6,
+      "phase": 3,
+      "name": "Columbus",
+      "state": "OH",
+      "lat": 39.96,
+      "lon": -82.99
+    },
+    {
+      "yr": 6,
+      "phase": 3,
+      "name": "Cleveland",
+      "state": "OH",
+      "lat": 41.5,
+      "lon": -81.69
+    },
+    {
+      "yr": 6,
+      "phase": 3,
+      "name": "Cincinnati",
+      "state": "OH",
+      "lat": 39.1,
+      "lon": -84.51
+    },
+    {
+      "yr": 6,
+      "phase": 3,
+      "name": "Detroit",
+      "state": "MI",
+      "lat": 42.33,
+      "lon": -83.05
+    },
+    {
+      "yr": 6,
+      "phase": 3,
+      "name": "Grand Rapids",
+      "state": "MI",
+      "lat": 42.96,
+      "lon": -85.67
+    },
+    {
+      "yr": 6,
+      "phase": 3,
+      "name": "Pittsburgh",
+      "state": "PA",
+      "lat": 40.44,
+      "lon": -79.99
+    },
+    {
+      "yr": 6,
+      "phase": 3,
+      "name": "Philadelphia",
+      "state": "PA",
+      "lat": 39.95,
+      "lon": -75.16
+    },
+    {
+      "yr": 6,
+      "phase": 3,
+      "name": "Harrisburg",
+      "state": "PA",
+      "lat": 40.27,
+      "lon": -76.88
+    },
+    {
+      "yr": 6,
+      "phase": 3,
+      "name": "Albany",
+      "state": "NY",
+      "lat": 42.65,
+      "lon": -73.76
+    },
+    {
+      "yr": 6,
+      "phase": 3,
+      "name": "Buffalo",
+      "state": "NY",
+      "lat": 42.89,
+      "lon": -78.88
+    },
+    {
+      "yr": 6,
+      "phase": 3,
+      "name": "Syracuse",
+      "state": "NY",
+      "lat": 43.05,
+      "lon": -76.15
+    },
+    {
+      "yr": 6,
+      "phase": 3,
+      "name": "Boston",
+      "state": "MA",
+      "lat": 42.36,
+      "lon": -71.06
+    },
+    {
+      "yr": 6,
+      "phase": 3,
+      "name": "Springfield MA",
+      "state": "MA",
+      "lat": 42.1,
+      "lon": -72.59
+    },
+    {
+      "yr": 6,
+      "phase": 3,
+      "name": "Indianapolis",
+      "state": "IN",
+      "lat": 39.77,
+      "lon": -86.16
+    },
+    {
+      "yr": 6,
+      "phase": 3,
+      "name": "Fort Wayne",
+      "state": "IN",
+      "lat": 41.08,
+      "lon": -85.14
+    },
+    {
+      "yr": 6,
+      "phase": 3,
+      "name": "Louisville",
+      "state": "KY",
+      "lat": 38.25,
+      "lon": -85.76
+    },
+    {
+      "yr": 6,
+      "phase": 3,
+      "name": "Milwaukee",
+      "state": "WI",
+      "lat": 43.04,
+      "lon": -87.91
+    },
+    {
+      "yr": 6,
+      "phase": 3,
+      "name": "Albuquerque",
+      "state": "NM",
+      "lat": 35.08,
+      "lon": -106.65
+    },
+    {
+      "yr": 6,
+      "phase": 3,
+      "name": "Oklahoma City",
+      "state": "OK",
+      "lat": 35.47,
+      "lon": -97.52
+    },
+    {
+      "yr": 7,
+      "phase": 3,
+      "name": "Richmond",
+      "state": "VA",
+      "lat": 37.54,
+      "lon": -77.44
+    },
+    {
+      "yr": 7,
+      "phase": 3,
+      "name": "Norfolk",
+      "state": "VA",
+      "lat": 36.85,
+      "lon": -76.29
+    },
+    {
+      "yr": 7,
+      "phase": 3,
+      "name": "Baltimore",
+      "state": "MD",
+      "lat": 39.29,
+      "lon": -76.61
+    },
+    {
+      "yr": 7,
+      "phase": 3,
+      "name": "DC Suburbs",
+      "state": "MD",
+      "lat": 39.0,
+      "lon": -77.1
+    },
+    {
+      "yr": 7,
+      "phase": 3,
+      "name": "Charleston SC",
+      "state": "SC",
+      "lat": 32.78,
+      "lon": -79.93
+    },
+    {
+      "yr": 7,
+      "phase": 3,
+      "name": "Greenville",
+      "state": "SC",
+      "lat": 34.85,
+      "lon": -82.39
+    },
+    {
+      "yr": 7,
+      "phase": 3,
+      "name": "Birmingham",
+      "state": "AL",
+      "lat": 33.52,
+      "lon": -86.81
+    },
+    {
+      "yr": 7,
+      "phase": 3,
+      "name": "Huntsville",
+      "state": "AL",
+      "lat": 34.73,
+      "lon": -86.59
+    },
+    {
+      "yr": 7,
+      "phase": 3,
+      "name": "Mobile",
+      "state": "AL",
+      "lat": 30.69,
+      "lon": -88.04
+    },
+    {
+      "yr": 7,
+      "phase": 3,
+      "name": "Jackson",
+      "state": "MS",
+      "lat": 32.3,
+      "lon": -90.18
+    },
+    {
+      "yr": 7,
+      "phase": 3,
+      "name": "Gulfport",
+      "state": "MS",
+      "lat": 30.37,
+      "lon": -89.09
+    },
+    {
+      "yr": 7,
+      "phase": 3,
+      "name": "New Orleans",
+      "state": "LA",
+      "lat": 29.95,
+      "lon": -90.07
+    },
+    {
+      "yr": 7,
+      "phase": 3,
+      "name": "Baton Rouge",
+      "state": "LA",
+      "lat": 30.45,
+      "lon": -91.19
+    },
+    {
+      "yr": 7,
+      "phase": 3,
+      "name": "Shreveport",
+      "state": "LA",
+      "lat": 32.52,
+      "lon": -93.75
+    },
+    {
+      "yr": 7,
+      "phase": 3,
+      "name": "Knoxville",
+      "state": "TN",
+      "lat": 35.96,
+      "lon": -83.92
+    },
+    {
+      "yr": 7,
+      "phase": 3,
+      "name": "Chattanooga",
+      "state": "TN",
+      "lat": 35.05,
+      "lon": -85.31
+    },
+    {
+      "yr": 7,
+      "phase": 3,
+      "name": "Tallahassee",
+      "state": "FL",
+      "lat": 30.44,
+      "lon": -84.28
+    },
+    {
+      "yr": 7,
+      "phase": 3,
+      "name": "Pensacola",
+      "state": "FL",
+      "lat": 30.42,
+      "lon": -87.22
+    },
+    {
+      "yr": 7,
+      "phase": 3,
+      "name": "Augusta",
+      "state": "GA",
+      "lat": 33.47,
+      "lon": -82.01
+    },
+    {
+      "yr": 7,
+      "phase": 3,
+      "name": "Columbus GA",
+      "state": "GA",
+      "lat": 32.46,
+      "lon": -84.99
+    },
+    {
+      "yr": 7,
+      "phase": 3,
+      "name": "Macon",
+      "state": "GA",
+      "lat": 32.84,
+      "lon": -83.63
+    },
+    {
+      "yr": 8,
+      "phase": 3,
+      "name": "Minneapolis",
+      "state": "MN",
+      "lat": 44.98,
+      "lon": -93.27
+    },
+    {
+      "yr": 8,
+      "phase": 3,
+      "name": "Duluth",
+      "state": "MN",
+      "lat": 46.79,
+      "lon": -92.1
+    },
+    {
+      "yr": 8,
+      "phase": 3,
+      "name": "Rochester MN",
+      "state": "MN",
+      "lat": 44.02,
+      "lon": -92.47
+    },
+    {
+      "yr": 8,
+      "phase": 3,
+      "name": "Madison",
+      "state": "WI",
+      "lat": 43.07,
+      "lon": -89.4
+    },
+    {
+      "yr": 8,
+      "phase": 3,
+      "name": "Green Bay",
+      "state": "WI",
+      "lat": 44.51,
+      "lon": -88.02
+    },
+    {
+      "yr": 8,
+      "phase": 3,
+      "name": "Des Moines",
+      "state": "IA",
+      "lat": 41.59,
+      "lon": -93.62
+    },
+    {
+      "yr": 8,
+      "phase": 3,
+      "name": "Cedar Rapids",
+      "state": "IA",
+      "lat": 41.98,
+      "lon": -91.66
+    },
+    {
+      "yr": 8,
+      "phase": 3,
+      "name": "St. Louis",
+      "state": "MO",
+      "lat": 38.63,
+      "lon": -90.2
+    },
+    {
+      "yr": 8,
+      "phase": 3,
+      "name": "Kansas City",
+      "state": "MO",
+      "lat": 39.1,
+      "lon": -94.58
+    },
+    {
+      "yr": 8,
+      "phase": 3,
+      "name": "Springfield MO",
+      "state": "MO",
+      "lat": 37.21,
+      "lon": -93.29
+    },
+    {
+      "yr": 8,
+      "phase": 3,
+      "name": "Wichita",
+      "state": "KS",
+      "lat": 37.69,
+      "lon": -97.34
+    },
+    {
+      "yr": 8,
+      "phase": 3,
+      "name": "Topeka",
+      "state": "KS",
+      "lat": 39.05,
+      "lon": -95.68
+    },
+    {
+      "yr": 8,
+      "phase": 3,
+      "name": "Tulsa",
+      "state": "OK",
+      "lat": 36.15,
+      "lon": -95.99
+    },
+    {
+      "yr": 8,
+      "phase": 3,
+      "name": "Lincoln",
+      "state": "NE",
+      "lat": 40.81,
+      "lon": -96.7
+    },
+    {
+      "yr": 8,
+      "phase": 3,
+      "name": "Sioux Falls",
+      "state": "SD",
+      "lat": 43.55,
+      "lon": -96.73
+    },
+    {
+      "yr": 8,
+      "phase": 3,
+      "name": "Fargo",
+      "state": "ND",
+      "lat": 46.88,
+      "lon": -96.79
+    },
+    {
+      "yr": 8,
+      "phase": 3,
+      "name": "Billings",
+      "state": "MT",
+      "lat": 45.78,
+      "lon": -108.5
+    },
+    {
+      "yr": 8,
+      "phase": 3,
+      "name": "Cheyenne",
+      "state": "WY",
+      "lat": 41.14,
+      "lon": -104.82
+    },
+    {
+      "yr": 8,
+      "phase": 3,
+      "name": "Toledo",
+      "state": "OH",
+      "lat": 41.66,
+      "lon": -83.55
+    },
+    {
+      "yr": 8,
+      "phase": 3,
+      "name": "Akron",
+      "state": "OH",
+      "lat": 41.08,
+      "lon": -81.52
+    },
+    {
+      "yr": 8,
+      "phase": 3,
+      "name": "Lansing",
+      "state": "MI",
+      "lat": 42.73,
+      "lon": -84.55
+    },
+    {
+      "yr": 9,
+      "phase": 3,
+      "name": "Hartford",
+      "state": "CT",
+      "lat": 41.76,
+      "lon": -72.67
+    },
+    {
+      "yr": 9,
+      "phase": 3,
+      "name": "New Haven",
+      "state": "CT",
+      "lat": 41.31,
+      "lon": -72.92
+    },
+    {
+      "yr": 9,
+      "phase": 3,
+      "name": "Newark",
+      "state": "NJ",
+      "lat": 40.74,
+      "lon": -74.17
+    },
+    {
+      "yr": 9,
+      "phase": 3,
+      "name": "Trenton",
+      "state": "NJ",
+      "lat": 40.22,
+      "lon": -74.76
+    },
+    {
+      "yr": 9,
+      "phase": 3,
+      "name": "Atlantic City",
+      "state": "NJ",
+      "lat": 39.36,
+      "lon": -74.42
+    },
+    {
+      "yr": 9,
+      "phase": 3,
+      "name": "Portland ME",
+      "state": "ME",
+      "lat": 43.66,
+      "lon": -70.26
+    },
+    {
+      "yr": 9,
+      "phase": 3,
+      "name": "Bangor",
+      "state": "ME",
+      "lat": 44.8,
+      "lon": -68.78
+    },
+    {
+      "yr": 9,
+      "phase": 3,
+      "name": "Manchester NH",
+      "state": "NH",
+      "lat": 42.99,
+      "lon": -71.46
+    },
+    {
+      "yr": 9,
+      "phase": 3,
+      "name": "Missoula",
+      "state": "MT",
+      "lat": 46.87,
+      "lon": -113.99
+    },
+    {
+      "yr": 9,
+      "phase": 3,
+      "name": "Bozeman",
+      "state": "MT",
+      "lat": 45.68,
+      "lon": -111.04
+    },
+    {
+      "yr": 9,
+      "phase": 3,
+      "name": "Casper",
+      "state": "WY",
+      "lat": 42.85,
+      "lon": -106.31
+    },
+    {
+      "yr": 9,
+      "phase": 3,
+      "name": "Las Cruces",
+      "state": "NM",
+      "lat": 32.32,
+      "lon": -106.76
+    },
+    {
+      "yr": 9,
+      "phase": 3,
+      "name": "Bismarck",
+      "state": "ND",
+      "lat": 46.81,
+      "lon": -100.78
+    },
+    {
+      "yr": 9,
+      "phase": 3,
+      "name": "Rapid City",
+      "state": "SD",
+      "lat": 44.08,
+      "lon": -103.23
+    },
+    {
+      "yr": 9,
+      "phase": 3,
+      "name": "Fayetteville AR",
+      "state": "AR",
+      "lat": 36.06,
+      "lon": -94.16
+    },
+    {
+      "yr": 9,
+      "phase": 3,
+      "name": "Little Rock",
+      "state": "AR",
+      "lat": 34.74,
+      "lon": -92.29
+    },
+    {
+      "yr": 9,
+      "phase": 3,
+      "name": "Lexington",
+      "state": "KY",
+      "lat": 38.04,
+      "lon": -84.5
+    },
+    {
+      "yr": 9,
+      "phase": 3,
+      "name": "Charleston WV",
+      "state": "WV",
+      "lat": 38.35,
+      "lon": -81.63
+    },
+    {
+      "yr": 9,
+      "phase": 3,
+      "name": "Hagerstown",
+      "state": "MD",
+      "lat": 39.64,
+      "lon": -77.72
+    },
+    {
+      "yr": 9,
+      "phase": 3,
+      "name": "Wilmington DE",
+      "state": "DE",
+      "lat": 39.74,
+      "lon": -75.55
+    },
+    {
+      "yr": 9,
+      "phase": 3,
+      "name": "Providence",
+      "state": "RI",
+      "lat": 41.82,
+      "lon": -71.41
+    },
+    {
+      "yr": 10,
+      "phase": 3,
+      "name": "Anchorage",
+      "state": "AK",
+      "lat": 61.22,
+      "lon": -149.9
+    },
+    {
+      "yr": 10,
+      "phase": 3,
+      "name": "Fairbanks",
+      "state": "AK",
+      "lat": 64.84,
+      "lon": -147.72
+    },
+    {
+      "yr": 10,
+      "phase": 3,
+      "name": "Honolulu",
+      "state": "HI",
+      "lat": 21.31,
+      "lon": -157.86
+    },
+    {
+      "yr": 10,
+      "phase": 3,
+      "name": "Hilo",
+      "state": "HI",
+      "lat": 19.7,
+      "lon": -155.09
+    },
+    {
+      "yr": 10,
+      "phase": 3,
+      "name": "Burlington VT",
+      "state": "VT",
+      "lat": 44.48,
+      "lon": -73.21
+    },
+    {
+      "yr": 10,
+      "phase": 3,
+      "name": "Morgantown",
+      "state": "WV",
+      "lat": 39.63,
+      "lon": -79.96
+    },
+    {
+      "yr": 10,
+      "phase": 3,
+      "name": "Huntington WV",
+      "state": "WV",
+      "lat": 38.42,
+      "lon": -82.45
+    },
+    {
+      "yr": 10,
+      "phase": 3,
+      "name": "Fort Smith",
+      "state": "AR",
+      "lat": 35.39,
+      "lon": -94.4
+    },
+    {
+      "yr": 10,
+      "phase": 3,
+      "name": "Jonesboro",
+      "state": "AR",
+      "lat": 35.84,
+      "lon": -90.7
+    },
+    {
+      "yr": 10,
+      "phase": 3,
+      "name": "Bowling Green",
+      "state": "KY",
+      "lat": 36.97,
+      "lon": -86.48
+    },
+    {
+      "yr": 10,
+      "phase": 3,
+      "name": "Owensboro",
+      "state": "KY",
+      "lat": 37.77,
+      "lon": -87.11
+    },
+    {
+      "yr": 10,
+      "phase": 3,
+      "name": "Omaha",
+      "state": "NE",
+      "lat": 41.26,
+      "lon": -95.93
+    },
+    {
+      "yr": 10,
+      "phase": 3,
+      "name": "Grand Island",
+      "state": "NE",
+      "lat": 40.93,
+      "lon": -98.34
+    },
+    {
+      "yr": 10,
+      "phase": 3,
+      "name": "Dover",
+      "state": "DE",
+      "lat": 39.16,
+      "lon": -75.52
+    },
+    {
+      "yr": 10,
+      "phase": 3,
+      "name": "Lafayette LA",
+      "state": "LA",
+      "lat": 30.22,
+      "lon": -92.02
+    },
+    {
+      "yr": 10,
+      "phase": 3,
+      "name": "Lake Charles",
+      "state": "LA",
+      "lat": 30.23,
+      "lon": -93.22
+    },
+    {
+      "yr": 10,
+      "phase": 3,
+      "name": "Hattiesburg",
+      "state": "MS",
+      "lat": 31.33,
+      "lon": -89.29
+    },
+    {
+      "yr": 10,
+      "phase": 3,
+      "name": "Tupelo",
+      "state": "MS",
+      "lat": 34.26,
+      "lon": -88.7
+    },
+    {
+      "yr": 10,
+      "phase": 3,
+      "name": "Florence SC",
+      "state": "SC",
+      "lat": 34.2,
+      "lon": -79.77
+    },
+    {
+      "yr": 10,
+      "phase": 3,
+      "name": "Bend",
+      "state": "OR",
+      "lat": 44.06,
+      "lon": -121.31
+    },
+    {
+      "yr": 10,
+      "phase": 3,
+      "name": "Yakima",
+      "state": "WA",
+      "lat": 46.6,
+      "lon": -120.51
+    }
+  ],
+  "hubs": [
+    {
+      "name": "West Coast Core",
+      "city": "Stockton",
+      "state": "CA",
+      "lat": 37.96,
+      "lon": -121.29,
+      "capex": 15,
+      "opens_yr": 1
+    },
+    {
+      "name": "Sun Belt Core",
+      "city": "Dallas-Fort Worth",
+      "state": "TX",
+      "lat": 32.78,
+      "lon": -96.8,
+      "capex": 15,
+      "opens_yr": 3
+    },
+    {
+      "name": "Southeast Core",
+      "city": "Atlanta",
+      "state": "GA",
+      "lat": 33.75,
+      "lon": -84.39,
+      "capex": 15,
+      "opens_yr": 4
+    },
+    {
+      "name": "Midwest/Northeast Core",
+      "city": "Columbus",
+      "state": "OH",
+      "lat": 39.96,
+      "lon": -82.99,
+      "capex": 15,
+      "opens_yr": 6
+    }
+  ],
+  "assumptions": {
+    "fab_capex_M": 3.0,
+    "rev_per_home_K": 180,
+    "fab_margin_pct": 22,
+    "hub_capex_M": 15,
+    "kit_price_K": 72,
+    "core_margin_pct": 28,
+    "royalty_pct": 8,
+    "core_opex_pct": 15
   }
-]
+}

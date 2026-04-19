@@ -1,93 +1,119 @@
-# HomeFab Expansion Map
+# HomeFab Expansion Map — Integrated Financial Model
 
-An interactive, editable map of HomeFab's 10-year US expansion. The map and the city data are decoupled — update `sites.json` to change the map, without touching any code.
+An interactive, editable map of HomeFab's 10-year US expansion, with a live financial dashboard that aggregates per-site economics across both business units: **FBX Core** (warehousing & distribution) and **FBX Fab-Home** (franchise factories).
 
-## Files in this repo
+## Files
 
-- `index.html` — the editor UI (map + editable table, all-in-one)
-- `sites.json` — the canonical list of 141 cities (year, phase, name, state, lat, lon)
+- `index.html` — the all-in-one editor: map, financial dashboard, cities table, hubs table, assumption controls
+- `sites.json` — canonical data file containing sites + hubs + financial assumptions
 - `README.md` — this file
 
 ## Publishing to GitHub Pages
 
-1. Create a new public repo on GitHub (e.g. `homefab-map`)
-2. Upload both `index.html` and `sites.json` to the root of the repo
-3. Go to **Settings → Pages**
-4. Under **Source**, select **Deploy from a branch**, choose branch `main` and folder `/ (root)`
-5. Click **Save**. Wait 1–2 minutes.
-6. Your published URL will be:
-   `https://YOUR-USERNAME.github.io/homefab-map/`
+1. Create a public GitHub repo (e.g. `homefab-map`)
+2. Upload all three files to the root
+3. Settings → Pages → Deploy from branch `main`, folder `/ (root)` → Save
+4. Your URL: `https://YOUR-USERNAME.github.io/homefab-map/`
 
 ## Embedding in Canva
 
-1. In Canva: **Elements → Embed**
-2. Paste your GitHub Pages URL
-3. Click **Embed**
+Elements → Embed → paste your GitHub Pages URL. The interactive map + dashboard render live.
 
-The live map renders inside your Canva deck. Interactive during presentations.
+## What's on the page
 
-## Editing the city list
+### Financial dashboard (top)
+Two bold side-by-side panels that update as you drag the year slider:
 
-There are two ways to edit cities, depending on whether you want the changes to be permanent (visible to everyone) or local (just on your browser).
+**FBX Core** (teal) — warehousing & distribution
+Cumulative revenue, operating profit, kit sales, royalty income, CAPEX committed, hubs operating, homes shipped, ROI
 
-### For permanent changes — edit `sites.json` on GitHub
+**FBX Fab-Home** (amber) — franchise factory network
+Cumulative revenue, net income, annual run-rate, Fab count, CAPEX committed, states covered, homes delivered, ROI
 
-This is the canonical list. Whatever's in this file is what everyone sees.
+### Global assumptions panel
+Click the ⚙ button to expose flex controls:
+- **Fab-Home defaults**: Fab CAPEX ($M), home revenue ($K), Fab margin (%)
+- **Core defaults**: hub CAPEX, kit price to Fabs, Core margin on kits, royalty %, Core opex %
 
-1. In your GitHub repo, click `sites.json`
-2. Click the pencil icon (Edit this file) in the top-right
-3. Each city is a JSON object like:
-   ```json
-   {
-     "yr": 3,
-     "phase": 2,
-     "name": "Dallas-Ft Worth",
-     "state": "TX",
-     "lat": 32.78,
-     "lon": -96.80
-   }
-   ```
-4. Edit, add, or remove cities. Keep the JSON valid (commas between entries, square brackets around the whole list).
-5. Scroll down and click **Commit changes**
-6. Within 1–2 minutes, your published Pages site will show the updates
+Change any number and the whole dashboard + tables recalculate instantly.
 
-**Tip:** if you're editing a lot at once, easier to use the editor UI (below) to make changes visually, then **Export JSON** and replace `sites.json` in the repo.
+### Map
+- Fab dots colored by phase (green / amber / red)
+- 4 FBX Core hub diamonds in teal
+- Toggle "Show hub→Fab routes" for nearest-hub visualization
+- Hover any marker for details
 
-### For experimentation — use the editor UI
+### Fab sites table
+Every row is inline-editable. Columns: Year, Phase, City, State, Lat, Lon, **CAPEX** (override $M), **Rev** (override $K), **Mgn** (override %), **Hub** (auto-assigned). Blank overrides use global defaults; filled overrides show in bold amber.
 
-Visit your published URL (or open `index.html` locally).
+### Hubs table
+Edit each of the 4 strategic hubs: name, city, state, lat/lon, CAPEX override, opening year. "Fabs" column shows how many sites route to each hub.
 
-- Edit any field in the city table — the map updates live
-- Add cities with the form at the bottom (lat/lon auto-fills for major US cities)
-- Drag the `⋮⋮` handles to reorder
-- Your edits save to your browser's localStorage automatically — they survive reloads
-- When you're ready to publish: click **Export JSON** and replace `sites.json` in the repo
+## Editing workflows
 
-The indicator badge next to the title tells you where your current view comes from:
+### Quick edits — modify `sites.json` on GitHub directly
 
-- **Synced with sites.json** — what you see matches the published file
-- **Local edits (not saved to source)** — you've made changes that aren't in sites.json yet
-- **Using built-in defaults** — couldn't find sites.json (falling back to the 141 cities baked into the HTML)
+The file is human-readable JSON:
+```json
+{
+  "version": 2,
+  "sites": [
+    { "yr":1, "phase":1, "name":"Los Angeles", "state":"CA",
+      "lat":34.05, "lon":-118.24,
+      "capex": 3.5,         // optional override ($M)
+      "rev_per_home": 200,  // optional override ($K)
+      "margin_pct": 20      // optional override (%)
+    }
+  ],
+  "hubs": [
+    { "name":"West Coast Core", "city":"Stockton", "state":"CA",
+      "lat":37.96, "lon":-121.29, "capex":15, "opens_yr":1 }
+  ],
+  "assumptions": {
+    "fab_capex_M":3, "rev_per_home_K":180, "fab_margin_pct":22,
+    "hub_capex_M":15, "kit_price_K":72, "core_margin_pct":28,
+    "royalty_pct":8, "core_opex_pct":15
+  }
+}
+```
 
-## Data format reference
+Commit to GitHub, wait 1–2 minutes for Pages to update.
 
-`sites.json` is a JSON array. Each entry has:
+### Visual editing — use the UI
+1. Open the published URL
+2. Edit anything — rows, assumptions, hubs
+3. All changes save to browser localStorage automatically
+4. Click **Export JSON** to download the combined file
+5. Replace `sites.json` in the repo with the export
 
-| Field | Type | Notes |
-|-------|------|-------|
-| `yr` | integer 1–10 | Year the HomeFab opens (relative to Year 1 = 2026) |
-| `phase` | integer 1–3 | 1 = California pilot, 2 = key markets, 3 = national scale |
-| `name` | string | City or metro name |
-| `state` | string | 2-letter US state abbreviation |
-| `lat` | number | Latitude (decimal degrees) |
-| `lon` | number | Longitude (decimal degrees, negative for western hemisphere) |
+## Economics model
 
-## How the loading priority works
+### Per-Fab output ramp
+- Phase 1: 180 homes/yr mature
+- Phase 2: 240 homes/yr mature
+- Phase 3: 320 → 400 homes/yr (scales by opening year)
+- Opening year contributes half mature output (mid-year average)
 
-When the editor loads:
+### Per-home revenue split (defaults)
+- $180K home sale → Fab revenue
+- $72K kit COGS → paid to Core
+- $14.4K royalty (8%) → paid to Core
+- Remainder → Fab labor, overhead, margin (22%)
 
-1. It fetches `sites.json` (with a cache-buster so you always get the latest)
-2. If you have local edits in your browser that differ from `sites.json`, you're prompted: keep local edits, or load the fresh list from source
-3. If the fetch fails (e.g. opened as `file://` rather than via a web server), it falls back to your local edits, then to the 141 built-in defaults
+### Core economics
+Revenue = kit sales + royalty · Gross profit on kits = kit sales × 28% · Opex = revenue × 15% · Operating profit = kit GP + royalty − opex
 
-Click **↻ Reload from source** anytime to discard local edits and pull the latest `sites.json`.
+### Fab-Home economics
+Revenue = homes × $180K · Net income = revenue × 22% · CAPEX = $3M per Fab
+
+### Hub assignment
+Each Fab is assigned to its nearest **active** Core hub by haversine distance. A hub is active when `opens_yr ≤ current year`.
+
+## Data source indicator
+
+Badge next to the title:
+- **Synced with sites.json** — view matches published file
+- **Local edits (not saved to source)** — unsaved changes in this browser
+- **Using built-in defaults** — sites.json not found (e.g. opened as `file://`)
+
+**↻ Reload from source** button discards local edits and re-fetches `sites.json`.
