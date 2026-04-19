@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "exported_at": "2026-04-19T16:27:12.113Z",
+  "exported_at": "2026-04-19T17:01:42.682Z",
   "sites": [
     {
       "yr": 1,
@@ -25,14 +25,6 @@
       "state": "CA",
       "lat": 34.8642,
       "lon": -118.1637
-    },
-    {
-      "yr": 2,
-      "phase": 1,
-      "name": "Los Angeles",
-      "state": "CA",
-      "lat": 34.0522,
-      "lon": -118.2437
     },
     {
       "yr": 2,
@@ -64,7 +56,8 @@
       "name": "Bakersfield",
       "state": "CA",
       "lat": 35.3733,
-      "lon": -119.0187
+      "lon": -119.0187,
+      "rev_per_home": 195
     },
     {
       "yr": 2,
@@ -75,7 +68,23 @@
       "lon": -122.7144
     },
     {
+      "yr": 2,
+      "phase": 1,
+      "name": "Phoenix",
+      "state": "AZ",
+      "lat": 33.4484,
+      "lon": -112.074
+    },
+    {
       "yr": 3,
+      "phase": 1,
+      "name": "Worcester",
+      "state": "MA",
+      "lat": 42.2626,
+      "lon": -71.8023
+    },
+    {
+      "yr": 2,
       "phase": 1,
       "name": "Newark",
       "state": "NJ",
@@ -93,14 +102,6 @@
     {
       "yr": 3,
       "phase": 1,
-      "name": "Worcester",
-      "state": "MA",
-      "lat": 42.2626,
-      "lon": -71.8023
-    },
-    {
-      "yr": 3,
-      "phase": 1,
       "name": "Rochester",
       "state": "NY",
       "lat": 43.1566,
@@ -113,14 +114,6 @@
       "state": "CO",
       "lat": 39.7392,
       "lon": -104.9903
-    },
-    {
-      "yr": 3,
-      "phase": 1,
-      "name": "Phoenix",
-      "state": "AZ",
-      "lat": 33.4484,
-      "lon": -112.074
     },
     {
       "yr": 4,
@@ -894,7 +887,7 @@
   "hubs": [
     {
       "name": "West Coast Core",
-      "city": "Corona",
+      "city": "corona",
       "state": "CA",
       "lat": 33.8753,
       "lon": -117.5664,
@@ -902,38 +895,29 @@
       "opens_yr": 1
     },
     {
-      "name": "Northeast Core",
-      "city": "Hartford",
-      "state": "CT",
-      "lat": 41.7658,
-      "lon": -72.6734,
-      "capex": 15,
-      "opens_yr": 3
-    },
-    {
-      "name": "Mountain-Southwest Core",
-      "city": "Denver",
-      "state": "CO",
-      "lat": 39.7392,
-      "lon": -104.9903,
-      "capex": 15,
-      "opens_yr": 3
-    },
-    {
       "name": "Sun Belt Core",
-      "city": "Dallas-Fort Worth",
+      "city": "amarillo",
       "state": "TX",
-      "lat": 32.78,
-      "lon": -96.8,
+      "lat": 35.22,
+      "lon": -101.83,
       "capex": 15,
-      "opens_yr": 5
+      "opens_yr": 3
     },
     {
-      "name": "Midwest Core",
-      "city": "Indianapolis",
-      "state": "IN",
-      "lat": 39.7684,
-      "lon": -86.1581,
+      "name": "Southeast Core",
+      "city": "albany",
+      "state": "GA",
+      "lat": 31.5,
+      "lon": -84.32,
+      "capex": 15,
+      "opens_yr": 4
+    },
+    {
+      "name": "Midwest/Northeast Core",
+      "city": "Milwaukee",
+      "state": "WI",
+      "lat": 43.0389,
+      "lon": -87.9065,
       "capex": 15,
       "opens_yr": 6
     }
