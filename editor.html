@@ -1282,7 +1282,10 @@ function exportJSON() {
   const blob = new Blob([JSON.stringify(payload, null, 2)], {type: 'application/json'});
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
-  a.href = url; a.download = 'homefab_export.json';
+  const ts = new Date();
+  const pad = n => String(n).padStart(2, '0');
+  const stamp = `${ts.getFullYear()}-${pad(ts.getMonth()+1)}-${pad(ts.getDate())}-${pad(ts.getHours())}${pad(ts.getMinutes())}`;
+  a.href = url; a.download = `homefab_${stamp}.json`;
   a.click();
   URL.revokeObjectURL(url);
   toast('Exported JSON (sites + hubs + assumptions)');
