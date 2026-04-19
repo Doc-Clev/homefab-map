@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>HomeFab — 10-Year Expansion Map</title>
+<title>HomeFab Editor — 10-Year Expansion Map</title>
 <style>
   :root {
     --bg-primary: #ffffff;
@@ -321,43 +321,31 @@
     padding: 4px 2px; cursor: pointer; max-width: 280px;
   }
   .version-picker button.icon-btn { padding: 2px 6px; font-size: 13px; line-height: 1; }
-
-  .editor-link {
-    display: inline-flex; align-items: center; height: 32px; padding: 0 12px;
-    font-size: 12px; color: var(--text-tertiary); text-decoration: none;
-    border: 0.5px solid var(--border-tertiary); border-radius: var(--border-radius-md);
-    transition: color 0.15s, border-color 0.15s;
-  }
-  .editor-link:hover { color: var(--text-primary); border-color: var(--border-secondary); }
-
-  /* Viewer: table cells are read-only text, not inputs */
-  .viewer .table-panel td input,
-  .viewer .table-panel td select { pointer-events: none; background: transparent !important; border: none !important; }
-  .viewer .drag-handle { display: none; }
-  .viewer .row-actions { display: none; }
-  .viewer .add-row-form { display: none; }
-  .viewer #geocode-hint { display: none; }
-  .viewer .assumption-toggle { display: none; }
-  .viewer .asm-panel input { pointer-events: none; background: transparent !important; border-color: transparent !important; }
-  .viewer .asm-reset { display: none; }
 </style>
 </head>
-<body class="viewer">
+<body>
 <div class="container">
   <header>
     <div>
-      <h1>HomeFab — 10-Year Expansion Map</h1>
-      <p class="subtitle">FBX modular housing expansion plan across 10 years. <span id="data-source-indicator"></span></p>
+      <h1>HomeFab — 10-Year Expansion Map <span style="display:inline-block; background:var(--p3); color:white; font-size:10px; font-weight:600; padding:2px 8px; border-radius:4px; vertical-align:3px; letter-spacing:0.4px">EDITOR</span></h1>
+      <p class="subtitle">Edit the cities table on the right — the map updates live. <span id="data-source-indicator"></span> · <a href="index.html" style="color:var(--info); text-decoration:none">View public version →</a></p>
     </div>
     <div class="toolbar">
+      <button onclick="reloadFromSource()" title="Fetch the latest sites.json from the hosted source">↻ Reload from source</button>
+      <button onclick="exportJSON()">Export JSON</button>
+      <button onclick="exportCSV()">Export CSV</button>
+      <button onclick="document.getElementById('import-file').click()">Import</button>
+      <input type="file" id="import-file" accept=".json,.csv" style="display:none" onchange="importFile(event)">
       <div class="version-picker" id="version-picker" style="display:none">
-        <label title="Browse previous versions of the plan">Version</label>
-        <select id="version-select" onchange="viewerLoadVersion(this.value)">
-          <option value="">— latest —</option>
+        <label title="Switch to a previous version">Version</label>
+        <select id="version-select" onchange="ghLoadFromDropdown(this.value)">
+          <option value="">— current (unsaved) —</option>
         </select>
-        <button class="icon-btn" onclick="viewerRefreshVersions()" title="Refresh version list">↻</button>
+        <button class="icon-btn" onclick="ghRefreshDropdown()" title="Refresh version list">↻</button>
       </div>
-      <a href="editor.html" class="editor-link" title="Editor (requires GitHub token)">Editor</a>
+      <button class="primary" onclick="ghSave()" title="Commit current sites + hubs + assumptions to GitHub as a new version">⇧ Save version</button>
+      <button onclick="ghConfig()" title="Configure GitHub repository and token">⚙ GitHub</button>
+      <button class="danger" onclick="resetToDefaults()">Reset</button>
     </div>
   </header>
 
@@ -717,17 +705,6 @@ const HUB_STORAGE_KEY = 'homefab_hubs_v3';
 const ASM_STORAGE_KEY = 'homefab_assumptions_v3';
 const GH_CONFIG_KEY = 'homefab_gh_config_v1';
 
-/* ============== Viewer repo coordinates (hardcoded) ==============
-   The public viewer reads the plan and commit history from this repo
-   using the unauthenticated GitHub API (rate limit: 60 req/hr per IP).
-   Hardcoded so viewers don't need any setup. */
-const VIEWER_REPO = {
-  owner: 'Doc-Clev',
-  repo:  'homefab-map',
-  branch: 'main',
-  path:  'sites.json'
-};
-
 /* ============== 4 FBX Core hubs (default seed) ============== */
 const SEED_HUBS = [
   { name: "West Coast Core", city: "Corona", state: "CA", lat: 33.8753, lon: -117.5664, capex: 15, opens_yr: 1 },
@@ -920,13 +897,7 @@ function loadAssumptions() {
     }
   } catch(e) {}
 }
-/* ============== Viewer mode guard ==============
-   When running as the public viewer (body.viewer class), all localStorage
-   writes are no-ops. Guarantees clean reads on every page load. */
-const IS_VIEWER = document.body && document.body.classList.contains('viewer');
-
 function saveAssumptions() {
-  if (IS_VIEWER) return;
   try { localStorage.setItem(ASM_STORAGE_KEY, JSON.stringify(assumptions)); } catch(e) {}
 }
 function applyAssumptionsToUI() {
@@ -986,7 +957,6 @@ function loadHubs() {
   return JSON.parse(JSON.stringify(SEED_HUBS));
 }
 function saveHubs() {
-  if (IS_VIEWER) return;
   try { localStorage.setItem(HUB_STORAGE_KEY, JSON.stringify(hubs)); } catch(e) {}
 }
 
@@ -1106,7 +1076,6 @@ async function reloadFromSource() {
 }
 
 function saveSites() {
-  if (IS_VIEWER) return;
   try { localStorage.setItem(STORAGE_KEY, JSON.stringify(sites)); } catch(e) {}
   // If the user has diverged from canonical, mark as local edits
   if (canonicalSites && !arraysEqual(canonicalSites, sites)) {
@@ -2423,110 +2392,6 @@ async function ghLoadFromDropdown(sha) {
   }
 }
 
-/* ============== VIEWER: public read-only version browsing ==============
-   Uses GitHub's public REST API with no Authorization header. Works for
-   public repos only. Rate limit: 60 requests/hour/IP. Each page load
-   spends ~2 requests (list commits + fetch one file). */
-
-async function viewerFetchLatest() {
-  // Tries GitHub API first so we get the authoritative latest. Falls back
-  // to the adjacent sites.json (served by GitHub Pages) if API fails.
-  try {
-    const url = `https://api.github.com/repos/${VIEWER_REPO.owner}/${VIEWER_REPO.repo}/contents/${encodeURIComponent(VIEWER_REPO.path)}?ref=${encodeURIComponent(VIEWER_REPO.branch)}`;
-    const r = await fetch(url, { headers: { 'Accept': 'application/vnd.github+json' } });
-    if (r.ok) {
-      const data = await r.json();
-      const raw = ghB64Decode(data.content);
-      return JSON.parse(raw);
-    }
-  } catch(e) { /* fall through */ }
-  // Fallback: adjacent sites.json
-  try {
-    const r = await fetch('sites.json?t=' + Date.now(), { cache: 'no-store' });
-    if (r.ok) return await r.json();
-  } catch(e) {}
-  return null;
-}
-
-async function viewerFetchBySha(sha) {
-  const url = `https://api.github.com/repos/${VIEWER_REPO.owner}/${VIEWER_REPO.repo}/contents/${encodeURIComponent(VIEWER_REPO.path)}?ref=${encodeURIComponent(sha)}`;
-  const r = await fetch(url, { headers: { 'Accept': 'application/vnd.github+json' } });
-  if (!r.ok) throw new Error(`GitHub API ${r.status}`);
-  const data = await r.json();
-  const raw = ghB64Decode(data.content);
-  return JSON.parse(raw);
-}
-
-async function viewerRefreshVersions() {
-  const picker = document.getElementById('version-picker');
-  const select = document.getElementById('version-select');
-  if (!picker || !select) return;
-  try {
-    const url = `https://api.github.com/repos/${VIEWER_REPO.owner}/${VIEWER_REPO.repo}/commits?path=${encodeURIComponent(VIEWER_REPO.path)}&sha=${encodeURIComponent(VIEWER_REPO.branch)}&per_page=30`;
-    const r = await fetch(url, { headers: { 'Accept': 'application/vnd.github+json' } });
-    if (!r.ok) {
-      // 403 = rate limited, 404 = repo/path missing. Hide dropdown quietly.
-      picker.style.display = 'none';
-      return;
-    }
-    const commits = await r.json();
-    if (!commits.length) { picker.style.display = 'none'; return; }
-    const opts = ['<option value="">— latest —</option>'];
-    commits.forEach(c => {
-      const sha = c.sha;
-      const msg = c.commit && c.commit.message ? c.commit.message : '';
-      const parsed = ghParseCommitMessage(msg);
-      const date = c.commit && c.commit.author && c.commit.author.date
-        ? new Date(c.commit.author.date) : null;
-      const dateStr = date ? date.toLocaleDateString(undefined, { month: 'short', day: 'numeric' }) : '';
-      const label = parsed.name || (parsed.desc ? parsed.desc.slice(0, 40) : sha.slice(0, 7));
-      const suffix = parsed.desc && parsed.name ? ` · ${parsed.desc.slice(0, 40)}` : '';
-      const dateSuffix = dateStr ? ` · ${dateStr}` : '';
-      opts.push(`<option value="${sha}" title="${escapeHtml(msg)}">${escapeHtml(label + suffix + dateSuffix)}</option>`);
-    });
-    select.innerHTML = opts.join('');
-    picker.style.display = 'inline-flex';
-    // Preserve a ?v=<sha> URL selection
-    const urlSha = new URLSearchParams(location.search).get('v');
-    if (urlSha && [...select.options].some(o => o.value.startsWith(urlSha) || urlSha.startsWith(o.value.slice(0, 7)))) {
-      const match = [...select.options].find(o => o.value.startsWith(urlSha) || urlSha.startsWith(o.value.slice(0, 7)));
-      if (match) select.value = match.value;
-    }
-  } catch(e) {
-    picker.style.display = 'none';
-  }
-}
-
-async function viewerLoadVersion(sha) {
-  try {
-    const payload = sha ? await viewerFetchBySha(sha) : await viewerFetchLatest();
-    if (!payload) { toast('Could not load version'); return; }
-    viewerApplyPayload(payload);
-    // Update URL so it can be shared / bookmarked
-    const newUrl = sha
-      ? `${location.pathname}?v=${sha.slice(0,7)}`
-      : location.pathname;
-    history.replaceState(null, '', newUrl);
-    toast(sha ? `Loaded version ${sha.slice(0,7)}` : 'Loaded latest');
-  } catch(e) {
-    toast('Load failed: ' + e.message);
-  }
-}
-
-function viewerApplyPayload(payload) {
-  if (!payload || typeof payload !== 'object') return;
-  if (Array.isArray(payload.sites)) { sites = JSON.parse(JSON.stringify(payload.sites)); ensureIds(); }
-  if (Array.isArray(payload.hubs) && payload.hubs.length > 0) { hubs = JSON.parse(JSON.stringify(payload.hubs)); ensureIds(); }
-  if (payload.assumptions && typeof payload.assumptions === 'object') {
-    assumptions = { ...DEFAULT_ASSUMPTIONS, ...payload.assumptions };
-    applyAssumptionsToUI();
-  }
-  dataSource = 'synced';
-  updateSourceIndicator();
-  render();
-}
-
-
 /* ============== Modal helpers ============== */
 function openModal(id) {
   const m = document.getElementById(id);
@@ -2545,42 +2410,25 @@ document.addEventListener('keydown', (e) => {
 
 
 (async function init() {
-  // VIEWER init — always fetch fresh from GitHub public API, no localStorage.
-  // This guarantees every viewer sees the authoritative latest plan
-  // committed by the editor, with zero setup on their end.
-
-  // Start with seed defaults while we fetch (so UI has something to render)
-  sites = JSON.parse(JSON.stringify(SEED_SITES));
-  hubs = JSON.parse(JSON.stringify(SEED_HUBS));
-  assumptions = { ...DEFAULT_ASSUMPTIONS };
+  // Load local hubs + assumptions synchronously (they're in localStorage / seeds)
+  hubs = loadHubs();
+  loadAssumptions();
   applyAssumptionsToUI();
   ensureIds();
 
-  // Check URL for ?v=<sha> so we can load the right version on first render
-  const urlSha = new URLSearchParams(location.search).get('v');
-
-  // Load plan + map topology in parallel
+  // Load sites in parallel with map topology fetch
   const [_, topo] = await Promise.all([
-    (async () => {
-      let payload;
-      try {
-        payload = urlSha ? await viewerFetchBySha(urlSha) : await viewerFetchLatest();
-      } catch(e) {
-        // If a specific SHA in the URL fails, fall back to latest
-        if (urlSha) {
-          try { payload = await viewerFetchLatest(); } catch(e2) {}
-          toast('Requested version not found — showing latest');
-        }
-      }
-      if (payload) viewerApplyPayload(payload);
-    })(),
+    loadSites().then(loaded => { sites = loaded; ensureIds(); updateSourceIndicator(); }),
     (async () => {
       const urls = [
         'https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json',
         'https://unpkg.com/us-atlas@3/states-10m.json'
       ];
       for (const u of urls) {
-        try { const r = await fetch(u); if (r.ok) return await r.json(); } catch(e) {}
+        try {
+          const r = await fetch(u);
+          if (r.ok) return await r.json();
+        } catch(e) {}
       }
       return null;
     })()
@@ -2588,6 +2436,7 @@ document.addEventListener('keydown', (e) => {
 
   if (!topo) {
     document.getElementById('map').innerHTML = '<text x="480" y="300" text-anchor="middle" fill="currentColor" font-size="14">Map data unavailable — check your internet connection</text>';
+    // Still render the table and dashboard even without the map
     render();
     return;
   }
@@ -2606,8 +2455,12 @@ document.addEventListener('keydown', (e) => {
 
   render();
 
-  // Populate the version dropdown (fails silently if rate-limited or repo private)
-  viewerRefreshVersions();
+  // If the URL contains ?v=<sha>, try to load that specific GitHub version
+  // after the initial render. Errors are non-fatal — user still sees a plan.
+  ghMaybeLoadFromURL();
+
+  // Populate the version dropdown from GitHub (silently skips if not configured)
+  ghRefreshDropdown();
 })();
 </script>
 </body>
