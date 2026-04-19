@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "exported_at": "2026-04-19T16:27:12.113Z",
+  "exported_at": "2026-04-19T17:35:00.249Z",
   "sites": [
     {
       "yr": 1,
@@ -921,10 +921,10 @@
     },
     {
       "name": "Sun Belt Core",
-      "city": "Dallas-Fort Worth",
+      "city": "amarillo",
       "state": "TX",
-      "lat": 32.78,
-      "lon": -96.8,
+      "lat": 35.22,
+      "lon": -101.83,
       "capex": 15,
       "opens_yr": 5
     },
