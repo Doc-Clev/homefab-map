@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HomeFab — 10-Year Expansion Map Editor</title>
+<style>
+  :root {
+    --bg-primary: #ffffff;
+    --bg-secondary: #f5f4ef;
+    --bg-tertiary: #faf9f5;
+    --text-primary: #1a1a1a;
+    --text-secondary: #5f5e5a;
+    --text-tertiary: #888780;
+    --border-tertiary: rgba(0,0,0,0.12);
+    --border-secondary: rgba(0,0,0,0.25);
+    --border-radius-md: 8px;
+    --border-radius-lg: 12px;
+    --p1: #639922;
+    --p2: #BA7517;
+    --p3: #A32D2D;
+    --p1-bg: #EAF3DE;
+    --p2-bg: #FAEEDA;
+    --p3-bg: #FCEBEB;
+    --danger: #C00000;
+    --success: #0F6E56;
+    --info: #185FA5;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg-primary: #1a1a1a;
+      --bg-secondary: #2c2c2a;
+      --bg-tertiary: #222220;
+      --text-primary: #f0efea;
+      --text-secondary: #b4b2a9;
+      --text-tertiary: #888780;
+      --border-tertiary: rgba(255,255,255,0.15);
+      --border-secondary: rgba(255,255,255,0.3);
+      --p1-bg: #27500A;
+      --p2-bg: #633806;
+      --p3-bg: #501313;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+    margin: 0;
+    padding: 20px;
+    line-height: 1.5;
+  }
+  .container { max-width: 1600px; margin: 0 auto; }
+  header { margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+  h1 { font-size: 20px; font-weight: 500; margin: 0; }
+  .subtitle { font-size: 13px; color: var(--text-secondary); margin: 2px 0 0; }
+  .badge { display: inline-block; padding: 1px 8px; border-radius: 10px; font-size: 11px; font-weight: 500; margin-left: 6px; vertical-align: 1px; }
+  .badge.synced { background: #D8EAD5; color: #285A22; }
+  .badge.local { background: #FAEEDA; color: #854F0B; }
+  .badge.offline { background: #F0F0F0; color: #5F5E5A; }
+  @media (prefers-color-scheme: dark) {
+    .badge.synced { background: #173404; color: #C0DD97; }
+    .badge.local { background: #412402; color: #FAC775; }
+    .badge.offline { background: #2C2C2A; color: #B4B2A9; }
+  }
+
+  .toolbar { display: flex; gap: 8px; flex-wrap: wrap; }
+  button {
+    background: var(--bg-primary); border: 0.5px solid var(--border-secondary);
+    color: var(--text-primary); padding: 6px 12px; border-radius: var(--border-radius-md);
+    font-size: 13px; cursor: pointer; transition: background 0.15s; font-family: inherit;
+  }
+  button:hover { background: var(--bg-secondary); }
+  button:active { transform: scale(0.98); }
+  button.primary { background: var(--info); color: white; border-color: var(--info); }
+  button.primary:hover { opacity: 0.9; background: var(--info); }
+  button.danger { color: var(--danger); }
+
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 0 0 16px; }
+  .stat { background: var(--bg-secondary); border-radius: var(--border-radius-md); padding: 10px 12px; }
+  .stat-label { font-size: 11px; color: var(--text-secondary); margin: 0 0 2px; }
+  .stat-value { font-size: 18px; font-weight: 500; color: var(--text-primary); }
+
+  .layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    align-items: start;
+  }
+  @media (max-width: 1100px) {
+    .layout { grid-template-columns: 1fr; }
+  }
+
+  .map-panel { position: sticky; top: 16px; }
+  .map-controls { display: flex; align-items: center; gap: 12px; margin: 0 0 12px; flex-wrap: wrap; font-size: 13px; color: var(--text-secondary); }
+  .map-controls input[type=range] { flex: 1; min-width: 150px; }
+  .yr-readout { min-width: 24px; font-weight: 500; color: var(--text-primary); font-size: 14px; }
+  .map { position: relative; background: var(--bg-secondary); border-radius: var(--border-radius-lg); padding: 8px; }
+  .map svg { width: 100%; height: auto; display: block; }
+  .state { fill: var(--bg-primary); stroke: var(--border-secondary); stroke-width: 0.5; }
+  .dot { stroke: var(--bg-primary); stroke-width: 0.6; cursor: pointer; transition: r 0.2s, opacity 0.2s; }
+  .dot.p1 { fill: var(--p1); }
+  .dot.p2 { fill: var(--p2); }
+  .dot.p3 { fill: var(--p3); }
+  .dot.dim { opacity: 0.15; }
+  .dot.hl { stroke: var(--text-primary); stroke-width: 2; r: 8; }
+  .tip {
+    position: absolute; background: var(--bg-primary); border: 0.5px solid var(--border-secondary);
+    border-radius: var(--border-radius-md); padding: 7px 11px; font-size: 12px;
+    pointer-events: none; opacity: 0; transition: opacity 0.15s; white-space: nowrap;
+    color: var(--text-primary); z-index: 5; box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+  .tip strong { font-weight: 500; }
+  .tip .meta { color: var(--text-secondary); font-size: 11px; margin-top: 1px; }
+  .legend { display: flex; gap: 16px; flex-wrap: wrap; font-size: 12px; color: var(--text-secondary); margin: 12px 0 0; align-items: center; justify-content: center; }
+  .swatch { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 5px; vertical-align: middle; }
+
+  /* Table panel */
+  .table-panel { background: var(--bg-secondary); border-radius: var(--border-radius-lg); padding: 12px; }
+  .table-header { display: flex; justify-content: space-between; align-items: center; margin: 0 0 10px; flex-wrap: wrap; gap: 8px; }
+  .table-title { font-size: 14px; font-weight: 500; color: var(--text-primary); margin: 0; }
+  .filter-row { display: flex; gap: 6px; flex-wrap: wrap; margin: 0 0 10px; align-items: center; font-size: 12px; color: var(--text-secondary); }
+  .filter-row select, .filter-row input { background: var(--bg-primary); border: 0.5px solid var(--border-tertiary); border-radius: 6px; padding: 4px 8px; font-size: 12px; color: var(--text-primary); font-family: inherit; }
+
+  .table-wrap { max-height: 620px; overflow-y: auto; border-radius: var(--border-radius-md); background: var(--bg-primary); }
+  table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  thead { position: sticky; top: 0; background: var(--bg-secondary); z-index: 2; }
+  th {
+    text-align: left; font-weight: 500; font-size: 11px; color: var(--text-secondary);
+    padding: 8px 6px; border-bottom: 0.5px solid var(--border-tertiary);
+    text-transform: uppercase; letter-spacing: 0.3px;
+  }
+  td { padding: 3px 4px; border-bottom: 0.5px solid var(--border-tertiary); vertical-align: middle; }
+  tr:hover td { background: var(--bg-secondary); }
+  tr.selected td { background: var(--p2-bg); }
+
+  td input, td select {
+    width: 100%; background: transparent; border: 0.5px solid transparent;
+    padding: 4px 6px; border-radius: 4px; font-size: 12px; color: var(--text-primary); font-family: inherit;
+    min-height: 26px;
+  }
+  td input:hover, td select:hover { border-color: var(--border-tertiary); background: var(--bg-primary); }
+  td input:focus, td select:focus { outline: none; border-color: var(--info); background: var(--bg-primary); }
+  td input[type=number] { text-align: right; }
+
+  .drag-handle { cursor: grab; color: var(--text-tertiary); user-select: none; padding: 0 4px; font-size: 14px; line-height: 1; }
+  .drag-handle:active { cursor: grabbing; }
+  tr.dragging { opacity: 0.4; }
+  tr.drop-target td { border-top: 2px solid var(--info); }
+
+  .phase-badge { display: inline-block; width: 18px; height: 18px; border-radius: 50%; text-align: center; line-height: 18px; font-size: 10px; font-weight: 500; color: white; }
+  .phase-badge.p1 { background: var(--p1); }
+  .phase-badge.p2 { background: var(--p2); }
+  .phase-badge.p3 { background: var(--p3); }
+
+  .row-actions { display: flex; gap: 2px; white-space: nowrap; }
+  .icon-btn { background: transparent; border: none; padding: 4px 6px; cursor: pointer; color: var(--text-secondary); font-size: 13px; border-radius: 4px; }
+  .icon-btn:hover { background: var(--bg-secondary); color: var(--text-primary); }
+  .icon-btn.danger:hover { color: var(--danger); }
+  .icon-btn.success:hover { color: var(--success); }
+
+  .add-row-form {
+    background: var(--bg-primary); border: 0.5px solid var(--border-tertiary);
+    border-radius: var(--border-radius-md); padding: 10px; margin: 10px 0 0;
+    display: grid; grid-template-columns: 60px 1fr 70px 70px 90px 90px auto; gap: 6px; align-items: end;
+  }
+  @media (max-width: 700px) { .add-row-form { grid-template-columns: 1fr 1fr; } }
+  .form-field label { display: block; font-size: 10px; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.3px; margin: 0 0 2px; }
+  .form-field input, .form-field select {
+    width: 100%; background: var(--bg-secondary); border: 0.5px solid var(--border-tertiary);
+    padding: 5px 7px; border-radius: 5px; font-size: 12px; color: var(--text-primary); font-family: inherit;
+  }
+  .form-field input:focus, .form-field select:focus { outline: none; border-color: var(--info); }
+
+  .toast {
+    position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+    background: var(--text-primary); color: var(--bg-primary);
+    padding: 8px 16px; border-radius: var(--border-radius-md); font-size: 13px;
+    opacity: 0; transition: opacity 0.2s; z-index: 100; pointer-events: none;
+  }
+  .toast.show { opacity: 1; }
+
+  .hint { font-size: 11px; color: var(--text-tertiary); font-style: italic; margin-left: 6px; }
+  .phase-hint { font-size: 10px; color: var(--text-tertiary); margin-left: 4px; }
+
+  .row-count-pill { background: var(--bg-primary); border: 0.5px solid var(--border-tertiary); padding: 2px 8px; border-radius: 10px; font-size: 11px; color: var(--text-secondary); }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <div>
+      <h1>HomeFab — 10-Year Expansion Map Editor</h1>
+      <p class="subtitle">Edit the cities table on the right — the map updates live. <span id="data-source-indicator"></span></p>
+    </div>
+    <div class="toolbar">
+      <button onclick="reloadFromSource()" title="Fetch the latest sites.json from the hosted source">↻ Reload from source</button>
+      <button onclick="exportJSON()">Export JSON</button>
+      <button onclick="exportCSV()">Export CSV</button>
+      <button onclick="document.getElementById('import-file').click()">Import</button>
+      <input type="file" id="import-file" accept=".json,.csv" style="display:none" onchange="importFile(event)">
+      <button class="danger" onclick="resetToDefaults()">Reset to defaults</button>
+    </div>
+  </header>
+
+  <div class="stats">
+    <div class="stat"><div class="stat-label">Total HomeFabs</div><div class="stat-value" id="s-total">—</div></div>
+    <div class="stat"><div class="stat-label">Phase 1 / 2 / 3</div><div class="stat-value" id="s-phases">—</div></div>
+    <div class="stat"><div class="stat-label">States covered</div><div class="stat-value" id="s-states">—</div></div>
+    <div class="stat"><div class="stat-label">Visible at current year</div><div class="stat-value" id="s-visible">—</div></div>
+  </div>
+
+  <div class="layout">
+    <!-- MAP PANEL -->
+    <div class="map-panel">
+      <div class="map-controls">
+        <span>Year <span class="yr-readout" id="yr-out">10</span></span>
+        <input type="range" id="yr" min="1" max="10" value="10" step="1">
+        <button onclick="play()" id="play-btn">▶ Animate</button>
+      </div>
+      <div class="map">
+        <div class="tip" id="tip"></div>
+        <svg id="map" viewBox="0 0 960 600" role="img">
+          <title>HomeFab expansion map</title>
+          <desc>US map showing HomeFab sites by phase</desc>
+        </svg>
+      </div>
+      <div class="legend">
+        <span><span class="swatch" style="background:var(--p1)"></span>Phase 1 (Yrs 1–2)</span>
+        <span><span class="swatch" style="background:var(--p2)"></span>Phase 2 (Yrs 3–5)</span>
+        <span><span class="swatch" style="background:var(--p3)"></span>Phase 3 (Yrs 6–10)</span>
+      </div>
+    </div>
+
+    <!-- TABLE PANEL -->
+    <div class="table-panel">
+      <div class="table-header">
+        <p class="table-title">Cities <span class="row-count-pill" id="row-count">—</span></p>
+        <div>
+          <button onclick="sortBy('yr')">Sort by Year</button>
+          <button onclick="sortBy('state')">Sort by State</button>
+          <button onclick="sortBy('name')">Sort by City</button>
+        </div>
+      </div>
+
+      <div class="filter-row">
+        <span>Filter:</span>
+        <input type="text" id="filter-text" placeholder="Search city or state..." style="flex:1" oninput="render()">
+        <select id="filter-phase" onchange="render()">
+          <option value="">All phases</option>
+          <option value="1">Phase 1</option>
+          <option value="2">Phase 2</option>
+          <option value="3">Phase 3</option>
+        </select>
+        <select id="filter-year" onchange="render()">
+          <option value="">All years</option>
+        </select>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th style="width:24px"></th>
+              <th style="width:50px">Yr</th>
+              <th style="width:60px">Phase</th>
+              <th>City</th>
+              <th style="width:55px">State</th>
+              <th style="width:75px">Lat</th>
+              <th style="width:75px">Lon</th>
+              <th style="width:80px"></th>
+            </tr>
+          </thead>
+          <tbody id="tbody"></tbody>
+        </table>
+      </div>
+
+      <div class="add-row-form">
+        <div class="form-field">
+          <label>Year</label>
+          <select id="new-yr">
+            <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
+            <option>6</option><option>7</option><option>8</option><option>9</option><option selected>10</option>
+          </select>
+        </div>
+        <div class="form-field">
+          <label>City</label>
+          <input type="text" id="new-name" placeholder="e.g. Corpus Christi" oninput="autoGeocodeHint()">
+        </div>
+        <div class="form-field">
+          <label>State</label>
+          <input type="text" id="new-state" maxlength="2" placeholder="TX" style="text-transform:uppercase" oninput="this.value=this.value.toUpperCase();autoGeocodeHint()">
+        </div>
+        <div class="form-field">
+          <label>Phase</label>
+          <select id="new-phase">
+            <option value="1">1</option><option value="2">2</option><option value="3" selected>3</option>
+          </select>
+        </div>
+        <div class="form-field">
+          <label>Lat</label>
+          <input type="number" id="new-lat" step="0.01" placeholder="auto">
+        </div>
+        <div class="form-field">
+          <label>Lon</label>
+          <input type="number" id="new-lon" step="0.01" placeholder="auto">
+        </div>
+        <div class="form-field">
+          <label>&nbsp;</label>
+          <button class="primary" onclick="addRow()">+ Add city</button>
+        </div>
+      </div>
+      <div id="geocode-hint" class="hint" style="margin-top:6px;min-height:16px"></div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js"></script>
+<script>
+const SEED_SITES = [{"yr":1,"phase":1,"name":"Los Angeles","state":"CA","lat":34.05,"lon":-118.24},{"yr":1,"phase":1,"name":"Bay Area/Stockton","state":"CA","lat":37.96,"lon":-121.29},{"yr":1,"phase":1,"name":"Fresno","state":"CA","lat":36.74,"lon":-119.78},{"yr":2,"phase":1,"name":"San Diego","state":"CA","lat":32.72,"lon":-117.16},{"yr":2,"phase":1,"name":"Sacramento","state":"CA","lat":38.58,"lon":-121.49},{"yr":2,"phase":1,"name":"Riverside","state":"CA","lat":33.95,"lon":-117.4},{"yr":3,"phase":2,"name":"Dallas-Ft Worth","state":"TX","lat":32.78,"lon":-96.8},{"yr":3,"phase":2,"name":"Houston","state":"TX","lat":29.76,"lon":-95.37},{"yr":3,"phase":2,"name":"Austin","state":"TX","lat":30.27,"lon":-97.74},{"yr":3,"phase":2,"name":"Phoenix","state":"AZ","lat":33.45,"lon":-112.07},{"yr":3,"phase":2,"name":"Tucson","state":"AZ","lat":32.22,"lon":-110.93},{"yr":3,"phase":2,"name":"Denver","state":"CO","lat":39.74,"lon":-104.99},{"yr":3,"phase":2,"name":"Colorado Springs","state":"CO","lat":38.83,"lon":-104.82},{"yr":3,"phase":2,"name":"Miami","state":"FL","lat":25.76,"lon":-80.19},{"yr":3,"phase":2,"name":"Orlando","state":"FL","lat":28.54,"lon":-81.38},{"yr":3,"phase":2,"name":"Tampa","state":"FL","lat":27.95,"lon":-82.46},{"yr":4,"phase":2,"name":"Charlotte","state":"NC","lat":35.23,"lon":-80.84},{"yr":4,"phase":2,"name":"Raleigh","state":"NC","lat":35.78,"lon":-78.64},{"yr":4,"phase":2,"name":"Atlanta","state":"GA","lat":33.75,"lon":-84.39},{"yr":4,"phase":2,"name":"Savannah","state":"GA","lat":32.08,"lon":-81.1},{"yr":4,"phase":2,"name":"Seattle","state":"WA","lat":47.61,"lon":-122.33},{"yr":4,"phase":2,"name":"Spokane","state":"WA","lat":47.66,"lon":-117.43},{"yr":4,"phase":2,"name":"Las Vegas","state":"NV","lat":36.17,"lon":-115.14},{"yr":4,"phase":2,"name":"Reno","state":"NV","lat":39.53,"lon":-119.81},{"yr":4,"phase":2,"name":"Jacksonville","state":"FL","lat":30.33,"lon":-81.66},{"yr":4,"phase":2,"name":"San Antonio","state":"TX","lat":29.42,"lon":-98.49},{"yr":5,"phase":2,"name":"Salt Lake City","state":"UT","lat":40.76,"lon":-111.89},{"yr":5,"phase":2,"name":"Provo","state":"UT","lat":40.23,"lon":-111.66},{"yr":5,"phase":2,"name":"Nashville","state":"TN","lat":36.16,"lon":-86.78},{"yr":5,"phase":2,"name":"Memphis","state":"TN","lat":35.15,"lon":-90.05},{"yr":5,"phase":2,"name":"Boise","state":"ID","lat":43.62,"lon":-116.21},{"yr":5,"phase":2,"name":"Portland","state":"OR","lat":45.51,"lon":-122.68},{"yr":5,"phase":2,"name":"Eugene","state":"OR","lat":44.05,"lon":-123.09},{"yr":5,"phase":2,"name":"El Paso","state":"TX","lat":31.76,"lon":-106.49},{"yr":5,"phase":2,"name":"Ft Lauderdale","state":"FL","lat":26.12,"lon":-80.14},{"yr":5,"phase":2,"name":"Gainesville","state":"FL","lat":29.65,"lon":-82.32},{"yr":6,"phase":3,"name":"Chicago","state":"IL","lat":41.88,"lon":-87.63},{"yr":6,"phase":3,"name":"Rockford","state":"IL","lat":42.27,"lon":-89.09},{"yr":6,"phase":3,"name":"Columbus","state":"OH","lat":39.96,"lon":-82.99},{"yr":6,"phase":3,"name":"Cleveland","state":"OH","lat":41.5,"lon":-81.69},{"yr":6,"phase":3,"name":"Cincinnati","state":"OH","lat":39.1,"lon":-84.51},{"yr":6,"phase":3,"name":"Detroit","state":"MI","lat":42.33,"lon":-83.05},{"yr":6,"phase":3,"name":"Grand Rapids","state":"MI","lat":42.96,"lon":-85.67},{"yr":6,"phase":3,"name":"Pittsburgh","state":"PA","lat":40.44,"lon":-79.99},{"yr":6,"phase":3,"name":"Philadelphia","state":"PA","lat":39.95,"lon":-75.16},{"yr":6,"phase":3,"name":"Harrisburg","state":"PA","lat":40.27,"lon":-76.88},{"yr":6,"phase":3,"name":"Albany","state":"NY","lat":42.65,"lon":-73.76},{"yr":6,"phase":3,"name":"Buffalo","state":"NY","lat":42.89,"lon":-78.88},{"yr":6,"phase":3,"name":"Syracuse","state":"NY","lat":43.05,"lon":-76.15},{"yr":6,"phase":3,"name":"Boston","state":"MA","lat":42.36,"lon":-71.06},{"yr":6,"phase":3,"name":"Springfield MA","state":"MA","lat":42.1,"lon":-72.59},{"yr":6,"phase":3,"name":"Indianapolis","state":"IN","lat":39.77,"lon":-86.16},{"yr":6,"phase":3,"name":"Fort Wayne","state":"IN","lat":41.08,"lon":-85.14},{"yr":6,"phase":3,"name":"Louisville","state":"KY","lat":38.25,"lon":-85.76},{"yr":6,"phase":3,"name":"Milwaukee","state":"WI","lat":43.04,"lon":-87.91},{"yr":6,"phase":3,"name":"Albuquerque","state":"NM","lat":35.08,"lon":-106.65},{"yr":6,"phase":3,"name":"Oklahoma City","state":"OK","lat":35.47,"lon":-97.52},{"yr":7,"phase":3,"name":"Richmond","state":"VA","lat":37.54,"lon":-77.44},{"yr":7,"phase":3,"name":"Norfolk","state":"VA","lat":36.85,"lon":-76.29},{"yr":7,"phase":3,"name":"Baltimore","state":"MD","lat":39.29,"lon":-76.61},{"yr":7,"phase":3,"name":"DC Suburbs","state":"MD","lat":39.0,"lon":-77.1},{"yr":7,"phase":3,"name":"Charleston SC","state":"SC","lat":32.78,"lon":-79.93},{"yr":7,"phase":3,"name":"Greenville","state":"SC","lat":34.85,"lon":-82.39},{"yr":7,"phase":3,"name":"Birmingham","state":"AL","lat":33.52,"lon":-86.81},{"yr":7,"phase":3,"name":"Huntsville","state":"AL","lat":34.73,"lon":-86.59},{"yr":7,"phase":3,"name":"Mobile","state":"AL","lat":30.69,"lon":-88.04},{"yr":7,"phase":3,"name":"Jackson","state":"MS","lat":32.3,"lon":-90.18},{"yr":7,"phase":3,"name":"Gulfport","state":"MS","lat":30.37,"lon":-89.09},{"yr":7,"phase":3,"name":"New Orleans","state":"LA","lat":29.95,"lon":-90.07},{"yr":7,"phase":3,"name":"Baton Rouge","state":"LA","lat":30.45,"lon":-91.19},{"yr":7,"phase":3,"name":"Shreveport","state":"LA","lat":32.52,"lon":-93.75},{"yr":7,"phase":3,"name":"Knoxville","state":"TN","lat":35.96,"lon":-83.92},{"yr":7,"phase":3,"name":"Chattanooga","state":"TN","lat":35.05,"lon":-85.31},{"yr":7,"phase":3,"name":"Tallahassee","state":"FL","lat":30.44,"lon":-84.28},{"yr":7,"phase":3,"name":"Pensacola","state":"FL","lat":30.42,"lon":-87.22},{"yr":7,"phase":3,"name":"Augusta","state":"GA","lat":33.47,"lon":-82.01},{"yr":7,"phase":3,"name":"Columbus GA","state":"GA","lat":32.46,"lon":-84.99},{"yr":7,"phase":3,"name":"Macon","state":"GA","lat":32.84,"lon":-83.63},{"yr":8,"phase":3,"name":"Minneapolis","state":"MN","lat":44.98,"lon":-93.27},{"yr":8,"phase":3,"name":"Duluth","state":"MN","lat":46.79,"lon":-92.1},{"yr":8,"phase":3,"name":"Rochester MN","state":"MN","lat":44.02,"lon":-92.47},{"yr":8,"phase":3,"name":"Madison","state":"WI","lat":43.07,"lon":-89.4},{"yr":8,"phase":3,"name":"Green Bay","state":"WI","lat":44.51,"lon":-88.02},{"yr":8,"phase":3,"name":"Des Moines","state":"IA","lat":41.59,"lon":-93.62},{"yr":8,"phase":3,"name":"Cedar Rapids","state":"IA","lat":41.98,"lon":-91.66},{"yr":8,"phase":3,"name":"St. Louis","state":"MO","lat":38.63,"lon":-90.2},{"yr":8,"phase":3,"name":"Kansas City","state":"MO","lat":39.1,"lon":-94.58},{"yr":8,"phase":3,"name":"Springfield MO","state":"MO","lat":37.21,"lon":-93.29},{"yr":8,"phase":3,"name":"Wichita","state":"KS","lat":37.69,"lon":-97.34},{"yr":8,"phase":3,"name":"Topeka","state":"KS","lat":39.05,"lon":-95.68},{"yr":8,"phase":3,"name":"Tulsa","state":"OK","lat":36.15,"lon":-95.99},{"yr":8,"phase":3,"name":"Lincoln","state":"NE","lat":40.81,"lon":-96.7},{"yr":8,"phase":3,"name":"Sioux Falls","state":"SD","lat":43.55,"lon":-96.73},{"yr":8,"phase":3,"name":"Fargo","state":"ND","lat":46.88,"lon":-96.79},{"yr":8,"phase":3,"name":"Billings","state":"MT","lat":45.78,"lon":-108.5},{"yr":8,"phase":3,"name":"Cheyenne","state":"WY","lat":41.14,"lon":-104.82},{"yr":8,"phase":3,"name":"Toledo","state":"OH","lat":41.66,"lon":-83.55},{"yr":8,"phase":3,"name":"Akron","state":"OH","lat":41.08,"lon":-81.52},{"yr":8,"phase":3,"name":"Lansing","state":"MI","lat":42.73,"lon":-84.55},{"yr":9,"phase":3,"name":"Hartford","state":"CT","lat":41.76,"lon":-72.67},{"yr":9,"phase":3,"name":"New Haven","state":"CT","lat":41.31,"lon":-72.92},{"yr":9,"phase":3,"name":"Newark","state":"NJ","lat":40.74,"lon":-74.17},{"yr":9,"phase":3,"name":"Trenton","state":"NJ","lat":40.22,"lon":-74.76},{"yr":9,"phase":3,"name":"Atlantic City","state":"NJ","lat":39.36,"lon":-74.42},{"yr":9,"phase":3,"name":"Portland ME","state":"ME","lat":43.66,"lon":-70.26},{"yr":9,"phase":3,"name":"Bangor","state":"ME","lat":44.8,"lon":-68.78},{"yr":9,"phase":3,"name":"Manchester NH","state":"NH","lat":42.99,"lon":-71.46},{"yr":9,"phase":3,"name":"Missoula","state":"MT","lat":46.87,"lon":-113.99},{"yr":9,"phase":3,"name":"Bozeman","state":"MT","lat":45.68,"lon":-111.04},{"yr":9,"phase":3,"name":"Casper","state":"WY","lat":42.85,"lon":-106.31},{"yr":9,"phase":3,"name":"Las Cruces","state":"NM","lat":32.32,"lon":-106.76},{"yr":9,"phase":3,"name":"Bismarck","state":"ND","lat":46.81,"lon":-100.78},{"yr":9,"phase":3,"name":"Rapid City","state":"SD","lat":44.08,"lon":-103.23},{"yr":9,"phase":3,"name":"Fayetteville AR","state":"AR","lat":36.06,"lon":-94.16},{"yr":9,"phase":3,"name":"Little Rock","state":"AR","lat":34.74,"lon":-92.29},{"yr":9,"phase":3,"name":"Lexington","state":"KY","lat":38.04,"lon":-84.5},{"yr":9,"phase":3,"name":"Charleston WV","state":"WV","lat":38.35,"lon":-81.63},{"yr":9,"phase":3,"name":"Hagerstown","state":"MD","lat":39.64,"lon":-77.72},{"yr":9,"phase":3,"name":"Wilmington DE","state":"DE","lat":39.74,"lon":-75.55},{"yr":9,"phase":3,"name":"Providence","state":"RI","lat":41.82,"lon":-71.41},{"yr":10,"phase":3,"name":"Anchorage","state":"AK","lat":61.22,"lon":-149.9},{"yr":10,"phase":3,"name":"Fairbanks","state":"AK","lat":64.84,"lon":-147.72},{"yr":10,"phase":3,"name":"Honolulu","state":"HI","lat":21.31,"lon":-157.86},{"yr":10,"phase":3,"name":"Hilo","state":"HI","lat":19.7,"lon":-155.09},{"yr":10,"phase":3,"name":"Burlington VT","state":"VT","lat":44.48,"lon":-73.21},{"yr":10,"phase":3,"name":"Morgantown","state":"WV","lat":39.63,"lon":-79.96},{"yr":10,"phase":3,"name":"Huntington WV","state":"WV","lat":38.42,"lon":-82.45},{"yr":10,"phase":3,"name":"Fort Smith","state":"AR","lat":35.39,"lon":-94.4},{"yr":10,"phase":3,"name":"Jonesboro","state":"AR","lat":35.84,"lon":-90.7},{"yr":10,"phase":3,"name":"Bowling Green","state":"KY","lat":36.97,"lon":-86.48},{"yr":10,"phase":3,"name":"Owensboro","state":"KY","lat":37.77,"lon":-87.11},{"yr":10,"phase":3,"name":"Omaha","state":"NE","lat":41.26,"lon":-95.93},{"yr":10,"phase":3,"name":"Grand Island","state":"NE","lat":40.93,"lon":-98.34},{"yr":10,"phase":3,"name":"Dover","state":"DE","lat":39.16,"lon":-75.52},{"yr":10,"phase":3,"name":"Lafayette LA","state":"LA","lat":30.22,"lon":-92.02},{"yr":10,"phase":3,"name":"Lake Charles","state":"LA","lat":30.23,"lon":-93.22},{"yr":10,"phase":3,"name":"Hattiesburg","state":"MS","lat":31.33,"lon":-89.29},{"yr":10,"phase":3,"name":"Tupelo","state":"MS","lat":34.26,"lon":-88.7},{"yr":10,"phase":3,"name":"Florence SC","state":"SC","lat":34.2,"lon":-79.77},{"yr":10,"phase":3,"name":"Bend","state":"OR","lat":44.06,"lon":-121.31},{"yr":10,"phase":3,"name":"Yakima","state":"WA","lat":46.6,"lon":-120.51}];
+const GEOCODE_DB = [{"name":"Los Angeles","state":"CA","lat":34.05,"lon":-118.24},{"name":"Bay Area/Stockton","state":"CA","lat":37.96,"lon":-121.29},{"name":"Fresno","state":"CA","lat":36.74,"lon":-119.78},{"name":"San Diego","state":"CA","lat":32.72,"lon":-117.16},{"name":"Sacramento","state":"CA","lat":38.58,"lon":-121.49},{"name":"Riverside","state":"CA","lat":33.95,"lon":-117.4},{"name":"Dallas-Ft Worth","state":"TX","lat":32.78,"lon":-96.8},{"name":"Houston","state":"TX","lat":29.76,"lon":-95.37},{"name":"Austin","state":"TX","lat":30.27,"lon":-97.74},{"name":"Phoenix","state":"AZ","lat":33.45,"lon":-112.07},{"name":"Tucson","state":"AZ","lat":32.22,"lon":-110.93},{"name":"Denver","state":"CO","lat":39.74,"lon":-104.99},{"name":"Colorado Springs","state":"CO","lat":38.83,"lon":-104.82},{"name":"Miami","state":"FL","lat":25.76,"lon":-80.19},{"name":"Orlando","state":"FL","lat":28.54,"lon":-81.38},{"name":"Tampa","state":"FL","lat":27.95,"lon":-82.46},{"name":"Charlotte","state":"NC","lat":35.23,"lon":-80.84},{"name":"Raleigh","state":"NC","lat":35.78,"lon":-78.64},{"name":"Atlanta","state":"GA","lat":33.75,"lon":-84.39},{"name":"Savannah","state":"GA","lat":32.08,"lon":-81.1},{"name":"Seattle","state":"WA","lat":47.61,"lon":-122.33},{"name":"Spokane","state":"WA","lat":47.66,"lon":-117.43},{"name":"Las Vegas","state":"NV","lat":36.17,"lon":-115.14},{"name":"Reno","state":"NV","lat":39.53,"lon":-119.81},{"name":"Jacksonville","state":"FL","lat":30.33,"lon":-81.66},{"name":"San Antonio","state":"TX","lat":29.42,"lon":-98.49},{"name":"Salt Lake City","state":"UT","lat":40.76,"lon":-111.89},{"name":"Provo","state":"UT","lat":40.23,"lon":-111.66},{"name":"Nashville","state":"TN","lat":36.16,"lon":-86.78},{"name":"Memphis","state":"TN","lat":35.15,"lon":-90.05},{"name":"Boise","state":"ID","lat":43.62,"lon":-116.21},{"name":"Portland","state":"OR","lat":45.51,"lon":-122.68},{"name":"Eugene","state":"OR","lat":44.05,"lon":-123.09},{"name":"El Paso","state":"TX","lat":31.76,"lon":-106.49},{"name":"Ft Lauderdale","state":"FL","lat":26.12,"lon":-80.14},{"name":"Gainesville","state":"FL","lat":29.65,"lon":-82.32},{"name":"Chicago","state":"IL","lat":41.88,"lon":-87.63},{"name":"Rockford","state":"IL","lat":42.27,"lon":-89.09},{"name":"Columbus","state":"OH","lat":39.96,"lon":-82.99},{"name":"Cleveland","state":"OH","lat":41.5,"lon":-81.69},{"name":"Cincinnati","state":"OH","lat":39.1,"lon":-84.51},{"name":"Detroit","state":"MI","lat":42.33,"lon":-83.05},{"name":"Grand Rapids","state":"MI","lat":42.96,"lon":-85.67},{"name":"Pittsburgh","state":"PA","lat":40.44,"lon":-79.99},{"name":"Philadelphia","state":"PA","lat":39.95,"lon":-75.16},{"name":"Harrisburg","state":"PA","lat":40.27,"lon":-76.88},{"name":"Albany","state":"NY","lat":42.65,"lon":-73.76},{"name":"Buffalo","state":"NY","lat":42.89,"lon":-78.88},{"name":"Syracuse","state":"NY","lat":43.05,"lon":-76.15},{"name":"Boston","state":"MA","lat":42.36,"lon":-71.06},{"name":"Springfield MA","state":"MA","lat":42.1,"lon":-72.59},{"name":"Indianapolis","state":"IN","lat":39.77,"lon":-86.16},{"name":"Fort Wayne","state":"IN","lat":41.08,"lon":-85.14},{"name":"Louisville","state":"KY","lat":38.25,"lon":-85.76},{"name":"Milwaukee","state":"WI","lat":43.04,"lon":-87.91},{"name":"Albuquerque","state":"NM","lat":35.08,"lon":-106.65},{"name":"Oklahoma City","state":"OK","lat":35.47,"lon":-97.52},{"name":"Richmond","state":"VA","lat":37.54,"lon":-77.44},{"name":"Norfolk","state":"VA","lat":36.85,"lon":-76.29},{"name":"Baltimore","state":"MD","lat":39.29,"lon":-76.61},{"name":"DC Suburbs","state":"MD","lat":39.0,"lon":-77.1},{"name":"Charleston SC","state":"SC","lat":32.78,"lon":-79.93},{"name":"Greenville","state":"SC","lat":34.85,"lon":-82.39},{"name":"Birmingham","state":"AL","lat":33.52,"lon":-86.81},{"name":"Huntsville","state":"AL","lat":34.73,"lon":-86.59},{"name":"Mobile","state":"AL","lat":30.69,"lon":-88.04},{"name":"Jackson","state":"MS","lat":32.3,"lon":-90.18},{"name":"Gulfport","state":"MS","lat":30.37,"lon":-89.09},{"name":"New Orleans","state":"LA","lat":29.95,"lon":-90.07},{"name":"Baton Rouge","state":"LA","lat":30.45,"lon":-91.19},{"name":"Shreveport","state":"LA","lat":32.52,"lon":-93.75},{"name":"Knoxville","state":"TN","lat":35.96,"lon":-83.92},{"name":"Chattanooga","state":"TN","lat":35.05,"lon":-85.31},{"name":"Tallahassee","state":"FL","lat":30.44,"lon":-84.28},{"name":"Pensacola","state":"FL","lat":30.42,"lon":-87.22},{"name":"Augusta","state":"GA","lat":33.47,"lon":-82.01},{"name":"Columbus GA","state":"GA","lat":32.46,"lon":-84.99},{"name":"Macon","state":"GA","lat":32.84,"lon":-83.63},{"name":"Minneapolis","state":"MN","lat":44.98,"lon":-93.27},{"name":"Duluth","state":"MN","lat":46.79,"lon":-92.1},{"name":"Rochester MN","state":"MN","lat":44.02,"lon":-92.47},{"name":"Madison","state":"WI","lat":43.07,"lon":-89.4},{"name":"Green Bay","state":"WI","lat":44.51,"lon":-88.02},{"name":"Des Moines","state":"IA","lat":41.59,"lon":-93.62},{"name":"Cedar Rapids","state":"IA","lat":41.98,"lon":-91.66},{"name":"St. Louis","state":"MO","lat":38.63,"lon":-90.2},{"name":"Kansas City","state":"MO","lat":39.1,"lon":-94.58},{"name":"Springfield MO","state":"MO","lat":37.21,"lon":-93.29},{"name":"Wichita","state":"KS","lat":37.69,"lon":-97.34},{"name":"Topeka","state":"KS","lat":39.05,"lon":-95.68},{"name":"Tulsa","state":"OK","lat":36.15,"lon":-95.99},{"name":"Lincoln","state":"NE","lat":40.81,"lon":-96.7},{"name":"Sioux Falls","state":"SD","lat":43.55,"lon":-96.73},{"name":"Fargo","state":"ND","lat":46.88,"lon":-96.79},{"name":"Billings","state":"MT","lat":45.78,"lon":-108.5},{"name":"Cheyenne","state":"WY","lat":41.14,"lon":-104.82},{"name":"Toledo","state":"OH","lat":41.66,"lon":-83.55},{"name":"Akron","state":"OH","lat":41.08,"lon":-81.52},{"name":"Lansing","state":"MI","lat":42.73,"lon":-84.55},{"name":"Hartford","state":"CT","lat":41.76,"lon":-72.67},{"name":"New Haven","state":"CT","lat":41.31,"lon":-72.92},{"name":"Newark","state":"NJ","lat":40.74,"lon":-74.17},{"name":"Trenton","state":"NJ","lat":40.22,"lon":-74.76},{"name":"Atlantic City","state":"NJ","lat":39.36,"lon":-74.42},{"name":"Portland ME","state":"ME","lat":43.66,"lon":-70.26},{"name":"Bangor","state":"ME","lat":44.8,"lon":-68.78},{"name":"Manchester NH","state":"NH","lat":42.99,"lon":-71.46},{"name":"Missoula","state":"MT","lat":46.87,"lon":-113.99},{"name":"Bozeman","state":"MT","lat":45.68,"lon":-111.04},{"name":"Casper","state":"WY","lat":42.85,"lon":-106.31},{"name":"Las Cruces","state":"NM","lat":32.32,"lon":-106.76},{"name":"Bismarck","state":"ND","lat":46.81,"lon":-100.78},{"name":"Rapid City","state":"SD","lat":44.08,"lon":-103.23},{"name":"Fayetteville AR","state":"AR","lat":36.06,"lon":-94.16},{"name":"Little Rock","state":"AR","lat":34.74,"lon":-92.29},{"name":"Lexington","state":"KY","lat":38.04,"lon":-84.5},{"name":"Charleston WV","state":"WV","lat":38.35,"lon":-81.63},{"name":"Hagerstown","state":"MD","lat":39.64,"lon":-77.72},{"name":"Wilmington DE","state":"DE","lat":39.74,"lon":-75.55},{"name":"Providence","state":"RI","lat":41.82,"lon":-71.41},{"name":"Anchorage","state":"AK","lat":61.22,"lon":-149.9},{"name":"Fairbanks","state":"AK","lat":64.84,"lon":-147.72},{"name":"Honolulu","state":"HI","lat":21.31,"lon":-157.86},{"name":"Hilo","state":"HI","lat":19.7,"lon":-155.09},{"name":"Burlington VT","state":"VT","lat":44.48,"lon":-73.21},{"name":"Morgantown","state":"WV","lat":39.63,"lon":-79.96},{"name":"Huntington WV","state":"WV","lat":38.42,"lon":-82.45},{"name":"Fort Smith","state":"AR","lat":35.39,"lon":-94.4},{"name":"Jonesboro","state":"AR","lat":35.84,"lon":-90.7},{"name":"Bowling Green","state":"KY","lat":36.97,"lon":-86.48},{"name":"Owensboro","state":"KY","lat":37.77,"lon":-87.11},{"name":"Omaha","state":"NE","lat":41.26,"lon":-95.93},{"name":"Grand Island","state":"NE","lat":40.93,"lon":-98.34},{"name":"Dover","state":"DE","lat":39.16,"lon":-75.52},{"name":"Lafayette LA","state":"LA","lat":30.22,"lon":-92.02},{"name":"Lake Charles","state":"LA","lat":30.23,"lon":-93.22},{"name":"Hattiesburg","state":"MS","lat":31.33,"lon":-89.29},{"name":"Tupelo","state":"MS","lat":34.26,"lon":-88.7},{"name":"Florence SC","state":"SC","lat":34.2,"lon":-79.77},{"name":"Bend","state":"OR","lat":44.06,"lon":-121.31},{"name":"Yakima","state":"WA","lat":46.6,"lon":-120.51},{"name":"New York","state":"NY","lat":40.71,"lon":-74.01},{"name":"Brooklyn","state":"NY","lat":40.68,"lon":-73.94},{"name":"Queens","state":"NY","lat":40.73,"lon":-73.79},{"name":"San Francisco","state":"CA","lat":37.77,"lon":-122.42},{"name":"Oakland","state":"CA","lat":37.8,"lon":-122.27},{"name":"San Jose","state":"CA","lat":37.34,"lon":-121.89},{"name":"Long Beach","state":"CA","lat":33.77,"lon":-118.19},{"name":"Anaheim","state":"CA","lat":33.84,"lon":-117.91},{"name":"Santa Ana","state":"CA","lat":33.75,"lon":-117.87},{"name":"Bakersfield","state":"CA","lat":35.37,"lon":-119.02},{"name":"Modesto","state":"CA","lat":37.64,"lon":-120.99},{"name":"Santa Rosa","state":"CA","lat":38.44,"lon":-122.71},{"name":"Arlington","state":"TX","lat":32.74,"lon":-97.11},{"name":"Plano","state":"TX","lat":33.02,"lon":-96.7},{"name":"Corpus Christi","state":"TX","lat":27.8,"lon":-97.4},{"name":"Waco","state":"TX","lat":31.55,"lon":-97.15},{"name":"Lubbock","state":"TX","lat":33.58,"lon":-101.86},{"name":"Amarillo","state":"TX","lat":35.22,"lon":-101.83},{"name":"Laredo","state":"TX","lat":27.51,"lon":-99.51},{"name":"Brownsville","state":"TX","lat":25.9,"lon":-97.5},{"name":"McAllen","state":"TX","lat":26.2,"lon":-98.23},{"name":"Mesa","state":"AZ","lat":33.42,"lon":-111.83},{"name":"Chandler","state":"AZ","lat":33.31,"lon":-111.84},{"name":"Glendale","state":"AZ","lat":33.54,"lon":-112.19},{"name":"Flagstaff","state":"AZ","lat":35.2,"lon":-111.65},{"name":"Sarasota","state":"FL","lat":27.34,"lon":-82.54},{"name":"West Palm Beach","state":"FL","lat":26.72,"lon":-80.05},{"name":"Naples","state":"FL","lat":26.14,"lon":-81.8},{"name":"Fort Myers","state":"FL","lat":26.64,"lon":-81.87},{"name":"Daytona Beach","state":"FL","lat":29.21,"lon":-81.02},{"name":"Boulder","state":"CO","lat":40.01,"lon":-105.27},{"name":"Fort Collins","state":"CO","lat":40.59,"lon":-105.08},{"name":"Grand Junction","state":"CO","lat":39.06,"lon":-108.55},{"name":"Asheville","state":"NC","lat":35.6,"lon":-82.55},{"name":"Greensboro","state":"NC","lat":36.07,"lon":-79.79},{"name":"Winston-Salem","state":"NC","lat":36.1,"lon":-80.24},{"name":"Wilmington NC","state":"NC","lat":34.23,"lon":-77.94},{"name":"Fayetteville NC","state":"NC","lat":35.05,"lon":-78.88},{"name":"Durham","state":"NC","lat":35.99,"lon":-78.9},{"name":"Athens","state":"GA","lat":33.96,"lon":-83.38},{"name":"Bellingham","state":"WA","lat":48.75,"lon":-122.48},{"name":"Olympia","state":"WA","lat":47.04,"lon":-122.9},{"name":"Tacoma","state":"WA","lat":47.25,"lon":-122.44},{"name":"Salem","state":"OR","lat":44.94,"lon":-123.04},{"name":"Medford","state":"OR","lat":42.33,"lon":-122.87},{"name":"Ogden","state":"UT","lat":41.22,"lon":-111.97},{"name":"St. George","state":"UT","lat":37.1,"lon":-113.58},{"name":"Coeur d'Alene","state":"ID","lat":47.68,"lon":-116.78},{"name":"Idaho Falls","state":"ID","lat":43.49,"lon":-112.04},{"name":"Henderson","state":"NV","lat":36.04,"lon":-114.98},{"name":"Santa Fe","state":"NM","lat":35.69,"lon":-105.94},{"name":"Aurora","state":"CO","lat":39.73,"lon":-104.83},{"name":"Peoria","state":"IL","lat":40.69,"lon":-89.59},{"name":"Springfield IL","state":"IL","lat":39.78,"lon":-89.65},{"name":"Champaign","state":"IL","lat":40.12,"lon":-88.24},{"name":"Dayton","state":"OH","lat":39.76,"lon":-84.19},{"name":"Youngstown","state":"OH","lat":41.1,"lon":-80.65},{"name":"Ann Arbor","state":"MI","lat":42.28,"lon":-83.74},{"name":"Flint","state":"MI","lat":43.01,"lon":-83.69},{"name":"Kalamazoo","state":"MI","lat":42.29,"lon":-85.59},{"name":"Erie","state":"PA","lat":42.13,"lon":-80.08},{"name":"Scranton","state":"PA","lat":41.41,"lon":-75.66},{"name":"Allentown","state":"PA","lat":40.6,"lon":-75.48},{"name":"Rochester","state":"NY","lat":43.16,"lon":-77.61},{"name":"White Plains","state":"NY","lat":41.03,"lon":-73.76},{"name":"Long Island","state":"NY","lat":40.79,"lon":-73.13},{"name":"Worcester","state":"MA","lat":42.26,"lon":-71.8},{"name":"Cambridge","state":"MA","lat":42.37,"lon":-71.11},{"name":"Evansville","state":"IN","lat":37.97,"lon":-87.57},{"name":"South Bend","state":"IN","lat":41.68,"lon":-86.25},{"name":"Frankfort","state":"KY","lat":38.2,"lon":-84.87},{"name":"Appleton","state":"WI","lat":44.26,"lon":-88.4},{"name":"St. Cloud","state":"MN","lat":45.56,"lon":-94.16},{"name":"Iowa City","state":"IA","lat":41.66,"lon":-91.53},{"name":"Columbia","state":"MO","lat":38.95,"lon":-92.33},{"name":"Independence","state":"MO","lat":39.09,"lon":-94.42},{"name":"Manhattan","state":"KS","lat":39.18,"lon":-96.58},{"name":"Lawrence","state":"KS","lat":38.97,"lon":-95.24},{"name":"Norman","state":"OK","lat":35.22,"lon":-97.44},{"name":"Charlottesville","state":"VA","lat":38.03,"lon":-78.48},{"name":"Roanoke","state":"VA","lat":37.27,"lon":-79.94},{"name":"Alexandria","state":"VA","lat":38.8,"lon":-77.05},{"name":"Frederick","state":"MD","lat":39.41,"lon":-77.41},{"name":"Annapolis","state":"MD","lat":38.98,"lon":-76.49},{"name":"Columbia","state":"SC","lat":34.0,"lon":-81.03},{"name":"Myrtle Beach","state":"SC","lat":33.69,"lon":-78.89},{"name":"Montgomery","state":"AL","lat":32.37,"lon":-86.3},{"name":"Tuscaloosa","state":"AL","lat":33.21,"lon":-87.57},{"name":"Auburn","state":"AL","lat":32.61,"lon":-85.48},{"name":"Biloxi","state":"MS","lat":30.4,"lon":-88.89},{"name":"Johnson City","state":"TN","lat":36.31,"lon":-82.35},{"name":"Murfreesboro","state":"TN","lat":35.85,"lon":-86.39},{"name":"Clearwater","state":"FL","lat":27.97,"lon":-82.8},{"name":"Key West","state":"FL","lat":24.56,"lon":-81.78},{"name":"Pompano Beach","state":"FL","lat":26.24,"lon":-80.12},{"name":"Valdosta","state":"GA","lat":30.83,"lon":-83.28},{"name":"Stamford","state":"CT","lat":41.05,"lon":-73.54},{"name":"Bridgeport","state":"CT","lat":41.18,"lon":-73.2},{"name":"Jersey City","state":"NJ","lat":40.72,"lon":-74.05},{"name":"Camden","state":"NJ","lat":39.93,"lon":-75.12},{"name":"Concord","state":"NH","lat":43.21,"lon":-71.54},{"name":"Nashua","state":"NH","lat":42.77,"lon":-71.46},{"name":"Lewiston","state":"ME","lat":44.1,"lon":-70.21},{"name":"Augusta ME","state":"ME","lat":44.31,"lon":-69.78},{"name":"Great Falls","state":"MT","lat":47.49,"lon":-111.3},{"name":"Helena","state":"MT","lat":46.59,"lon":-112.04},{"name":"Laramie","state":"WY","lat":41.31,"lon":-105.59},{"name":"Jackson Hole","state":"WY","lat":43.48,"lon":-110.76},{"name":"Farmington","state":"NM","lat":36.73,"lon":-108.22},{"name":"Grand Forks","state":"ND","lat":47.93,"lon":-97.03},{"name":"Aberdeen","state":"SD","lat":45.46,"lon":-98.49},{"name":"Hot Springs","state":"AR","lat":34.5,"lon":-93.06},{"name":"Paducah","state":"KY","lat":37.08,"lon":-88.6},{"name":"Wheeling","state":"WV","lat":40.06,"lon":-80.72},{"name":"Pawtucket","state":"RI","lat":41.87,"lon":-71.38},{"name":"Middlebury","state":"VT","lat":44.01,"lon":-73.17},{"name":"Montpelier","state":"VT","lat":44.26,"lon":-72.57},{"name":"Juneau","state":"AK","lat":58.3,"lon":-134.42},{"name":"Sitka","state":"AK","lat":57.05,"lon":-135.33},{"name":"Kailua","state":"HI","lat":21.4,"lon":-157.74},{"name":"Kahului","state":"HI","lat":20.89,"lon":-156.47},{"name":"Tyler","state":"TX","lat":32.35,"lon":-95.3},{"name":"College Station","state":"TX","lat":30.63,"lon":-96.33},{"name":"Beaumont","state":"TX","lat":30.08,"lon":-94.1},{"name":"Galveston","state":"TX","lat":29.3,"lon":-94.79},{"name":"Odessa","state":"TX","lat":31.84,"lon":-102.37},{"name":"Midland","state":"TX","lat":31.99,"lon":-102.08},{"name":"Yuma","state":"AZ","lat":32.69,"lon":-114.63},{"name":"Prescott","state":"AZ","lat":34.54,"lon":-112.47},{"name":"Redding","state":"CA","lat":40.58,"lon":-122.39},{"name":"Chico","state":"CA","lat":39.73,"lon":-121.84},{"name":"Monterey","state":"CA","lat":36.6,"lon":-121.89},{"name":"Palm Springs","state":"CA","lat":33.83,"lon":-116.55},{"name":"Santa Barbara","state":"CA","lat":34.42,"lon":-119.7},{"name":"Ventura","state":"CA","lat":34.27,"lon":-119.23}];
+
+
+const STORAGE_KEY = 'homefab_sites_v1';
+let sites = [];  // populated async during init
+let currentYear = 10;
+let playTimer = null;
+let mapProjection = null;
+let hoveredRowId = null;
+let canonicalSites = null;  // what was loaded from sites.json (for comparison)
+let dataSource = 'loading';  // 'synced' | 'local-edits' | 'offline' | 'loading'
+
+// Give every site a unique id for tracking across edits
+function ensureIds() {
+  sites.forEach((s, i) => { if (!s._id) s._id = 'id_' + Date.now() + '_' + i + '_' + Math.random().toString(36).slice(2,7); });
+}
+
+// Strip _id and normalize for comparison
+function normalize(arr) {
+  return arr.map(({_id, ...rest}) => rest);
+}
+
+function arraysEqual(a, b) {
+  if (!a || !b || a.length !== b.length) return false;
+  return JSON.stringify(normalize(a)) === JSON.stringify(normalize(b));
+}
+
+async function fetchCanonical() {
+  try {
+    // Add cache-buster so users always get the latest sites.json after you push updates
+    const resp = await fetch('sites.json?t=' + Date.now(), { cache: 'no-store' });
+    if (!resp.ok) throw new Error('HTTP ' + resp.status);
+    const data = await resp.json();
+    if (!Array.isArray(data) || data.length === 0) throw new Error('Empty or invalid');
+    return data;
+  } catch(e) {
+    return null;
+  }
+}
+
+async function loadSites() {
+  const canonical = await fetchCanonical();
+  canonicalSites = canonical;
+
+  let stored = null;
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      if (Array.isArray(parsed) && parsed.length > 0) stored = parsed;
+    }
+  } catch(e) {}
+
+  if (canonical && stored && !arraysEqual(canonical, stored)) {
+    // User has local edits AND sites.json exists AND they differ
+    const useLocal = confirm(
+      'You have unsaved local edits that differ from the published sites.json.\n\n' +
+      '• Click OK to keep your local edits\n' +
+      '• Click Cancel to load the fresh list from sites.json (your local edits will be discarded)'
+    );
+    if (useLocal) {
+      dataSource = 'local-edits';
+      return stored;
+    } else {
+      localStorage.removeItem(STORAGE_KEY);
+      dataSource = 'synced';
+      return JSON.parse(JSON.stringify(canonical));
+    }
+  }
+
+  if (canonical) {
+    dataSource = stored ? 'synced' : 'synced';  // local matches canonical, or no local
+    return stored || JSON.parse(JSON.stringify(canonical));
+  }
+
+  // No canonical (fetch failed — likely opened as file://)
+  if (stored) { dataSource = 'local-edits'; return stored; }
+  dataSource = 'offline';
+  return JSON.parse(JSON.stringify(SEED_SITES));
+}
+
+function updateSourceIndicator() {
+  const el = document.getElementById('data-source-indicator');
+  if (!el) return;
+  if (dataSource === 'synced') {
+    el.innerHTML = '<span class="badge synced">Synced with sites.json</span>';
+  } else if (dataSource === 'local-edits') {
+    el.innerHTML = '<span class="badge local">Local edits (not saved to source)</span>';
+  } else if (dataSource === 'offline') {
+    el.innerHTML = '<span class="badge offline">Using built-in defaults (sites.json not found)</span>';
+  } else {
+    el.innerHTML = '<span class="badge offline">Loading…</span>';
+  }
+}
+
+async function reloadFromSource() {
+  const canonical = await fetchCanonical();
+  if (!canonical) {
+    toast('Could not fetch sites.json — check your connection or the file URL');
+    return;
+  }
+  if (sites.length > 0 && !arraysEqual(canonical, sites)) {
+    const ok = confirm(
+      'Reload from sites.json? This will discard your local edits in this browser.\n\n' +
+      'Tip: click Export JSON first if you want to save your current work.'
+    );
+    if (!ok) return;
+  }
+  localStorage.removeItem(STORAGE_KEY);
+  canonicalSites = canonical;
+  sites = JSON.parse(JSON.stringify(canonical));
+  dataSource = 'synced';
+  ensureIds();
+  updateSourceIndicator();
+  render();
+  toast('Reloaded ' + sites.length + ' cities from sites.json');
+}
+
+function saveSites() {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(sites)); } catch(e) {}
+  // If the user has diverged from canonical, mark as local edits
+  if (canonicalSites && !arraysEqual(canonicalSites, sites)) {
+    if (dataSource !== 'local-edits') {
+      dataSource = 'local-edits';
+      updateSourceIndicator();
+    }
+  } else if (canonicalSites && arraysEqual(canonicalSites, sites)) {
+    if (dataSource !== 'synced') {
+      dataSource = 'synced';
+      updateSourceIndicator();
+    }
+  }
+}
+
+function toast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toast._t);
+  toast._t = setTimeout(() => t.classList.remove('show'), 1800);
+}
+
+// Geocode lookup
+function geocode(name, state) {
+  if (!name || !state) return null;
+  const n = name.toLowerCase().trim();
+  const s = state.toUpperCase().trim();
+  // Exact match
+  let m = GEOCODE_DB.find(c => c.name.toLowerCase() === n && c.state === s);
+  if (m) return { lat: m.lat, lon: m.lon };
+  // Partial match (contains)
+  m = GEOCODE_DB.find(c => c.state === s && (c.name.toLowerCase().includes(n) || n.includes(c.name.toLowerCase())));
+  if (m) return { lat: m.lat, lon: m.lon, fuzzy: true, matched: m.name };
+  return null;
+}
+
+function autoGeocodeHint() {
+  const name = document.getElementById('new-name').value.trim();
+  const state = document.getElementById('new-state').value.trim();
+  const hint = document.getElementById('geocode-hint');
+  const latF = document.getElementById('new-lat');
+  const lonF = document.getElementById('new-lon');
+  if (!name || !state) { hint.textContent = ''; return; }
+  const g = geocode(name, state);
+  if (g) {
+    if (g.fuzzy) {
+      hint.textContent = `Found similar: ${g.matched}, ${state} (${g.lat.toFixed(2)}, ${g.lon.toFixed(2)})`;
+    } else {
+      hint.textContent = `Auto-filled: ${g.lat.toFixed(2)}, ${g.lon.toFixed(2)}`;
+    }
+    if (!latF.value) latF.value = g.lat;
+    if (!lonF.value) lonF.value = g.lon;
+  } else {
+    hint.textContent = `No lat/lon found for "${name}, ${state}" — enter manually or use a different spelling.`;
+  }
+}
+
+function addRow() {
+  const yr = parseInt(document.getElementById('new-yr').value);
+  const name = document.getElementById('new-name').value.trim();
+  const state = document.getElementById('new-state').value.trim().toUpperCase();
+  const phase = parseInt(document.getElementById('new-phase').value);
+  let lat = parseFloat(document.getElementById('new-lat').value);
+  let lon = parseFloat(document.getElementById('new-lon').value);
+
+  if (!name || !state) { toast('City and State required'); return; }
+  if (state.length !== 2) { toast('State must be 2 letters'); return; }
+
+  if (isNaN(lat) || isNaN(lon)) {
+    const g = geocode(name, state);
+    if (g) { lat = g.lat; lon = g.lon; }
+    else { toast('Lat/Lon required (not in built-in lookup)'); return; }
+  }
+  if (lat < -90 || lat > 90 || lon < -180 || lon > 180) { toast('Invalid coordinates'); return; }
+
+  const newSite = { yr, phase, name, state, lat, lon, _id: 'id_' + Date.now() + '_' + Math.random().toString(36).slice(2,7) };
+  sites.push(newSite);
+  saveSites();
+  document.getElementById('new-name').value = '';
+  document.getElementById('new-state').value = '';
+  document.getElementById('new-lat').value = '';
+  document.getElementById('new-lon').value = '';
+  document.getElementById('geocode-hint').textContent = '';
+  render();
+  toast(`Added ${name}, ${state}`);
+}
+
+function deleteRow(id) {
+  const idx = sites.findIndex(s => s._id === id);
+  if (idx === -1) return;
+  const s = sites[idx];
+  sites.splice(idx, 1);
+  saveSites();
+  render();
+  toast(`Removed ${s.name}, ${s.state}`);
+}
+
+function updateField(id, field, value) {
+  const site = sites.find(s => s._id === id);
+  if (!site) return;
+  if (field === 'yr' || field === 'phase') {
+    value = parseInt(value);
+    if (isNaN(value)) return;
+    if (field === 'yr' && (value < 1 || value > 10)) return;
+    if (field === 'phase' && (value < 1 || value > 3)) return;
+  } else if (field === 'lat' || field === 'lon') {
+    value = parseFloat(value);
+    if (isNaN(value)) return;
+  } else if (field === 'state') {
+    value = (value || '').toUpperCase().slice(0, 2);
+  } else if (field === 'name') {
+    value = (value || '').trim();
+    if (!value) return;
+  }
+  site[field] = value;
+  saveSites();
+  updateMap();
+  updateStats();
+}
+
+function sortBy(field) {
+  sites.sort((a, b) => {
+    const av = a[field], bv = b[field];
+    if (typeof av === 'number') return av - bv;
+    return String(av).localeCompare(String(bv));
+  });
+  saveSites();
+  render();
+  toast(`Sorted by ${field}`);
+}
+
+function resetToDefaults() {
+  const source = canonicalSites ? 'the published sites.json' : 'the built-in defaults';
+  if (!confirm(`Reset all edits and restore ${source}? This cannot be undone.`)) return;
+  localStorage.removeItem(STORAGE_KEY);
+  sites = JSON.parse(JSON.stringify(canonicalSites || SEED_SITES));
+  dataSource = canonicalSites ? 'synced' : 'offline';
+  ensureIds();
+  updateSourceIndicator();
+  render();
+  toast('Reset to defaults');
+}
+
+function exportJSON() {
+  const clean = sites.map(({_id, ...rest}) => rest);
+  const blob = new Blob([JSON.stringify(clean, null, 2)], {type: 'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'homefab_sites.json';
+  a.click();
+  URL.revokeObjectURL(url);
+  toast('Exported JSON');
+}
+
+function exportCSV() {
+  const rows = [['Year','Phase','City','State','Latitude','Longitude']];
+  sites.forEach(s => rows.push([s.yr, s.phase, s.name, s.state, s.lat, s.lon]));
+  const csv = rows.map(r => r.map(v => {
+    const str = String(v);
+    return /[",\n]/.test(str) ? '"' + str.replace(/"/g, '""') + '"' : str;
+  }).join(',')).join('\n');
+  const blob = new Blob([csv], {type: 'text/csv'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'homefab_sites.csv';
+  a.click();
+  URL.revokeObjectURL(url);
+  toast('Exported CSV');
+}
+
+function importFile(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    try {
+      let imported = [];
+      if (file.name.endsWith('.json')) {
+        imported = JSON.parse(e.target.result);
+      } else if (file.name.endsWith('.csv')) {
+        const lines = e.target.result.split(/\r?\n/).filter(l => l.trim());
+        // detect header
+        const first = lines[0].toLowerCase();
+        const startIdx = (first.includes('year') || first.includes('city')) ? 1 : 0;
+        for (let i = startIdx; i < lines.length; i++) {
+          const parts = parseCSVLine(lines[i]);
+          if (parts.length < 6) continue;
+          imported.push({
+            yr: parseInt(parts[0]),
+            phase: parseInt(parts[1]),
+            name: parts[2],
+            state: parts[3].toUpperCase(),
+            lat: parseFloat(parts[4]),
+            lon: parseFloat(parts[5])
+          });
+        }
+      }
+      if (!Array.isArray(imported) || imported.length === 0) { toast('No valid rows found'); return; }
+      // Validate
+      const valid = imported.filter(s => s.name && s.state && !isNaN(s.lat) && !isNaN(s.lon) && !isNaN(s.yr) && !isNaN(s.phase));
+      if (valid.length === 0) { toast('No valid rows after validation'); return; }
+      sites = valid;
+      ensureIds();
+      saveSites();
+      render();
+      toast(`Imported ${valid.length} cities`);
+    } catch(err) {
+      toast('Import failed: ' + err.message);
+    }
+  };
+  reader.readAsText(file);
+  event.target.value = '';
+}
+
+function parseCSVLine(line) {
+  const result = [];
+  let cur = '', inQuotes = false;
+  for (let i = 0; i < line.length; i++) {
+    const c = line[i];
+    if (inQuotes) {
+      if (c === '"' && line[i+1] === '"') { cur += '"'; i++; }
+      else if (c === '"') inQuotes = false;
+      else cur += c;
+    } else {
+      if (c === ',') { result.push(cur); cur = ''; }
+      else if (c === '"') inQuotes = true;
+      else cur += c;
+    }
+  }
+  result.push(cur);
+  return result.map(s => s.trim());
+}
+
+// ---- Rendering ----
+function render() {
+  ensureIds();
+  renderTable();
+  renderYearFilter();
+  updateMap();
+  updateStats();
+}
+
+function renderYearFilter() {
+  const sel = document.getElementById('filter-year');
+  const cur = sel.value;
+  const years = [...new Set(sites.map(s => s.yr))].sort((a,b) => a - b);
+  sel.innerHTML = '<option value="">All years</option>' + years.map(y => `<option value="${y}">Year ${y}</option>`).join('');
+  sel.value = cur;
+}
+
+function renderTable() {
+  const tbody = document.getElementById('tbody');
+  const filterText = document.getElementById('filter-text').value.toLowerCase().trim();
+  const filterPhase = document.getElementById('filter-phase').value;
+  const filterYear = document.getElementById('filter-year').value;
+
+  const visible = sites.filter(s => {
+    if (filterText && !s.name.toLowerCase().includes(filterText) && !s.state.toLowerCase().includes(filterText)) return false;
+    if (filterPhase && String(s.phase) !== filterPhase) return false;
+    if (filterYear && String(s.yr) !== filterYear) return false;
+    return true;
+  });
+
+  document.getElementById('row-count').textContent = visible.length === sites.length ? `${sites.length} total` : `${visible.length} of ${sites.length}`;
+
+  tbody.innerHTML = visible.map(s => `
+    <tr data-id="${s._id}" draggable="true" onmouseenter="highlightDot('${s._id}')" onmouseleave="highlightDot(null)">
+      <td><span class="drag-handle" title="Drag to reorder">⋮⋮</span></td>
+      <td><input type="number" min="1" max="10" value="${s.yr}" onchange="updateField('${s._id}','yr',this.value)"></td>
+      <td>
+        <select onchange="updateField('${s._id}','phase',this.value)">
+          <option value="1" ${s.phase===1?'selected':''}>1</option>
+          <option value="2" ${s.phase===2?'selected':''}>2</option>
+          <option value="3" ${s.phase===3?'selected':''}>3</option>
+        </select>
+      </td>
+      <td><input type="text" value="${escapeHtml(s.name)}" onchange="updateField('${s._id}','name',this.value)"></td>
+      <td><input type="text" maxlength="2" value="${escapeHtml(s.state)}" style="text-transform:uppercase" onchange="updateField('${s._id}','state',this.value)"></td>
+      <td><input type="number" step="0.01" value="${s.lat}" onchange="updateField('${s._id}','lat',this.value)"></td>
+      <td><input type="number" step="0.01" value="${s.lon}" onchange="updateField('${s._id}','lon',this.value)"></td>
+      <td class="row-actions">
+        <button class="icon-btn success" title="Duplicate" onclick="duplicateRow('${s._id}')">⎘</button>
+        <button class="icon-btn" title="Re-geocode" onclick="regeocodeRow('${s._id}')">⌖</button>
+        <button class="icon-btn danger" title="Delete" onclick="deleteRow('${s._id}')">✕</button>
+      </td>
+    </tr>
+  `).join('');
+
+  attachDragHandlers();
+}
+
+function escapeHtml(s) {
+  return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+function duplicateRow(id) {
+  const s = sites.find(x => x._id === id);
+  if (!s) return;
+  const copy = { ...s, _id: 'id_' + Date.now() + '_' + Math.random().toString(36).slice(2,7), name: s.name + ' (copy)' };
+  const idx = sites.findIndex(x => x._id === id);
+  sites.splice(idx + 1, 0, copy);
+  saveSites();
+  render();
+}
+
+function regeocodeRow(id) {
+  const s = sites.find(x => x._id === id);
+  if (!s) return;
+  const g = geocode(s.name, s.state);
+  if (g) {
+    s.lat = g.lat; s.lon = g.lon;
+    saveSites(); render();
+    toast(`Re-geocoded ${s.name}`);
+  } else {
+    toast(`No match for "${s.name}, ${s.state}"`);
+  }
+}
+
+// ---- Drag & drop reorder ----
+let dragId = null;
+function attachDragHandlers() {
+  const rows = document.querySelectorAll('#tbody tr');
+  rows.forEach(row => {
+    row.addEventListener('dragstart', e => {
+      dragId = row.getAttribute('data-id');
+      row.classList.add('dragging');
+      e.dataTransfer.effectAllowed = 'move';
+    });
+    row.addEventListener('dragend', () => {
+      row.classList.remove('dragging');
+      document.querySelectorAll('#tbody tr').forEach(r => r.classList.remove('drop-target'));
+    });
+    row.addEventListener('dragover', e => {
+      e.preventDefault();
+      e.dataTransfer.dropEffect = 'move';
+      document.querySelectorAll('#tbody tr').forEach(r => r.classList.remove('drop-target'));
+      row.classList.add('drop-target');
+    });
+    row.addEventListener('drop', e => {
+      e.preventDefault();
+      const targetId = row.getAttribute('data-id');
+      if (dragId && targetId && dragId !== targetId) {
+        const from = sites.findIndex(s => s._id === dragId);
+        const to = sites.findIndex(s => s._id === targetId);
+        if (from !== -1 && to !== -1) {
+          const [moved] = sites.splice(from, 1);
+          sites.splice(to, 0, moved);
+          saveSites();
+          render();
+        }
+      }
+      row.classList.remove('drop-target');
+    });
+  });
+}
+
+// ---- Map ----
+function updateStats() {
+  document.getElementById('s-total').textContent = sites.length;
+  const p1 = sites.filter(s => s.phase === 1).length;
+  const p2 = sites.filter(s => s.phase === 2).length;
+  const p3 = sites.filter(s => s.phase === 3).length;
+  document.getElementById('s-phases').textContent = `${p1} / ${p2} / ${p3}`;
+  const states = new Set(sites.filter(s => s.yr <= currentYear).map(s => s.state));
+  document.getElementById('s-states').textContent = states.size;
+  const visible = sites.filter(s => s.yr <= currentYear).length;
+  document.getElementById('s-visible').textContent = visible;
+}
+
+function updateMap() {
+  if (!mapProjection) return;
+  const svg = d3.select('#map');
+  let g = svg.select('g.dots-layer');
+  if (g.empty()) g = svg.append('g').attr('class', 'dots-layer');
+
+  const join = g.selectAll('circle').data(sites, d => d._id);
+  join.exit().remove();
+  const enter = join.enter().append('circle').attr('r', 4.5).attr('class', d => 'dot p' + d.phase);
+  enter.merge(join)
+    .attr('class', d => 'dot p' + d.phase + (d.yr > currentYear ? ' dim' : '') + (d._id === hoveredRowId ? ' hl' : ''))
+    .attr('cx', d => { const p = mapProjection([d.lon, d.lat]); return p ? p[0] : -100; })
+    .attr('cy', d => { const p = mapProjection([d.lon, d.lat]); return p ? p[1] : -100; });
+
+  // Tooltip handlers
+  const tip = document.getElementById('tip');
+  const mapEl = document.querySelector('.map');
+  g.selectAll('circle')
+    .on('mouseenter', function(e, d) {
+      d3.select(this).attr('r', 7);
+      tip.innerHTML = `<strong>${escapeHtml(d.name)}, ${escapeHtml(d.state)}</strong><div class="meta">Year ${d.yr} · Phase ${d.phase}</div>`;
+      tip.style.opacity = '1';
+    })
+    .on('mousemove', function(e) {
+      const rect = mapEl.getBoundingClientRect();
+      tip.style.left = (e.clientX - rect.left + 12) + 'px';
+      tip.style.top = (e.clientY - rect.top - 8) + 'px';
+    })
+    .on('mouseleave', function() {
+      d3.select(this).attr('r', 4.5);
+      tip.style.opacity = '0';
+    });
+}
+
+function highlightDot(id) {
+  hoveredRowId = id;
+  updateMap();
+}
+
+function play() {
+  const slider = document.getElementById('yr');
+  const btn = document.getElementById('play-btn');
+  if (playTimer) { clearInterval(playTimer); playTimer = null; btn.textContent = '▶ Animate'; return; }
+  btn.textContent = '⏸ Pause';
+  let y = 1;
+  slider.value = 1;
+  currentYear = 1;
+  document.getElementById('yr-out').textContent = '1';
+  updateMap(); updateStats();
+  playTimer = setInterval(() => {
+    y++;
+    if (y > 10) { clearInterval(playTimer); playTimer = null; btn.textContent = '▶ Animate'; return; }
+    slider.value = y;
+    currentYear = y;
+    document.getElementById('yr-out').textContent = String(y);
+    updateMap(); updateStats();
+  }, 800);
+}
+
+(async function init() {
+  // Load sites first — parallel with the map topology fetch
+  const [_, topo] = await Promise.all([
+    loadSites().then(loaded => { sites = loaded; ensureIds(); updateSourceIndicator(); }),
+    (async () => {
+      const urls = [
+        'https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json',
+        'https://unpkg.com/us-atlas@3/states-10m.json'
+      ];
+      for (const u of urls) {
+        try {
+          const r = await fetch(u);
+          if (r.ok) return await r.json();
+        } catch(e) {}
+      }
+      return null;
+    })()
+  ]);
+
+  if (!topo) {
+    document.getElementById('map').innerHTML = '<text x="480" y="300" text-anchor="middle" fill="currentColor" font-size="14">Map data unavailable — check your internet connection</text>';
+    // Still render the table even without the map
+    render();
+    return;
+  }
+
+  const svg = d3.select('#map');
+  mapProjection = d3.geoAlbersUsa().scale(1180).translate([480, 300]);
+  const path = d3.geoPath(mapProjection);
+  const states = topojson.feature(topo, topo.objects.states);
+  svg.append('g').attr('class', 'states-layer').selectAll('path').data(states.features).enter().append('path').attr('class', 'state').attr('d', path);
+
+  document.getElementById('yr').addEventListener('input', e => {
+    currentYear = +e.target.value;
+    document.getElementById('yr-out').textContent = String(currentYear);
+    updateMap(); updateStats();
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>
