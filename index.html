@@ -879,12 +879,15 @@ async function loadSites() {
 function updateSourceIndicator() {
   const el = document.getElementById('data-source-indicator');
   if (!el) return;
+  const n = sites ? sites.length : 0;
+  const y1 = sites ? sites.filter(s => s.yr === 1).length : 0;
+  const counts = `${n} Fabs · ${y1} in Y1`;
   if (dataSource === 'synced') {
-    el.innerHTML = '<span class="badge synced">Synced with sites.json</span>';
+    el.innerHTML = `<span class="badge synced">Synced with sites.json</span> <span class="badge offline">${counts}</span>`;
   } else if (dataSource === 'local-edits') {
-    el.innerHTML = '<span class="badge local">Local edits (not saved to source)</span>';
+    el.innerHTML = `<span class="badge local">Local edits (not saved to source)</span> <span class="badge offline">${counts}</span>`;
   } else if (dataSource === 'offline') {
-    el.innerHTML = '<span class="badge offline">Using built-in defaults (sites.json not found)</span>';
+    el.innerHTML = `<span class="badge offline">Built-in plan (no sites.json)</span> <span class="badge offline">${counts}</span>`;
   } else {
     el.innerHTML = '<span class="badge offline">Loading…</span>';
   }
@@ -1088,17 +1091,23 @@ function sortBy(field) {
 }
 
 function resetToDefaults() {
-  const source = canonicalSites ? 'the published sites.json' : 'the built-in defaults';
-  if (!confirm(`Reset all Fab sites AND FBX Core hubs back to ${source}? This cannot be undone.`)) return;
+  // Always reset to the SEED_SITES/SEED_HUBS embedded in this HTML file.
+  // Do NOT use canonicalSites — that may be a stale sites.json fetched from a
+  // hosted deployment and would silently reintroduce the old plan.
+  if (!confirm(
+    `Reset all Fab sites AND FBX Core hubs to the built-in plan embedded in this HTML file?\n\n` +
+    `This discards any local edits AND ignores any sites.json hosted alongside this page.\n\n` +
+    `This cannot be undone.`
+  )) return;
   localStorage.removeItem(STORAGE_KEY);
   localStorage.removeItem(HUB_STORAGE_KEY);
-  sites = JSON.parse(JSON.stringify(canonicalSites || SEED_SITES));
+  sites = JSON.parse(JSON.stringify(SEED_SITES));
   hubs = JSON.parse(JSON.stringify(SEED_HUBS));
-  dataSource = canonicalSites ? 'synced' : 'offline';
+  dataSource = 'offline';
   ensureIds();
   updateSourceIndicator();
   render();
-  toast('Sites and hubs reset to defaults');
+  toast(`Reset: loaded ${sites.length} Fabs and ${hubs.length} hubs from built-in plan`);
 }
 
 function exportJSON() {
