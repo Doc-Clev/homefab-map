@@ -13,7 +13,7 @@ An interactive, editable map of HomeFab's 10-year US expansion, with a live fina
 1. Create a public GitHub repo (e.g. `homefab-map`)
 2. Upload all three files to the root
 3. Settings → Pages → Deploy from branch `main`, folder `/ (root)` → Save
-4. Your URL: `https://YOUR-USERNAME.github.io/homefab-map/`
+4. Your URL: `https://Doc-Clev.github.io/homefab-map/index.html`
 
 ## Embedding in Canva
 
