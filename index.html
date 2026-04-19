@@ -241,6 +241,25 @@
   td input.override::placeholder { color: var(--text-tertiary); font-style: italic; }
   td input.override[data-dirty="1"] { color: #854F0B; font-weight: 500; }
   @media (prefers-color-scheme: dark) { td input.override[data-dirty="1"] { color: #FAC775; } }
+
+  .loc-pin { display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px; border-radius: 50%; cursor: pointer; font-size: 11px; transition: background 0.15s; }
+  .loc-pin.ok { color: var(--text-tertiary); }
+  .loc-pin.ok:hover { background: var(--bg-secondary); color: var(--text-secondary); }
+  .loc-pin.warn { background: #FAEEDA; color: #854F0B; }
+  .loc-pin.warn:hover { background: #FAC775; }
+  @media (prefers-color-scheme: dark) {
+    .loc-pin.warn { background: #412402; color: #FAC775; }
+    .loc-pin.warn:hover { background: #633806; }
+  }
+  .coord-popover {
+    position: absolute; background: var(--bg-primary); border: 0.5px solid var(--border-secondary);
+    border-radius: var(--border-radius-md); padding: 10px 12px; z-index: 20;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.12); display: flex; gap: 8px; align-items: end;
+  }
+  .coord-popover .cp-field { display: flex; flex-direction: column; gap: 2px; }
+  .coord-popover label { font-size: 10px; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.3px; }
+  .coord-popover input { width: 80px; background: var(--bg-secondary); border: 0.5px solid var(--border-tertiary); padding: 4px 6px; border-radius: 5px; color: var(--text-primary); font-family: inherit; font-size: 12px; }
+  .coord-popover button { padding: 5px 10px; font-size: 12px; }
 </style>
 </head>
 <body>
@@ -435,8 +454,7 @@
               <th style="width:42px">Ph</th>
               <th>City</th>
               <th style="width:40px">ST</th>
-              <th style="width:60px" title="Latitude">Lat</th>
-              <th style="width:60px" title="Longitude">Lon</th>
+              <th style="width:28px" title="Location status — click the pin if city isn't auto-resolved"></th>
               <th style="width:70px" title="CAPEX override in $M — blank = default">CAPEX</th>
               <th style="width:62px" title="Home revenue override in $K — blank = default">Rev</th>
               <th style="width:54px" title="Fab margin % override — blank = default">Mgn</th>
@@ -456,7 +474,7 @@
             <option>6</option><option>7</option><option>8</option><option>9</option><option selected>10</option>
           </select>
         </div>
-        <div class="form-field">
+        <div class="form-field" style="grid-column: span 2">
           <label>City</label>
           <input type="text" id="new-name" placeholder="e.g. Corpus Christi" oninput="autoGeocodeHint()">
         </div>
@@ -469,14 +487,6 @@
           <select id="new-phase">
             <option value="1">1</option><option value="2">2</option><option value="3" selected>3</option>
           </select>
-        </div>
-        <div class="form-field">
-          <label>Lat</label>
-          <input type="number" id="new-lat" step="0.01" placeholder="auto">
-        </div>
-        <div class="form-field">
-          <label>Lon</label>
-          <input type="number" id="new-lon" step="0.01" placeholder="auto">
         </div>
         <div class="form-field">
           <label>&nbsp;</label>
@@ -501,8 +511,7 @@
             <th>Hub name</th>
             <th style="width:160px">City</th>
             <th style="width:40px">ST</th>
-            <th style="width:60px">Lat</th>
-            <th style="width:60px">Lon</th>
+            <th style="width:28px" title="Location status"></th>
             <th style="width:75px" title="Hub CAPEX override in $M — blank = default">CAPEX</th>
             <th style="width:70px" title="Fabs currently assigned">Fabs</th>
             <th style="width:80px"></th>
@@ -935,20 +944,18 @@ function autoGeocodeHint() {
   const name = document.getElementById('new-name').value.trim();
   const state = document.getElementById('new-state').value.trim();
   const hint = document.getElementById('geocode-hint');
-  const latF = document.getElementById('new-lat');
-  const lonF = document.getElementById('new-lon');
   if (!name || !state) { hint.textContent = ''; return; }
   const g = geocode(name, state);
   if (g) {
     if (g.fuzzy) {
-      hint.textContent = `Found similar: ${g.matched}, ${state} (${g.lat.toFixed(2)}, ${g.lon.toFixed(2)})`;
+      hint.textContent = `✓ Found similar: ${g.matched}, ${state} (${g.lat.toFixed(2)}, ${g.lon.toFixed(2)})`;
     } else {
-      hint.textContent = `Auto-filled: ${g.lat.toFixed(2)}, ${g.lon.toFixed(2)}`;
+      hint.textContent = `✓ Location recognized: ${g.lat.toFixed(2)}, ${g.lon.toFixed(2)}`;
     }
-    if (!latF.value) latF.value = g.lat;
-    if (!lonF.value) lonF.value = g.lon;
+    hint.style.color = 'var(--success, var(--text-secondary))';
   } else {
-    hint.textContent = `No lat/lon found for "${name}, ${state}" — enter manually or use a different spelling.`;
+    hint.textContent = `⚠ "${name}, ${state}" not in built-in database — city will be added with no coordinates. Click the ⚠ pin afterward to enter lat/lon manually.`;
+    hint.style.color = 'var(--text-warning, #854F0B)';
   }
 }
 
@@ -957,29 +964,29 @@ function addRow() {
   const name = document.getElementById('new-name').value.trim();
   const state = document.getElementById('new-state').value.trim().toUpperCase();
   const phase = parseInt(document.getElementById('new-phase').value);
-  let lat = parseFloat(document.getElementById('new-lat').value);
-  let lon = parseFloat(document.getElementById('new-lon').value);
 
   if (!name || !state) { toast('City and State required'); return; }
   if (state.length !== 2) { toast('State must be 2 letters'); return; }
 
-  if (isNaN(lat) || isNaN(lon)) {
-    const g = geocode(name, state);
-    if (g) { lat = g.lat; lon = g.lon; }
-    else { toast('Lat/Lon required (not in built-in lookup)'); return; }
+  let lat = null, lon = null;
+  const g = geocode(name, state);
+  if (g) {
+    lat = g.lat;
+    lon = g.lon;
   }
-  if (lat < -90 || lat > 90 || lon < -180 || lon > 180) { toast('Invalid coordinates'); return; }
 
   const newSite = { yr, phase, name, state, lat, lon, _id: 'id_' + Date.now() + '_' + Math.random().toString(36).slice(2,7) };
   sites.push(newSite);
   saveSites();
   document.getElementById('new-name').value = '';
   document.getElementById('new-state').value = '';
-  document.getElementById('new-lat').value = '';
-  document.getElementById('new-lon').value = '';
   document.getElementById('geocode-hint').textContent = '';
   render();
-  toast(`Added ${name}, ${state}`);
+  if (g) {
+    toast(`Added ${name}, ${state}`);
+  } else {
+    toast(`Added ${name}, ${state} — click the ⚠ pin to set coordinates`);
+  }
 }
 
 function deleteRow(id) {
@@ -1021,9 +1028,19 @@ function updateField(id, field, value) {
     if (!value) return;
   }
   site[field] = value;
+
+  // Auto-geocode when name or state changes — if the new (name, state) is in the DB,
+  // update lat/lon silently. If not, leave existing coords in place and let the ⚠ pin show.
+  if (field === 'name' || field === 'state') {
+    const g = geocode(site.name, site.state);
+    if (g) {
+      site.lat = g.lat;
+      site.lon = g.lon;
+    }
+  }
+
   saveSites();
-  // If year/phase changed, hub assignment might change too
-  if (field === 'yr' || field === 'phase' || field === 'lat' || field === 'lon' || field === 'state') {
+  if (field === 'yr' || field === 'phase' || field === 'lat' || field === 'lon' || field === 'state' || field === 'name') {
     renderTable();
     renderHubs();
   }
@@ -1230,6 +1247,19 @@ function renderTable() {
     const capexVal = (s.capex != null && s.capex !== '') ? s.capex : '';
     const revVal   = (s.rev_per_home != null && s.rev_per_home !== '') ? s.rev_per_home : '';
     const margVal  = (s.margin_pct != null && s.margin_pct !== '') ? s.margin_pct : '';
+    const hasCoords = !isNaN(s.lat) && !isNaN(s.lon) && s.lat !== null && s.lon !== null;
+    const g = geocode(s.name, s.state);
+    // "ok" if coords are set AND they match a geocode DB entry for the current name/state
+    // "warn" if no coords, or coords don't match a known city (user manually entered or geocode miss)
+    let locStatus = 'ok';
+    let locTitle = `${s.lat?.toFixed?.(2)}, ${s.lon?.toFixed?.(2)} (click to edit)`;
+    if (!hasCoords) {
+      locStatus = 'warn';
+      locTitle = 'No coordinates — click to set manually';
+    } else if (!g) {
+      locStatus = 'warn';
+      locTitle = `"${s.name}, ${s.state}" not in built-in database — coords are manual (${s.lat.toFixed(2)}, ${s.lon.toFixed(2)}). Click to edit.`;
+    }
     return `
     <tr data-id="${s._id}" draggable="true" onmouseenter="highlightDot('${s._id}')" onmouseleave="highlightDot(null)">
       <td><span class="drag-handle" title="Drag to reorder">⋮⋮</span></td>
@@ -1243,15 +1273,14 @@ function renderTable() {
       </td>
       <td><input type="text" value="${escapeHtml(s.name)}" onchange="updateField('${s._id}','name',this.value)"></td>
       <td><input type="text" maxlength="2" value="${escapeHtml(s.state)}" style="text-transform:uppercase" onchange="updateField('${s._id}','state',this.value)"></td>
-      <td><input type="number" step="0.01" value="${s.lat}" onchange="updateField('${s._id}','lat',this.value)"></td>
-      <td><input type="number" step="0.01" value="${s.lon}" onchange="updateField('${s._id}','lon',this.value)"></td>
+      <td style="text-align:center"><span class="loc-pin ${locStatus}" title="${escapeHtml(locTitle)}" onclick="openCoordPopover(event, '${s._id}', 'site')">${locStatus === 'ok' ? '📍' : '⚠'}</span></td>
       <td><input type="number" step="0.1" class="override" data-dirty="${capexVal!==''?1:0}" placeholder="${assumptions.fab_capex_M}" value="${capexVal}" onchange="updateField('${s._id}','capex',this.value)" title="CAPEX in $M — blank = default"></td>
       <td><input type="number" step="1" class="override" data-dirty="${revVal!==''?1:0}" placeholder="${assumptions.rev_per_home_K}" value="${revVal}" onchange="updateField('${s._id}','rev_per_home',this.value)" title="Home revenue in $K"></td>
       <td><input type="number" step="0.1" class="override" data-dirty="${margVal!==''?1:0}" placeholder="${assumptions.fab_margin_pct}" value="${margVal}" onchange="updateField('${s._id}','margin_pct',this.value)" title="Fab margin %"></td>
       <td style="font-size:11px; color:var(--text-secondary); text-align:center" title="${assign ? `Assigned to ${assign.hub.name}, ${Math.round(assign.dist_mi)} mi` : 'No active hub'}">${hubShort}</td>
       <td class="row-actions">
         <button class="icon-btn success" title="Duplicate" onclick="duplicateRow('${s._id}')">⎘</button>
-        <button class="icon-btn" title="Re-geocode" onclick="regeocodeRow('${s._id}')">⌖</button>
+        <button class="icon-btn" title="Re-geocode from city name" onclick="regeocodeRow('${s._id}')">⌖</button>
         <button class="icon-btn danger" title="Delete" onclick="deleteRow('${s._id}')">✕</button>
       </td>
     </tr>`;
@@ -1275,14 +1304,24 @@ function renderHubs() {
 
   tbody.innerHTML = hubs.map(h => {
     const capVal = (h.capex != null && h.capex !== '') ? h.capex : '';
+    const hasCoords = !isNaN(h.lat) && !isNaN(h.lon) && h.lat !== null && h.lon !== null;
+    const g = geocode(h.city, h.state);
+    let locStatus = 'ok';
+    let locTitle = `${h.lat?.toFixed?.(2)}, ${h.lon?.toFixed?.(2)} (click to edit)`;
+    if (!hasCoords) {
+      locStatus = 'warn';
+      locTitle = 'No coordinates — click to set manually';
+    } else if (!g) {
+      locStatus = 'warn';
+      locTitle = `"${h.city}, ${h.state}" not in built-in database — coords are manual. Click to edit.`;
+    }
     return `
     <tr data-hubid="${h._id}">
       <td><input type="number" min="1" max="10" value="${h.opens_yr}" onchange="updateHubField('${h._id}','opens_yr',this.value)"></td>
       <td><input type="text" value="${escapeHtml(h.name)}" onchange="updateHubField('${h._id}','name',this.value)"></td>
       <td><input type="text" value="${escapeHtml(h.city)}" onchange="updateHubField('${h._id}','city',this.value)"></td>
       <td><input type="text" maxlength="2" value="${escapeHtml(h.state)}" style="text-transform:uppercase" onchange="updateHubField('${h._id}','state',this.value)"></td>
-      <td><input type="number" step="0.01" value="${h.lat}" onchange="updateHubField('${h._id}','lat',this.value)"></td>
-      <td><input type="number" step="0.01" value="${h.lon}" onchange="updateHubField('${h._id}','lon',this.value)"></td>
+      <td style="text-align:center"><span class="loc-pin ${locStatus}" title="${escapeHtml(locTitle)}" onclick="openCoordPopover(event, '${h._id}', 'hub')">${locStatus === 'ok' ? '📍' : '⚠'}</span></td>
       <td><input type="number" step="1" class="override" data-dirty="${capVal!==''?1:0}" placeholder="${assumptions.hub_capex_M}" value="${capVal}" onchange="updateHubField('${h._id}','capex',this.value)" title="$M"></td>
       <td style="text-align:center; font-size:12px; color:var(--text-secondary)">${fabCounts[h._id] || 0}</td>
       <td class="row-actions">
@@ -1307,8 +1346,18 @@ function updateHubField(id, field, value) {
   } else {
     h[field] = (value || '').trim();
   }
+
+  // Auto-geocode when city or state changes
+  if (field === 'city' || field === 'state') {
+    const g = geocode(h.city, h.state);
+    if (g) {
+      h.lat = g.lat;
+      h.lon = g.lon;
+    }
+  }
+
   saveHubs();
-  renderTable();  // nearest-hub may change
+  renderTable();
   renderHubs();
   updateMap();
   updateDashboard();
@@ -1326,6 +1375,65 @@ function deleteHub(id) {
 
 function escapeHtml(s) {
   return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+// ---- Coord popover (pin click) ----
+function openCoordPopover(event, id, type) {
+  event.stopPropagation();
+  closeCoordPopover();
+  const target = type === 'hub' ? hubs.find(h => h._id === id) : sites.find(s => s._id === id);
+  if (!target) return;
+  const pop = document.createElement('div');
+  pop.className = 'coord-popover';
+  pop.id = 'coord-popover';
+  pop.innerHTML = `
+    <div class="cp-field"><label>Lat</label><input type="number" step="0.01" id="cp-lat" value="${target.lat ?? ''}"></div>
+    <div class="cp-field"><label>Lon</label><input type="number" step="0.01" id="cp-lon" value="${target.lon ?? ''}"></div>
+    <button onclick="saveCoordPopover('${id}','${type}')">Save</button>
+    <button onclick="closeCoordPopover()">Cancel</button>
+  `;
+  const rect = event.currentTarget.getBoundingClientRect();
+  pop.style.top  = (window.scrollY + rect.bottom + 4) + 'px';
+  pop.style.left = (window.scrollX + rect.left - 8) + 'px';
+  document.body.appendChild(pop);
+  setTimeout(() => {
+    document.addEventListener('click', closeCoordPopoverOnOutsideClick);
+  }, 50);
+}
+
+function closeCoordPopoverOnOutsideClick(e) {
+  const pop = document.getElementById('coord-popover');
+  if (pop && !pop.contains(e.target)) closeCoordPopover();
+}
+
+function closeCoordPopover() {
+  const pop = document.getElementById('coord-popover');
+  if (pop) pop.remove();
+  document.removeEventListener('click', closeCoordPopoverOnOutsideClick);
+}
+
+function saveCoordPopover(id, type) {
+  const lat = parseFloat(document.getElementById('cp-lat').value);
+  const lon = parseFloat(document.getElementById('cp-lon').value);
+  if (isNaN(lat) || isNaN(lon)) { toast('Both lat and lon must be numbers'); return; }
+  if (lat < -90 || lat > 90 || lon < -180 || lon > 180) { toast('Invalid coordinate range'); return; }
+  if (type === 'hub') {
+    const h = hubs.find(x => x._id === id);
+    if (!h) return;
+    h.lat = lat; h.lon = lon;
+    saveHubs();
+  } else {
+    const s = sites.find(x => x._id === id);
+    if (!s) return;
+    s.lat = lat; s.lon = lon;
+    saveSites();
+  }
+  closeCoordPopover();
+  renderTable();
+  renderHubs();
+  updateMap();
+  updateDashboard();
+  toast('Coordinates updated');
 }
 
 function duplicateRow(id) {
