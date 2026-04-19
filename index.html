@@ -1091,12 +1091,12 @@ function saveSites() {
   }
 }
 
-function toast(msg) {
+function toast(msg, duration) {
   const t = document.getElementById('toast');
   t.textContent = msg;
   t.classList.add('show');
   clearTimeout(toast._t);
-  toast._t = setTimeout(() => t.classList.remove('show'), 1800);
+  toast._t = setTimeout(() => t.classList.remove('show'), duration || 1800);
 }
 
 // Geocode lookup
@@ -2075,24 +2075,45 @@ async function ghDoCommit() {
   const btn = document.getElementById('gh-commit-btn');
   btn.disabled = true; btn.textContent = 'Committing…';
 
+  // Diagnostic trail — printed to console so you can see exactly what happened
+  // even if the toast is missed. Never logs the token.
+  const diag = [];
+  const log = (s) => { diag.push(s); console.log('[ghDoCommit]', s); };
+
   try {
+    log(`Target: ${cfg.owner}/${cfg.repo} @ ${cfg.branch} · ${cfg.path}`);
+    log(`Message: "${msg}"`);
+
     // 1. Get current file SHA (if it exists) — required for updates
     let existingSha = null;
+    const getUrl = `https://api.github.com/repos/${cfg.owner}/${cfg.repo}/contents/${encodeURIComponent(cfg.path)}?ref=${encodeURIComponent(cfg.branch)}`;
+    log(`GET ${getUrl}`);
+    let getResp;
     try {
-      const getUrl = `https://api.github.com/repos/${cfg.owner}/${cfg.repo}/contents/${encodeURIComponent(cfg.path)}?ref=${encodeURIComponent(cfg.branch)}`;
-      const getResp = await fetch(getUrl, {
+      getResp = await fetch(getUrl, {
         headers: { 'Authorization': `Bearer ${cfg.token}`, 'Accept': 'application/vnd.github+json' }
       });
-      if (getResp.ok) {
-        const existing = await getResp.json();
-        existingSha = existing.sha;
-      } else if (getResp.status !== 404) {
-        throw new Error(`GET failed: ${getResp.status}`);
-      }
-      // 404 = file doesn't exist yet, that's fine — we'll create it
-    } catch(e) {
-      // If GET truly fails we let PUT try anyway
-      console.warn('SHA lookup failed, attempting PUT anyway:', e);
+    } catch(netErr) {
+      throw new Error(`Network error fetching current SHA: ${netErr.message}. Check connectivity.`);
+    }
+    log(`GET status: ${getResp.status}`);
+
+    if (getResp.ok) {
+      const existing = await getResp.json();
+      existingSha = existing.sha;
+      log(`Existing file SHA: ${existingSha}`);
+    } else if (getResp.status === 404) {
+      log('File does not exist yet — will create on PUT');
+    } else if (getResp.status === 401) {
+      throw new Error(`Token invalid or expired (401). Regenerate a fine-grained PAT in GitHub settings.`);
+    } else if (getResp.status === 403) {
+      const e = await getResp.json().catch(() => ({}));
+      throw new Error(`403 Forbidden: ${e.message || 'Token lacks Contents: Read & Write on this repo, or rate limit hit'}`);
+    } else if (getResp.status === 404) {
+      // already handled above
+    } else {
+      const e = await getResp.json().catch(() => ({}));
+      throw new Error(`SHA lookup failed (${getResp.status}): ${e.message || 'unknown'}`);
     }
 
     // 2. PUT the new content
@@ -2105,31 +2126,46 @@ async function ghDoCommit() {
       branch: cfg.branch
     };
     if (existingSha) body.sha = existingSha;
+    log(`PUT ${putUrl} (payload ${content.length} b64 chars, sha=${existingSha ? existingSha.slice(0,7) : 'none'})`);
 
-    const putResp = await fetch(putUrl, {
-      method: 'PUT',
-      headers: {
-        'Authorization': `Bearer ${cfg.token}`,
-        'Accept': 'application/vnd.github+json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(body)
-    });
+    let putResp;
+    try {
+      putResp = await fetch(putUrl, {
+        method: 'PUT',
+        headers: {
+          'Authorization': `Bearer ${cfg.token}`,
+          'Accept': 'application/vnd.github+json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(body)
+      });
+    } catch(netErr) {
+      throw new Error(`Network error during PUT: ${netErr.message}`);
+    }
+    log(`PUT status: ${putResp.status}`);
 
     if (!putResp.ok) {
       const err = await putResp.json().catch(() => ({}));
-      throw new Error(err.message || `PUT failed: ${putResp.status}`);
+      const hint = putResp.status === 409
+        ? ' (SHA conflict — click Refresh in the version dropdown, then try again)'
+        : putResp.status === 422
+        ? ' (invalid request — check branch name and file path)'
+        : '';
+      throw new Error(`PUT ${putResp.status}: ${err.message || 'unknown'}${hint}`);
     }
 
     const result = await putResp.json();
     const sha = result.commit && result.commit.sha ? result.commit.sha.slice(0, 7) : '';
+    log(`Commit SHA: ${sha}`);
     closeModal('gh-save-modal');
     const label = name ? ghSanitizeVersionName(name) : sha;
     toast(`✓ Saved "${label}" (${sha})`);
     // Refresh the dropdown so the new version appears immediately
     ghRefreshDropdown();
   } catch(e) {
-    toast('✗ Commit failed: ' + e.message);
+    console.error('[ghDoCommit] Full diagnostic trail:', diag);
+    console.error('[ghDoCommit] Error:', e);
+    toast('✗ Commit failed: ' + e.message, 6000);
   } finally {
     btn.disabled = false; btn.textContent = 'Commit to GitHub';
   }
