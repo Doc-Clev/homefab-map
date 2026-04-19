@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FBX Operating Model — Value Chain</title>
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<style>
+:root {
+  --bg-primary: #faf9f7;
+  --bg-secondary: #f3f1ec;
+  --bg-tertiary: #ebe8e0;
+  --bg-card: #ffffff;
+  --text-primary: #2b2a27;
+  --text-secondary: #605d57;
+  --text-muted: #8a857c;
+  --border: #d9d5cc;
+  --border-strong: #b8b2a5;
+  --p1: #6b8e5a;
+  --p2: #c9964a;
+  --p3: #b85c4a;
+  --info: #5a7a99;
+  --accent: #8a6a4a;
+  --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 12px rgba(0,0,0,0.04);
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-primary: #1a1916;
+    --bg-secondary: #22201c;
+    --bg-tertiary: #2d2a25;
+    --bg-card: #26231f;
+    --text-primary: #e8e4db;
+    --text-secondary: #b0aa9e;
+    --text-muted: #7a756b;
+    --border: #3a3630;
+    --border-strong: #4d4840;
+    --p1: #8aad78;
+    --p2: #d9a85c;
+    --p3: #cc7560;
+    --info: #7a9ab9;
+    --accent: #a88a6a;
+    --shadow: 0 1px 3px rgba(0,0,0,0.3), 0 4px 12px rgba(0,0,0,0.2);
+  }
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-size: 14px;
+  line-height: 1.5;
+}
+.app {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  grid-template-rows: auto 1fr;
+  grid-template-areas: "header header" "main right";
+  height: 100vh;
+}
+header {
+  grid-area: header;
+  padding: 12px 20px;
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+header h1 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+header .subtitle {
+  color: var(--text-muted);
+  font-size: 12px;
+}
+header .spacer { flex: 1; }
+header select {
+  background: var(--bg-card);
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  padding: 5px 8px;
+  font-size: 12px;
+  font-family: inherit;
+  max-width: 280px;
+}
+.btn {
+  background: var(--bg-card);
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 12px;
+  cursor: pointer;
+  font-family: inherit;
+  text-decoration: none;
+  display: inline-block;
+}
+.btn:hover { background: var(--bg-tertiary); }
+.version-info {
+  font-size: 11px;
+  color: var(--text-muted);
+  font-family: "SF Mono", Menlo, Consolas, monospace;
+}
+
+main {
+  grid-area: main;
+  overflow: auto;
+  background: var(--bg-primary);
+  position: relative;
+}
+
+aside.right {
+  grid-area: right;
+  background: var(--bg-secondary);
+  border-left: 1px solid var(--border);
+  overflow-y: auto;
+  padding: 16px;
+}
+
+.section {
+  margin-bottom: 16px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--border);
+}
+.section:last-child { border-bottom: none; }
+.section h2 {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  margin: 0 0 8px 0;
+  font-weight: 600;
+}
+
+.rollup {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 8px 10px;
+  margin-bottom: 8px;
+}
+.rollup h3 {
+  margin: 0 0 4px 0;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+.rollup .row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  padding: 1px 0;
+}
+.rollup .row.total {
+  border-top: 1px solid var(--border);
+  margin-top: 3px;
+  padding-top: 3px;
+  font-weight: 600;
+}
+.rollup .row .val { font-variant-numeric: tabular-nums; }
+.rollup .row .val.pos { color: var(--p1); }
+.rollup .row .val.neg { color: var(--p3); }
+
+#chart { width: 100%; height: 100%; display: block; }
+.spine { stroke: var(--text-primary); stroke-width: 2; }
+.effect-box { fill: var(--bg-card); stroke: var(--text-primary); stroke-width: 1.5; }
+.effect-text {
+  fill: var(--text-primary);
+  font-weight: 600; font-size: 14px;
+  text-anchor: middle; dominant-baseline: middle;
+}
+.bu-bone { stroke-width: 2.5; }
+.bu-bone[data-bu="first_mile"] { stroke: var(--p1); }
+.bu-bone[data-bu="fbx_core"] { stroke: var(--p2); }
+.bu-bone[data-bu="last_mile"] { stroke: var(--p3); }
+.bu-label { font-size: 13px; font-weight: 600; cursor: pointer; }
+.bu-label[data-bu="first_mile"] { fill: var(--p1); }
+.bu-label[data-bu="fbx_core"] { fill: var(--p2); }
+.bu-label[data-bu="last_mile"] { fill: var(--p3); }
+.fn-bone { stroke-width: 1.2; opacity: 0.65; }
+.fn-bone[data-bu="first_mile"] { stroke: var(--p1); }
+.fn-bone[data-bu="fbx_core"] { stroke: var(--p2); }
+.fn-bone[data-bu="last_mile"] { stroke: var(--p3); }
+.fn-label { font-size: 11px; fill: var(--text-secondary); cursor: pointer; }
+.fn-label:hover, .fn-label.active { fill: var(--text-primary); font-weight: 600; }
+.handoff-line { stroke: var(--text-muted); stroke-width: 1; stroke-dasharray: 4 3; }
+.handoff-label { font-size: 10px; fill: var(--text-muted); font-style: italic; text-anchor: middle; }
+.ownership-band { fill-opacity: 0.15; stroke: var(--border); stroke-width: 0.5; }
+.ownership-label { font-size: 10px; fill: var(--text-secondary); text-anchor: middle; font-weight: 500; }
+
+.explainer {
+  position: absolute;
+  top: 20px; right: 20px;
+  width: 380px;
+  max-height: calc(100% - 40px);
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+  padding: 16px;
+  overflow-y: auto;
+  display: none;
+  z-index: 10;
+}
+.explainer.visible { display: block; }
+.explainer.pinned { border-color: var(--accent); }
+.explainer h3 { margin: 0 0 8px 0; font-size: 14px; }
+.explainer .close {
+  position: absolute; top: 8px; right: 10px;
+  background: none; border: none; color: var(--text-muted);
+  cursor: pointer; font-size: 16px;
+}
+.explainer .meta {
+  font-size: 12px; color: var(--text-muted);
+  margin-bottom: 8px; padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+}
+.explainer .md-content { font-size: 13px; line-height: 1.55; }
+.explainer .md-content p { margin: 0 0 8px 0; }
+.explainer .md-content ul { margin: 0 0 8px 0; padding-left: 20px; }
+.explainer .md-content code {
+  background: var(--bg-tertiary); padding: 1px 4px;
+  border-radius: 3px; font-size: 12px;
+}
+.explainer .fin {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 4px 12px;
+  font-size: 12px;
+  background: var(--bg-secondary);
+  padding: 8px 10px; border-radius: 5px;
+  margin-bottom: 10px;
+}
+.explainer .fin .label { color: var(--text-muted); }
+.explainer .fin .val { font-variant-numeric: tabular-nums; text-align: right; }
+
+.loading-overlay {
+  position: fixed; inset: 0;
+  background: var(--bg-primary);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 200;
+  color: var(--text-muted);
+  font-size: 14px;
+}
+.error-banner {
+  background: var(--p3);
+  color: white;
+  padding: 8px 16px;
+  font-size: 13px;
+  text-align: center;
+}
+
+@media (max-width: 900px) {
+  .app {
+    grid-template-columns: 1fr;
+    grid-template-areas: "header" "main" "right";
+    height: auto;
+  }
+  aside.right { border: none; border-top: 1px solid var(--border); }
+  main { min-height: 500px; height: 70vh; }
+}
+</style>
+</head>
+<body>
+<div class="loading-overlay" id="loading">Loading fishbone…</div>
+
+<div class="app">
+  <header>
+    <h1>FBX Operating Model</h1>
+    <span class="subtitle">Value chain · 3 BUs</span>
+    <span class="spacer"></span>
+    <select id="version-select" title="Browse versions">
+      <option>Loading versions…</option>
+    </select>
+    <span class="version-info" id="version-info"></span>
+    <a class="btn" href="https://doc-clev.github.io/homefab-map/" title="Expansion map">Map →</a>
+  </header>
+
+  <main>
+    <svg id="chart"></svg>
+    <div class="explainer" id="explainer">
+      <button class="close" id="explainer-close">×</button>
+      <div class="meta" id="explainer-meta"></div>
+      <h3 id="explainer-title"></h3>
+      <div class="fin" id="explainer-fin" style="display:none;"></div>
+      <div class="md-content" id="explainer-body"></div>
+    </div>
+  </main>
+
+  <aside class="right">
+    <div class="section">
+      <h2>Roll-up (Annual, $K)</h2>
+      <div id="rollup"></div>
+    </div>
+    <div class="section">
+      <h2>Volume assumptions</h2>
+      <div id="volume-display" style="font-size: 12px; color: var(--text-secondary);"></div>
+    </div>
+    <div class="section">
+      <h2>Reading the diagram</h2>
+      <div style="font-size: 12px; color: var(--text-secondary); line-height: 1.6;">
+        Three business units feed the same outcome — a delivered home on bare land. Functions branch off each BU bone. Hover any element for detail.<br><br>
+        <span style="color: var(--p1);">●</span> First Mile owns the buyer through contract<br>
+        <span style="color: var(--p2);">●</span> FBX Core runs the factory and supply layer<br>
+        <span style="color: var(--p3);">●</span> Last Mile (GC) executes on-site<br><br>
+        Customer relationship band along the top shows who owns the buyer at each stage. Dotted lines mark commercial handoffs.
+      </div>
+    </div>
+  </aside>
+</div>
+
+<script>
+const REPO = "Doc-Clev/homefab-map";
+const FILE_PATH = "fishbone.json";
+
+let state = null;
+let pinnedExplainer = null;
+let currentSha = null;
+
+// ============== BASIS / ROLLUP ==============
+function normalizeToAnnual(value_K, basis, volume) {
+  switch (basis) {
+    case "per_home": return value_K * (volume.homes_per_year || 0);
+    case "per_contract": return value_K * (volume.contracts_per_year || 0);
+    case "per_franchise": return value_K * (volume.franchises_per_year || 0);
+    case "per_month": return value_K * 12;
+    case "per_year": return value_K;
+    default: return value_K;
+  }
+}
+
+function migrateState(s) {
+  if (!s.volume) s.volume = {};
+  if (s.volume.homes_per_year == null) s.volume.homes_per_year = 100;
+  if (s.volume.contracts_per_year == null) s.volume.contracts_per_year = 100;
+  if (s.volume.franchises_per_year == null) s.volume.franchises_per_year = 4;
+  if (s.volume.franchises_from_map == null) s.volume.franchises_from_map = false;
+  if (!Array.isArray(s.bus)) s.bus = [];
+  s.bus.forEach(bu => {
+    if (!Array.isArray(bu.functions)) bu.functions = [];
+    bu.functions.forEach(fn => {
+      if (fn.external_rev_pct == null) {
+        fn.external_rev_pct = (bu.id === "fbx_core") ? 0 : 100;
+      }
+      if (fn.revenue_K == null) fn.revenue_K = 0;
+      if (fn.cost_K == null) fn.cost_K = 0;
+      if (fn.time_days == null) fn.time_days = 0;
+      if (fn.headcount == null) fn.headcount = 0;
+      if (!fn.basis) fn.basis = "per_home";
+    });
+  });
+  if (!s.handoffs) s.handoffs = [];
+  if (!s.customer_ownership) s.customer_ownership = { sales_owns_through: "fbx_core" };
+  return s;
+}
+
+function computeRollup() {
+  const vol = state.volume;
+  const perBU = {};
+  let totalElimination = 0;
+
+  state.bus.forEach(bu => {
+    let rev = 0, cost = 0, hc = 0, extRev = 0, intRev = 0;
+    bu.functions.forEach(fn => {
+      const annualRev = normalizeToAnnual(fn.revenue_K || 0, fn.basis, vol);
+      const annualCost = normalizeToAnnual(fn.cost_K || 0, fn.basis, vol);
+      const extPct = (fn.external_rev_pct == null ? 100 : fn.external_rev_pct) / 100;
+      rev += annualRev;
+      cost += annualCost;
+      extRev += annualRev * extPct;
+      intRev += annualRev * (1 - extPct);
+      hc += fn.headcount || 0;
+    });
+    perBU[bu.id] = {
+      revenue: rev, externalRevenue: extRev, internalRevenue: intRev,
+      cost: cost, margin: rev - cost, headcount: hc
+    };
+    totalElimination += intRev;
+  });
+
+  const gross = {
+    revenue: Object.values(perBU).reduce((s, b) => s + b.revenue, 0),
+    cost: Object.values(perBU).reduce((s, b) => s + b.cost, 0),
+    headcount: Object.values(perBU).reduce((s, b) => s + b.headcount, 0)
+  };
+  gross.margin = gross.revenue - gross.cost;
+
+  const consolidated = {
+    revenue: gross.revenue - totalElimination,
+    cost: gross.cost - totalElimination,
+    margin: gross.margin,
+    headcount: gross.headcount
+  };
+
+  return { perBU, gross, elimination: totalElimination, consolidated };
+}
+
+// ============== RENDER ==============
+function renderAll() {
+  if (!state) return;
+  renderRollup();
+  renderVolume();
+  renderFishbone();
+}
+
+function fmt(n) {
+  if (Math.abs(n) >= 1000) return "$" + (n / 1000).toFixed(1) + "M";
+  return "$" + Math.round(n) + "K";
+}
+
+function renderRollup() {
+  const r = computeRollup();
+  const cls = (n) => n >= 0 ? "pos" : "neg";
+  const buCard = (id, label) => {
+    const b = r.perBU[id];
+    if (!b) return "";
+    return `
+    <div class="rollup">
+      <h3>${label}</h3>
+      <div class="row"><span>Revenue</span><span class="val">${fmt(b.revenue)}</span></div>
+      <div class="row" style="font-size: 11px; color: var(--text-muted);">
+        <span>· external</span><span class="val">${fmt(b.externalRevenue)}</span>
+      </div>
+      <div class="row" style="font-size: 11px; color: var(--text-muted);">
+        <span>· inter-BU</span><span class="val">${fmt(b.internalRevenue)}</span>
+      </div>
+      <div class="row"><span>Cost</span><span class="val">${fmt(b.cost)}</span></div>
+      <div class="row total"><span>Margin</span><span class="val ${cls(b.margin)}">${fmt(b.margin)}</span></div>
+    </div>`;
+  };
+  document.getElementById("rollup").innerHTML = `
+    ${buCard("first_mile", "First Mile")}
+    ${buCard("fbx_core", "FBX Core")}
+    ${buCard("last_mile", "Last Mile")}
+    <div class="rollup">
+      <h3>Consolidated</h3>
+      <div class="row"><span>Gross Rev</span><span class="val">${fmt(r.gross.revenue)}</span></div>
+      <div class="row" style="color: var(--text-muted); font-size: 11px;"><span>Eliminations</span><span class="val">-${fmt(r.elimination)}</span></div>
+      <div class="row"><span>Consol Rev</span><span class="val">${fmt(r.consolidated.revenue)}</span></div>
+      <div class="row total"><span>Margin</span><span class="val ${cls(r.consolidated.margin)}">${fmt(r.consolidated.margin)}</span></div>
+    </div>
+  `;
+}
+
+function renderVolume() {
+  const v = state.volume;
+  document.getElementById("volume-display").innerHTML = `
+    <div style="display: flex; justify-content: space-between; padding: 2px 0;"><span>Homes / yr</span><span style="font-variant-numeric: tabular-nums; color: var(--text-primary);">${v.homes_per_year}</span></div>
+    <div style="display: flex; justify-content: space-between; padding: 2px 0;"><span>Contracts / yr</span><span style="font-variant-numeric: tabular-nums; color: var(--text-primary);">${v.contracts_per_year}</span></div>
+    <div style="display: flex; justify-content: space-between; padding: 2px 0;"><span>Franchises / yr</span><span style="font-variant-numeric: tabular-nums; color: var(--text-primary);">${v.franchises_per_year}${v.franchises_from_map ? " (from map)" : ""}</span></div>
+  `;
+}
+
+function renderFishbone() {
+  const svg = d3.select("#chart");
+  svg.selectAll("*").remove();
+
+  const container = document.querySelector("main");
+  const W = Math.max(900, container.clientWidth - 20);
+  const H = Math.max(560, container.clientHeight - 20);
+
+  svg.attr("viewBox", `0 0 ${W} ${H}`)
+     .attr("width", W).attr("height", H);
+
+  const marginL = 40, marginR = 260, marginT = 60, marginB = 40;
+  const spineY = H / 2 + 20;
+  const spineX1 = marginL;
+  const spineX2 = W - marginR;
+
+  // Ownership band
+  const bandY = marginT - 30;
+  const bandH = 20;
+  const buCount = state.bus.length;
+  const buWidth = (spineX2 - spineX1) / buCount;
+  svg.append("rect").attr("class", "ownership-band")
+    .attr("x", spineX1).attr("y", bandY)
+    .attr("width", buWidth * 2).attr("height", bandH)
+    .style("fill", "var(--p1)");
+  svg.append("text").attr("class", "ownership-label")
+    .attr("x", spineX1 + buWidth).attr("y", bandY + bandH / 2 + 4)
+    .text("Customer relationship: Sales →");
+  svg.append("rect").attr("class", "ownership-band")
+    .attr("x", spineX1 + buWidth * 2).attr("y", bandY)
+    .attr("width", buWidth).attr("height", bandH)
+    .style("fill", "var(--p3)");
+  svg.append("text").attr("class", "ownership-label")
+    .attr("x", spineX1 + buWidth * 2.5).attr("y", bandY + bandH / 2 + 4)
+    .text("→ GC");
+
+  // Spine
+  svg.append("line").attr("class", "spine")
+    .attr("x1", spineX1).attr("y1", spineY)
+    .attr("x2", spineX2).attr("y2", spineY);
+
+  const effectX = spineX2;
+  const effectW = 220, effectH = 56;
+  svg.append("polygon")
+    .attr("points", `${effectX},${spineY - 10} ${effectX + 14},${spineY} ${effectX},${spineY + 10}`)
+    .attr("fill", "var(--text-primary)");
+  svg.append("rect").attr("class", "effect-box")
+    .attr("x", effectX + 20).attr("y", spineY - effectH / 2)
+    .attr("width", effectW).attr("height", effectH).attr("rx", 6);
+  svg.append("text").attr("class", "effect-text")
+    .attr("x", effectX + 20 + effectW / 2).attr("y", spineY)
+    .text(state.head);
+
+  const boneAngle = 55;
+  const boneLen = 200;
+  state.bus.forEach((bu, i) => {
+    const attachX = spineX1 + buWidth * (i + 1) - 20;
+    const above = (i % 2 === 0);
+    const dir = above ? -1 : 1;
+    const boneEndX = attachX - boneLen * Math.cos(boneAngle * Math.PI / 180);
+    const boneEndY = spineY + dir * boneLen * Math.sin(boneAngle * Math.PI / 180);
+
+    svg.append("line").attr("class", "bu-bone").attr("data-bu", bu.id)
+      .attr("x1", attachX).attr("y1", spineY)
+      .attr("x2", boneEndX).attr("y2", boneEndY);
+
+    const labelG = svg.append("g")
+      .style("cursor", "pointer")
+      .on("mouseenter", () => showExplainer("bu", bu.id))
+      .on("mouseleave", hideExplainerIfNotPinned)
+      .on("click", () => pinExplainer("bu", bu.id));
+
+    labelG.append("rect")
+      .attr("x", boneEndX - 60)
+      .attr("y", boneEndY - 14 + (above ? -8 : -4))
+      .attr("width", 120).attr("height", 24)
+      .attr("fill", "var(--bg-card)")
+      .attr("stroke", `var(${bu.color_var || '--text-primary'})`)
+      .attr("stroke-width", 1.5).attr("rx", 4);
+    labelG.append("text").attr("class", "bu-label").attr("data-bu", bu.id)
+      .attr("x", boneEndX).attr("y", boneEndY + 2 + (above ? -8 : -4))
+      .attr("text-anchor", "middle").text(bu.name);
+
+    const fnCount = bu.functions.length;
+    bu.functions.forEach((fn, j) => {
+      const t = (j + 1) / (fnCount + 1);
+      const anchorX = attachX + (boneEndX - attachX) * t;
+      const anchorY = spineY + (boneEndY - spineY) * t;
+      const subLen = 70;
+      const subSide = (j % 2 === 0) ? 1 : -1;
+      const bvx = boneEndX - attachX, bvy = boneEndY - spineY;
+      const blen = Math.sqrt(bvx * bvx + bvy * bvy);
+      const pvx = -bvy / blen, pvy = bvx / blen;
+      const outSign = above ? -1 : 1;
+      const subEndX = anchorX + pvx * subLen * outSign * subSide;
+      const subEndY = anchorY + pvy * subLen * outSign * subSide;
+
+      svg.append("line").attr("class", "fn-bone").attr("data-bu", bu.id)
+        .attr("x1", anchorX).attr("y1", anchorY)
+        .attr("x2", subEndX).attr("y2", subEndY);
+
+      svg.append("text").attr("class", "fn-label")
+        .attr("x", subEndX).attr("y", subEndY + (subEndY < anchorY ? -6 : 12))
+        .attr("text-anchor", subSide * outSign > 0 ? "start" : "end")
+        .text(fn.name)
+        .style("cursor", "pointer")
+        .on("mouseenter", () => showExplainer("fn", fn.id, bu.id))
+        .on("mouseleave", hideExplainerIfNotPinned)
+        .on("click", () => pinExplainer("fn", fn.id, bu.id));
+    });
+
+    if (i < state.bus.length - 1) {
+      const handoffX = spineX1 + buWidth * (i + 1);
+      svg.append("line").attr("class", "handoff-line")
+        .attr("x1", handoffX).attr("y1", marginT)
+        .attr("x2", handoffX).attr("y2", H - marginB);
+      const handoff = state.handoffs[i];
+      if (handoff) {
+        svg.append("text").attr("class", "handoff-label")
+          .attr("x", handoffX).attr("y", H - marginB + 18)
+          .text("↓ " + handoff.label);
+      }
+    }
+  });
+}
+
+// ============== EXPLAINER ==============
+function showExplainer(type, id, buId) {
+  if (pinnedExplainer) return;
+  populateExplainer(type, id, buId);
+  document.getElementById("explainer").classList.add("visible");
+}
+
+function pinExplainer(type, id, buId) {
+  populateExplainer(type, id, buId);
+  pinnedExplainer = { type, id, buId };
+  const el = document.getElementById("explainer");
+  el.classList.add("visible", "pinned");
+}
+
+function populateExplainer(type, id, buId) {
+  const titleEl = document.getElementById("explainer-title");
+  const bodyEl = document.getElementById("explainer-body");
+  const metaEl = document.getElementById("explainer-meta");
+  const finEl = document.getElementById("explainer-fin");
+
+  if (type === "bu") {
+    const bu = state.bus.find(b => b.id === id);
+    if (!bu) return;
+    const r = computeRollup();
+    const b = r.perBU[id];
+    titleEl.textContent = bu.name;
+    metaEl.textContent = "Business Unit · " + bu.functions.length + " functions";
+    bodyEl.innerHTML = marked.parse(bu.description || "");
+    finEl.style.display = "grid";
+    finEl.innerHTML = `
+      <span class="label">Annual Rev</span><span class="val">${fmt(b.revenue)}</span>
+      <span class="label">External</span><span class="val">${fmt(b.externalRevenue)}</span>
+      <span class="label">Inter-BU</span><span class="val">${fmt(b.internalRevenue)}</span>
+      <span class="label">Cost</span><span class="val">${fmt(b.cost)}</span>
+      <span class="label">Margin</span><span class="val">${fmt(b.margin)}</span>
+      <span class="label">Headcount</span><span class="val">${b.headcount}</span>
+    `;
+  } else if (type === "fn") {
+    const bu = state.bus.find(b => b.id === buId);
+    if (!bu) return;
+    const fn = bu.functions.find(f => f.id === id);
+    if (!fn) return;
+    const annualRev = normalizeToAnnual(fn.revenue_K || 0, fn.basis, state.volume);
+    const annualCost = normalizeToAnnual(fn.cost_K || 0, fn.basis, state.volume);
+    const margin = annualRev - annualCost;
+    const marginPct = annualRev ? ((margin / annualRev) * 100).toFixed(0) + "%" : "—";
+    const extPct = fn.external_rev_pct == null ? 100 : fn.external_rev_pct;
+
+    titleEl.textContent = fn.name;
+    metaEl.textContent = `${bu.name} · ${fn.basis.replace("_", " ")} · ${extPct}% external`;
+    bodyEl.innerHTML = marked.parse(fn.description || "");
+    finEl.style.display = "grid";
+    finEl.innerHTML = `
+      <span class="label">Per ${fn.basis.replace("per_", "")}</span><span class="val">$${fn.revenue_K}K rev / $${fn.cost_K}K cost</span>
+      <span class="label">Annual Rev</span><span class="val">${fmt(annualRev)}</span>
+      <span class="label">Annual Cost</span><span class="val">${fmt(annualCost)}</span>
+      <span class="label">Margin</span><span class="val">${fmt(margin)} (${marginPct})</span>
+      <span class="label">Headcount</span><span class="val">${fn.headcount || 0}</span>
+      <span class="label">Time</span><span class="val">${fn.time_days || 0} days</span>
+    `;
+  }
+}
+
+function hideExplainerIfNotPinned() {
+  if (pinnedExplainer) return;
+  document.getElementById("explainer").classList.remove("visible");
+}
+
+document.getElementById("explainer-close").addEventListener("click", () => {
+  pinnedExplainer = null;
+  document.getElementById("explainer").classList.remove("visible", "pinned");
+});
+
+// Click-outside on chart unpins
+document.querySelector("main").addEventListener("click", (e) => {
+  if (!e.target.closest(".explainer") && !e.target.closest(".fn-label") && !e.target.closest(".bu-label") && !e.target.closest("g")) {
+    if (pinnedExplainer) {
+      pinnedExplainer = null;
+      document.getElementById("explainer").classList.remove("visible", "pinned");
+    }
+  }
+});
+
+// ============== GITHUB LOAD (unauthenticated) ==============
+async function loadVersion(sha) {
+  try {
+    const url = sha
+      ? `https://api.github.com/repos/${REPO}/contents/${FILE_PATH}?ref=${sha}`
+      : `https://api.github.com/repos/${REPO}/contents/${FILE_PATH}`;
+    const res = await fetch(url, { headers: { Accept: "application/vnd.github.raw" } });
+    if (!res.ok) {
+      if (res.status === 404) {
+        showError("fishbone.json not found in repo. Save a version from the editor first.");
+      } else if (res.status === 403) {
+        showError("GitHub API rate limit. Try again in a minute.");
+      } else {
+        showError(`Load failed: ${res.status}`);
+      }
+      return false;
+    }
+    const text = await res.text();
+    state = JSON.parse(text);
+    migrateState(state);
+    currentSha = sha;
+    if (sha) {
+      document.getElementById("version-info").textContent = sha.substring(0, 7);
+    } else {
+      document.getElementById("version-info").textContent = "latest";
+    }
+    return true;
+  } catch (err) {
+    showError("Load error: " + err.message);
+    return false;
+  }
+}
+
+async function loadVersionList() {
+  try {
+    const res = await fetch(
+      `https://api.github.com/repos/${REPO}/commits?path=${FILE_PATH}&per_page=30`,
+      { headers: { Accept: "application/vnd.github+json" } }
+    );
+    if (!res.ok) return;
+    const commits = await res.json();
+    const sel = document.getElementById("version-select");
+    sel.innerHTML = "";
+    if (!commits.length) {
+      sel.innerHTML = `<option>No versions yet</option>`;
+      return;
+    }
+    // Add "Latest" first
+    const latestOpt = document.createElement("option");
+    latestOpt.value = "";
+    latestOpt.textContent = "Latest";
+    sel.appendChild(latestOpt);
+
+    commits.forEach(c => {
+      const msg = c.commit.message;
+      const m = msg.match(/^\[([^\]]+)\]\s*(.*)/);
+      const name = m ? m[1] : "(unnamed)";
+      const date = new Date(c.commit.author.date).toLocaleDateString();
+      const opt = document.createElement("option");
+      opt.value = c.sha;
+      opt.textContent = `${name} — ${date}`;
+      sel.appendChild(opt);
+    });
+
+    // If a deep-link sha is set, select it
+    if (currentSha) {
+      sel.value = currentSha;
+    }
+  } catch (err) {
+    // Silent — version list is non-critical
+  }
+}
+
+document.getElementById("version-select").addEventListener("change", async (e) => {
+  const sha = e.target.value;
+  document.getElementById("loading").style.display = "flex";
+  const ok = await loadVersion(sha || null);
+  if (ok) {
+    renderAll();
+    // Update URL without reload
+    const u = new URL(window.location.href);
+    if (sha) u.searchParams.set("v", sha);
+    else u.searchParams.delete("v");
+    window.history.replaceState({}, "", u);
+  }
+  document.getElementById("loading").style.display = "none";
+});
+
+function showError(msg) {
+  const banner = document.createElement("div");
+  banner.className = "error-banner";
+  banner.textContent = msg;
+  document.body.insertBefore(banner, document.body.firstChild);
+  setTimeout(() => banner.remove(), 6000);
+}
+
+// ============== INIT ==============
+window.addEventListener("resize", () => {
+  if (state) renderFishbone();
+});
+
+(async function init() {
+  const params = new URLSearchParams(window.location.search);
+  const v = params.get("v");
+  const ok = await loadVersion(v || null);
+  document.getElementById("loading").style.display = "none";
+  if (ok) {
+    renderAll();
+    loadVersionList();
+  }
+})();
+</script>
+</body>
+</html>

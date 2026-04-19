@@ -1,0 +1,1500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FBX Fishbone — Editor</title>
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<style>
+:root {
+  --bg-primary: #faf9f7;
+  --bg-secondary: #f3f1ec;
+  --bg-tertiary: #ebe8e0;
+  --bg-card: #ffffff;
+  --text-primary: #2b2a27;
+  --text-secondary: #605d57;
+  --text-muted: #8a857c;
+  --border: #d9d5cc;
+  --border-strong: #b8b2a5;
+  --p1: #6b8e5a;      /* First Mile green */
+  --p2: #c9964a;      /* FBX Core amber */
+  --p3: #b85c4a;      /* Last Mile red */
+  --info: #5a7a99;
+  --accent: #8a6a4a;
+  --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 12px rgba(0,0,0,0.04);
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-primary: #1a1916;
+    --bg-secondary: #22201c;
+    --bg-tertiary: #2d2a25;
+    --bg-card: #26231f;
+    --text-primary: #e8e4db;
+    --text-secondary: #b0aa9e;
+    --text-muted: #7a756b;
+    --border: #3a3630;
+    --border-strong: #4d4840;
+    --p1: #8aad78;
+    --p2: #d9a85c;
+    --p3: #cc7560;
+    --info: #7a9ab9;
+    --accent: #a88a6a;
+    --shadow: 0 1px 3px rgba(0,0,0,0.3), 0 4px 12px rgba(0,0,0,0.2);
+  }
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-size: 14px;
+  line-height: 1.5;
+}
+.app {
+  display: grid;
+  grid-template-columns: 340px 1fr 380px;
+  grid-template-rows: auto 1fr;
+  grid-template-areas: "header header header" "left main right";
+  height: 100vh;
+  gap: 0;
+}
+header {
+  grid-area: header;
+  padding: 12px 20px;
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+header h1 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+header .subtitle {
+  color: var(--text-muted);
+  font-size: 12px;
+}
+header .spacer { flex: 1; }
+.btn {
+  background: var(--bg-card);
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+  padding: 6px 12px;
+  border-radius: 5px;
+  font-size: 13px;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.15s;
+}
+.btn:hover { background: var(--bg-tertiary); border-color: var(--border-strong); }
+.btn.primary {
+  background: var(--accent);
+  color: white;
+  border-color: var(--accent);
+}
+.btn.primary:hover { opacity: 0.9; background: var(--accent); }
+.btn.small { padding: 3px 8px; font-size: 12px; }
+.btn.danger { color: var(--p3); border-color: var(--p3); }
+.btn.danger:hover { background: var(--p3); color: white; }
+
+aside.left, aside.right {
+  background: var(--bg-secondary);
+  overflow-y: auto;
+  padding: 16px;
+}
+aside.left { grid-area: left; border-right: 1px solid var(--border); }
+aside.right { grid-area: right; border-left: 1px solid var(--border); }
+
+main {
+  grid-area: main;
+  overflow: auto;
+  background: var(--bg-primary);
+  position: relative;
+}
+
+.section {
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+}
+.section:last-child { border-bottom: none; }
+.section h2 {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  margin: 0 0 10px 0;
+  font-weight: 600;
+}
+
+.field {
+  margin-bottom: 10px;
+}
+.field label {
+  display: block;
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-bottom: 3px;
+}
+input[type=text], input[type=number], textarea, select {
+  width: 100%;
+  background: var(--bg-card);
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 6px 8px;
+  font-size: 13px;
+  font-family: inherit;
+}
+textarea { resize: vertical; min-height: 80px; font-family: "SF Mono", Menlo, Consolas, monospace; font-size: 12px; }
+input:focus, textarea:focus, select:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.bu-block {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-left: 3px solid var(--border-strong);
+}
+.bu-block[data-bu="first_mile"] { border-left-color: var(--p1); }
+.bu-block[data-bu="fbx_core"] { border-left-color: var(--p2); }
+.bu-block[data-bu="last_mile"] { border-left-color: var(--p3); }
+
+.bu-block h3 {
+  margin: 0 0 8px 0;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.bu-block .fn-list { list-style: none; padding: 0; margin: 0 0 8px 0; }
+.bu-block .fn-list li {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 6px;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 12px;
+}
+.bu-block .fn-list li:hover { background: var(--bg-tertiary); }
+.bu-block .fn-list li.active { background: var(--bg-tertiary); font-weight: 500; }
+.bu-block .fn-list li .fn-name { flex: 1; }
+.bu-block .fn-list li .move-btn {
+  background: none; border: none; color: var(--text-muted);
+  cursor: pointer; padding: 0 3px; font-size: 11px;
+}
+.bu-block .fn-list li .move-btn:hover { color: var(--text-primary); }
+
+.rollup {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 10px;
+  margin-bottom: 8px;
+}
+.rollup h3 {
+  margin: 0 0 6px 0;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+.rollup .row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  padding: 2px 0;
+}
+.rollup .row.total {
+  border-top: 1px solid var(--border);
+  margin-top: 4px;
+  padding-top: 4px;
+  font-weight: 600;
+}
+.rollup .row .val { font-variant-numeric: tabular-nums; }
+.rollup .row .val.pos { color: var(--p1); }
+.rollup .row .val.neg { color: var(--p3); }
+
+/* SVG Fishbone */
+#chart {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.spine { stroke: var(--text-primary); stroke-width: 2; }
+.effect-box {
+  fill: var(--bg-card);
+  stroke: var(--text-primary);
+  stroke-width: 1.5;
+}
+.effect-text {
+  fill: var(--text-primary);
+  font-weight: 600;
+  font-size: 14px;
+  text-anchor: middle;
+  dominant-baseline: middle;
+}
+.bu-bone { stroke-width: 2.5; }
+.bu-bone[data-bu="first_mile"] { stroke: var(--p1); }
+.bu-bone[data-bu="fbx_core"] { stroke: var(--p2); }
+.bu-bone[data-bu="last_mile"] { stroke: var(--p3); }
+.bu-label {
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.bu-label[data-bu="first_mile"] { fill: var(--p1); }
+.bu-label[data-bu="fbx_core"] { fill: var(--p2); }
+.bu-label[data-bu="last_mile"] { fill: var(--p3); }
+.fn-bone { stroke-width: 1.2; opacity: 0.65; }
+.fn-bone[data-bu="first_mile"] { stroke: var(--p1); }
+.fn-bone[data-bu="fbx_core"] { stroke: var(--p2); }
+.fn-bone[data-bu="last_mile"] { stroke: var(--p3); }
+.fn-label {
+  font-size: 11px;
+  fill: var(--text-secondary);
+  cursor: pointer;
+}
+.fn-label:hover, .fn-label.active { fill: var(--text-primary); font-weight: 600; }
+.handoff-line {
+  stroke: var(--text-muted);
+  stroke-width: 1;
+  stroke-dasharray: 4 3;
+}
+.handoff-label {
+  font-size: 10px;
+  fill: var(--text-muted);
+  font-style: italic;
+  text-anchor: middle;
+}
+.ownership-band {
+  fill-opacity: 0.15;
+  stroke: var(--border);
+  stroke-width: 0.5;
+}
+.ownership-label {
+  font-size: 10px;
+  fill: var(--text-secondary);
+  text-anchor: middle;
+  font-weight: 500;
+}
+
+/* Explainer panel */
+.explainer {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 380px;
+  max-height: calc(100% - 40px);
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+  padding: 16px;
+  overflow-y: auto;
+  display: none;
+  z-index: 10;
+}
+.explainer.visible { display: block; }
+.explainer.pinned { border-color: var(--accent); }
+.explainer h3 { margin: 0 0 8px 0; font-size: 14px; }
+.explainer .close {
+  position: absolute; top: 8px; right: 10px;
+  background: none; border: none; color: var(--text-muted);
+  cursor: pointer; font-size: 16px;
+}
+.explainer .meta {
+  font-size: 12px; color: var(--text-muted);
+  margin-bottom: 8px; padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+}
+.explainer .md-content { font-size: 13px; line-height: 1.55; }
+.explainer .md-content p { margin: 0 0 8px 0; }
+.explainer .md-content ul { margin: 0 0 8px 0; padding-left: 20px; }
+.explainer .md-content code {
+  background: var(--bg-tertiary); padding: 1px 4px;
+  border-radius: 3px; font-size: 12px;
+}
+
+/* Reference sidebar (map sync) */
+.refs {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+.refs .ref-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 3px 0;
+}
+.refs .ref-row .val { font-variant-numeric: tabular-nums; color: var(--text-primary); }
+
+/* Toast */
+.toast {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--p1);
+  border-radius: 5px;
+  padding: 10px 14px;
+  font-size: 13px;
+  box-shadow: var(--shadow);
+  z-index: 100;
+  animation: slideIn 0.2s ease;
+}
+.toast.error { border-left-color: var(--p3); }
+@keyframes slideIn {
+  from { transform: translateX(20px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+/* Modal */
+.modal-backdrop {
+  position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.4);
+  z-index: 50;
+  display: flex; align-items: center; justify-content: center;
+}
+.modal {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 20px;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: var(--shadow);
+}
+.modal h2 { margin: 0 0 12px 0; font-size: 16px; }
+
+/* Mobile */
+@media (max-width: 900px) {
+  .app {
+    grid-template-columns: 1fr;
+    grid-template-areas: "header" "main" "left" "right";
+    height: auto;
+  }
+  aside.left, aside.right { border: none; border-top: 1px solid var(--border); }
+  main { min-height: 500px; }
+}
+
+/* Detail editor */
+.detail-panel { font-size: 13px; }
+.detail-panel h2 { font-size: 15px; margin: 0 0 10px 0; }
+.detail-panel .two-col {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <header>
+    <h1>FBX Fishbone Editor</h1>
+    <span class="subtitle">Value chain across three BUs</span>
+    <span class="spacer"></span>
+    <button class="btn small" id="btn-import">Import</button>
+    <button class="btn small" id="btn-export">Export JSON</button>
+    <button class="btn small" id="btn-versions">Versions</button>
+    <button class="btn small" id="btn-settings">PAT</button>
+    <button class="btn primary small" id="btn-save">Save Version</button>
+  </header>
+
+  <aside class="left">
+    <div class="section">
+      <h2>Diagram Head</h2>
+      <div class="field">
+        <input type="text" id="head-input" placeholder="Effect label">
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Business Units</h2>
+      <div id="bu-list"></div>
+    </div>
+
+    <div class="section">
+      <h2>Roll-up (Annual, $K)</h2>
+      <div id="rollup"></div>
+      <div class="field" style="margin-top: 10px;">
+        <label>Homes / year (volume assumption)</label>
+        <input type="number" id="volume-homes" value="100">
+      </div>
+      <div class="field">
+        <label>Contracts / year</label>
+        <input type="number" id="volume-contracts" value="100">
+      </div>
+      <div class="field">
+        <label style="display: flex; justify-content: space-between; align-items: center;">
+          <span>Franchises / year</span>
+          <span style="font-size: 11px; color: var(--text-muted);">
+            <input type="checkbox" id="volume-franchises-from-map" style="vertical-align: middle; margin-right: 4px;">sync from map
+          </span>
+        </label>
+        <input type="number" id="volume-franchises" value="4">
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>From Expansion Map</h2>
+      <div class="refs" id="refs">
+        <div class="ref-row"><span>Loading...</span></div>
+      </div>
+      <button class="btn small" id="btn-sync-map" style="margin-top: 8px;">Refresh from map</button>
+    </div>
+  </aside>
+
+  <main>
+    <svg id="chart"></svg>
+    <div class="explainer" id="explainer">
+      <button class="close" id="explainer-close">×</button>
+      <div class="meta" id="explainer-meta"></div>
+      <h3 id="explainer-title"></h3>
+      <div class="md-content" id="explainer-body"></div>
+    </div>
+  </main>
+
+  <aside class="right" id="detail-pane">
+    <div class="detail-panel" id="detail-panel">
+      <p style="color: var(--text-muted); font-size: 13px;">
+        Click a business unit or function in the diagram or sidebar to edit.
+      </p>
+    </div>
+  </aside>
+</div>
+
+<script>
+// ============== SEED DATA ==============
+// Default function shape includes external_rev_pct: 0–100.
+// 100 = entirely external revenue (real new money into the system).
+// 0 = entirely inter-BU (gets eliminated in consolidation).
+const SEED = {
+  head: "Delivered Home on Bare Land",
+  volume: {
+    homes_per_year: 100,
+    contracts_per_year: 100,
+    franchises_per_year: 4,       // Tied to map's Fab count; auto-synced with override
+    franchises_from_map: true      // true = pull from sites.json Fab count
+  },
+  bus: [
+    {
+      id: "first_mile",
+      name: "First Mile",
+      color_var: "--p1",
+      description: "**First Mile** owns the customer-facing experience from initial interest through contract signing.\n\nCovers entitlement, financing, design, sales, franchise origination, contract execution, and ongoing franchise licensing (4–8% royalty on franchisee sales for brand, marketing, and sales support).",
+      functions: [
+        { id: "entitlement", name: "Entitlement / Permit", description: "Securing land entitlements, zoning approvals, and building permits.", revenue_K: 0, cost_K: 0, time_days: 0, headcount: 0, basis: "per_home", external_rev_pct: 100 },
+        { id: "finance", name: "Finance", description: "Construction loans, end-consumer mortgages, and financing coordination.", revenue_K: 0, cost_K: 0, time_days: 0, headcount: 0, basis: "per_home", external_rev_pct: 100 },
+        { id: "design", name: "Design", description: "Home design selection and customization with the buyer.", revenue_K: 0, cost_K: 0, time_days: 0, headcount: 0, basis: "per_home", external_rev_pct: 100 },
+        { id: "home_sales", name: "Home Sales", description: "Direct-to-consumer home sales (corporate-operated territories).", revenue_K: 0, cost_K: 0, time_days: 0, headcount: 0, basis: "per_home", external_rev_pct: 100 },
+        { id: "franchise_sales", name: "Franchise Sales", description: "Originating new franchise deals. One-time fee of $650K–$950K per franchise depending on size/complexity. External revenue — paid by new franchisee.", revenue_K: 800, cost_K: 0, time_days: 0, headcount: 0, basis: "per_franchise", external_rev_pct: 100 },
+        { id: "licensing_fees", name: "Licensing / Royalties", description: "Ongoing 4–8% royalty on franchisee home sales volume, in exchange for brand, marketing, and sales support. Paid by franchisees (who operate Last Mile) to First Mile. **Inter-BU flow — eliminates in consolidation.**\n\nRevenue here should be entered as annual $K expected from all franchisees. Last Mile books a matching COGS line.", revenue_K: 0, cost_K: 0, time_days: 0, headcount: 0, basis: "per_year", external_rev_pct: 0 },
+        { id: "building_contracts", name: "Building Contracts", description: "Contract execution and buyer handoff to construction.", revenue_K: 0, cost_K: 0, time_days: 0, headcount: 0, basis: "per_contract", external_rev_pct: 100 }
+      ]
+    },
+    {
+      id: "fbx_core",
+      name: "FBX Core",
+      color_var: "--p2",
+      description: "**FBX Core** is the industrial middle — the factory and distribution layer.\n\nImports components, runs warehousing, assembles Kits of Parts, trains operators, runs R&D, distributes to assembly factories, and sells components (SIP panels, bath/kitchen pods) à la carte to external buyers.",
+      functions: [
+        { id: "import", name: "Import (Foreign & Domestic)", description: "Sourcing components from domestic and international suppliers.", revenue_K: 0, cost_K: 0, time_days: 0, headcount: 0, basis: "per_home", external_rev_pct: 0 },
+        { id: "warehousing", name: "Warehousing", description: "Storage and inventory management.", revenue_K: 0, cost_K: 0, time_days: 0, headcount: 0, basis: "per_month", external_rev_pct: 0 },
+        { id: "kop", name: "Kit of Parts Creation", description: "Assembling components into shippable Kits of Parts. Sold to Last Mile at transfer price. **Inter-BU flow — eliminates in consolidation.**", revenue_K: 0, cost_K: 0, time_days: 0, headcount: 0, basis: "per_home", external_rev_pct: 0 },
+        { id: "component_sales", name: "Component Sales (SIP / Pods)", description: "Wall/roof SIP panels and bath/kitchen pods sold à la carte to external buyers (non-franchisee builders, developers). **External revenue — does not eliminate.** Will become a real line.", revenue_K: 0, cost_K: 0, time_days: 0, headcount: 0, basis: "per_year", external_rev_pct: 100 },
+        { id: "training", name: "Training", description: "Training assembly crews and franchise operators.", revenue_K: 0, cost_K: 0, time_days: 0, headcount: 0, basis: "per_year", external_rev_pct: 0 },
+        { id: "rd", name: "Research & Development", description: "Product development, system improvements, new models.", revenue_K: 0, cost_K: 0, time_days: 0, headcount: 0, basis: "per_year", external_rev_pct: 0 },
+        { id: "distribution", name: "Distribution to Assembly", description: "Logistics from Core to assembly factories.", revenue_K: 0, cost_K: 0, time_days: 0, headcount: 0, basis: "per_home", external_rev_pct: 0 }
+      ]
+    },
+    {
+      id: "last_mile",
+      name: "Last Mile",
+      color_var: "--p3",
+      description: "**Last Mile** is the GC-led execution layer.\n\nAssembly, delivery, site installation, and inspections. Revenue from home construction contracts paid by end buyers. Pays Core for KoP (COGS) and First Mile for ongoing licensing royalties (4–8% of sales).",
+      functions: [
+        { id: "assembly", name: "Assembly", description: "Factory assembly of the home from the Kit of Parts.", revenue_K: 0, cost_K: 0, time_days: 0, headcount: 0, basis: "per_home", external_rev_pct: 100 },
+        { id: "delivery", name: "Delivery Logistics", description: "Transport from assembly factory to the site.", revenue_K: 0, cost_K: 0, time_days: 0, headcount: 0, basis: "per_home", external_rev_pct: 100 },
+        { id: "install", name: "Installation Site Work", description: "Foundation, utilities, installation, finishing.", revenue_K: 0, cost_K: 0, time_days: 0, headcount: 0, basis: "per_home", external_rev_pct: 100 },
+        { id: "inspections", name: "Inspections", description: "Final inspections, certificates of occupancy.", revenue_K: 0, cost_K: 0, time_days: 0, headcount: 0, basis: "per_home", external_rev_pct: 100 }
+      ]
+    }
+  ],
+  handoffs: [
+    { after_bu: "first_mile", label: "contract signed → kit ordered", type: "commercial" },
+    { after_bu: "fbx_core", label: "kit shipped → site work begins", type: "commercial+customer" }
+  ],
+  customer_ownership: {
+    sales_owns_through: "fbx_core"  // Sales holds relationship through kit ordering; GC takes over at Last Mile
+  }
+};
+
+// ============== STATE ==============
+let state = JSON.parse(JSON.stringify(SEED));
+let selection = null;  // { type: 'bu'|'fn', buId, fnId? }
+let pinnedExplainer = null;
+const PAT_KEY = "fbx_fishbone_pat";
+const REPO = "Doc-Clev/homefab-map";
+const FILE_PATH = "fishbone.json";
+const MAP_FILE_PATH = "sites.json";
+
+// Backfill missing fields when loading older JSON. Idempotent.
+function migrateState(s) {
+  if (!s.volume) s.volume = {};
+  if (s.volume.homes_per_year == null) s.volume.homes_per_year = 100;
+  if (s.volume.contracts_per_year == null) s.volume.contracts_per_year = 100;
+  if (s.volume.franchises_per_year == null) s.volume.franchises_per_year = 4;
+  if (s.volume.franchises_from_map == null) s.volume.franchises_from_map = false;
+  if (!Array.isArray(s.bus)) s.bus = [];
+  s.bus.forEach(bu => {
+    if (!Array.isArray(bu.functions)) bu.functions = [];
+    bu.functions.forEach(fn => {
+      if (fn.external_rev_pct == null) {
+        // Sensible default by BU: Core defaults to internal, others to external
+        fn.external_rev_pct = (bu.id === "fbx_core") ? 0 : 100;
+      }
+      if (fn.revenue_K == null) fn.revenue_K = 0;
+      if (fn.cost_K == null) fn.cost_K = 0;
+      if (fn.time_days == null) fn.time_days = 0;
+      if (fn.headcount == null) fn.headcount = 0;
+      if (!fn.basis) fn.basis = "per_home";
+    });
+  });
+  if (!s.handoffs) s.handoffs = SEED.handoffs;
+  if (!s.customer_ownership) s.customer_ownership = SEED.customer_ownership;
+  return s;
+}
+
+// ============== BASIS NORMALIZATION ==============
+// All functions roll up to annual $K.
+function normalizeToAnnual(value_K, basis, volume) {
+  switch (basis) {
+    case "per_home": return value_K * (volume.homes_per_year || 0);
+    case "per_contract": return value_K * (volume.contracts_per_year || 0);
+    case "per_franchise": return value_K * (volume.franchises_per_year || 0);
+    case "per_month": return value_K * 12;
+    case "per_year": return value_K;
+    default: return value_K;
+  }
+}
+
+function computeRollup() {
+  const vol = state.volume;
+  const perBU = {};
+  let totalElimination = 0;
+  let eliminationByBU = { first_mile: 0, fbx_core: 0, last_mile: 0 };
+
+  state.bus.forEach(bu => {
+    let rev = 0, cost = 0, hc = 0, extRev = 0, intRev = 0;
+    bu.functions.forEach(fn => {
+      const annualRev = normalizeToAnnual(fn.revenue_K || 0, fn.basis, vol);
+      const annualCost = normalizeToAnnual(fn.cost_K || 0, fn.basis, vol);
+      const extPct = (fn.external_rev_pct == null ? 100 : fn.external_rev_pct) / 100;
+      const fnExtRev = annualRev * extPct;
+      const fnIntRev = annualRev * (1 - extPct);
+      rev += annualRev;
+      cost += annualCost;
+      extRev += fnExtRev;
+      intRev += fnIntRev;
+      hc += fn.headcount || 0;
+    });
+    perBU[bu.id] = {
+      revenue: rev,
+      externalRevenue: extRev,
+      internalRevenue: intRev,
+      cost: cost,
+      margin: rev - cost,
+      headcount: hc
+    };
+    eliminationByBU[bu.id] = intRev;
+    totalElimination += intRev;
+  });
+
+  // Gross = sum of all three (as if each BU were standalone)
+  const gross = {
+    revenue: Object.values(perBU).reduce((s, b) => s + b.revenue, 0),
+    cost: Object.values(perBU).reduce((s, b) => s + b.cost, 0),
+    headcount: Object.values(perBU).reduce((s, b) => s + b.headcount, 0)
+  };
+  gross.margin = gross.revenue - gross.cost;
+
+  // Consolidated: eliminate internal revenue from both revenue and cost.
+  // Assumption: every $ of internal revenue booked by one BU equals a $ of COGS
+  // in another BU (transfer pricing at parity). Margin is preserved.
+  const consolidated = {
+    revenue: gross.revenue - totalElimination,
+    cost: gross.cost - totalElimination,
+    margin: gross.margin,
+    headcount: gross.headcount
+  };
+
+  return { perBU, gross, elimination: totalElimination, eliminationByBU, consolidated };
+}
+
+// ============== RENDERING ==============
+function renderAll() {
+  renderSidebar();
+  renderFishbone();
+  renderDetail();
+  renderRollup();
+}
+
+function renderSidebar() {
+  document.getElementById("head-input").value = state.head;
+  document.getElementById("volume-homes").value = state.volume.homes_per_year;
+  document.getElementById("volume-contracts").value = state.volume.contracts_per_year;
+  document.getElementById("volume-franchises").value = state.volume.franchises_per_year || 0;
+  document.getElementById("volume-franchises-from-map").checked = !!state.volume.franchises_from_map;
+  document.getElementById("volume-franchises").disabled = !!state.volume.franchises_from_map;
+
+  const list = document.getElementById("bu-list");
+  list.innerHTML = "";
+  state.bus.forEach(bu => {
+    const block = document.createElement("div");
+    block.className = "bu-block";
+    block.dataset.bu = bu.id;
+    block.innerHTML = `
+      <h3>
+        <span class="bu-name">${escapeHtml(bu.name)}</span>
+        <button class="btn small" data-act="edit-bu" data-bu="${bu.id}" style="margin-left:auto;">Edit</button>
+      </h3>
+      <ul class="fn-list"></ul>
+      <button class="btn small" data-act="add-fn" data-bu="${bu.id}">+ Add function</button>
+    `;
+    const ul = block.querySelector(".fn-list");
+    bu.functions.forEach((fn, idx) => {
+      const li = document.createElement("li");
+      li.dataset.fn = fn.id;
+      li.dataset.bu = bu.id;
+      if (selection && selection.type === "fn" && selection.fnId === fn.id && selection.buId === bu.id) {
+        li.classList.add("active");
+      }
+      li.innerHTML = `
+        <span class="fn-name">${escapeHtml(fn.name)}</span>
+        <button class="move-btn" data-act="move-up" data-bu="${bu.id}" data-fn="${fn.id}" ${idx === 0 ? "disabled" : ""}>▲</button>
+        <button class="move-btn" data-act="move-down" data-bu="${bu.id}" data-fn="${fn.id}" ${idx === bu.functions.length - 1 ? "disabled" : ""}>▼</button>
+      `;
+      li.addEventListener("click", (e) => {
+        if (e.target.closest("button")) return;
+        selection = { type: "fn", buId: bu.id, fnId: fn.id };
+        renderAll();
+      });
+      ul.appendChild(li);
+    });
+    list.appendChild(block);
+  });
+}
+
+function renderRollup() {
+  const r = computeRollup();
+  const el = document.getElementById("rollup");
+  const fmt = (n) => {
+    if (Math.abs(n) >= 1000) return "$" + (n / 1000).toFixed(1) + "M";
+    return "$" + Math.round(n) + "K";
+  };
+  const cls = (n) => n >= 0 ? "pos" : "neg";
+  const buCard = (id, label) => {
+    const b = r.perBU[id];
+    const elim = r.eliminationByBU[id] || 0;
+    return `
+    <div class="rollup">
+      <h3>${label}</h3>
+      <div class="row"><span>Revenue (gross)</span><span class="val">${fmt(b.revenue)}</span></div>
+      <div class="row" style="font-size: 11px; color: var(--text-muted);">
+        <span>· external</span><span class="val">${fmt(b.externalRevenue)}</span>
+      </div>
+      <div class="row" style="font-size: 11px; color: var(--text-muted);">
+        <span>· inter-BU</span><span class="val">${fmt(b.internalRevenue)}</span>
+      </div>
+      <div class="row"><span>Cost</span><span class="val">${fmt(b.cost)}</span></div>
+      <div class="row"><span>Headcount</span><span class="val">${b.headcount}</span></div>
+      <div class="row total"><span>Margin</span><span class="val ${cls(b.margin)}">${fmt(b.margin)}</span></div>
+    </div>`;
+  };
+  el.innerHTML = `
+    ${buCard("first_mile", "First Mile")}
+    ${buCard("fbx_core", "FBX Core")}
+    ${buCard("last_mile", "Last Mile")}
+    <div class="rollup">
+      <h3>Consolidated</h3>
+      <div class="row"><span>Gross Rev</span><span class="val">${fmt(r.gross.revenue)}</span></div>
+      <div class="row" style="color: var(--text-muted); font-size: 11px;"><span>Eliminations</span><span class="val">-${fmt(r.elimination)}</span></div>
+      <div class="row"><span>Consol Rev</span><span class="val">${fmt(r.consolidated.revenue)}</span></div>
+      <div class="row"><span>Consol Cost</span><span class="val">${fmt(r.consolidated.cost)}</span></div>
+      <div class="row total"><span>Consol Margin</span><span class="val ${cls(r.consolidated.margin)}">${fmt(r.consolidated.margin)}</span></div>
+    </div>
+  `;
+}
+
+function renderFishbone() {
+  const svg = d3.select("#chart");
+  svg.selectAll("*").remove();
+
+  const container = document.querySelector("main");
+  const W = Math.max(900, container.clientWidth - 40);
+  const H = Math.max(560, container.clientHeight - 40);
+
+  svg.attr("viewBox", `0 0 ${W} ${H}`)
+     .attr("width", W)
+     .attr("height", H);
+
+  // Layout
+  const marginL = 40, marginR = 260, marginT = 60, marginB = 40;
+  const spineY = H / 2 + 20;
+  const spineX1 = marginL;
+  const spineX2 = W - marginR;
+
+  // Ownership band along top
+  const bandY = marginT - 30;
+  const bandH = 20;
+  // Split band: Sales owns through fbx_core end, GC takes last_mile
+  const buCount = state.bus.length;
+  const buWidth = (spineX2 - spineX1) / buCount;
+  // Sales band covers first two BUs; GC band covers the third
+  svg.append("rect")
+    .attr("class", "ownership-band")
+    .attr("x", spineX1)
+    .attr("y", bandY)
+    .attr("width", buWidth * 2)
+    .attr("height", bandH)
+    .style("fill", "var(--p1)");
+  svg.append("text")
+    .attr("class", "ownership-label")
+    .attr("x", spineX1 + buWidth)
+    .attr("y", bandY + bandH / 2 + 4)
+    .text("Customer relationship: Sales →");
+  svg.append("rect")
+    .attr("class", "ownership-band")
+    .attr("x", spineX1 + buWidth * 2)
+    .attr("y", bandY)
+    .attr("width", buWidth)
+    .attr("height", bandH)
+    .style("fill", "var(--p3)");
+  svg.append("text")
+    .attr("class", "ownership-label")
+    .attr("x", spineX1 + buWidth * 2.5)
+    .attr("y", bandY + bandH / 2 + 4)
+    .text("→ GC");
+
+  // Spine
+  svg.append("line")
+    .attr("class", "spine")
+    .attr("x1", spineX1).attr("y1", spineY)
+    .attr("x2", spineX2).attr("y2", spineY);
+
+  // Arrowhead into effect
+  const effectX = spineX2;
+  const effectCX = effectX + 120;
+  const effectW = 220;
+  const effectH = 56;
+  svg.append("polygon")
+    .attr("points", `${effectX},${spineY - 10} ${effectX + 14},${spineY} ${effectX},${spineY + 10}`)
+    .attr("fill", "var(--text-primary)");
+
+  // Effect box
+  svg.append("rect")
+    .attr("class", "effect-box")
+    .attr("x", effectX + 20)
+    .attr("y", spineY - effectH / 2)
+    .attr("width", effectW)
+    .attr("height", effectH)
+    .attr("rx", 6);
+  svg.append("text")
+    .attr("class", "effect-text")
+    .attr("x", effectX + 20 + effectW / 2)
+    .attr("y", spineY)
+    .text(state.head);
+
+  // BU bones — alternate above/below spine
+  const boneAngle = 55; // degrees from spine
+  const boneLen = 200;
+  state.bus.forEach((bu, i) => {
+    const buCenterX = spineX1 + buWidth * i + buWidth / 2;
+    // Place attach point offset so bones don't crowd
+    const attachX = spineX1 + buWidth * (i + 1) - 20;
+    const above = (i % 2 === 0);
+    const dir = above ? -1 : 1;
+
+    // Bone line
+    const boneEndX = attachX - boneLen * Math.cos(boneAngle * Math.PI / 180);
+    const boneEndY = spineY + dir * boneLen * Math.sin(boneAngle * Math.PI / 180);
+
+    svg.append("line")
+      .attr("class", "bu-bone")
+      .attr("data-bu", bu.id)
+      .attr("x1", attachX).attr("y1", spineY)
+      .attr("x2", boneEndX).attr("y2", boneEndY);
+
+    // BU label at end of bone
+    const labelG = svg.append("g")
+      .style("cursor", "pointer")
+      .on("click", () => {
+        selection = { type: "bu", buId: bu.id };
+        renderAll();
+      })
+      .on("mouseenter", () => showExplainer("bu", bu.id, { x: boneEndX, y: boneEndY }))
+      .on("mouseleave", () => hideExplainerIfNotPinned());
+
+    labelG.append("rect")
+      .attr("x", boneEndX - 60)
+      .attr("y", boneEndY - 14 + (above ? -8 : -4))
+      .attr("width", 120)
+      .attr("height", 24)
+      .attr("fill", "var(--bg-card)")
+      .attr("stroke", `var(${bu.color_var})`)
+      .attr("stroke-width", 1.5)
+      .attr("rx", 4);
+
+    labelG.append("text")
+      .attr("class", "bu-label")
+      .attr("data-bu", bu.id)
+      .attr("x", boneEndX)
+      .attr("y", boneEndY + 2 + (above ? -8 : -4))
+      .attr("text-anchor", "middle")
+      .text(bu.name);
+
+    // Sub-function bones off the BU bone
+    const fnCount = bu.functions.length;
+    bu.functions.forEach((fn, j) => {
+      // Place sub-bones evenly along BU bone
+      const t = (j + 1) / (fnCount + 1);
+      const anchorX = attachX + (boneEndX - attachX) * t;
+      const anchorY = spineY + (boneEndY - spineY) * t;
+
+      // Sub-bone perpendicular-ish to BU bone, extending outward
+      const subLen = 70;
+      // Alternate sides of the BU bone for sub-bones
+      const subSide = (j % 2 === 0) ? 1 : -1;
+      // Perpendicular vector to BU bone, pointing "outward"
+      const bvx = boneEndX - attachX, bvy = boneEndY - spineY;
+      const blen = Math.sqrt(bvx * bvx + bvy * bvy);
+      // Perpendicular (rotate 90deg)
+      const pvx = -bvy / blen, pvy = bvx / blen;
+      // Choose outward direction (away from spine center)
+      const outSign = above ? -1 : 1;
+      const subEndX = anchorX + pvx * subLen * outSign * subSide;
+      const subEndY = anchorY + pvy * subLen * outSign * subSide;
+
+      svg.append("line")
+        .attr("class", "fn-bone")
+        .attr("data-bu", bu.id)
+        .attr("x1", anchorX).attr("y1", anchorY)
+        .attr("x2", subEndX).attr("y2", subEndY);
+
+      const fnLabel = svg.append("text")
+        .attr("class", "fn-label" + (selection && selection.type === "fn" && selection.fnId === fn.id ? " active" : ""))
+        .attr("x", subEndX)
+        .attr("y", subEndY + (subEndY < anchorY ? -6 : 12))
+        .attr("text-anchor", subSide * outSign > 0 ? "start" : "end")
+        .text(fn.name)
+        .style("cursor", "pointer")
+        .on("click", () => {
+          selection = { type: "fn", buId: bu.id, fnId: fn.id };
+          renderAll();
+        })
+        .on("mouseenter", () => showExplainer("fn", fn.id, { x: subEndX, y: subEndY }, bu.id))
+        .on("mouseleave", () => hideExplainerIfNotPinned());
+    });
+
+    // Handoff line after this BU (except after last)
+    if (i < state.bus.length - 1) {
+      const handoffX = spineX1 + buWidth * (i + 1);
+      svg.append("line")
+        .attr("class", "handoff-line")
+        .attr("x1", handoffX).attr("y1", marginT)
+        .attr("x2", handoffX).attr("y2", H - marginB);
+
+      const handoff = state.handoffs[i];
+      if (handoff) {
+        svg.append("text")
+          .attr("class", "handoff-label")
+          .attr("x", handoffX)
+          .attr("y", H - marginB + 18)
+          .text("↓ " + handoff.label);
+      }
+    }
+  });
+}
+
+// ============== DETAIL PANEL ==============
+function renderDetail() {
+  const pane = document.getElementById("detail-panel");
+  if (!selection) {
+    pane.innerHTML = `<p style="color: var(--text-muted); font-size: 13px;">
+      Click a business unit or function in the diagram or sidebar to edit.
+    </p>`;
+    return;
+  }
+
+  if (selection.type === "bu") {
+    const bu = state.bus.find(b => b.id === selection.buId);
+    if (!bu) return;
+    pane.innerHTML = `
+      <h2>${escapeHtml(bu.name)}</h2>
+      <div class="field">
+        <label>BU Name</label>
+        <input type="text" id="bu-name" value="${escapeHtml(bu.name)}">
+      </div>
+      <div class="field">
+        <label>Description (Markdown)</label>
+        <textarea id="bu-desc" rows="8">${escapeHtml(bu.description || "")}</textarea>
+      </div>
+      <button class="btn" id="bu-save">Save</button>
+    `;
+    document.getElementById("bu-save").addEventListener("click", () => {
+      bu.name = document.getElementById("bu-name").value;
+      bu.description = document.getElementById("bu-desc").value;
+      renderAll();
+      toast("Business unit updated");
+    });
+    return;
+  }
+
+  if (selection.type === "fn") {
+    const bu = state.bus.find(b => b.id === selection.buId);
+    if (!bu) return;
+    const fn = bu.functions.find(f => f.id === selection.fnId);
+    if (!fn) return;
+
+    pane.innerHTML = `
+      <h2>${escapeHtml(fn.name)}</h2>
+      <div style="color: var(--text-muted); font-size: 12px; margin-bottom: 10px;">in ${escapeHtml(bu.name)}</div>
+
+      <div class="field">
+        <label>Function Name</label>
+        <input type="text" id="fn-name" value="${escapeHtml(fn.name)}">
+      </div>
+
+      <div class="field">
+        <label>Basis</label>
+        <select id="fn-basis">
+          <option value="per_home" ${fn.basis === "per_home" ? "selected" : ""}>Per home</option>
+          <option value="per_contract" ${fn.basis === "per_contract" ? "selected" : ""}>Per contract</option>
+          <option value="per_franchise" ${fn.basis === "per_franchise" ? "selected" : ""}>Per franchise</option>
+          <option value="per_month" ${fn.basis === "per_month" ? "selected" : ""}>Per month</option>
+          <option value="per_year" ${fn.basis === "per_year" ? "selected" : ""}>Per year</option>
+        </select>
+      </div>
+
+      <div class="two-col">
+        <div class="field">
+          <label>Revenue ($K)</label>
+          <input type="number" id="fn-rev" value="${fn.revenue_K || 0}" step="0.1">
+        </div>
+        <div class="field">
+          <label>Cost ($K)</label>
+          <input type="number" id="fn-cost" value="${fn.cost_K || 0}" step="0.1">
+        </div>
+        <div class="field">
+          <label>Time (days)</label>
+          <input type="number" id="fn-days" value="${fn.time_days || 0}">
+        </div>
+        <div class="field">
+          <label>Headcount</label>
+          <input type="number" id="fn-hc" value="${fn.headcount || 0}">
+        </div>
+      </div>
+
+      <div class="field">
+        <label style="display: flex; justify-content: space-between;">
+          <span>External revenue %</span>
+          <span style="color: var(--text-muted); font-size: 11px;">100 = external · 0 = inter-BU (eliminates)</span>
+        </label>
+        <input type="number" id="fn-ext" value="${fn.external_rev_pct == null ? 100 : fn.external_rev_pct}" min="0" max="100" step="1">
+      </div>
+
+      <div class="field">
+        <label>Margin % (computed)</label>
+        <input type="text" id="fn-margin" value="${fn.revenue_K ? ((fn.revenue_K - fn.cost_K) / fn.revenue_K * 100).toFixed(1) + '%' : 'n/a'}" readonly style="background: var(--bg-tertiary);">
+      </div>
+
+      <div class="field">
+        <label>Description (Markdown)</label>
+        <textarea id="fn-desc" rows="6">${escapeHtml(fn.description || "")}</textarea>
+      </div>
+
+      <div style="display: flex; gap: 6px;">
+        <button class="btn primary" id="fn-save">Save</button>
+        <button class="btn danger" id="fn-delete">Delete</button>
+      </div>
+    `;
+
+    document.getElementById("fn-save").addEventListener("click", () => {
+      fn.name = document.getElementById("fn-name").value;
+      fn.basis = document.getElementById("fn-basis").value;
+      fn.revenue_K = parseFloat(document.getElementById("fn-rev").value) || 0;
+      fn.cost_K = parseFloat(document.getElementById("fn-cost").value) || 0;
+      fn.time_days = parseFloat(document.getElementById("fn-days").value) || 0;
+      fn.headcount = parseFloat(document.getElementById("fn-hc").value) || 0;
+      fn.external_rev_pct = Math.max(0, Math.min(100, parseFloat(document.getElementById("fn-ext").value) || 0));
+      fn.description = document.getElementById("fn-desc").value;
+      renderAll();
+      toast("Function updated");
+    });
+
+    document.getElementById("fn-delete").addEventListener("click", () => {
+      if (!confirm(`Delete "${fn.name}"?`)) return;
+      bu.functions = bu.functions.filter(f => f.id !== fn.id);
+      selection = null;
+      renderAll();
+      toast("Function deleted");
+    });
+  }
+}
+
+// ============== EXPLAINER ==============
+function showExplainer(type, id, pos, buId) {
+  if (pinnedExplainer) return;
+  const el = document.getElementById("explainer");
+  const titleEl = document.getElementById("explainer-title");
+  const bodyEl = document.getElementById("explainer-body");
+  const metaEl = document.getElementById("explainer-meta");
+
+  if (type === "bu") {
+    const bu = state.bus.find(b => b.id === id);
+    if (!bu) return;
+    titleEl.textContent = bu.name;
+    metaEl.textContent = "Business Unit";
+    bodyEl.innerHTML = marked.parse(bu.description || "");
+  } else if (type === "fn") {
+    const bu = state.bus.find(b => b.id === buId);
+    const fn = bu.functions.find(f => f.id === id);
+    if (!fn) return;
+    titleEl.textContent = fn.name;
+    metaEl.textContent = `${bu.name} · ${fn.basis.replace("_", " ")}`;
+    bodyEl.innerHTML = marked.parse(fn.description || "");
+  }
+  el.classList.add("visible");
+}
+
+function hideExplainerIfNotPinned() {
+  if (pinnedExplainer) return;
+  document.getElementById("explainer").classList.remove("visible");
+}
+
+document.getElementById("explainer-close").addEventListener("click", () => {
+  pinnedExplainer = null;
+  document.getElementById("explainer").classList.remove("visible", "pinned");
+});
+
+// Click to pin
+document.getElementById("explainer").addEventListener("click", (e) => {
+  if (e.target.closest(".close")) return;
+  if (!pinnedExplainer) {
+    pinnedExplainer = true;
+    document.getElementById("explainer").classList.add("pinned");
+  }
+});
+
+// ============== EVENT HANDLERS ==============
+document.getElementById("head-input").addEventListener("input", (e) => {
+  state.head = e.target.value;
+  renderFishbone();
+});
+
+document.getElementById("volume-homes").addEventListener("input", (e) => {
+  state.volume.homes_per_year = parseFloat(e.target.value) || 0;
+  renderRollup();
+});
+
+document.getElementById("volume-contracts").addEventListener("input", (e) => {
+  state.volume.contracts_per_year = parseFloat(e.target.value) || 0;
+  renderRollup();
+});
+
+document.getElementById("volume-franchises").addEventListener("input", (e) => {
+  state.volume.franchises_per_year = parseFloat(e.target.value) || 0;
+  renderRollup();
+});
+
+document.getElementById("volume-franchises-from-map").addEventListener("change", (e) => {
+  state.volume.franchises_from_map = e.target.checked;
+  document.getElementById("volume-franchises").disabled = e.target.checked;
+  if (e.target.checked) {
+    loadMapRefs(); // will refresh and apply
+  }
+});
+
+document.addEventListener("click", (e) => {
+  const btn = e.target.closest("[data-act]");
+  if (!btn) return;
+  const act = btn.dataset.act;
+  const buId = btn.dataset.bu;
+  const fnId = btn.dataset.fn;
+
+  if (act === "edit-bu") {
+    selection = { type: "bu", buId };
+    renderAll();
+  } else if (act === "add-fn") {
+    const bu = state.bus.find(b => b.id === buId);
+    const newId = "fn_" + Date.now();
+    // Sensible default: Core functions are internal by default, others external
+    const defaultExt = bu.id === "fbx_core" ? 0 : 100;
+    bu.functions.push({
+      id: newId, name: "New Function", description: "",
+      revenue_K: 0, cost_K: 0, time_days: 0, headcount: 0,
+      basis: "per_home", external_rev_pct: defaultExt
+    });
+    selection = { type: "fn", buId, fnId: newId };
+    renderAll();
+  } else if (act === "move-up" || act === "move-down") {
+    const bu = state.bus.find(b => b.id === buId);
+    const idx = bu.functions.findIndex(f => f.id === fnId);
+    const newIdx = act === "move-up" ? idx - 1 : idx + 1;
+    if (newIdx < 0 || newIdx >= bu.functions.length) return;
+    [bu.functions[idx], bu.functions[newIdx]] = [bu.functions[newIdx], bu.functions[idx]];
+    renderAll();
+  }
+});
+
+// ============== IMPORT / EXPORT ==============
+document.getElementById("btn-export").addEventListener("click", () => {
+  const blob = new Blob([JSON.stringify(state, null, 2)], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "fishbone.json";
+  a.click();
+  URL.revokeObjectURL(url);
+});
+
+document.getElementById("btn-import").addEventListener("click", () => {
+  const input = document.createElement("input");
+  input.type = "file";
+  input.accept = ".json,application/json";
+  input.onchange = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+      try {
+        state = JSON.parse(ev.target.result);
+        migrateState(state);
+        renderAll();
+        toast("Imported");
+      } catch (err) {
+        toast("Import failed: " + err.message, true);
+      }
+    };
+    reader.readAsText(file);
+  };
+  input.click();
+});
+
+// ============== GITHUB PAT FLOW ==============
+function getPAT() {
+  return localStorage.getItem(PAT_KEY);
+}
+function setPAT(pat) {
+  if (pat) localStorage.setItem(PAT_KEY, pat);
+  else localStorage.removeItem(PAT_KEY);
+}
+
+document.getElementById("btn-settings").addEventListener("click", () => {
+  const current = getPAT() || "";
+  showModal(`
+    <h2>GitHub PAT</h2>
+    <p style="color: var(--text-muted); font-size: 13px;">
+      Fine-grained PAT with <code>Contents: Read &amp; Write</code> scoped to <code>${REPO}</code>.
+      Stored in your browser's localStorage.
+    </p>
+    <div class="field">
+      <label>Personal Access Token</label>
+      <input type="text" id="pat-input" value="${escapeHtml(current)}" placeholder="github_pat_...">
+    </div>
+    <div style="display: flex; gap: 6px; justify-content: flex-end;">
+      <button class="btn" id="pat-clear">Clear</button>
+      <button class="btn" id="pat-cancel">Cancel</button>
+      <button class="btn primary" id="pat-save">Save</button>
+    </div>
+  `, () => {
+    document.getElementById("pat-save").addEventListener("click", () => {
+      setPAT(document.getElementById("pat-input").value.trim());
+      closeModal();
+      toast("PAT saved");
+    });
+    document.getElementById("pat-clear").addEventListener("click", () => {
+      setPAT("");
+      closeModal();
+      toast("PAT cleared");
+    });
+    document.getElementById("pat-cancel").addEventListener("click", closeModal);
+  });
+});
+
+document.getElementById("btn-save").addEventListener("click", () => {
+  const pat = getPAT();
+  if (!pat) {
+    toast("Set a PAT first (click PAT button)", true);
+    return;
+  }
+  showModal(`
+    <h2>Save Version</h2>
+    <p style="color: var(--text-muted); font-size: 13px;">
+      Commits <code>fishbone.json</code> to <code>${REPO}</code>.
+    </p>
+    <div class="field">
+      <label>Version name (short label for the dropdown)</label>
+      <input type="text" id="save-name" placeholder="e.g., initial, v2-with-franchise-fees" autofocus>
+    </div>
+    <div class="field">
+      <label>Description</label>
+      <input type="text" id="save-desc" placeholder="what changed">
+    </div>
+    <div style="display: flex; gap: 6px; justify-content: flex-end;">
+      <button class="btn" id="save-cancel">Cancel</button>
+      <button class="btn primary" id="save-commit">Commit</button>
+    </div>
+  `, () => {
+    document.getElementById("save-cancel").addEventListener("click", closeModal);
+    document.getElementById("save-commit").addEventListener("click", async () => {
+      const name = document.getElementById("save-name").value.trim() || "untitled";
+      const desc = document.getElementById("save-desc").value.trim() || "updated fishbone";
+      const msg = `[${name}] ${desc}`;
+      closeModal();
+      await commitToGitHub(msg);
+    });
+  });
+});
+
+async function commitToGitHub(message) {
+  const pat = getPAT();
+  if (!pat) return;
+
+  try {
+    // Get current file SHA (if exists)
+    const getRes = await fetch(`https://api.github.com/repos/${REPO}/contents/${FILE_PATH}`, {
+      headers: { Authorization: `Bearer ${pat}`, Accept: "application/vnd.github+json" }
+    });
+    let sha = null;
+    if (getRes.ok) {
+      const data = await getRes.json();
+      sha = data.sha;
+    } else if (getRes.status !== 404) {
+      throw new Error(`GET failed: ${getRes.status}`);
+    }
+
+    // Encode content
+    const content = btoa(unescape(encodeURIComponent(JSON.stringify(state, null, 2))));
+
+    const putRes = await fetch(`https://api.github.com/repos/${REPO}/contents/${FILE_PATH}`, {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${pat}`,
+        Accept: "application/vnd.github+json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        message,
+        content,
+        sha: sha || undefined
+      })
+    });
+
+    if (!putRes.ok) {
+      const err = await putRes.json().catch(() => ({}));
+      throw new Error(`PUT failed: ${putRes.status} ${err.message || ""}`);
+    }
+
+    const result = await putRes.json();
+    toast(`Saved: ${result.commit.sha.substring(0, 7)}`);
+  } catch (err) {
+    toast("Save failed: " + err.message, true);
+  }
+}
+
+document.getElementById("btn-versions").addEventListener("click", async () => {
+  const pat = getPAT();
+  showModal(`
+    <h2>Versions</h2>
+    <div id="versions-list" style="max-height: 400px; overflow-y: auto;">Loading...</div>
+    <div style="display: flex; gap: 6px; justify-content: flex-end; margin-top: 10px;">
+      <button class="btn" id="ver-close">Close</button>
+    </div>
+  `, async () => {
+    document.getElementById("ver-close").addEventListener("click", closeModal);
+
+    const list = document.getElementById("versions-list");
+    try {
+      const headers = pat
+        ? { Authorization: `Bearer ${pat}`, Accept: "application/vnd.github+json" }
+        : { Accept: "application/vnd.github+json" };
+      const res = await fetch(`https://api.github.com/repos/${REPO}/commits?path=${FILE_PATH}&per_page=30`, { headers });
+      if (!res.ok) throw new Error(`List failed: ${res.status}`);
+      const commits = await res.json();
+      if (!commits.length) {
+        list.innerHTML = "<p style='color: var(--text-muted);'>No versions yet.</p>";
+        return;
+      }
+      list.innerHTML = commits.map(c => {
+        const msg = c.commit.message;
+        const m = msg.match(/^\[([^\]]+)\]\s*(.*)/);
+        const name = m ? m[1] : "(unnamed)";
+        const desc = m ? m[2] : msg;
+        const date = new Date(c.commit.author.date).toLocaleString();
+        return `
+          <div style="padding: 8px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 8px;">
+            <div style="flex: 1;">
+              <div style="font-weight: 600; font-size: 13px;">${escapeHtml(name)}</div>
+              <div style="font-size: 12px; color: var(--text-secondary);">${escapeHtml(desc)}</div>
+              <div style="font-size: 11px; color: var(--text-muted);">${date} · ${c.sha.substring(0, 7)}</div>
+            </div>
+            <button class="btn small" data-act="load-ver" data-sha="${c.sha}">Load</button>
+            <a class="btn small" href="?v=${c.sha}" target="_blank">Link</a>
+          </div>
+        `;
+      }).join("");
+
+      list.querySelectorAll("[data-act='load-ver']").forEach(b => {
+        b.addEventListener("click", async () => {
+          await loadVersion(b.dataset.sha);
+          closeModal();
+        });
+      });
+    } catch (err) {
+      list.innerHTML = `<p style="color: var(--p3);">Error: ${escapeHtml(err.message)}</p>`;
+    }
+  });
+});
+
+async function loadVersion(sha) {
+  try {
+    const pat = getPAT();
+    const headers = pat
+      ? { Authorization: `Bearer ${pat}`, Accept: "application/vnd.github.raw" }
+      : { Accept: "application/vnd.github.raw" };
+    const res = await fetch(`https://api.github.com/repos/${REPO}/contents/${FILE_PATH}?ref=${sha}`, { headers });
+    if (!res.ok) throw new Error(`Fetch failed: ${res.status}`);
+    const text = await res.text();
+    state = JSON.parse(text);
+    migrateState(state);
+    renderAll();
+    toast(`Loaded ${sha.substring(0, 7)}`);
+  } catch (err) {
+    toast("Load failed: " + err.message, true);
+  }
+}
+
+// Deep-link via ?v=<sha>
+(async function checkDeepLink() {
+  const params = new URLSearchParams(window.location.search);
+  const v = params.get("v");
+  if (v) {
+    await loadVersion(v);
+  } else {
+    // Try to load latest from GitHub
+    await loadLatest();
+  }
+})();
+
+async function loadLatest() {
+  try {
+    const res = await fetch(`https://api.github.com/repos/${REPO}/contents/${FILE_PATH}`, {
+      headers: { Accept: "application/vnd.github.raw" }
+    });
+    if (res.ok) {
+      const text = await res.text();
+      state = JSON.parse(text);
+      migrateState(state);
+      renderAll();
+    }
+    // If 404 or other, just use seed — already loaded.
+  } catch (err) {
+    // Silent fail — keep seed data
+  }
+}
+
+// ============== MAP SYNC ==============
+async function loadMapRefs() {
+  const refsEl = document.getElementById("refs");
+  try {
+    const res = await fetch(`https://api.github.com/repos/${REPO}/contents/${MAP_FILE_PATH}`, {
+      headers: { Accept: "application/vnd.github.raw" }
+    });
+    if (!res.ok) {
+      refsEl.innerHTML = `<div class="ref-row"><span style="color: var(--text-muted);">sites.json not found</span></div>`;
+      return;
+    }
+    const map = await res.json();
+    // Best-effort extraction — map schema may vary
+    const globals = map.globals || map.assumptions || {};
+    const sites = map.sites || map.fabs || [];
+    const fabCount = Array.isArray(sites) ? sites.length : 0;
+    const revPerHome = globals.rev_per_home_K || globals.revenue_per_home_K || "—";
+    const homesPerFabYear = globals.homes_per_fab_year || globals.homes_per_year_per_fab || "—";
+
+    // If franchises sync is on, apply fabCount as franchises_per_year
+    let appliedNote = "";
+    if (state.volume.franchises_from_map && fabCount > 0) {
+      state.volume.franchises_per_year = fabCount;
+      appliedNote = `<div style="color: var(--p1); margin-top: 4px;">✓ Applied ${fabCount} → franchises/year</div>`;
+      // re-render sidebar + rollup to reflect
+      const fEl = document.getElementById("volume-franchises");
+      if (fEl) fEl.value = fabCount;
+      renderRollup();
+    }
+
+    refsEl.innerHTML = `
+      <div class="ref-row"><span>Fab count</span><span class="val">${fabCount}</span></div>
+      <div class="ref-row"><span>Rev per home ($K)</span><span class="val">${revPerHome}</span></div>
+      <div class="ref-row"><span>Homes/fab/year</span><span class="val">${homesPerFabYear}</span></div>
+      <div class="ref-row" style="font-size: 11px; color: var(--text-muted); margin-top: 6px; border-top: 1px solid var(--border); padding-top: 6px;">
+        Reference values. Franchise count auto-applies when sync is on.
+        ${appliedNote}
+      </div>
+    `;
+  } catch (err) {
+    refsEl.innerHTML = `<div class="ref-row"><span style="color: var(--text-muted);">Map unavailable</span></div>`;
+  }
+}
+document.getElementById("btn-sync-map").addEventListener("click", loadMapRefs);
+loadMapRefs();
+
+// ============== MODAL ==============
+function showModal(html, onOpen) {
+  const backdrop = document.createElement("div");
+  backdrop.className = "modal-backdrop";
+  backdrop.innerHTML = `<div class="modal">${html}</div>`;
+  backdrop.addEventListener("click", (e) => {
+    if (e.target === backdrop) closeModal();
+  });
+  document.body.appendChild(backdrop);
+  if (onOpen) onOpen();
+}
+function closeModal() {
+  document.querySelector(".modal-backdrop")?.remove();
+}
+
+// ============== TOAST ==============
+function toast(msg, isError) {
+  const t = document.createElement("div");
+  t.className = "toast" + (isError ? " error" : "");
+  t.textContent = msg;
+  document.body.appendChild(t);
+  setTimeout(() => t.remove(), 3000);
+}
+
+// ============== UTILS ==============
+function escapeHtml(s) {
+  return String(s || "").replace(/[&<>"']/g, (c) => ({
+    "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+  })[c]);
+}
+
+// ============== INIT ==============
+window.addEventListener("resize", renderFishbone);
+renderAll();
+</script>
+</body>
+</html>
