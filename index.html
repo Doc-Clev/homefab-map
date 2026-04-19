@@ -224,6 +224,9 @@
   /* ---- MAP HUB MARKERS ---- */
   .hub { fill: #0F6E56; stroke: var(--bg-primary); stroke-width: 1.5; cursor: pointer; transition: opacity 0.2s; }
   .hub.dim { opacity: 0.15; }
+  .hub-range { fill: #0F6E56; fill-opacity: 0.15; stroke: #0F6E56; stroke-opacity: 0.35; stroke-width: 0.75; pointer-events: none; transition: opacity 0.2s; }
+  .hub-range.dim { opacity: 0.08; }
+  @media (prefers-color-scheme: dark) { .hub-range { fill: #5DCAA5; stroke: #5DCAA5; } }
   .hub-label { font-size: 10px; font-weight: 500; fill: #085041; pointer-events: none; }
   @media (prefers-color-scheme: dark) { .hub-label { fill: #9FE1CB; } .hub { fill: #5DCAA5; stroke: var(--bg-primary); } }
   .hub-swatch { background: transparent; border: 2px solid #0F6E56; transform: rotate(45deg); border-radius: 1px; }
@@ -417,6 +420,7 @@
         <span><span class="swatch" style="background:var(--p2)"></span>Phase 2 Fab</span>
         <span><span class="swatch" style="background:var(--p3)"></span>Phase 3 Fab</span>
         <span><span class="swatch hub-swatch"></span>FBX Core hub</span>
+        <span><span class="swatch" style="background:rgba(15,110,86,0.15); border:1px solid rgba(15,110,86,0.35); border-radius:50%"></span>500-mi hub service range</span>
       </div>
     </div>
 
@@ -450,7 +454,7 @@
           <thead>
             <tr>
               <th style="width:22px"></th>
-              <th style="width:40px">Yr</th>
+              <th style="width:56px">Yr</th>
               <th style="width:42px">Ph</th>
               <th>City</th>
               <th style="width:40px">ST</th>
@@ -517,7 +521,7 @@
       <table>
         <thead>
           <tr>
-            <th style="width:40px">Opens Yr</th>
+            <th style="width:72px">Opens Yr</th>
             <th>Hub name</th>
             <th style="width:160px">City</th>
             <th style="width:40px">ST</th>
@@ -548,11 +552,11 @@ const ASM_STORAGE_KEY = 'homefab_assumptions_v3';
 
 /* ============== 4 FBX Core hubs (default seed) ============== */
 const SEED_HUBS = [
-  { name: "West Coast Core", city: "Stockton", state: "CA", lat: 37.96, lon: -121.29, capex: 15, opens_yr: 1 },
+  { name: "West Coast Core", city: "Corona", state: "CA", lat: 33.8753, lon: -117.5664, capex: 15, opens_yr: 1 },
   { name: "Northeast Core", city: "Hartford", state: "CT", lat: 41.7658, lon: -72.6734, capex: 15, opens_yr: 3 },
   { name: "Mountain-Southwest Core", city: "Denver", state: "CO", lat: 39.7392, lon: -104.9903, capex: 15, opens_yr: 3 },
   { name: "Sun Belt Core", city: "Dallas-Fort Worth", state: "TX", lat: 32.78, lon: -96.8, capex: 15, opens_yr: 5 },
-  { name: "Midwest Core", city: "Columbus", state: "OH", lat: 39.9612, lon: -82.9988, capex: 15, opens_yr: 6 },
+  { name: "Midwest Core", city: "Indianapolis", state: "IN", lat: 39.7684, lon: -86.1581, capex: 15, opens_yr: 6 },
 ];
 
 /* ============== Default assumptions (flexible via UI) ============== */
@@ -1573,6 +1577,34 @@ function updateDashboard() {
 function updateMap() {
   if (!mapProjection) return;
   const svg = d3.select('#map');
+
+  // --- Hub service-range circles (under everything) ---
+  // 500-mile radius concentric circles around each FBX Core hub.
+  // Pixel radius is computed per-hub using the projection: we project a point
+  // 500 miles due east at the hub's latitude and measure the screen distance,
+  // so the circle is geographically accurate regardless of Albers distortion.
+  let rangeG = svg.select('g.hub-ranges-layer');
+  if (rangeG.empty()) rangeG = svg.append('g').attr('class', 'hub-ranges-layer');
+  const rangeMiles = 500;
+  const milesPerDegLat = 69.0;  // close enough for this purpose
+  function rangePx(hub) {
+    const center = mapProjection([hub.lon, hub.lat]);
+    if (!center) return 0;
+    // Offset 500 mi east — longitude degrees per mile depends on cos(latitude)
+    const milesPerDegLon = Math.cos(hub.lat * Math.PI / 180) * milesPerDegLat;
+    const dLon = rangeMiles / milesPerDegLon;
+    const edge = mapProjection([hub.lon + dLon, hub.lat]);
+    if (!edge) return 0;
+    return Math.hypot(edge[0] - center[0], edge[1] - center[1]);
+  }
+  const rangeJoin = rangeG.selectAll('circle.hub-range').data(hubs, d => d._id);
+  rangeJoin.exit().remove();
+  rangeJoin.enter().append('circle').attr('class', 'hub-range')
+    .merge(rangeJoin)
+    .attr('class', d => 'hub-range' + (d.opens_yr > currentYear ? ' dim' : ''))
+    .attr('cx', d => { const p = mapProjection([d.lon, d.lat]); return p ? p[0] : -1000; })
+    .attr('cy', d => { const p = mapProjection([d.lon, d.lat]); return p ? p[1] : -1000; })
+    .attr('r', d => rangePx(d));
 
   // --- Routes layer (under dots) ---
   let routeG = svg.select('g.routes-layer');

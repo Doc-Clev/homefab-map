@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "exported_at": "2026-04-19T16:17:02.247Z",
+  "exported_at": "2026-04-19T16:27:12.113Z",
   "sites": [
     {
       "yr": 1,
@@ -894,10 +894,10 @@
   "hubs": [
     {
       "name": "West Coast Core",
-      "city": "Stockton",
+      "city": "Corona",
       "state": "CA",
-      "lat": 37.96,
-      "lon": -121.29,
+      "lat": 33.8753,
+      "lon": -117.5664,
       "capex": 15,
       "opens_yr": 1
     },
@@ -930,10 +930,10 @@
     },
     {
       "name": "Midwest Core",
-      "city": "Columbus",
-      "state": "OH",
-      "lat": 39.9612,
-      "lon": -82.9988,
+      "city": "Indianapolis",
+      "state": "IN",
+      "lat": 39.7684,
+      "lon": -86.1581,
       "capex": 15,
       "opens_yr": 6
     }
