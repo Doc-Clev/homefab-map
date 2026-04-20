@@ -420,6 +420,13 @@ input:focus, textarea:focus, select:focus {
     </div>
 
     <div class="section">
+      <h2>Products (left box)</h2>
+      <div class="field">
+        <textarea id="products-input" rows="4" placeholder="One product per line"></textarea>
+      </div>
+    </div>
+
+    <div class="section">
       <h2>Business Units</h2>
       <div id="bu-list"></div>
     </div>
@@ -573,6 +580,9 @@ function migrateState(s) {
   });
   if (!s.handoffs) s.handoffs = SEED.handoffs;
   if (!s.customer_ownership) s.customer_ownership = SEED.customer_ownership;
+  if (!Array.isArray(s.products)) {
+    s.products = ["ADUs", "High Density Multi-Family", "Bathroom Pods", "SIPs"];
+  }
   return s;
 }
 
@@ -652,6 +662,7 @@ function renderAll() {
 
 function renderSidebar() {
   document.getElementById("head-input").value = state.head;
+  document.getElementById("products-input").value = (state.products || []).join("\n");
   document.getElementById("volume-homes").value = state.volume.homes_per_year;
   document.getElementById("volume-contracts").value = state.volume.contracts_per_year;
   document.getElementById("volume-franchises").value = state.volume.franchises_per_year || 0;
@@ -742,189 +753,342 @@ function renderFishbone() {
   svg.selectAll("*").remove();
 
   const container = document.querySelector("main");
-  const W = Math.max(900, container.clientWidth - 40);
-  const H = Math.max(560, container.clientHeight - 40);
+  const W = Math.max(1000, container.clientWidth - 40);
+  const H = Math.max(620, container.clientHeight - 40);
 
   svg.attr("viewBox", `0 0 ${W} ${H}`)
-     .attr("width", W)
-     .attr("height", H);
+     .attr("width", W).attr("height", H);
 
-  // Layout
-  const marginL = 40, marginR = 260, marginT = 60, marginB = 40;
-  const spineY = H / 2 + 20;
+  // ---- Layout ----
+  const marginL = 180, marginR = 220;
+  const headerBandH = 34;    // BU zone label row, top
+  const ownershipBandH = 16; // Customer ownership band, below headers
+  const footerBandH = 30;    // Handoff labels, bottom
+  const marginT = 20 + headerBandH + ownershipBandH + 10; // top breathing room for function stubs
+  const marginB = 20 + footerBandH;
+  const spineY = Math.round((marginT + (H - marginB)) / 2);
   const spineX1 = marginL;
   const spineX2 = W - marginR;
-
-  // Ownership band along top
-  const bandY = marginT - 30;
-  const bandH = 20;
-  // Split band: Sales owns through fbx_core end, GC takes last_mile
   const buCount = state.bus.length;
   const buWidth = (spineX2 - spineX1) / buCount;
-  // Sales band covers first two BUs; GC band covers the third
-  svg.append("rect")
-    .attr("class", "ownership-band")
-    .attr("x", spineX1)
-    .attr("y", bandY)
-    .attr("width", buWidth * 2)
-    .attr("height", bandH)
-    .style("fill", "var(--p1)");
-  svg.append("text")
-    .attr("class", "ownership-label")
-    .attr("x", spineX1 + buWidth)
-    .attr("y", bandY + bandH / 2 + 4)
-    .text("Customer relationship: Sales →");
-  svg.append("rect")
-    .attr("class", "ownership-band")
-    .attr("x", spineX1 + buWidth * 2)
-    .attr("y", bandY)
-    .attr("width", buWidth)
-    .attr("height", bandH)
-    .style("fill", "var(--p3)");
-  svg.append("text")
-    .attr("class", "ownership-label")
-    .attr("x", spineX1 + buWidth * 2.5)
-    .attr("y", bandY + bandH / 2 + 4)
-    .text("→ GC");
 
-  // Spine
-  svg.append("line")
-    .attr("class", "spine")
-    .attr("x1", spineX1).attr("y1", spineY)
-    .attr("x2", spineX2).attr("y2", spineY);
-
-  // Arrowhead into effect
-  const effectX = spineX2;
-  const effectCX = effectX + 120;
-  const effectW = 220;
-  const effectH = 56;
-  svg.append("polygon")
-    .attr("points", `${effectX},${spineY - 10} ${effectX + 14},${spineY} ${effectX},${spineY + 10}`)
-    .attr("fill", "var(--text-primary)");
-
-  // Effect box
-  svg.append("rect")
-    .attr("class", "effect-box")
-    .attr("x", effectX + 20)
-    .attr("y", spineY - effectH / 2)
-    .attr("width", effectW)
-    .attr("height", effectH)
-    .attr("rx", 6);
-  svg.append("text")
-    .attr("class", "effect-text")
-    .attr("x", effectX + 20 + effectW / 2)
-    .attr("y", spineY)
-    .text(state.head);
-
-  // BU bones — alternate above/below spine
-  const boneAngle = 55; // degrees from spine
-  const boneLen = 200;
+  // ---- BU zone headers (row at top) ----
   state.bus.forEach((bu, i) => {
-    const buCenterX = spineX1 + buWidth * i + buWidth / 2;
-    // Place attach point offset so bones don't crowd
-    const attachX = spineX1 + buWidth * (i + 1) - 20;
-    const above = (i % 2 === 0);
-    const dir = above ? -1 : 1;
+    const zoneX = spineX1 + buWidth * i;
+    const zoneMid = zoneX + buWidth / 2;
+    const buColor = `var(${bu.color_var})`;
 
-    // Bone line
-    const boneEndX = attachX - boneLen * Math.cos(boneAngle * Math.PI / 180);
-    const boneEndY = spineY + dir * boneLen * Math.sin(boneAngle * Math.PI / 180);
-
-    svg.append("line")
-      .attr("class", "bu-bone")
-      .attr("data-bu", bu.id)
-      .attr("x1", attachX).attr("y1", spineY)
-      .attr("x2", boneEndX).attr("y2", boneEndY);
-
-    // BU label at end of bone
-    const labelG = svg.append("g")
+    const headerG = svg.append("g")
       .style("cursor", "pointer")
       .on("click", () => {
         selection = { type: "bu", buId: bu.id };
         renderAll();
       })
-      .on("mouseenter", () => showExplainer("bu", bu.id, { x: boneEndX, y: boneEndY }))
+      .on("mouseenter", () => showExplainer("bu", bu.id))
       .on("mouseleave", () => hideExplainerIfNotPinned());
 
-    labelG.append("rect")
-      .attr("x", boneEndX - 60)
-      .attr("y", boneEndY - 14 + (above ? -8 : -4))
-      .attr("width", 120)
-      .attr("height", 24)
-      .attr("fill", "var(--bg-card)")
-      .attr("stroke", `var(${bu.color_var})`)
-      .attr("stroke-width", 1.5)
-      .attr("rx", 4);
-
-    labelG.append("text")
-      .attr("class", "bu-label")
-      .attr("data-bu", bu.id)
-      .attr("x", boneEndX)
-      .attr("y", boneEndY + 2 + (above ? -8 : -4))
+    // filled pill centered over zone
+    const pillW = Math.min(180, buWidth - 40);
+    const pillH = 26;
+    const pillX = zoneMid - pillW / 2;
+    const pillY = 14;
+    headerG.append("rect")
+      .attr("x", pillX).attr("y", pillY)
+      .attr("width", pillW).attr("height", pillH)
+      .attr("rx", 5).attr("fill", buColor);
+    headerG.append("text")
+      .attr("x", zoneMid).attr("y", pillY + pillH / 2 + 5)
       .attr("text-anchor", "middle")
+      .attr("fill", "white")
+      .attr("font-weight", 600)
+      .attr("font-size", 13)
       .text(bu.name);
+  });
 
-    // Sub-function bones off the BU bone
-    const fnCount = bu.functions.length;
+  // ---- Customer ownership band below headers ----
+  const bandY = 14 + 26 + 6;
+  svg.append("rect").attr("class", "ownership-band")
+    .attr("x", spineX1).attr("y", bandY)
+    .attr("width", buWidth * 2).attr("height", ownershipBandH)
+    .style("fill", "var(--p1)");
+  svg.append("text").attr("class", "ownership-label")
+    .attr("x", spineX1 + buWidth).attr("y", bandY + ownershipBandH / 2 + 4)
+    .text("Customer relationship: Sales →");
+  svg.append("rect").attr("class", "ownership-band")
+    .attr("x", spineX1 + buWidth * 2).attr("y", bandY)
+    .attr("width", buWidth).attr("height", ownershipBandH)
+    .style("fill", "var(--p3)");
+  svg.append("text").attr("class", "ownership-label")
+    .attr("x", spineX1 + buWidth * 2.5).attr("y", bandY + ownershipBandH / 2 + 4)
+    .text("→ GC");
+
+  // ---- Dashed BU zone dividers ----
+  for (let i = 1; i < buCount; i++) {
+    const x = spineX1 + buWidth * i;
+    svg.append("line")
+      .attr("x1", x).attr("y1", marginT - 4)
+      .attr("x2", x).attr("y2", H - marginB + 4)
+      .attr("stroke", "var(--text-primary)")
+      .attr("stroke-width", 1)
+      .attr("stroke-dasharray", "5 4")
+      .attr("opacity", 0.25);
+    const handoff = state.handoffs[i - 1];
+    if (handoff) {
+      svg.append("text").attr("class", "handoff-label")
+        .attr("x", x).attr("y", H - marginB + 20)
+        .text("↓ " + handoff.label);
+    }
+  }
+
+  // ---- Horizontal spine ----
+  svg.append("line").attr("class", "spine")
+    .attr("x1", spineX1).attr("y1", spineY)
+    .attr("x2", spineX2).attr("y2", spineY)
+    .attr("stroke-width", 4);
+
+  // ---- Chunky effect arrow ----
+  const arrowStart = spineX2;
+  const arrowTipX = arrowStart + 80;
+  const arrowH = 60;
+  svg.append("polygon")
+    .attr("points", `${arrowStart},${spineY - arrowH/2} ${arrowTipX},${spineY} ${arrowStart},${spineY + arrowH/2}`)
+    .attr("fill", "var(--text-primary)")
+    .attr("opacity", 0.9);
+  const effectX = arrowTipX + 8;
+  const effectW = 160, effectH = 70;
+  svg.append("rect").attr("class", "effect-box")
+    .attr("x", effectX).attr("y", spineY - effectH / 2)
+    .attr("width", effectW).attr("height", effectH).attr("rx", 6)
+    .attr("fill", "var(--text-primary)")
+    .attr("stroke", "var(--text-primary)");
+  const effectLines = wrapText(state.head, 18);
+  const lineH = 16;
+  const startY = spineY - ((effectLines.length - 1) * lineH) / 2 + 4;
+  effectLines.forEach((line, i) => {
+    svg.append("text").attr("class", "effect-text")
+      .attr("x", effectX + effectW / 2)
+      .attr("y", startY + i * lineH)
+      .attr("fill", "var(--bg-primary)")
+      .text(line);
+  });
+
+  // ---- Products box on left end of spine ----
+  const products = Array.isArray(state.products) ? state.products : [];
+  const productsW = 150;
+  const productsX = spineX1 - productsW - 8;
+  // Dynamic height based on line count
+  const productLineH = 15;
+  const productTitleH = 18;
+  const productsPad = 10;
+  const productsH = productTitleH + (products.length * productLineH) + productsPad * 2;
+  svg.append("rect").attr("class", "products-box")
+    .attr("x", productsX).attr("y", spineY - productsH / 2)
+    .attr("width", productsW).attr("height", productsH).attr("rx", 6)
+    .attr("fill", "var(--text-primary)")
+    .attr("stroke", "var(--text-primary)");
+  // Title
+  svg.append("text")
+    .attr("x", productsX + productsW / 2)
+    .attr("y", spineY - productsH / 2 + productsPad + productTitleH - 4)
+    .attr("text-anchor", "middle")
+    .attr("fill", "var(--bg-primary)")
+    .attr("font-size", 13)
+    .attr("font-weight", 700)
+    .text("Products");
+  // Product list
+  products.forEach((p, idx) => {
+    svg.append("text")
+      .attr("x", productsX + productsW / 2)
+      .attr("y", spineY - productsH / 2 + productsPad + productTitleH + 8 + idx * productLineH)
+      .attr("text-anchor", "middle")
+      .attr("fill", "var(--bg-primary)")
+      .attr("font-size", 11)
+      .attr("opacity", 0.9)
+      .text(p);
+  });
+
+  // ---- Function stubs (oblique — leaning left, away from effect) ----
+  // Each bone's tip shifts left by sin(tilt) * height from its anchor.
+  // We compute anchor X values in "tip-space" (where we want tips to land),
+  // then shift right by that offset so tips end up in the right place.
+  const TILT_DEG = 22;
+  const TILT_SIN = Math.sin(TILT_DEG * Math.PI / 180);
+
+  state.bus.forEach((bu, i) => {
+    const zoneX = spineX1 + buWidth * i;
+    const zoneInnerPad = 20;
+    const zoneInnerLeft = zoneX + zoneInnerPad;
+    const zoneInnerRight = zoneX + buWidth - zoneInnerPad;
+    const buColor = `var(${bu.color_var})`;
+
+    const topFns = [];
+    const botFns = [];
     bu.functions.forEach((fn, j) => {
-      // Place sub-bones evenly along BU bone
-      const t = (j + 1) / (fnCount + 1);
-      const anchorX = attachX + (boneEndX - attachX) * t;
-      const anchorY = spineY + (boneEndY - spineY) * t;
-
-      // Sub-bone perpendicular-ish to BU bone, extending outward
-      const subLen = 70;
-      // Alternate sides of the BU bone for sub-bones
-      const subSide = (j % 2 === 0) ? 1 : -1;
-      // Perpendicular vector to BU bone, pointing "outward"
-      const bvx = boneEndX - attachX, bvy = boneEndY - spineY;
-      const blen = Math.sqrt(bvx * bvx + bvy * bvy);
-      // Perpendicular (rotate 90deg)
-      const pvx = -bvy / blen, pvy = bvx / blen;
-      // Choose outward direction (away from spine center)
-      const outSign = above ? -1 : 1;
-      const subEndX = anchorX + pvx * subLen * outSign * subSide;
-      const subEndY = anchorY + pvy * subLen * outSign * subSide;
-
-      svg.append("line")
-        .attr("class", "fn-bone")
-        .attr("data-bu", bu.id)
-        .attr("x1", anchorX).attr("y1", anchorY)
-        .attr("x2", subEndX).attr("y2", subEndY);
-
-      const fnLabel = svg.append("text")
-        .attr("class", "fn-label" + (selection && selection.type === "fn" && selection.fnId === fn.id ? " active" : ""))
-        .attr("x", subEndX)
-        .attr("y", subEndY + (subEndY < anchorY ? -6 : 12))
-        .attr("text-anchor", subSide * outSign > 0 ? "start" : "end")
-        .text(fn.name)
-        .style("cursor", "pointer")
-        .on("click", () => {
-          selection = { type: "fn", buId: bu.id, fnId: fn.id };
-          renderAll();
-        })
-        .on("mouseenter", () => showExplainer("fn", fn.id, { x: subEndX, y: subEndY }, bu.id))
-        .on("mouseleave", () => hideExplainerIfNotPinned());
+      if (j % 2 === 0) topFns.push(fn);
+      else botFns.push(fn);
     });
 
-    // Handoff line after this BU (except after last)
-    if (i < state.bus.length - 1) {
-      const handoffX = spineX1 + buWidth * (i + 1);
-      svg.append("line")
-        .attr("class", "handoff-line")
-        .attr("x1", handoffX).attr("y1", marginT)
-        .attr("x2", handoffX).attr("y2", H - marginB);
+    const stubHeightMax = spineY - marginT - 30;
+    const stubHeightMin = 50;
+    const heightFor = (idx, total) => {
+      if (total <= 1) return stubHeightMin + (stubHeightMax - stubHeightMin) * 0.6;
+      const ratios = [0.95, 0.65, 0.85, 0.55, 0.75, 0.45];
+      const r = ratios[idx % ratios.length];
+      return stubHeightMin + (stubHeightMax - stubHeightMin) * r;
+    };
 
-      const handoff = state.handoffs[i];
-      if (handoff) {
-        svg.append("text")
-          .attr("class", "handoff-label")
-          .attr("x", handoffX)
-          .attr("y", H - marginB + 18)
-          .text("↓ " + handoff.label);
+    const distributeTipX = (count, addSlot) => {
+      const n = count + (addSlot ? 1 : 0);
+      if (n === 0) return [];
+      const positions = [];
+      for (let k = 0; k < n; k++) {
+        const t = (n === 1) ? 0.5 : (k + 0.5) / n;
+        positions.push(zoneInnerLeft + (zoneInnerRight - zoneInnerLeft) * t);
       }
+      return positions;
+    };
+
+    // Anchor X = desired tip X + (lean offset)
+    // Spine intersects anchor at x. Tip at (x - sin*h, spineY ± cos*h).
+    // So anchor = tipX + sin*h.
+    const anchorFromTip = (tipX, h) => tipX + TILT_SIN * h;
+
+    const addOnTop = topFns.length <= botFns.length;
+
+    // Top stubs
+    const topTipXs = distributeTipX(topFns.length, addOnTop);
+    topFns.forEach((fn, idx) => {
+      const h = heightFor(idx, topFns.length);
+      const x = anchorFromTip(topTipXs[idx], h);
+      drawStub(svg, fn, bu, x, spineY, -1, h, buColor, false);
+    });
+    if (addOnTop) {
+      const h = heightFor(topFns.length, topFns.length + 1) * 0.7;
+      const x = anchorFromTip(topTipXs[topFns.length], h);
+      drawStub(svg, null, bu, x, spineY, -1, h, buColor, true);
+    }
+
+    // Bottom stubs
+    const botTipXs = distributeTipX(botFns.length, !addOnTop);
+    botFns.forEach((fn, idx) => {
+      const h = heightFor(idx, botFns.length);
+      const x = anchorFromTip(botTipXs[idx], h);
+      drawStub(svg, fn, bu, x, spineY, 1, h, buColor, false);
+    });
+    if (!addOnTop) {
+      const h = heightFor(botFns.length, botFns.length + 1) * 0.7;
+      const x = anchorFromTip(botTipXs[botFns.length], h);
+      drawStub(svg, null, bu, x, spineY, 1, h, buColor, true);
     }
   });
+}
+
+// Draw a single vertical function stub.
+// fn=null signals the "+ add input" placeholder.
+function drawStub(svg, fn, bu, x, spineY, dir, height, color, isAddPrompt) {
+  // Oblique bone: tip leans LEFT (away from the effect / fish head on the right)
+  // This is the classic Ishikawa orientation — inputs fan back from the effect.
+  // Angle from vertical: ~22deg (68deg from horizontal)
+  const tiltDeg = 22;
+  const tiltRad = tiltDeg * Math.PI / 180;
+  const tipX = x - Math.sin(tiltRad) * height;
+  const tipY = spineY + dir * Math.cos(tiltRad) * height;
+  const dotR = 5;
+
+  // bone line
+  const line = svg.append("line")
+    .attr("x1", x).attr("y1", spineY)
+    .attr("x2", tipX).attr("y2", tipY)
+    .attr("stroke", color)
+    .attr("stroke-width", isAddPrompt ? 1 : 1.8)
+    .attr("opacity", isAddPrompt ? 0.5 : 0.85);
+  if (isAddPrompt) line.attr("stroke-dasharray", "3 3");
+
+  // tip dot
+  svg.append("circle")
+    .attr("cx", tipX).attr("cy", tipY).attr("r", dotR)
+    .attr("fill", color)
+    .attr("opacity", isAddPrompt ? 0.5 : 1);
+
+  // label positioned above/below the tip
+  const labelY = tipY + dir * (dotR + 12);
+  const text = isAddPrompt ? "+ add input" : (fn ? fn.name : "");
+  const isActive = !isAddPrompt && fn && selection && selection.type === "fn" && selection.fnId === fn.id;
+
+  const label = svg.append("text")
+    .attr("class", isAddPrompt ? "" : ("fn-label" + (isActive ? " active" : "")))
+    .attr("x", tipX).attr("y", labelY)
+    .attr("text-anchor", "middle")
+    .attr("fill", isAddPrompt ? color : "var(--text-primary)")
+    .attr("font-size", isAddPrompt ? 11 : 12)
+    .attr("font-style", isAddPrompt ? "italic" : "normal")
+    .attr("font-weight", isActive ? 600 : 400)
+    .attr("opacity", isAddPrompt ? 0.75 : 1)
+    .style("cursor", "pointer");
+
+  const maxWidth = 110;
+  const approxW = text.length * 6.2;
+  if (approxW > maxWidth && !isAddPrompt) {
+    const lines = wrapText(text, 16);
+    label.text("");
+    lines.forEach((ln, li) => {
+      label.append("tspan")
+        .attr("x", tipX)
+        .attr("dy", li === 0 ? 0 : 13)
+        .text(ln);
+    });
+  } else {
+    label.text(text);
+  }
+
+  // click/hover target covers the whole bone + label region
+  const minX = Math.min(x, tipX) - 60;
+  const maxX = Math.max(x, tipX) + 60;
+  const clickGroup = svg.append("rect")
+    .attr("x", minX).attr("y", Math.min(spineY, labelY) - 8)
+    .attr("width", maxX - minX).attr("height", Math.abs(labelY - spineY) + 20)
+    .attr("fill", "transparent")
+    .style("cursor", "pointer");
+
+  if (isAddPrompt) {
+    clickGroup.on("click", () => {
+      const bu2 = state.bus.find(b => b.id === bu.id);
+      const newId = "fn_" + Date.now();
+      const defaultExt = bu2.id === "fbx_core" ? 0 : 100;
+      bu2.functions.push({
+        id: newId, name: "New Function", description: "",
+        revenue_K: 0, cost_K: 0, time_days: 0, headcount: 0,
+        basis: "per_home", external_rev_pct: defaultExt
+      });
+      selection = { type: "fn", buId: bu.id, fnId: newId };
+      renderAll();
+    });
+  } else if (fn) {
+    clickGroup
+      .on("click", () => {
+        selection = { type: "fn", buId: bu.id, fnId: fn.id };
+        renderAll();
+      })
+      .on("mouseenter", () => showExplainer("fn", fn.id, { x: tipX, y: tipY }, bu.id))
+      .on("mouseleave", () => hideExplainerIfNotPinned());
+  }
+}
+
+// Simple text wrapper for multi-line effect label
+function wrapText(text, maxChars) {
+  const words = String(text || "").split(/\s+/);
+  const lines = [];
+  let cur = "";
+  for (const w of words) {
+    if ((cur + " " + w).trim().length > maxChars && cur) {
+      lines.push(cur.trim());
+      cur = w;
+    } else {
+      cur = (cur + " " + w).trim();
+    }
+  }
+  if (cur) lines.push(cur);
+  return lines.slice(0, 3);
 }
 
 // ============== DETAIL PANEL ==============
@@ -1100,6 +1264,14 @@ document.getElementById("explainer").addEventListener("click", (e) => {
 // ============== EVENT HANDLERS ==============
 document.getElementById("head-input").addEventListener("input", (e) => {
   state.head = e.target.value;
+  renderFishbone();
+});
+
+document.getElementById("products-input").addEventListener("input", (e) => {
+  state.products = e.target.value
+    .split("\n")
+    .map(s => s.trim())
+    .filter(s => s.length > 0);
   renderFishbone();
 });
 

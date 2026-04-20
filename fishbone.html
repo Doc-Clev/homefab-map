@@ -289,6 +289,18 @@ aside.right {
       <button class="close" id="explainer-close">×</button>
       <div class="meta" id="explainer-meta"></div>
       <h3 id="explainer-title"></h3>
+      <div class="fin-toggle-row" style="display: flex; justify-content: flex-end; margin-bottom: 8px;">
+        <button id="fin-toggle" style="
+          background: var(--bg-tertiary);
+          color: var(--text-secondary);
+          border: 1px solid var(--border);
+          border-radius: 4px;
+          padding: 3px 8px;
+          font-size: 11px;
+          cursor: pointer;
+          font-family: inherit;
+        ">Show financials</button>
+      </div>
       <div class="fin" id="explainer-fin" style="display:none;"></div>
       <div class="md-content" id="explainer-body"></div>
     </div>
@@ -358,6 +370,9 @@ function migrateState(s) {
   });
   if (!s.handoffs) s.handoffs = [];
   if (!s.customer_ownership) s.customer_ownership = { sales_owns_through: "fbx_core" };
+  if (!Array.isArray(s.products)) {
+    s.products = ["ADUs", "High Density Multi-Family", "Bathroom Pods", "SIPs"];
+  }
   return s;
 }
 
@@ -463,125 +478,277 @@ function renderFishbone() {
   svg.selectAll("*").remove();
 
   const container = document.querySelector("main");
-  const W = Math.max(900, container.clientWidth - 20);
-  const H = Math.max(560, container.clientHeight - 20);
+  const W = Math.max(1000, container.clientWidth - 20);
+  const H = Math.max(620, container.clientHeight - 20);
 
   svg.attr("viewBox", `0 0 ${W} ${H}`)
      .attr("width", W).attr("height", H);
 
-  const marginL = 40, marginR = 260, marginT = 60, marginB = 40;
-  const spineY = H / 2 + 20;
+  const marginL = 180, marginR = 220;
+  const headerBandH = 34;
+  const ownershipBandH = 16;
+  const footerBandH = 30;
+  const marginT = 20 + headerBandH + ownershipBandH + 10;
+  const marginB = 20 + footerBandH;
+  const spineY = Math.round((marginT + (H - marginB)) / 2);
   const spineX1 = marginL;
   const spineX2 = W - marginR;
-
-  // Ownership band
-  const bandY = marginT - 30;
-  const bandH = 20;
   const buCount = state.bus.length;
   const buWidth = (spineX2 - spineX1) / buCount;
-  svg.append("rect").attr("class", "ownership-band")
-    .attr("x", spineX1).attr("y", bandY)
-    .attr("width", buWidth * 2).attr("height", bandH)
-    .style("fill", "var(--p1)");
-  svg.append("text").attr("class", "ownership-label")
-    .attr("x", spineX1 + buWidth).attr("y", bandY + bandH / 2 + 4)
-    .text("Customer relationship: Sales →");
-  svg.append("rect").attr("class", "ownership-band")
-    .attr("x", spineX1 + buWidth * 2).attr("y", bandY)
-    .attr("width", buWidth).attr("height", bandH)
-    .style("fill", "var(--p3)");
-  svg.append("text").attr("class", "ownership-label")
-    .attr("x", spineX1 + buWidth * 2.5).attr("y", bandY + bandH / 2 + 4)
-    .text("→ GC");
 
-  // Spine
-  svg.append("line").attr("class", "spine")
-    .attr("x1", spineX1).attr("y1", spineY)
-    .attr("x2", spineX2).attr("y2", spineY);
-
-  const effectX = spineX2;
-  const effectW = 220, effectH = 56;
-  svg.append("polygon")
-    .attr("points", `${effectX},${spineY - 10} ${effectX + 14},${spineY} ${effectX},${spineY + 10}`)
-    .attr("fill", "var(--text-primary)");
-  svg.append("rect").attr("class", "effect-box")
-    .attr("x", effectX + 20).attr("y", spineY - effectH / 2)
-    .attr("width", effectW).attr("height", effectH).attr("rx", 6);
-  svg.append("text").attr("class", "effect-text")
-    .attr("x", effectX + 20 + effectW / 2).attr("y", spineY)
-    .text(state.head);
-
-  const boneAngle = 55;
-  const boneLen = 200;
+  // BU zone headers
   state.bus.forEach((bu, i) => {
-    const attachX = spineX1 + buWidth * (i + 1) - 20;
-    const above = (i % 2 === 0);
-    const dir = above ? -1 : 1;
-    const boneEndX = attachX - boneLen * Math.cos(boneAngle * Math.PI / 180);
-    const boneEndY = spineY + dir * boneLen * Math.sin(boneAngle * Math.PI / 180);
+    const zoneX = spineX1 + buWidth * i;
+    const zoneMid = zoneX + buWidth / 2;
+    const buColor = `var(${bu.color_var || '--text-primary'})`;
 
-    svg.append("line").attr("class", "bu-bone").attr("data-bu", bu.id)
-      .attr("x1", attachX).attr("y1", spineY)
-      .attr("x2", boneEndX).attr("y2", boneEndY);
-
-    const labelG = svg.append("g")
+    const headerG = svg.append("g")
       .style("cursor", "pointer")
       .on("mouseenter", () => showExplainer("bu", bu.id))
       .on("mouseleave", hideExplainerIfNotPinned)
       .on("click", () => pinExplainer("bu", bu.id));
 
-    labelG.append("rect")
-      .attr("x", boneEndX - 60)
-      .attr("y", boneEndY - 14 + (above ? -8 : -4))
-      .attr("width", 120).attr("height", 24)
-      .attr("fill", "var(--bg-card)")
-      .attr("stroke", `var(${bu.color_var || '--text-primary'})`)
-      .attr("stroke-width", 1.5).attr("rx", 4);
-    labelG.append("text").attr("class", "bu-label").attr("data-bu", bu.id)
-      .attr("x", boneEndX).attr("y", boneEndY + 2 + (above ? -8 : -4))
-      .attr("text-anchor", "middle").text(bu.name);
+    const pillW = Math.min(180, buWidth - 40);
+    const pillH = 26;
+    const pillX = zoneMid - pillW / 2;
+    const pillY = 14;
+    headerG.append("rect")
+      .attr("x", pillX).attr("y", pillY)
+      .attr("width", pillW).attr("height", pillH)
+      .attr("rx", 5).attr("fill", buColor);
+    headerG.append("text")
+      .attr("x", zoneMid).attr("y", pillY + pillH / 2 + 5)
+      .attr("text-anchor", "middle")
+      .attr("fill", "white")
+      .attr("font-weight", 600)
+      .attr("font-size", 13)
+      .text(bu.name);
+  });
 
-    const fnCount = bu.functions.length;
+  // Ownership band
+  const bandY = 14 + 26 + 6;
+  svg.append("rect").attr("class", "ownership-band")
+    .attr("x", spineX1).attr("y", bandY)
+    .attr("width", buWidth * 2).attr("height", ownershipBandH)
+    .style("fill", "var(--p1)");
+  svg.append("text").attr("class", "ownership-label")
+    .attr("x", spineX1 + buWidth).attr("y", bandY + ownershipBandH / 2 + 4)
+    .text("Customer relationship: Sales →");
+  svg.append("rect").attr("class", "ownership-band")
+    .attr("x", spineX1 + buWidth * 2).attr("y", bandY)
+    .attr("width", buWidth).attr("height", ownershipBandH)
+    .style("fill", "var(--p3)");
+  svg.append("text").attr("class", "ownership-label")
+    .attr("x", spineX1 + buWidth * 2.5).attr("y", bandY + ownershipBandH / 2 + 4)
+    .text("→ GC");
+
+  // Dividers
+  for (let i = 1; i < buCount; i++) {
+    const x = spineX1 + buWidth * i;
+    svg.append("line")
+      .attr("x1", x).attr("y1", marginT - 4)
+      .attr("x2", x).attr("y2", H - marginB + 4)
+      .attr("stroke", "var(--text-primary)")
+      .attr("stroke-width", 1)
+      .attr("stroke-dasharray", "5 4")
+      .attr("opacity", 0.25);
+    const handoff = state.handoffs[i - 1];
+    if (handoff) {
+      svg.append("text").attr("class", "handoff-label")
+        .attr("x", x).attr("y", H - marginB + 20)
+        .text("↓ " + handoff.label);
+    }
+  }
+
+  // Spine
+  svg.append("line").attr("class", "spine")
+    .attr("x1", spineX1).attr("y1", spineY)
+    .attr("x2", spineX2).attr("y2", spineY)
+    .attr("stroke-width", 4);
+
+  // Effect arrow + box
+  const arrowStart = spineX2;
+  const arrowTipX = arrowStart + 80;
+  const arrowH = 60;
+  svg.append("polygon")
+    .attr("points", `${arrowStart},${spineY - arrowH/2} ${arrowTipX},${spineY} ${arrowStart},${spineY + arrowH/2}`)
+    .attr("fill", "var(--text-primary)")
+    .attr("opacity", 0.9);
+  const effectX = arrowTipX + 8;
+  const effectW = 160, effectH = 70;
+  svg.append("rect").attr("class", "effect-box")
+    .attr("x", effectX).attr("y", spineY - effectH / 2)
+    .attr("width", effectW).attr("height", effectH).attr("rx", 6)
+    .attr("fill", "var(--text-primary)")
+    .attr("stroke", "var(--text-primary)");
+  const effectLines = wrapText(state.head, 18);
+  const lineH = 16;
+  const startY = spineY - ((effectLines.length - 1) * lineH) / 2 + 4;
+  effectLines.forEach((line, i) => {
+    svg.append("text").attr("class", "effect-text")
+      .attr("x", effectX + effectW / 2)
+      .attr("y", startY + i * lineH)
+      .attr("fill", "var(--bg-primary)")
+      .text(line);
+  });
+
+  // ---- Products box on left end of spine ----
+  const products = Array.isArray(state.products) ? state.products : [];
+  const productsW = 150;
+  const productsX = spineX1 - productsW - 8;
+  const productLineH = 15;
+  const productTitleH = 18;
+  const productsPad = 10;
+  const productsH = productTitleH + (products.length * productLineH) + productsPad * 2;
+  svg.append("rect").attr("class", "products-box")
+    .attr("x", productsX).attr("y", spineY - productsH / 2)
+    .attr("width", productsW).attr("height", productsH).attr("rx", 6)
+    .attr("fill", "var(--text-primary)")
+    .attr("stroke", "var(--text-primary)");
+  svg.append("text")
+    .attr("x", productsX + productsW / 2)
+    .attr("y", spineY - productsH / 2 + productsPad + productTitleH - 4)
+    .attr("text-anchor", "middle")
+    .attr("fill", "var(--bg-primary)")
+    .attr("font-size", 13)
+    .attr("font-weight", 700)
+    .text("Products");
+  products.forEach((p, idx) => {
+    svg.append("text")
+      .attr("x", productsX + productsW / 2)
+      .attr("y", spineY - productsH / 2 + productsPad + productTitleH + 8 + idx * productLineH)
+      .attr("text-anchor", "middle")
+      .attr("fill", "var(--bg-primary)")
+      .attr("font-size", 11)
+      .attr("opacity", 0.9)
+      .text(p);
+  });
+
+  // Function stubs — oblique (leaning left, away from effect)
+  const TILT_DEG = 22;
+  const TILT_SIN = Math.sin(TILT_DEG * Math.PI / 180);
+
+  state.bus.forEach((bu, i) => {
+    const zoneX = spineX1 + buWidth * i;
+    const zoneInnerPad = 20;
+    const zoneInnerLeft = zoneX + zoneInnerPad;
+    const zoneInnerRight = zoneX + buWidth - zoneInnerPad;
+    const buColor = `var(${bu.color_var || '--text-primary'})`;
+
+    const topFns = [];
+    const botFns = [];
     bu.functions.forEach((fn, j) => {
-      const t = (j + 1) / (fnCount + 1);
-      const anchorX = attachX + (boneEndX - attachX) * t;
-      const anchorY = spineY + (boneEndY - spineY) * t;
-      const subLen = 70;
-      const subSide = (j % 2 === 0) ? 1 : -1;
-      const bvx = boneEndX - attachX, bvy = boneEndY - spineY;
-      const blen = Math.sqrt(bvx * bvx + bvy * bvy);
-      const pvx = -bvy / blen, pvy = bvx / blen;
-      const outSign = above ? -1 : 1;
-      const subEndX = anchorX + pvx * subLen * outSign * subSide;
-      const subEndY = anchorY + pvy * subLen * outSign * subSide;
-
-      svg.append("line").attr("class", "fn-bone").attr("data-bu", bu.id)
-        .attr("x1", anchorX).attr("y1", anchorY)
-        .attr("x2", subEndX).attr("y2", subEndY);
-
-      svg.append("text").attr("class", "fn-label")
-        .attr("x", subEndX).attr("y", subEndY + (subEndY < anchorY ? -6 : 12))
-        .attr("text-anchor", subSide * outSign > 0 ? "start" : "end")
-        .text(fn.name)
-        .style("cursor", "pointer")
-        .on("mouseenter", () => showExplainer("fn", fn.id, bu.id))
-        .on("mouseleave", hideExplainerIfNotPinned)
-        .on("click", () => pinExplainer("fn", fn.id, bu.id));
+      if (j % 2 === 0) topFns.push(fn);
+      else botFns.push(fn);
     });
 
-    if (i < state.bus.length - 1) {
-      const handoffX = spineX1 + buWidth * (i + 1);
-      svg.append("line").attr("class", "handoff-line")
-        .attr("x1", handoffX).attr("y1", marginT)
-        .attr("x2", handoffX).attr("y2", H - marginB);
-      const handoff = state.handoffs[i];
-      if (handoff) {
-        svg.append("text").attr("class", "handoff-label")
-          .attr("x", handoffX).attr("y", H - marginB + 18)
-          .text("↓ " + handoff.label);
+    const stubHeightMax = spineY - marginT - 30;
+    const stubHeightMin = 50;
+    const heightFor = (idx, total) => {
+      if (total <= 1) return stubHeightMin + (stubHeightMax - stubHeightMin) * 0.6;
+      const ratios = [0.95, 0.65, 0.85, 0.55, 0.75, 0.45];
+      const r = ratios[idx % ratios.length];
+      return stubHeightMin + (stubHeightMax - stubHeightMin) * r;
+    };
+
+    const distributeTipX = (count) => {
+      if (count === 0) return [];
+      const positions = [];
+      for (let k = 0; k < count; k++) {
+        const t = (count === 1) ? 0.5 : (k + 0.5) / count;
+        positions.push(zoneInnerLeft + (zoneInnerRight - zoneInnerLeft) * t);
       }
-    }
+      return positions;
+    };
+
+    const anchorFromTip = (tipX, h) => tipX + TILT_SIN * h;
+
+    const topTipXs = distributeTipX(topFns.length);
+    topFns.forEach((fn, idx) => {
+      const h = heightFor(idx, topFns.length);
+      const x = anchorFromTip(topTipXs[idx], h);
+      drawStub(svg, fn, bu, x, spineY, -1, h, buColor);
+    });
+
+    const botTipXs = distributeTipX(botFns.length);
+    botFns.forEach((fn, idx) => {
+      const h = heightFor(idx, botFns.length);
+      const x = anchorFromTip(botTipXs[idx], h);
+      drawStub(svg, fn, bu, x, spineY, 1, h, buColor);
+    });
   });
+}
+
+function drawStub(svg, fn, bu, x, spineY, dir, height, color) {
+  // Oblique bone: tip leans left (away from effect at right)
+  const tiltDeg = 22;
+  const tiltRad = tiltDeg * Math.PI / 180;
+  const tipX = x - Math.sin(tiltRad) * height;
+  const tipY = spineY + dir * Math.cos(tiltRad) * height;
+  const dotR = 5;
+
+  svg.append("line")
+    .attr("x1", x).attr("y1", spineY)
+    .attr("x2", tipX).attr("y2", tipY)
+    .attr("stroke", color)
+    .attr("stroke-width", 1.8)
+    .attr("opacity", 0.85);
+
+  svg.append("circle")
+    .attr("cx", tipX).attr("cy", tipY).attr("r", dotR)
+    .attr("fill", color);
+
+  const labelY = tipY + dir * (dotR + 12);
+  const label = svg.append("text")
+    .attr("class", "fn-label")
+    .attr("x", tipX).attr("y", labelY)
+    .attr("text-anchor", "middle")
+    .attr("fill", "var(--text-primary)")
+    .attr("font-size", 12)
+    .style("cursor", "pointer");
+
+  const approxW = fn.name.length * 6.2;
+  if (approxW > 110) {
+    const lines = wrapText(fn.name, 16);
+    lines.forEach((ln, li) => {
+      label.append("tspan")
+        .attr("x", tipX)
+        .attr("dy", li === 0 ? 0 : 13)
+        .text(ln);
+    });
+  } else {
+    label.text(fn.name);
+  }
+
+  const minX = Math.min(x, tipX) - 60;
+  const maxX = Math.max(x, tipX) + 60;
+  const labelHeightPx = Math.abs(labelY - spineY) + 20;
+  const clickBox = svg.append("rect")
+    .attr("x", minX).attr("y", Math.min(spineY, labelY) - 8)
+    .attr("width", maxX - minX).attr("height", labelHeightPx)
+    .attr("fill", "transparent")
+    .style("cursor", "pointer");
+
+  clickBox
+    .on("mouseenter", () => showExplainer("fn", fn.id, bu.id))
+    .on("mouseleave", hideExplainerIfNotPinned)
+    .on("click", () => pinExplainer("fn", fn.id, bu.id));
+}
+
+function wrapText(text, maxChars) {
+  const words = String(text || "").split(/\s+/);
+  const lines = [];
+  let cur = "";
+  for (const w of words) {
+    if ((cur + " " + w).trim().length > maxChars && cur) {
+      lines.push(cur.trim());
+      cur = w;
+    } else {
+      cur = (cur + " " + w).trim();
+    }
+  }
+  if (cur) lines.push(cur);
+  return lines.slice(0, 3);
 }
 
 // ============== EXPLAINER ==============
@@ -598,6 +765,27 @@ function pinExplainer(type, id, buId) {
   el.classList.add("visible", "pinned");
 }
 
+// User preference: show financials in explainer? Default OFF, persisted across hovers.
+let finVisible = false;
+
+function updateFinVisibility() {
+  const finEl = document.getElementById("explainer-fin");
+  const btnEl = document.getElementById("fin-toggle");
+  if (finVisible) {
+    finEl.style.display = "grid";
+    btnEl.textContent = "Hide financials";
+    btnEl.style.background = "var(--accent)";
+    btnEl.style.color = "white";
+    btnEl.style.borderColor = "var(--accent)";
+  } else {
+    finEl.style.display = "none";
+    btnEl.textContent = "Show financials";
+    btnEl.style.background = "var(--bg-tertiary)";
+    btnEl.style.color = "var(--text-secondary)";
+    btnEl.style.borderColor = "var(--border)";
+  }
+}
+
 function populateExplainer(type, id, buId) {
   const titleEl = document.getElementById("explainer-title");
   const bodyEl = document.getElementById("explainer-body");
@@ -612,7 +800,6 @@ function populateExplainer(type, id, buId) {
     titleEl.textContent = bu.name;
     metaEl.textContent = "Business Unit · " + bu.functions.length + " functions";
     bodyEl.innerHTML = marked.parse(bu.description || "");
-    finEl.style.display = "grid";
     finEl.innerHTML = `
       <span class="label">Annual Rev</span><span class="val">${fmt(b.revenue)}</span>
       <span class="label">External</span><span class="val">${fmt(b.externalRevenue)}</span>
@@ -635,7 +822,6 @@ function populateExplainer(type, id, buId) {
     titleEl.textContent = fn.name;
     metaEl.textContent = `${bu.name} · ${fn.basis.replace("_", " ")} · ${extPct}% external`;
     bodyEl.innerHTML = marked.parse(fn.description || "");
-    finEl.style.display = "grid";
     finEl.innerHTML = `
       <span class="label">Per ${fn.basis.replace("per_", "")}</span><span class="val">$${fn.revenue_K}K rev / $${fn.cost_K}K cost</span>
       <span class="label">Annual Rev</span><span class="val">${fmt(annualRev)}</span>
@@ -645,6 +831,7 @@ function populateExplainer(type, id, buId) {
       <span class="label">Time</span><span class="val">${fn.time_days || 0} days</span>
     `;
   }
+  updateFinVisibility();
 }
 
 function hideExplainerIfNotPinned() {
@@ -655,6 +842,12 @@ function hideExplainerIfNotPinned() {
 document.getElementById("explainer-close").addEventListener("click", () => {
   pinnedExplainer = null;
   document.getElementById("explainer").classList.remove("visible", "pinned");
+});
+
+document.getElementById("fin-toggle").addEventListener("click", (e) => {
+  e.stopPropagation();  // don't trigger pin logic
+  finVisible = !finVisible;
+  updateFinVisibility();
 });
 
 // Click-outside on chart unpins
