@@ -291,34 +291,76 @@ input:focus, textarea:focus, select:focus {
   font-weight: 500;
 }
 
-/* Explainer panel */
+/* Explainer panel - JS-positioned near the element it illuminates */
 .explainer {
   position: absolute;
-  top: 20px;
-  right: 20px;
-  width: 380px;
-  max-height: calc(100% - 40px);
+  width: 340px;
+  max-height: 70vh;
   background: var(--bg-card);
   border: 1px solid var(--border);
   border-radius: 8px;
   box-shadow: var(--shadow);
-  padding: 16px;
+  padding: 14px 16px;
   overflow-y: auto;
   display: none;
   z-index: 10;
+  /* default position fallback (if JS doesn't set it) */
+  top: 20px;
+  right: 20px;
 }
 .explainer.visible { display: block; }
-.explainer.pinned { border-color: var(--accent); }
-.explainer h3 { margin: 0 0 8px 0; font-size: 14px; }
+.explainer h3 { margin: 0 0 6px 0; font-size: 14px; }
 .explainer .close {
-  position: absolute; top: 8px; right: 10px;
-  background: none; border: none; color: var(--text-muted);
-  cursor: pointer; font-size: 16px;
+  position: absolute; top: 6px; right: 8px;
+  background: var(--bg-tertiary); border: 1px solid var(--border);
+  color: var(--text-muted);
+  cursor: pointer; font-size: 14px;
+  border-radius: 4px;
+  width: 22px; height: 22px;
+  display: flex; align-items: center; justify-content: center;
+  line-height: 1;
+  padding: 0;
+}
+.explainer .close:hover {
+  background: var(--p3); color: white; border-color: var(--p3);
 }
 .explainer .meta {
-  font-size: 12px; color: var(--text-muted);
-  margin-bottom: 8px; padding-bottom: 8px;
+  font-size: 11px; color: var(--text-muted);
+  margin-bottom: 6px; padding-bottom: 6px;
   border-bottom: 1px solid var(--border);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.explainer .owner-block {
+  background: var(--bg-secondary);
+  border-left: 3px solid var(--accent);
+  padding: 8px 10px;
+  margin: 8px 0 10px 0;
+  border-radius: 0 4px 4px 0;
+  font-size: 12px;
+}
+.explainer .owner-block .label {
+  color: var(--text-muted);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 2px;
+}
+.explainer .owner-block .owner-name {
+  color: var(--text-primary);
+  font-weight: 600;
+  font-size: 13px;
+}
+.explainer .owner-block .owner-desc {
+  color: var(--text-secondary);
+  font-size: 12px;
+  line-height: 1.45;
+  margin-top: 4px;
+}
+.explainer .owner-block .inherited {
+  font-style: italic;
+  color: var(--text-muted);
+  font-size: 11px;
 }
 .explainer .md-content { font-size: 13px; line-height: 1.55; }
 .explainer .md-content p { margin: 0 0 8px 0; }
@@ -465,9 +507,14 @@ input:focus, textarea:focus, select:focus {
   <main>
     <svg id="chart"></svg>
     <div class="explainer" id="explainer">
-      <button class="close" id="explainer-close">×</button>
+      <button class="close" id="explainer-close" title="Close">×</button>
       <div class="meta" id="explainer-meta"></div>
       <h3 id="explainer-title"></h3>
+      <div class="owner-block" id="explainer-owner" style="display:none;">
+        <div class="label">Operated by</div>
+        <div class="owner-name" id="explainer-owner-name"></div>
+        <div class="owner-desc" id="explainer-owner-desc"></div>
+      </div>
       <div class="md-content" id="explainer-body"></div>
     </div>
   </main>
@@ -499,6 +546,8 @@ const SEED = {
       id: "first_mile",
       name: "First Mile",
       color_var: "--p1",
+      owner: "FBX Sales, Inc.",
+      owner_description: "FBX Sales, Inc. owns and operates all First Mile activities — direct home sales, franchise origination, design consultation, financing coordination, and ongoing franchise licensing. Revenue books to this entity.",
       description: "**First Mile** owns the customer-facing experience from initial interest through contract signing.\n\nCovers entitlement, financing, design, sales, franchise origination, contract execution, and ongoing franchise licensing (4–8% royalty on franchisee sales for brand, marketing, and sales support).",
       functions: [
         { id: "entitlement", name: "Entitlement / Permit", description: "Securing land entitlements, zoning approvals, and building permits.", revenue_K: 0, cost_K: 0, time_days: 0, headcount: 0, basis: "per_home", external_rev_pct: 100 },
@@ -514,6 +563,8 @@ const SEED = {
       id: "fbx_core",
       name: "FBX Core",
       color_var: "--p2",
+      owner: "FBX Core, LLC",
+      owner_description: "FBX Core, LLC is the industrial entity — operates warehousing, imports, Kit-of-Parts assembly, component sales, training, R&D, and distribution logistics. Transfer-prices KoP and component kits to Last Mile.",
       description: "**FBX Core** is the industrial middle — the factory and distribution layer.\n\nImports components, runs warehousing, assembles Kits of Parts, trains operators, runs R&D, distributes to assembly factories, and sells components (SIP panels, bath/kitchen pods) à la carte to external buyers.",
       functions: [
         { id: "import", name: "Import (Foreign & Domestic)", description: "Sourcing components from domestic and international suppliers.", revenue_K: 0, cost_K: 0, time_days: 0, headcount: 0, basis: "per_home", external_rev_pct: 0 },
@@ -529,6 +580,8 @@ const SEED = {
       id: "last_mile",
       name: "Last Mile",
       color_var: "--p3",
+      owner: "FBX Construction Services",
+      owner_description: "FBX Construction Services is the GC-led execution entity. Corporate-operated territories sit under this entity; franchisee-operated territories run as independent LLCs licensed by FBX Sales, Inc.",
       description: "**Last Mile** is the GC-led execution layer.\n\nAssembly, delivery, site installation, and inspections. Revenue from home construction contracts paid by end buyers. Pays Core for KoP (COGS) and First Mile for ongoing licensing royalties (4–8% of sales).",
       functions: [
         { id: "assembly", name: "Assembly", description: "Factory assembly of the home from the Kit of Parts.", revenue_K: 0, cost_K: 0, time_days: 0, headcount: 0, basis: "per_home", external_rev_pct: 100 },
@@ -565,8 +618,14 @@ function migrateState(s) {
   if (s.volume.franchises_from_map == null) s.volume.franchises_from_map = false;
   if (!Array.isArray(s.bus)) s.bus = [];
   s.bus.forEach(bu => {
+    // BU-level owner fields
+    if (bu.owner == null) bu.owner = "";
+    if (bu.owner_description == null) bu.owner_description = "";
     if (!Array.isArray(bu.functions)) bu.functions = [];
     bu.functions.forEach(fn => {
+      // Function-level owner fields (blank = inherits from BU)
+      if (fn.owner == null) fn.owner = "";
+      if (fn.owner_description == null) fn.owner_description = "";
       if (fn.external_rev_pct == null) {
         // Sensible default by BU: Core defaults to internal, others to external
         fn.external_rev_pct = (bu.id === "fbx_core") ? 0 : 100;
@@ -761,7 +820,7 @@ function renderFishbone() {
 
   // ---- Layout ----
   const marginL = 180, marginR = 220;
-  const headerBandH = 34;    // BU zone label row, top
+  const headerBandH = 48;    // BU pill + owner subheader
   const ownershipBandH = 16; // Customer ownership band, below headers
   const footerBandH = 30;    // Handoff labels, bottom
   const marginT = 20 + headerBandH + ownershipBandH + 10; // top breathing room for function stubs
@@ -784,7 +843,7 @@ function renderFishbone() {
         selection = { type: "bu", buId: bu.id };
         renderAll();
       })
-      .on("mouseenter", () => showExplainer("bu", bu.id))
+      .on("mouseenter", function(e) { showExplainer("bu", bu.id, e); })
       .on("mouseleave", () => hideExplainerIfNotPinned());
 
     // filled pill centered over zone
@@ -803,10 +862,21 @@ function renderFishbone() {
       .attr("font-weight", 600)
       .attr("font-size", 13)
       .text(bu.name);
+
+    // Owner sub-header (italic, BU-colored, below pill)
+    if (bu.owner) {
+      headerG.append("text")
+        .attr("x", zoneMid).attr("y", pillY + pillH + 12)
+        .attr("text-anchor", "middle")
+        .attr("fill", buColor)
+        .attr("font-style", "italic")
+        .attr("font-size", 11)
+        .text(bu.owner);
+    }
   });
 
-  // ---- Customer ownership band below headers ----
-  const bandY = 14 + 26 + 6;
+  // ---- Customer ownership band below headers + owner subheaders ----
+  const bandY = 14 + 26 + 18;  // was +6, added room for owner subheader
   svg.append("rect").attr("class", "ownership-band")
     .attr("x", spineX1).attr("y", bandY)
     .attr("width", buWidth * 2).attr("height", ownershipBandH)
@@ -1058,7 +1128,8 @@ function drawStub(svg, fn, bu, x, spineY, dir, height, color, isAddPrompt) {
       bu2.functions.push({
         id: newId, name: "New Function", description: "",
         revenue_K: 0, cost_K: 0, time_days: 0, headcount: 0,
-        basis: "per_home", external_rev_pct: defaultExt
+        basis: "per_home", external_rev_pct: defaultExt,
+        owner: "", owner_description: ""
       });
       selection = { type: "fn", buId: bu.id, fnId: newId };
       renderAll();
@@ -1069,7 +1140,7 @@ function drawStub(svg, fn, bu, x, spineY, dir, height, color, isAddPrompt) {
         selection = { type: "fn", buId: bu.id, fnId: fn.id };
         renderAll();
       })
-      .on("mouseenter", () => showExplainer("fn", fn.id, { x: tipX, y: tipY }, bu.id))
+      .on("mouseenter", function(e) { showExplainer("fn", fn.id, e, bu.id); })
       .on("mouseleave", () => hideExplainerIfNotPinned());
   }
 }
@@ -1111,6 +1182,14 @@ function renderDetail() {
         <input type="text" id="bu-name" value="${escapeHtml(bu.name)}">
       </div>
       <div class="field">
+        <label>Owner Entity</label>
+        <input type="text" id="bu-owner" value="${escapeHtml(bu.owner || "")}" placeholder="e.g., FBX Sales, Inc.">
+      </div>
+      <div class="field">
+        <label>Owner Description (Markdown)</label>
+        <textarea id="bu-owner-desc" rows="4">${escapeHtml(bu.owner_description || "")}</textarea>
+      </div>
+      <div class="field">
         <label>Description (Markdown)</label>
         <textarea id="bu-desc" rows="8">${escapeHtml(bu.description || "")}</textarea>
       </div>
@@ -1118,6 +1197,8 @@ function renderDetail() {
     `;
     document.getElementById("bu-save").addEventListener("click", () => {
       bu.name = document.getElementById("bu-name").value;
+      bu.owner = document.getElementById("bu-owner").value;
+      bu.owner_description = document.getElementById("bu-owner-desc").value;
       bu.description = document.getElementById("bu-desc").value;
       renderAll();
       toast("Business unit updated");
@@ -1184,6 +1265,18 @@ function renderDetail() {
       </div>
 
       <div class="field">
+        <label style="display: flex; justify-content: space-between;">
+          <span>Owner Entity (leave blank to inherit from ${escapeHtml(bu.name)})</span>
+          ${bu.owner ? `<span style="color: var(--text-muted); font-size: 11px;">inherits: ${escapeHtml(bu.owner)}</span>` : ''}
+        </label>
+        <input type="text" id="fn-owner" value="${escapeHtml(fn.owner || "")}" placeholder="${escapeHtml(bu.owner || '')}">
+      </div>
+      <div class="field">
+        <label>Owner Description (Markdown, blank = inherit)</label>
+        <textarea id="fn-owner-desc" rows="3">${escapeHtml(fn.owner_description || "")}</textarea>
+      </div>
+
+      <div class="field">
         <label>Description (Markdown)</label>
         <textarea id="fn-desc" rows="6">${escapeHtml(fn.description || "")}</textarea>
       </div>
@@ -1202,6 +1295,8 @@ function renderDetail() {
       fn.time_days = parseFloat(document.getElementById("fn-days").value) || 0;
       fn.headcount = parseFloat(document.getElementById("fn-hc").value) || 0;
       fn.external_rev_pct = Math.max(0, Math.min(100, parseFloat(document.getElementById("fn-ext").value) || 0));
+      fn.owner = document.getElementById("fn-owner").value.trim();
+      fn.owner_description = document.getElementById("fn-owner-desc").value;
       fn.description = document.getElementById("fn-desc").value;
       renderAll();
       toast("Function updated");
@@ -1218,12 +1313,18 @@ function renderDetail() {
 }
 
 // ============== EXPLAINER ==============
-function showExplainer(type, id, pos, buId) {
-  if (pinnedExplainer) return;
+// Explainer is persistent: stays open until user clicks ×. Positioned
+// near the element that triggered it (with viewport clamping).
+// `showExplainer` takes an optional DOM event so we can anchor to
+// the actual click/hover position.
+function showExplainer(type, id, evt, buId) {
   const el = document.getElementById("explainer");
   const titleEl = document.getElementById("explainer-title");
   const bodyEl = document.getElementById("explainer-body");
   const metaEl = document.getElementById("explainer-meta");
+  const ownerBlock = document.getElementById("explainer-owner");
+  const ownerNameEl = document.getElementById("explainer-owner-name");
+  const ownerDescEl = document.getElementById("explainer-owner-desc");
 
   if (type === "bu") {
     const bu = state.bus.find(b => b.id === id);
@@ -1231,35 +1332,86 @@ function showExplainer(type, id, pos, buId) {
     titleEl.textContent = bu.name;
     metaEl.textContent = "Business Unit";
     bodyEl.innerHTML = marked.parse(bu.description || "");
+    // Owner block for BU: always direct, never inherited
+    if (bu.owner) {
+      ownerNameEl.textContent = bu.owner;
+      ownerDescEl.innerHTML = marked.parse(bu.owner_description || "");
+      ownerBlock.style.display = "block";
+    } else {
+      ownerBlock.style.display = "none";
+    }
   } else if (type === "fn") {
     const bu = state.bus.find(b => b.id === buId);
+    if (!bu) return;
     const fn = bu.functions.find(f => f.id === id);
     if (!fn) return;
     titleEl.textContent = fn.name;
     metaEl.textContent = `${bu.name} · ${fn.basis.replace("_", " ")}`;
     bodyEl.innerHTML = marked.parse(fn.description || "");
+    // Owner block for fn: direct if fn.owner set, else inherited from BU
+    const effectiveOwner = fn.owner || bu.owner;
+    if (effectiveOwner) {
+      ownerNameEl.textContent = effectiveOwner;
+      const isInherited = !fn.owner && bu.owner;
+      const descSrc = fn.owner_description || (isInherited ? bu.owner_description : "");
+      ownerDescEl.innerHTML = marked.parse(descSrc || "");
+      if (isInherited) {
+        ownerDescEl.innerHTML += `<div class="inherited">(inherited from ${bu.name})</div>`;
+      }
+      ownerBlock.style.display = "block";
+    } else {
+      ownerBlock.style.display = "none";
+    }
   }
+
   el.classList.add("visible");
+  positionExplainer(el, evt);
 }
 
-function hideExplainerIfNotPinned() {
-  if (pinnedExplainer) return;
-  document.getElementById("explainer").classList.remove("visible");
-}
+// Position the explainer near the event/element, clamped to the main area.
+// Accepts either a DOM event (uses clientX/Y) or a plain {x, y} in SVG coords.
+function positionExplainer(el, evtOrPos) {
+  const main = document.querySelector("main");
+  const mainRect = main.getBoundingClientRect();
+  const elW = 340;
+  const elH = Math.min(el.scrollHeight || 300, mainRect.height * 0.7);
+  const pad = 12;
 
-document.getElementById("explainer-close").addEventListener("click", () => {
-  pinnedExplainer = null;
-  document.getElementById("explainer").classList.remove("visible", "pinned");
-});
-
-// Click to pin
-document.getElementById("explainer").addEventListener("click", (e) => {
-  if (e.target.closest(".close")) return;
-  if (!pinnedExplainer) {
-    pinnedExplainer = true;
-    document.getElementById("explainer").classList.add("pinned");
+  let anchorX, anchorY;
+  if (evtOrPos && typeof evtOrPos.clientX === "number") {
+    // DOM event — use viewport coords relative to main
+    anchorX = evtOrPos.clientX - mainRect.left;
+    anchorY = evtOrPos.clientY - mainRect.top;
+  } else if (evtOrPos && typeof evtOrPos.x === "number") {
+    // {x, y} from SVG — already relative to main since SVG fills main
+    anchorX = evtOrPos.x;
+    anchorY = evtOrPos.y;
+  } else {
+    anchorX = mainRect.width / 2;
+    anchorY = mainRect.height / 2;
   }
+
+  // Prefer right of anchor; flip to left if it overflows
+  let left = anchorX + 20;
+  let top = anchorY - 20;
+  if (left + elW + pad > mainRect.width) {
+    left = anchorX - elW - 20;
+  }
+  left = Math.max(pad, Math.min(mainRect.width - elW - pad, left));
+  top = Math.max(pad, Math.min(mainRect.height - elH - pad, top));
+
+  el.style.left = left + "px";
+  el.style.top = top + "px";
+  el.style.right = "auto";
+}
+
+// Close handler — the ONLY way to hide the explainer
+document.getElementById("explainer-close").addEventListener("click", () => {
+  document.getElementById("explainer").classList.remove("visible");
 });
+
+// Replace the old hideExplainerIfNotPinned — no-op now (persistent)
+function hideExplainerIfNotPinned() { /* explainer stays until closed */ }
 
 // ============== EVENT HANDLERS ==============
 document.getElementById("head-input").addEventListener("input", (e) => {
@@ -1316,7 +1468,8 @@ document.addEventListener("click", (e) => {
     bu.functions.push({
       id: newId, name: "New Function", description: "",
       revenue_K: 0, cost_K: 0, time_days: 0, headcount: 0,
-      basis: "per_home", external_rev_pct: defaultExt
+      basis: "per_home", external_rev_pct: defaultExt,
+      owner: "", owner_description: ""
     });
     selection = { type: "fn", buId, fnId: newId };
     renderAll();
