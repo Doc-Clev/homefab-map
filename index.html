@@ -4602,7 +4602,19 @@ document.addEventListener('keydown', (e) => {
   }
 })();
 </script>
-</body></html>"></iframe><iframe class="page-frame" data-page="editor" sandbox="allow-scripts allow-same-origin allow-downloads allow-forms allow-modals allow-popups" srcdoc="<!DOCTYPE html><html lang=&quot;en&quot;><head><meta charset=&quot;UTF-8&quot;><meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1.0&quot;><script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js&quot;></script>
+
+<script>
+// Expose state to postMessage bridge
+if (typeof exportJSON === 'function') window._exportJSON = exportJSON;
+window.addEventListener('message', function(e) {
+  if (!e.data || e.data.type !== 'fbx-get-state') return;
+  var content = null;
+  try {
+    if (typeof exportJSON === 'function') content = exportJSON();
+  } catch(err) {}
+  window.parent.postMessage({ type: 'fbx-state', content: content, filename: 'sites.json' }, '*');
+});
+</script></body></html>"></iframe><iframe class="page-frame" data-page="editor" sandbox="allow-scripts allow-same-origin allow-downloads allow-forms allow-modals allow-popups" srcdoc="<!DOCTYPE html><html lang=&quot;en&quot;><head><meta charset=&quot;UTF-8&quot;><meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1.0&quot;><script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js&quot;></script>
 <script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js&quot;></script><style>*{box-sizing:border-box}body{margin:0}
   :root {
     --bg-primary: #ffffff;
@@ -8865,7 +8877,19 @@ document.addEventListener('keydown', (e) => {
   }
 })();
 </script>
-</body></html>"></iframe><iframe class="page-frame" data-page="fishbone" sandbox="allow-scripts allow-same-origin allow-downloads allow-forms allow-modals allow-popups" srcdoc="<!DOCTYPE html><html lang=&quot;en&quot;><head><meta charset=&quot;UTF-8&quot;><meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1.0&quot;><script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js&quot;></script>
+
+<script>
+// Expose state to postMessage bridge
+if (typeof exportJSON === 'function') window._exportJSON = exportJSON;
+window.addEventListener('message', function(e) {
+  if (!e.data || e.data.type !== 'fbx-get-state') return;
+  var content = null;
+  try {
+    if (typeof exportJSON === 'function') content = exportJSON();
+  } catch(err) {}
+  window.parent.postMessage({ type: 'fbx-state', content: content, filename: 'sites.json' }, '*');
+});
+</script></body></html>"></iframe><iframe class="page-frame" data-page="fishbone" sandbox="allow-scripts allow-same-origin allow-downloads allow-forms allow-modals allow-popups" srcdoc="<!DOCTYPE html><html lang=&quot;en&quot;><head><meta charset=&quot;UTF-8&quot;><meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1.0&quot;><script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js&quot;></script>
 <script src=&quot;https://cdn.jsdelivr.net/npm/marked/marked.min.js&quot;></script>
 <script>
 var _EXL = {&quot;first_mile&quot;:[{&quot;id&quot;:&quot;home_sales&quot;,&quot;name&quot;:&quot;Home Sales&quot;,&quot;company&quot;:&quot;External Partners&quot;,&quot;owners&quot;:&quot;Opportunity for commissioned based partners&quot;},{&quot;id&quot;:&quot;component_sales&quot;,&quot;name&quot;:&quot;Component Sales (SIP / Pods)&quot;,&quot;company&quot;:&quot;External Partners&quot;,&quot;owners&quot;:&quot;Opportunity for commissioned based partners&quot;},{&quot;id&quot;:&quot;building_contracts&quot;,&quot;name&quot;:&quot;Building Contracts&quot;,&quot;company&quot;:&quot;External Partners&quot;,&quot;owners&quot;:&quot;Opportunity for commissioned based partners&quot;},{&quot;id&quot;:&quot;entitlement&quot;,&quot;name&quot;:&quot;Entitlement / Permit&quot;,&quot;company&quot;:&quot;External Partners&quot;,&quot;owners&quot;:&quot;apServant, Inc &amp; Others&quot;}],&quot;fbx_core&quot;:[{&quot;id&quot;:&quot;design&quot;,&quot;name&quot;:&quot;Design&quot;,&quot;company&quot;:&quot;FBX Expansion, Inc&quot;,&quot;owners&quot;:&quot;Dave, Tony&quot;},{&quot;id&quot;:&quot;rd&quot;,&quot;name&quot;:&quot;Research &amp; Development&quot;,&quot;company&quot;:&quot;FBX Expansion, Inc&quot;,&quot;owners&quot;:&quot;Dave, Tony&quot;},{&quot;id&quot;:&quot;franchise_sales&quot;,&quot;name&quot;:&quot;Franchise Sales&quot;,&quot;company&quot;:&quot;FBX Expansion, Inc&quot;,&quot;owners&quot;:&quot;Dave, Tony&quot;},{&quot;id&quot;:&quot;warehousing&quot;,&quot;name&quot;:&quot;Warehousing&quot;,&quot;company&quot;:&quot;FBX Product Dev, Inc&quot;,&quot;owners&quot;:&quot;Dave, Tony, Equity Partners&quot;},{&quot;id&quot;:&quot;import&quot;,&quot;name&quot;:&quot;Import (Foreign &amp; Domestic)&quot;,&quot;company&quot;:&quot;FBX Product Dev, Inc&quot;,&quot;owners&quot;:&quot;Dave, Tony, Equity Partners&quot;},{&quot;id&quot;:&quot;kop&quot;,&quot;name&quot;:&quot;Kit of Parts Creation&quot;,&quot;company&quot;:&quot;FBX Product Dev, Inc&quot;,&quot;owners&quot;:&quot;Dave, Tony, Equity Partners&quot;},{&quot;id&quot;:&quot;licensing_fees&quot;,&quot;name&quot;:&quot;Licensing / Royalties&quot;,&quot;company&quot;:&quot;FBX Expansion, Inc&quot;,&quot;owners&quot;:&quot;Dave, Tony&quot;},{&quot;id&quot;:&quot;training&quot;,&quot;name&quot;:&quot;Training&quot;,&quot;company&quot;:&quot;FBX Expansion, Inc&quot;,&quot;owners&quot;:&quot;Dave, Tony&quot;}],&quot;last_mile&quot;:[{&quot;id&quot;:&quot;distribution&quot;,&quot;name&quot;:&quot;Distribution to Assembly&quot;,&quot;company&quot;:&quot;External Partners&quot;,&quot;owners&quot;:&quot;Stream Logistics &amp; Fee Based&quot;},{&quot;id&quot;:&quot;assembly&quot;,&quot;name&quot;:&quot;Assembly&quot;,&quot;company&quot;:&quot;Franchisees&quot;,&quot;owners&quot;:&quot;&quot;},{&quot;id&quot;:&quot;inspections&quot;,&quot;name&quot;:&quot;Building Inspections &amp; Quality&quot;,&quot;company&quot;:&quot;External Partners&quot;,&quot;owners&quot;:&quot;ICC or Intertek&quot;},{&quot;id&quot;:&quot;delivery&quot;,&quot;name&quot;:&quot;Delivery Logistics&quot;,&quot;company&quot;:&quot;External Partners&quot;,&quot;owners&quot;:&quot;Stream Logistics &amp; Fee Based&quot;},{&quot;id&quot;:&quot;install&quot;,&quot;name&quot;:&quot;Installation Site Work&quot;,&quot;company&quot;:&quot;Franchisees&quot;,&quot;owners&quot;:&quot;&quot;}]};
@@ -10634,7 +10658,15 @@ window.addEventListener('message', function(e) {
   window.parent.postMessage({ type: 'fbx-state', content: content, filename: 'fishbone.json' }, '*');
 });
 </script>
-</body></html>"></iframe><iframe class="page-frame" data-page="fishbone-editor" sandbox="allow-scripts allow-same-origin allow-downloads allow-forms allow-modals allow-popups" srcdoc="<!DOCTYPE html><html lang=&quot;en&quot;><head><meta charset=&quot;UTF-8&quot;><meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1.0&quot;><script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js&quot;></script>
+
+<script>
+window.addEventListener('message', function(e) {
+  if (!e.data || e.data.type !== 'fbx-get-state') return;
+  var content = null;
+  try { if (window.state) content = JSON.stringify(window.state, null, 2); } catch(err) {}
+  window.parent.postMessage({ type: 'fbx-state', content: content, filename: 'fishbone.json' }, '*');
+});
+</script></body></html>"></iframe><iframe class="page-frame" data-page="fishbone-editor" sandbox="allow-scripts allow-same-origin allow-downloads allow-forms allow-modals allow-popups" srcdoc="<!DOCTYPE html><html lang=&quot;en&quot;><head><meta charset=&quot;UTF-8&quot;><meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1.0&quot;><script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js&quot;></script>
 <script src=&quot;https://cdn.jsdelivr.net/npm/marked/marked.min.js&quot;></script>
 <script>
 var _EXL = {&quot;first_mile&quot;:[{&quot;id&quot;:&quot;home_sales&quot;,&quot;name&quot;:&quot;Home Sales&quot;,&quot;company&quot;:&quot;External Partners&quot;,&quot;owners&quot;:&quot;Opportunity for commissioned based partners&quot;},{&quot;id&quot;:&quot;component_sales&quot;,&quot;name&quot;:&quot;Component Sales (SIP / Pods)&quot;,&quot;company&quot;:&quot;External Partners&quot;,&quot;owners&quot;:&quot;Opportunity for commissioned based partners&quot;},{&quot;id&quot;:&quot;building_contracts&quot;,&quot;name&quot;:&quot;Building Contracts&quot;,&quot;company&quot;:&quot;External Partners&quot;,&quot;owners&quot;:&quot;Opportunity for commissioned based partners&quot;},{&quot;id&quot;:&quot;entitlement&quot;,&quot;name&quot;:&quot;Entitlement / Permit&quot;,&quot;company&quot;:&quot;External Partners&quot;,&quot;owners&quot;:&quot;apServant, Inc &amp; Others&quot;}],&quot;fbx_core&quot;:[{&quot;id&quot;:&quot;design&quot;,&quot;name&quot;:&quot;Design&quot;,&quot;company&quot;:&quot;FBX Expansion, Inc&quot;,&quot;owners&quot;:&quot;Dave, Tony&quot;},{&quot;id&quot;:&quot;rd&quot;,&quot;name&quot;:&quot;Research &amp; Development&quot;,&quot;company&quot;:&quot;FBX Expansion, Inc&quot;,&quot;owners&quot;:&quot;Dave, Tony&quot;},{&quot;id&quot;:&quot;franchise_sales&quot;,&quot;name&quot;:&quot;Franchise Sales&quot;,&quot;company&quot;:&quot;FBX Expansion, Inc&quot;,&quot;owners&quot;:&quot;Dave, Tony&quot;},{&quot;id&quot;:&quot;warehousing&quot;,&quot;name&quot;:&quot;Warehousing&quot;,&quot;company&quot;:&quot;FBX Product Dev, Inc&quot;,&quot;owners&quot;:&quot;Dave, Tony, Equity Partners&quot;},{&quot;id&quot;:&quot;import&quot;,&quot;name&quot;:&quot;Import (Foreign &amp; Domestic)&quot;,&quot;company&quot;:&quot;FBX Product Dev, Inc&quot;,&quot;owners&quot;:&quot;Dave, Tony, Equity Partners&quot;},{&quot;id&quot;:&quot;kop&quot;,&quot;name&quot;:&quot;Kit of Parts Creation&quot;,&quot;company&quot;:&quot;FBX Product Dev, Inc&quot;,&quot;owners&quot;:&quot;Dave, Tony, Equity Partners&quot;},{&quot;id&quot;:&quot;licensing_fees&quot;,&quot;name&quot;:&quot;Licensing / Royalties&quot;,&quot;company&quot;:&quot;FBX Expansion, Inc&quot;,&quot;owners&quot;:&quot;Dave, Tony&quot;},{&quot;id&quot;:&quot;training&quot;,&quot;name&quot;:&quot;Training&quot;,&quot;company&quot;:&quot;FBX Expansion, Inc&quot;,&quot;owners&quot;:&quot;Dave, Tony&quot;}],&quot;last_mile&quot;:[{&quot;id&quot;:&quot;distribution&quot;,&quot;name&quot;:&quot;Distribution to Assembly&quot;,&quot;company&quot;:&quot;External Partners&quot;,&quot;owners&quot;:&quot;Stream Logistics &amp; Fee Based&quot;},{&quot;id&quot;:&quot;assembly&quot;,&quot;name&quot;:&quot;Assembly&quot;,&quot;company&quot;:&quot;Franchisees&quot;,&quot;owners&quot;:&quot;&quot;},{&quot;id&quot;:&quot;inspections&quot;,&quot;name&quot;:&quot;Building Inspections &amp; Quality&quot;,&quot;company&quot;:&quot;External Partners&quot;,&quot;owners&quot;:&quot;ICC or Intertek&quot;},{&quot;id&quot;:&quot;delivery&quot;,&quot;name&quot;:&quot;Delivery Logistics&quot;,&quot;company&quot;:&quot;External Partners&quot;,&quot;owners&quot;:&quot;Stream Logistics &amp; Fee Based&quot;},{&quot;id&quot;:&quot;install&quot;,&quot;name&quot;:&quot;Installation Site Work&quot;,&quot;company&quot;:&quot;Franchisees&quot;,&quot;owners&quot;:&quot;&quot;}]};
@@ -13772,7 +13804,15 @@ renderAll();</script>
   };
 })();
 </script>
-</body></html>"></iframe></div><div id="ver-panel"><div id="ver-panel-head">Version History</div><div id="ver-list"></div></div><div id="save-modal"><div class="svm-box"><h2>Save Version</h2><p class="svm-subtitle">Page: <strong id="svm-page-label"></strong></p><label><span class="svm-required">*</span> Version name (required)</label><input type="text" id="svm-name" placeholder="e.g. Q2 draft" autocomplete="off"><div id="svm-error"></div><div class="svm-hint">Commits <strong id="svm-file-label"></strong> to GitHub via Actions — takes ~15s.</div><div class="svm-actions"><button id="svm-cancel">Cancel</button><button id="svm-commit">Save to GitHub</button></div></div></div><div id="nav-toast"></div><script>
+
+<script>
+window.addEventListener('message', function(e) {
+  if (!e.data || e.data.type !== 'fbx-get-state') return;
+  var content = null;
+  try { if (typeof state !== 'undefined') content = JSON.stringify(state, null, 2); } catch(err) {}
+  window.parent.postMessage({ type: 'fbx-state', content: content, filename: 'fishbone.json' }, '*');
+});
+</script></body></html>"></iframe></div><div id="ver-panel"><div id="ver-panel-head">Version History</div><div id="ver-list"></div></div><div id="save-modal"><div class="svm-box"><h2>Save Version</h2><p class="svm-subtitle">Page: <strong id="svm-page-label"></strong></p><label><span class="svm-required">*</span> Version name (required)</label><input type="text" id="svm-name" placeholder="e.g. Q2 draft" autocomplete="off"><div id="svm-error"></div><div class="svm-hint">Commits <strong id="svm-file-label"></strong> to GitHub via Actions — takes ~15s.</div><div class="svm-actions"><button id="svm-cancel">Cancel</button><button id="svm-commit">Save to GitHub</button></div></div></div><div id="nav-toast"></div><script>
 var _PAT='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',_REPO='Doc-Clev/homefab-map',_WF_ID='265885571';
 var _PAGES=['map','editor','fishbone','fishbone-editor'];
 var _LABELS={'map':'🗺 Expansion Map','editor':'✏️ Map Editor','fishbone':'🐟 Fishbone','fishbone-editor':'✏️ Fishbone Editor'};
@@ -13832,7 +13872,7 @@ function _getFrameState(){
     if(!frame){resolve(null);return;}
     _pendingSave=resolve;
     try{frame.contentWindow.postMessage({type:'fbx-get-state'},'*')}catch(e){resolve(null);}
-    setTimeout(function(){if(_pendingSave){_pendingSave=null;resolve(null);}},3000);
+    setTimeout(function(){if(_pendingSave){_pendingSave=null;resolve(null);}},8000);
   });
 }
 
