@@ -7,16 +7,12 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%;overflow:hidden}
-body{
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
-  display:flex;flex-direction:column;background:#f5f4ef;
-}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;display:flex;flex-direction:column;background:#f5f4ef}
 @media(prefers-color-scheme:dark){body{background:#1a1916}}
 #nav{
   display:flex;align-items:center;height:44px;min-height:44px;flex-shrink:0;
   background:#fff;border-bottom:1px solid rgba(0,0,0,0.12);
-  box-shadow:0 1px 4px rgba(0,0,0,0.06);padding:0 14px;
-  position:relative;z-index:10;
+  box-shadow:0 1px 4px rgba(0,0,0,0.06);padding:0 14px;position:relative;z-index:10;
 }
 @media(prefers-color-scheme:dark){#nav{background:#1a1916;border-bottom-color:rgba(255,255,255,0.1)}}
 .nav-brand{font-size:13px;font-weight:600;letter-spacing:-0.01em;color:#1a1a1a;margin-right:12px;white-space:nowrap}
@@ -27,8 +23,7 @@ body{
   display:flex;align-items:center;padding:0 10px;height:44px;
   border:none;border-bottom:2.5px solid transparent;background:none;
   cursor:pointer;font-size:12.5px;font-weight:500;color:#5f5e5a;
-  white-space:nowrap;font-family:inherit;
-  transition:color 0.12s,border-color 0.12s;
+  white-space:nowrap;font-family:inherit;transition:color 0.12s,border-color 0.12s;
 }
 .nav-tab:hover{color:#1a1a1a}
 @media(prefers-color-scheme:dark){.nav-tab{color:#b4b2a9}.nav-tab:hover{color:#f0efea}}
@@ -37,78 +32,112 @@ body{
 #nav-save-btn{
   display:flex;align-items:center;gap:5px;padding:5px 13px;border-radius:6px;
   background:#185FA5;color:#fff;border:none;font-size:12px;font-weight:500;
-  cursor:pointer;font-family:inherit;transition:opacity 0.15s;
+  cursor:pointer;font-family:inherit;transition:opacity 0.15s;position:relative;
 }
 #nav-save-btn:hover{opacity:0.88}
+#nav-save-btn:disabled{opacity:0.5;cursor:not-allowed}
 #nav-ver-btn{
   padding:5px 11px;border-radius:6px;border:1px solid rgba(0,0,0,0.15);
   background:transparent;color:#5f5e5a;font-size:12px;cursor:pointer;font-family:inherit;
 }
 @media(prefers-color-scheme:dark){#nav-ver-btn{border-color:rgba(255,255,255,0.15);color:#b4b2a9}}
 #nav-ver-btn:hover{background:rgba(0,0,0,0.05)}
+
+/* Save status pill */
+#save-status{
+  display:none;align-items:center;gap:6px;
+  padding:4px 10px;border-radius:20px;font-size:11px;font-weight:500;
+  background:#f0f9f0;color:#285A22;border:1px solid #c3e0c3;
+}
+#save-status.saving{background:#FFF8E7;color:#854F0B;border-color:#f0d080}
+#save-status.error{background:#FFF0F0;color:#8B1A1A;border-color:#f0c0c0}
+#save-status.show{display:flex}
+.status-dot{width:7px;height:7px;border-radius:50%;background:currentColor;flex-shrink:0}
+#save-status.saving .status-dot{
+  animation:pulse 0.8s ease-in-out infinite alternate;
+}
+@keyframes pulse{from{opacity:0.3}to{opacity:1}}
+
 #frame-container{flex:1;position:relative;overflow:hidden}
-.page-frame{position:absolute;inset:0;width:100%;height:100%;border:none;display:none;background:transparent}
+.page-frame{position:absolute;inset:0;width:100%;height:100%;border:none;display:none}
+
+/* Version panel */
 #ver-panel{
-  display:none;position:absolute;top:44px;right:12px;width:280px;max-height:360px;
+  display:none;position:absolute;top:44px;right:12px;width:300px;max-height:400px;
   background:#fff;border:1px solid rgba(0,0,0,0.12);border-radius:8px;
-  box-shadow:0 4px 20px rgba(0,0,0,0.12);z-index:20;overflow:hidden;font-size:12px;
+  box-shadow:0 4px 20px rgba(0,0,0,0.12);z-index:20;overflow:hidden;
 }
 @media(prefers-color-scheme:dark){#ver-panel{background:#26231f;border-color:rgba(255,255,255,0.1)}}
 #ver-panel-head{
-  padding:10px 14px;border-bottom:1px solid rgba(0,0,0,0.08);
+  padding:10px 14px 8px;border-bottom:1px solid rgba(0,0,0,0.08);
   font-size:11px;text-transform:uppercase;letter-spacing:0.07em;color:#888780;font-weight:600;
 }
-#ver-list{overflow-y:auto;max-height:300px;padding:4px 0}
-.ver-item{padding:8px 14px;border-bottom:1px solid rgba(0,0,0,0.05);cursor:default}
+#ver-list{overflow-y:auto;max-height:340px;padding:4px 0}
+.ver-item{padding:9px 14px;border-bottom:1px solid rgba(0,0,0,0.05);cursor:default}
 .ver-item:last-child{border-bottom:none}
-.ver-name{font-weight:600;color:#1a1a1a;margin-bottom:2px}
+.ver-name{font-weight:600;font-size:13px;color:#1a1a1a;margin-bottom:2px}
 @media(prefers-color-scheme:dark){.ver-name{color:#e8e4db}}
+.ver-meta{display:flex;gap:8px;align-items:center}
 .ver-ts{color:#888780;font-size:11px}
-.ver-empty{padding:16px 14px;color:#888780;font-style:italic}
+.ver-tag{
+  display:inline-block;padding:1px 6px;border-radius:8px;font-size:10px;font-weight:500;
+  background:#f0f0f0;color:#555;
+}
+.ver-tag-map{background:#EAF3DE;color:#285A22}
+.ver-tag-editor{background:#DDEAF5;color:#0D3A6A}
+.ver-tag-fishbone{background:#FAEEDA;color:#854F0B}
+.ver-tag-fishbone-editor{background:#FCEBEB;color:#6B1E1E}
+.ver-empty{padding:20px 14px;color:#888780;font-style:italic;font-size:13px;text-align:center}
+
+/* Save modal */
 #save-modal{
   display:none;position:fixed;inset:0;z-index:100;
   background:rgba(0,0,0,0.4);align-items:center;justify-content:center;
 }
 .svm-box{
   background:#fff;border-radius:10px;padding:24px 28px;
-  width:90%;max-width:440px;box-shadow:0 8px 32px rgba(0,0,0,0.18);
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
+  width:90%;max-width:460px;box-shadow:0 8px 32px rgba(0,0,0,0.18);
 }
 @media(prefers-color-scheme:dark){.svm-box{background:#26231f;color:#e8e4db}}
-.svm-box h2{font-size:15px;font-weight:600;margin-bottom:4px}
-.svm-subtitle{font-size:12px;color:#888780;margin-bottom:18px}
-.svm-box label{display:block;font-size:12px;color:#888780;margin-bottom:5px}
+.svm-box h2{font-size:15px;font-weight:600;margin-bottom:2px}
+.svm-subtitle{font-size:12px;color:#888780;margin-bottom:20px}
+.svm-box label{display:block;font-size:12px;color:#888780;margin-bottom:5px;font-weight:500}
 .svm-required{color:#C00000}
 .svm-box input[type=text]{
-  width:100%;padding:8px 10px;border:1.5px solid rgba(0,0,0,0.18);border-radius:6px;
+  width:100%;padding:9px 11px;border:1.5px solid rgba(0,0,0,0.18);border-radius:6px;
   font-size:14px;font-family:inherit;background:#faf9f7;color:#1a1a1a;
+  transition:border-color 0.15s;
 }
 @media(prefers-color-scheme:dark){.svm-box input[type=text]{background:#1a1916;color:#e8e4db;border-color:rgba(255,255,255,0.2)}}
-.svm-box input[type=text].invalid{border-color:#C00000!important}
-.svm-box input[type=text]:focus{outline:none;border-color:#185FA5}
-#svm-error{font-size:11px;color:#C00000;min-height:14px;margin-top:3px}
-.svm-ts-row{margin-top:12px}
-.svm-ts-val{
-  font-size:12px;color:#888780;font-family:"SF Mono",Menlo,Consolas,monospace;
-  background:#f3f1ec;border-radius:5px;padding:5px 10px;margin-top:3px;
+.svm-box input.invalid{border-color:#C00000!important}
+.svm-box input:focus{outline:none;border-color:#185FA5}
+#svm-error{font-size:11px;color:#C00000;min-height:14px;margin-top:4px}
+.svm-hint{
+  margin-top:14px;padding:10px 12px;background:#f5f4ef;border-radius:6px;
+  font-size:12px;color:#5f5e5a;line-height:1.5;
 }
-@media(prefers-color-scheme:dark){.svm-ts-val{background:#2d2a25}}
+@media(prefers-color-scheme:dark){.svm-hint{background:#2d2a25;color:#b4b2a9}}
+.svm-hint strong{color:#1a1a1a}
+@media(prefers-color-scheme:dark){.svm-hint strong{color:#e8e4db}}
 .svm-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:20px}
 .svm-actions button{
-  padding:7px 18px;border-radius:6px;font-size:13px;font-weight:500;
+  padding:8px 20px;border-radius:6px;font-size:13px;font-weight:500;
   cursor:pointer;font-family:inherit;border:1.5px solid rgba(0,0,0,0.15);
+  transition:opacity 0.15s;
 }
 #svm-cancel{background:#f5f4ef;color:#1a1a1a}
 @media(prefers-color-scheme:dark){#svm-cancel{background:#2d2a25;color:#e8e4db;border-color:rgba(255,255,255,0.15)}}
 #svm-commit{background:#185FA5;color:#fff;border-color:#185FA5}
 #svm-commit:hover{opacity:0.88}
+#svm-commit:disabled{opacity:0.5;cursor:not-allowed}
+
+/* Toast */
 #nav-toast{
   position:fixed;bottom:20px;right:20px;z-index:200;
   background:#fff;border-left:3px solid #639922;border-radius:6px;
   padding:10px 16px;font-size:13px;box-shadow:0 2px 12px rgba(0,0,0,0.12);
   opacity:0;transform:translateY(8px);transition:opacity 0.2s,transform 0.2s;
-  pointer-events:none;max-width:320px;
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
+  pointer-events:none;max-width:340px;line-height:1.4;
 }
 @media(prefers-color-scheme:dark){#nav-toast{background:#26231f;color:#e8e4db}}
 </style>
@@ -125,6 +154,7 @@ body{
   <button class="nav-tab" data-page="fishbone-editor">✏️ Fishbone Editor</button>
   <div class="nav-spacer"></div>
   <div class="nav-actions">
+    <div id="save-status"><div class="status-dot"></div><span id="save-status-text"></span></div>
     <button id="nav-ver-btn" onclick="_toggleVerPanel()">Versions ▾</button>
     <button id="nav-save-btn">
       <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
@@ -9958,8 +9988,7 @@ function _applyExcelData(stateObj) {
         var meta = 'Company: ' + exFn.company + (exFn.owners ? ' · ' + exFn.owners : '');
         if (existing.description &amp;&amp; existing.description.indexOf(exFn.company) < 0)
           existing.description += '\n\n' + meta;
-        else if (!existing.description)
-          existing.description = meta;
+        else if (!existing.description) existing.description = meta;
       } else {
         bu.functions.push({
           id: exFn.id, name: exFn.name,
@@ -12496,8 +12525,7 @@ function _applyExcelData(stateObj) {
         var meta = 'Company: ' + exFn.company + (exFn.owners ? ' · ' + exFn.owners : '');
         if (existing.description &amp;&amp; existing.description.indexOf(exFn.company) < 0)
           existing.description += '\n\n' + meta;
-        else if (!existing.description)
-          existing.description = meta;
+        else if (!existing.description) existing.description = meta;
       } else {
         bu.functions.push({
           id: exFn.id, name: exFn.name,
@@ -13811,10 +13839,9 @@ renderAll();
   }
   window.addEventListener('message', function(e) {
     if (!e.data) return;
-    if (e.data.type === 'fbx-save-github' &amp;&amp; e.data.name) {
-      var pat = localStorage.getItem('fbx_fishbone_pat');
-      if (pat &amp;&amp; typeof commitToGitHub === 'function')
-        commitToGitHub('[' + e.data.name + '] saved from unified editor');
+    if (e.data.type === 'fbx-save-github' &amp;&amp; e.data.payload) {
+      // parent has already committed via Actions; just reload state from GitHub
+      if (typeof loadLatest === 'function') setTimeout(loadLatest, 18000);
     }
   });
   var _origToast = window.toast;
@@ -13827,24 +13854,24 @@ renderAll();
 </div>
 
 <div id="ver-panel">
-  <div id="ver-panel-head">Version History</div>
+  <div id="ver-panel-head">Version History — <span id="ver-panel-page"></span></div>
   <div id="ver-list"></div>
 </div>
 
 <div id="save-modal">
   <div class="svm-box">
     <h2>Save Version</h2>
-    <p class="svm-subtitle">Source: <strong id="svm-page-label"></strong></p>
+    <p class="svm-subtitle">Page: <strong id="svm-page-label"></strong></p>
     <label><span class="svm-required">*</span> Version name (required)</label>
     <input type="text" id="svm-name" placeholder='e.g. "Q2 draft" or "franchise-fees-v2"' autocomplete="off">
     <div id="svm-error"></div>
-    <div class="svm-ts-row">
-      <label>Timestamp (auto-generated)</label>
-      <div class="svm-ts-val" id="svm-ts"></div>
+    <div class="svm-hint">
+      Commits <strong id="svm-file-label"></strong> to GitHub via Actions.
+      Takes ~15 seconds. You can keep working while it runs.
     </div>
     <div class="svm-actions">
       <button id="svm-cancel">Cancel</button>
-      <button id="svm-commit">Save Version</button>
+      <button id="svm-commit">Save to GitHub</button>
     </div>
   </div>
 </div>
@@ -13853,17 +13880,21 @@ renderAll();
 
 <script>
 
-var _PAGES=['map','editor','fishbone','fishbone-editor'];
-var _LABELS={'map':'🗺 Expansion Map','editor':'✏️ Map Editor','fishbone':'🐟 Fishbone','fishbone-editor':'✏️ Fishbone Editor'};
-var _COLORS={'map':'#639922','editor':'#185FA5','fishbone':'#c9964a','fishbone-editor':'#b85c4a'};
-var _currentPage='map';
-var _VER_KEY='fbx_versions_v2';
-var _versions={};
+var _PAT  = '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';
+var _REPO = 'Doc-Clev/homefab-map';
+var _WF_ID = '265885571';
+var _PAGES  = ['map','editor','fishbone','fishbone-editor'];
+var _LABELS = {'map':'🗺 Expansion Map','editor':'✏️ Map Editor','fishbone':'🐟 Fishbone','fishbone-editor':'✏️ Fishbone Editor'};
+var _COLORS = {'map':'#639922','editor':'#185FA5','fishbone':'#c9964a','fishbone-editor':'#b85c4a'};
+var _FILE_FOR_PAGE = {'map':'sites.json','editor':'sites.json','fishbone':'fishbone.json','fishbone-editor':'fishbone.json'};
+var _currentPage = 'map';
+var _VER_KEY = 'fbx_versions_v2';
+var _versions = {};
 try{_versions=JSON.parse(localStorage.getItem(_VER_KEY)||'{}')}catch(e){_versions={}}
 _PAGES.forEach(function(p){if(!_versions[p])_versions[p]=[]});
-
 function _saveLS(){try{localStorage.setItem(_VER_KEY,JSON.stringify(_versions))}catch(e){}}
 
+// ── Page switching ──────────────────────────────────────────────────────────
 function _switchPage(page){
   _currentPage=page;
   document.querySelectorAll('.nav-tab').forEach(function(b){
@@ -13880,14 +13911,15 @@ function _switchPage(page){
   _refreshVerList();
 }
 
+// ── Save modal ──────────────────────────────────────────────────────────────
 function _openSaveModal(){
-  var ts=new Date();
-  document.getElementById('svm-ts').textContent=ts.toLocaleString('en-US',{year:'numeric',month:'short',day:'numeric',hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:true});
-  document.getElementById('svm-page-label').textContent=_LABELS[_currentPage]||_currentPage;
-  document.getElementById('svm-page-label').style.color=_COLORS[_currentPage]||'#185FA5';
   var ni=document.getElementById('svm-name');
-  ni.value='';ni.classList.remove('invalid');
+  ni.value=''; ni.classList.remove('invalid');
   document.getElementById('svm-error').textContent='';
+  document.getElementById('svm-commit').disabled=false;
+  document.getElementById('svm-page-label').textContent=_LABELS[_currentPage];
+  document.getElementById('svm-page-label').style.color=_COLORS[_currentPage];
+  document.getElementById('svm-file-label').textContent=_FILE_FOR_PAGE[_currentPage];
   document.getElementById('save-modal').style.display='flex';
   setTimeout(function(){ni.focus()},50);
 }
@@ -13896,61 +13928,182 @@ function _closeSaveModal(){
   document.getElementById('save-modal').style.display='none';
 }
 
-function _commitSave(){
+// ── GitHub Actions dispatch + poll ──────────────────────────────────────────
+async function _dispatchAndPoll(versionName, content, filename){
+  var encoded = btoa(unescape(encodeURIComponent(content)));
+  
+  // Dispatch
+  var beforeTime = new Date().toISOString();
+  var dispatchRes = await fetch(
+    'https://api.github.com/repos/'+_REPO+'/actions/workflows/'+_WF_ID+'/dispatches',
+    {
+      method:'POST',
+      headers:{
+        'Authorization':'Bearer '+_PAT,
+        'Accept':'application/vnd.github+json',
+        'Content-Type':'application/json'
+      },
+      body: JSON.stringify({
+        ref:'main',
+        inputs:{
+          filename: filename,
+          content: encoded,
+          version_name: versionName,
+          source_page: _currentPage
+        }
+      })
+    }
+  );
+  if(dispatchRes.status !== 204) {
+    throw new Error('Dispatch failed: HTTP ' + dispatchRes.status);
+  }
+
+  // Poll for the run that started after beforeTime
+  _setStatus('saving','Committing…');
+  var runId = null;
+  for(var attempt=0; attempt<15; attempt++){
+    await _sleep(2000);
+    var runsRes = await fetch(
+      'https://api.github.com/repos/'+_REPO+'/actions/runs?per_page=5',
+      {headers:{'Authorization':'Bearer '+_PAT,'Accept':'application/vnd.github+json'}}
+    );
+    var runsData = await runsRes.json();
+    var match = (runsData.workflow_runs||[]).find(function(r){
+      return r.workflow_id==_WF_ID && r.created_at>=beforeTime;
+    });
+    if(match){ runId=match.id; break; }
+  }
+  if(!runId) throw new Error('Could not find workflow run');
+
+  // Poll run status
+  for(var i=0; i<20; i++){
+    await _sleep(3000);
+    var runRes = await fetch(
+      'https://api.github.com/repos/'+_REPO+'/actions/runs/'+runId,
+      {headers:{'Authorization':'Bearer '+_PAT,'Accept':'application/vnd.github+json'}}
+    );
+    var run = await runRes.json();
+    if(run.status==='completed'){
+      if(run.conclusion==='success') return true;
+      throw new Error('Workflow failed: '+run.conclusion);
+    }
+    var elapsed=Math.round((Date.now()-new Date(run.created_at).getTime())/1000);
+    _setStatus('saving','Committing… '+elapsed+'s');
+  }
+  throw new Error('Timed out waiting for workflow');
+}
+
+async function _commitSave(){
   var ni=document.getElementById('svm-name');
   var name=ni.value.trim();
   if(!name){
     ni.classList.add('invalid');
     document.getElementById('svm-error').textContent='Version name is required.';
-    ni.focus();return;
+    ni.focus(); return;
   }
   ni.classList.remove('invalid');
   document.getElementById('svm-error').textContent='';
-  var ts=new Date();
-  var entry={
-    name:name,ts:ts.toISOString(),
-    tsDisplay:ts.toLocaleString('en-US',{year:'numeric',month:'short',day:'numeric',hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:true}),
-    page:_currentPage
-  };
-  _versions[_currentPage].unshift(entry);
-  _saveLS();
+  document.getElementById('svm-commit').disabled=true;
   _closeSaveModal();
-  _refreshVerList();
-  _showToast('Version "'+name+'" saved');
-  if(_currentPage==='fishbone-editor'){
-    var f=document.querySelector('.page-frame[data-page="fishbone-editor"]');
-    if(f){try{f.contentWindow.postMessage({type:'fbx-save-github',name:name},'*')}catch(e){}}
+
+  // Get current state from the active iframe
+  var frame=document.querySelector('.page-frame[data-page="'+_currentPage+'"]');
+  var content=null;
+  var filename=_FILE_FOR_PAGE[_currentPage];
+  try{
+    var cw=frame.contentWindow;
+    if(_currentPage==='fishbone'||_currentPage==='fishbone-editor'){
+      if(cw.state) content=JSON.stringify(cw.state,null,2);
+    } else {
+      // Map pages export via their existing function
+      if(typeof cw.exportJSON==='function') content=cw.exportJSON();
+      else if(cw.sites && cw.hubs) {
+        content=JSON.stringify({sites:cw.sites,hubs:cw.hubs,assumptions:cw.assumptions||{}},null,2);
+      }
+    }
+  }catch(e){}
+
+  if(!content){
+    _showToast('Could not read page state — try again','err');
+    document.getElementById('svm-commit').disabled=false;
+    return;
   }
+
+  try{
+    await _dispatchAndPoll(name, content, filename);
+
+    // Record version locally
+    var ts=new Date();
+    _versions[_currentPage].unshift({
+      name:name,
+      ts:ts.toISOString(),
+      tsDisplay:ts.toLocaleString('en-US',{year:'numeric',month:'short',day:'numeric',hour:'2-digit',minute:'2-digit',hour12:true}),
+      page:_currentPage
+    });
+    _saveLS();
+    _refreshVerList();
+    _setStatus('done','Saved ✓');
+    _showToast('Version "'+name+'" committed to GitHub');
+    setTimeout(function(){_hideStatus()},4000);
+
+    // Tell the fishbone editor to reload from GitHub
+    if((_currentPage==='fishbone'||_currentPage==='fishbone-editor')&&frame){
+      try{frame.contentWindow.postMessage({type:'fbx-save-github',name:name},'*')}catch(e){}
+    }
+  } catch(err) {
+    _setStatus('error','Save failed');
+    _showToast('Save failed: '+err.message, true);
+    setTimeout(function(){_hideStatus()},5000);
+  }
+  document.getElementById('svm-commit').disabled=false;
+}
+
+// ── Status pill ─────────────────────────────────────────────────────────────
+function _setStatus(type, msg){
+  var el=document.getElementById('save-status');
+  el.className='show '+type;
+  document.getElementById('save-status-text').textContent=msg;
+}
+function _hideStatus(){
+  document.getElementById('save-status').className='';
+}
+
+// ── Version panel ────────────────────────────────────────────────────────────
+function _toggleVerPanel(){
+  var p=document.getElementById('ver-panel');
+  var show=p.style.display!=='block';
+  p.style.display=show?'block':'none';
+  if(show)_refreshVerList();
 }
 
 function _refreshVerList(){
   var el=document.getElementById('ver-list');
   var vers=_versions[_currentPage]||[];
-  if(!vers.length){el.innerHTML='<div class="ver-empty">No saved versions yet.</div>';return;}
+  if(!vers.length){
+    el.innerHTML='<div class="ver-empty">No saved versions yet for this page.</div>';
+    return;
+  }
   el.innerHTML=vers.map(function(v){
-    return '<div class="ver-item"><div class="ver-name">'+_esc(v.name)+'</div><div class="ver-ts">'+_esc(v.tsDisplay)+'</div></div>';
+    var tagCls='ver-tag ver-tag-'+v.page.replace(/-/g,'_');
+    return '<div class="ver-item"><div class="ver-name">'+_esc(v.name)+'</div>'+
+      '<div class="ver-meta"><span class="ver-ts">'+_esc(v.tsDisplay)+'</span>'+
+      '<span class="'+tagCls+'">'+_esc(v.page)+'</span></div></div>';
   }).join('');
 }
 
-function _toggleVerPanel(){
-  var p=document.getElementById('ver-panel');
-  var show=p.style.display==='none'||!p.style.display;
-  p.style.display=show?'block':'none';
-  if(show)_refreshVerList();
-}
-
+// ── Helpers ──────────────────────────────────────────────────────────────────
+function _sleep(ms){return new Promise(function(r){setTimeout(r,ms)})}
 function _showToast(msg,err){
   var t=document.getElementById('nav-toast');
   t.textContent=msg;
   t.style.borderLeftColor=err?'#C00000':'#639922';
   t.style.opacity='1';t.style.transform='translateY(0)';
   clearTimeout(t._timer);
-  t._timer=setTimeout(function(){t.style.opacity='0';t.style.transform='translateY(8px)'},3000);
+  t._timer=setTimeout(function(){t.style.opacity='0';t.style.transform='translateY(8px)'},4000);
 }
-
 function _esc(s){return String(s||'').replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
 
-// Wire UI
+// ── Wire up UI ────────────────────────────────────────────────────────────────
 document.querySelectorAll('.nav-tab').forEach(function(btn){
   btn.addEventListener('click',function(){_switchPage(btn.dataset.page)});
 });
@@ -13960,23 +14113,17 @@ document.getElementById('svm-commit').addEventListener('click',_commitSave);
 document.getElementById('save-modal').addEventListener('click',function(e){if(e.target===this)_closeSaveModal()});
 document.addEventListener('keydown',function(e){if(e.key==='Escape')_closeSaveModal()});
 document.getElementById('svm-name').addEventListener('keydown',function(e){if(e.key==='Enter')_commitSave()});
-
-// Close version panel on outside click
 document.addEventListener('click',function(e){
   var p=document.getElementById('ver-panel');
-  if(p.style.display==='block'&&!p.contains(e.target)&&e.target.id!=='nav-ver-btn'){
+  if(p.style.display==='block'&&!p.contains(e.target)&&e.target.id!=='nav-ver-btn')
     p.style.display='none';
-  }
 });
-
-// Listen for messages from iframes
 window.addEventListener('message',function(e){
   if(!e.data)return;
   if(e.data.type==='fbx-toast')_showToast(e.data.msg,e.data.err);
-  if(e.data.type==='fbx-request-save'&&_currentPage==='fishbone-editor')_openSaveModal();
+  if(e.data.type==='fbx-request-save')_openSaveModal();
 });
 
-// Init — activate map tab
 _switchPage('map');
 
 </script>
