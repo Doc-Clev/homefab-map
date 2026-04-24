@@ -1,0 +1,42 @@
+name: Save Version
+
+on:
+  workflow_dispatch:
+    inputs:
+      filename:
+        description: 'File to save (fishbone.json or sites.json)'
+        required: true
+      content:
+        description: 'JSON content (base64 encoded)'
+        required: true
+      version_name:
+        description: 'Version name for commit message'
+        required: true
+      source_page:
+        description: 'Which page triggered the save'
+        required: false
+        default: 'unknown'
+
+jobs:
+  save:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Decode and write file
+        run: |
+          echo "${{ github.event.inputs.content }}" | base64 -d > "${{ github.event.inputs.filename }}"
+
+      - name: Validate JSON
+        run: |
+          python3 -c "import json,sys; json.load(open('${{ github.event.inputs.filename }}')); print('JSON valid')"
+
+      - name: Commit
+        run: |
+          git config user.name "FBX Save Bot"
+          git config user.email "actions@github.com"
+          git add "${{ github.event.inputs.filename }}"
+          git diff --staged --quiet || git commit -m "[${{ github.event.inputs.version_name }}] saved from ${{ github.event.inputs.source_page }}"
+          git push
