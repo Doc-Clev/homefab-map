@@ -1,951 +1,1512 @@
 {
-  "version": 2,
-  "exported_at": "2026-04-19T16:27:12.113Z",
+  "version": 3,
   "sites": [
     {
       "yr": 1,
       "phase": 1,
       "name": "Fresno",
       "state": "CA",
-      "lat": 36.7378,
-      "lon": -119.7871
-    },
-    {
-      "yr": 1,
-      "phase": 1,
-      "name": "Corona",
-      "state": "CA",
-      "lat": 33.8753,
-      "lon": -117.5664
+      "lat": 36.74,
+      "lon": -119.77,
+      "hub": "Corona",
+      "adu": "Base",
+      "note": "Operational HQ. Central Valley hub, established base, massive inland CA housing demand."
     },
     {
       "yr": 1,
       "phase": 1,
       "name": "Rosamond",
       "state": "CA",
-      "lat": 34.8642,
-      "lon": -118.1637
+      "lat": 34.87,
+      "lon": -118.16,
+      "hub": "Corona",
+      "adu": "Base",
+      "note": "Kern County / Antelope Valley. Inexpensive land, LA Basin overflow buyers, Edwards AFB workforce housing."
     },
     {
       "yr": 2,
       "phase": 1,
-      "name": "Los Angeles",
+      "name": "Corona",
       "state": "CA",
-      "lat": 34.0522,
-      "lon": -118.2437
+      "lat": 33.87,
+      "lon": -117.56,
+      "hub": "Corona",
+      "adu": "Excellent",
+      "note": "SoCal Hub HQ becomes franchise site. Inland Empire is ground zero for CA ADU demand \u2014 by-right state law, severe shortage, anchors West Coast network."
     },
     {
       "yr": 2,
       "phase": 1,
       "name": "San Diego",
       "state": "CA",
-      "lat": 32.7157,
-      "lon": -117.1611
+      "lat": 32.72,
+      "lon": -117.16,
+      "hub": "Corona",
+      "adu": "Excellent",
+      "note": "One of the highest ADU permit rates in the nation. Streamlined permitting, military workforce housing, strong homeowner ROI story, short haul from Corona."
     },
     {
       "yr": 2,
       "phase": 1,
-      "name": "Bay Area/Stockton",
+      "name": "Stockton",
       "state": "CA",
       "lat": 37.96,
-      "lon": -121.29
+      "lon": -121.29,
+      "hub": "Corona",
+      "adu": "Strong",
+      "note": "Bay Area price refugee corridor. CA ADU law fully applies, large multigenerational homeowner base, extends Fresno coverage north through San Joaquin Valley."
     },
     {
       "yr": 2,
       "phase": 1,
-      "name": "Sacramento",
-      "state": "CA",
-      "lat": 38.5816,
-      "lon": -121.4944
+      "name": "Honolulu",
+      "state": "HI",
+      "lat": 21.31,
+      "lon": -157.86,
+      "hub": "Corona",
+      "adu": "Excellent",
+      "note": "HI ADU law among the most aggressive in the US. Extreme land scarcity, highest housing costs nationally, modular ships well to islands \u2014 unique captive market."
     },
     {
       "yr": 2,
       "phase": 1,
-      "name": "Bakersfield",
-      "state": "CA",
-      "lat": 35.3733,
-      "lon": -119.0187
+      "name": "Phoenix",
+      "state": "AZ",
+      "lat": 33.45,
+      "lon": -112.07,
+      "hub": "Corona",
+      "adu": "Moderate",
+      "note": "Largest Sun Belt growth market. Massive population influx, tech/finance relocations, gateway to AZ franchise network. City-level ADU rules permissive despite mixed state legislature."
     },
     {
       "yr": 2,
-      "phase": 1,
-      "name": "Santa Rosa",
-      "state": "CA",
-      "lat": 38.4405,
-      "lon": -122.7144
-    },
-    {
-      "yr": 3,
-      "phase": 1,
-      "name": "Newark",
-      "state": "NJ",
-      "lat": 40.7357,
-      "lon": -74.1724
-    },
-    {
-      "yr": 3,
       "phase": 1,
       "name": "Hartford",
       "state": "CT",
-      "lat": 41.7658,
-      "lon": -72.6734
-    },
-    {
-      "yr": 3,
-      "phase": 1,
-      "name": "Worcester",
-      "state": "MA",
-      "lat": 42.2626,
-      "lon": -71.8023
-    },
-    {
-      "yr": 3,
-      "phase": 1,
-      "name": "Rochester",
-      "state": "NY",
-      "lat": 43.1566,
-      "lon": -77.6088
+      "lat": 41.76,
+      "lon": -72.68,
+      "hub": "Hartford",
+      "adu": "Strong",
+      "note": "Northeast Hub launch. CT ADU legislation 2021 \u2014 statewide by-right. Anchors MA, RI, NY network. Insurance/finance workforce, high homeowner equity."
     },
     {
       "yr": 3,
       "phase": 1,
       "name": "Denver",
       "state": "CO",
-      "lat": 39.7392,
-      "lon": -104.9903
+      "lat": 39.74,
+      "lon": -104.98,
+      "hub": "Denver",
+      "adu": "Excellent",
+      "note": "CO statewide ADU law 2024 \u2014 strongest in Mountain West. By-right ADU required in all cities. Rapid growth, tech culture buyer, anchors CO hub for Fort Collins and Colorado Springs."
     },
     {
       "yr": 3,
       "phase": 1,
-      "name": "Phoenix",
-      "state": "AZ",
-      "lat": 33.4484,
-      "lon": -112.074
+      "name": "Las Vegas",
+      "state": "NV",
+      "lat": 36.17,
+      "lon": -115.14,
+      "hub": "Corona",
+      "adu": "Strong",
+      "note": "NV ADU reform + massive CA overflow demand. Tens of thousands of LA/OC price refugees \u2014 exact modular buyer. Workforce housing shortage severe. Short haul from Corona hub."
     },
     {
-      "yr": 4,
+      "yr": 3,
       "phase": 2,
-      "name": "Jersey City",
-      "state": "NJ",
-      "lat": 40.7178,
-      "lon": -74.0431
+      "name": "Austin",
+      "state": "TX",
+      "lat": 30.27,
+      "lon": -97.74,
+      "hub": "Dallas",
+      "adu": "Excellent",
+      "note": "Eliminated single-family zoning citywide 2023. ADU permitting streamlined city-wide. Tech boom workforce housing gap. Pulled from Yr 4 \u2014 first-mover opportunity now."
     },
     {
-      "yr": 4,
-      "phase": 2,
-      "name": "Trenton",
-      "state": "NJ",
-      "lat": 40.2206,
-      "lon": -74.7597
-    },
-    {
-      "yr": 4,
-      "phase": 2,
-      "name": "New Haven",
-      "state": "CT",
-      "lat": 41.3083,
-      "lon": -72.9279
-    },
-    {
-      "yr": 4,
-      "phase": 2,
-      "name": "Bridgeport",
-      "state": "CT",
-      "lat": 41.1865,
-      "lon": -73.1952
-    },
-    {
-      "yr": 4,
+      "yr": 3,
       "phase": 2,
       "name": "Boston",
       "state": "MA",
-      "lat": 42.3601,
-      "lon": -71.0589
+      "lat": 42.36,
+      "lon": -71.06,
+      "hub": "Hartford",
+      "adu": "Excellent",
+      "note": "MA MBTA Communities Act mandates density near transit statewide. Severe housing shortage, high-income educated buyer, strong sustainability ethos. Hartford hub live \u2014 extend north now."
+    },
+    {
+      "yr": 3,
+      "phase": 2,
+      "name": "Portland",
+      "state": "OR",
+      "lat": 45.52,
+      "lon": -122.68,
+      "hub": "Corona",
+      "adu": "Excellent",
+      "note": "Oregon pioneered the nation's first statewide ADU legalization. HB 2001 eliminated single-family exclusionary zoning. Highest modular/prefab awareness outside CA. Pulled from Yr 5."
+    },
+    {
+      "yr": 3,
+      "phase": 2,
+      "name": "Seattle",
+      "state": "WA",
+      "lat": 47.61,
+      "lon": -122.33,
+      "hub": "Corona",
+      "adu": "Excellent",
+      "note": "WA ADU reform + missing middle housing laws statewide. Extreme cost crisis, tech workforce demand. Top-3 national ADU market by permit volume. Pulled from Yr 5."
+    },
+    {
+      "yr": 3,
+      "phase": 2,
+      "name": "Salt Lake City",
+      "state": "UT",
+      "lat": 40.76,
+      "lon": -111.89,
+      "hub": "Denver",
+      "adu": "Strong",
+      "note": "UT ADU by-right law 2021 \u2014 statewide. Fastest-growing metro corridor, young family demographic, tech migration from CA. Denver hub covers easily. Pulled from Yr 5."
+    },
+    {
+      "yr": 3,
+      "phase": 2,
+      "name": "Boise",
+      "state": "ID",
+      "lat": 43.61,
+      "lon": -116.2,
+      "hub": "Denver",
+      "adu": "Excellent",
+      "note": "One of the most acute housing cost explosions in the US 2019-2024. CA refugee buyers, affordability crisis, ID ADU-permissive. Demand is now. Pulled from Yr 5."
+    },
+    {
+      "yr": 3,
+      "phase": 2,
+      "name": "Charlotte",
+      "state": "NC",
+      "lat": 35.23,
+      "lon": -80.84,
+      "hub": "Dallas",
+      "adu": "Strong",
+      "note": "Charlotte UDO upzoning 2022 \u2014 most progressive zoning overhaul in the Southeast. Rapid population growth, finance/tech hub. Zoning reform window is now. Pulled from Yr 5."
     },
     {
       "yr": 4,
       "phase": 2,
-      "name": "Providence",
-      "state": "RI",
-      "lat": 41.824,
-      "lon": -71.4128
-    },
-    {
-      "yr": 4,
-      "phase": 2,
-      "name": "Albany",
-      "state": "NY",
-      "lat": 42.6526,
-      "lon": -73.7562
+      "name": "Raleigh",
+      "state": "NC",
+      "lat": 35.78,
+      "lon": -78.64,
+      "hub": "Dallas",
+      "adu": "Strong",
+      "note": "Research Triangle tech/biotech workforce housing demand. By-right ADU reform active. Charlotte + Raleigh together justify a Southeast hub. Pulled from Yr 5."
     },
     {
       "yr": 4,
       "phase": 2,
       "name": "Fort Collins",
       "state": "CO",
-      "lat": 40.5853,
-      "lon": -105.0844
+      "lat": 40.59,
+      "lon": -105.08,
+      "hub": "Denver",
+      "adu": "Excellent",
+      "note": "CO ADU law applies. CSU university market drives year-round rental ADU demand. Sustainability-oriented buyers. Short haul from Denver hub \u2014 low incremental cost."
+    },
+    {
+      "yr": 4,
+      "phase": 2,
+      "name": "New Haven",
+      "state": "CT",
+      "lat": 41.31,
+      "lon": -72.92,
+      "hub": "Hartford",
+      "adu": "Strong",
+      "note": "CT ADU legislation 2021 \u2014 statewide by-right. Yale institutional market, high homeowner equity, urban infill demand. Pairs with Bridgeport to cover CT shoreline."
+    },
+    {
+      "yr": 4,
+      "phase": 2,
+      "name": "Bridgeport",
+      "state": "CT",
+      "lat": 41.18,
+      "lon": -73.19,
+      "hub": "Hartford",
+      "adu": "Strong",
+      "note": "CT legislation + NYC commuter overflow. Fairfield County ADU demand from homeowners offsetting high property costs. Strong rental ADU ROI. Pairs with New Haven as CT push."
+    },
+    {
+      "yr": 4,
+      "phase": 2,
+      "name": "Providence",
+      "state": "RI",
+      "lat": 41.82,
+      "lon": -71.42,
+      "hub": "Hartford",
+      "adu": "Strong",
+      "note": "RI ADU reform active. RISD/Brown buyer culture leans modular. Boston overflow demand. Hartford hub proximity makes this low-cost to add. Early mover advantage."
+    },
+    {
+      "yr": 4,
+      "phase": 2,
+      "name": "Jersey City",
+      "state": "NJ",
+      "lat": 40.73,
+      "lon": -74.08,
+      "hub": "Hartford",
+      "adu": "Moderate",
+      "note": "NJ ADU law passed 2024. NYC overflow \u2014 homeowners with massive equity seeking income-generating ADUs. High demand volume compensates for higher land cost."
+    },
+    {
+      "yr": 4,
+      "phase": 2,
+      "name": "Dallas",
+      "state": "TX",
+      "lat": 32.78,
+      "lon": -96.8,
+      "hub": "Dallas",
+      "adu": "Moderate",
+      "note": "Largest TX metro, anchors Dallas distribution hub serving Austin, Houston, SA cluster. ADU awareness growing. Sheer market size demands presence even with car-centric sprawl culture."
+    },
+    {
+      "yr": 4,
+      "phase": 2,
+      "name": "Colorado Springs",
+      "state": "CO",
+      "lat": 38.83,
+      "lon": -104.82,
+      "hub": "Denver",
+      "adu": "Excellent",
+      "note": "CO ADU law applies. Large military workforce \u2014 Peterson, Schriever, Fort Carson. Military ADU demand is financeable (VA-compatible). Constrained footprint drives ADU appeal."
+    },
+    {
+      "yr": 4,
+      "phase": 2,
+      "name": "Reno",
+      "state": "NV",
+      "lat": 39.53,
+      "lon": -119.81,
+      "hub": "Corona",
+      "adu": "Strong",
+      "note": "NV ADU reform + Bay Area/Tesla Gigafactory workforce overflow. Massive housing cost gap vs SF. Tech manufacturing workforce needs affordable options."
+    },
+    {
+      "yr": 4,
+      "phase": 2,
+      "name": "Minneapolis",
+      "state": "MN",
+      "lat": 44.98,
+      "lon": -93.27,
+      "hub": "Indianapolis",
+      "adu": "Strong",
+      "note": "Minneapolis eliminated single-family zoning \u2014 first major US city to do so. Strong modular awareness, sustainability culture. Landmark reform market pulled from Yr 8."
+    },
+    {
+      "yr": 4,
+      "phase": 2,
+      "name": "Atlanta",
+      "state": "GA",
+      "lat": 33.75,
+      "lon": -84.39,
+      "hub": "Dallas",
+      "adu": "Strong",
+      "note": "Intown ADU reform active. Film/tech hub workforce housing need. Largest SE metro \u2014 justifies standalone coverage. ADU adoption growing among Beltline corridor homeowners."
     },
     {
       "yr": 4,
       "phase": 2,
       "name": "Tucson",
       "state": "AZ",
-      "lat": 32.2226,
-      "lon": -110.9747
-    },
-    {
-      "yr": 4,
-      "phase": 2,
-      "name": "Las Vegas",
-      "state": "NV",
-      "lat": 36.1699,
-      "lon": -115.1398
-    },
-    {
-      "yr": 4,
-      "phase": 2,
-      "name": "Dallas-Ft Worth",
-      "state": "TX",
-      "lat": 32.7767,
-      "lon": -96.797
-    },
-    {
-      "yr": 4,
-      "phase": 2,
-      "name": "Austin",
-      "state": "TX",
-      "lat": 30.2672,
-      "lon": -97.7431
-    },
-    {
-      "yr": 5,
-      "phase": 2,
-      "name": "Seattle",
-      "state": "WA",
-      "lat": 47.6062,
-      "lon": -122.3321
-    },
-    {
-      "yr": 5,
-      "phase": 2,
-      "name": "Portland",
-      "state": "OR",
-      "lat": 45.5152,
-      "lon": -122.6784
-    },
-    {
-      "yr": 5,
-      "phase": 2,
-      "name": "Boise",
-      "state": "ID",
-      "lat": 43.615,
-      "lon": -116.2023
-    },
-    {
-      "yr": 5,
-      "phase": 2,
-      "name": "Salt Lake City",
-      "state": "UT",
-      "lat": 40.7608,
-      "lon": -111.891
-    },
-    {
-      "yr": 5,
-      "phase": 2,
-      "name": "Reno",
-      "state": "NV",
-      "lat": 39.5296,
-      "lon": -119.8138
-    },
-    {
-      "yr": 5,
-      "phase": 2,
-      "name": "Manchester NH",
-      "state": "NH",
-      "lat": 42.9956,
-      "lon": -71.4548
-    },
-    {
-      "yr": 5,
-      "phase": 2,
-      "name": "Portland ME",
-      "state": "ME",
-      "lat": 43.6591,
-      "lon": -70.2568
-    },
-    {
-      "yr": 5,
-      "phase": 2,
-      "name": "Buffalo",
-      "state": "NY",
-      "lat": 42.8864,
-      "lon": -78.8784
-    },
-    {
-      "yr": 5,
-      "phase": 2,
-      "name": "Syracuse",
-      "state": "NY",
-      "lat": 43.0481,
-      "lon": -76.1474
-    },
-    {
-      "yr": 5,
-      "phase": 2,
-      "name": "Colorado Springs",
-      "state": "CO",
-      "lat": 38.8339,
-      "lon": -104.8214
+      "lat": 32.22,
+      "lon": -110.97,
+      "hub": "Corona",
+      "adu": "Moderate",
+      "note": "AZ city-level ADU rules permissive despite state legislature friction. University of Arizona market, retiree casita demand, Phoenix-overflow affordability seekers."
     },
     {
       "yr": 5,
       "phase": 2,
       "name": "Houston",
       "state": "TX",
-      "lat": 29.7604,
-      "lon": -95.3698
+      "lat": 29.76,
+      "lon": -95.37,
+      "hub": "Dallas",
+      "adu": "Moderate",
+      "note": "No zoning = permissive by default. Sheer market size necessary. Energy sector workforce, large lot inventory for ADU placement. Sprawl culture is a headwind but volume compensates."
     },
     {
       "yr": 5,
       "phase": 2,
-      "name": "Charlotte",
-      "state": "NC",
-      "lat": 35.2271,
-      "lon": -80.8431
+      "name": "Albany",
+      "state": "NY",
+      "lat": 42.65,
+      "lon": -73.75,
+      "hub": "Hartford",
+      "adu": "Moderate",
+      "note": "NY ADU reform active statewide. State capital \u2014 stable government/healthcare employment. Hartford hub proximity makes this low-cost. Anchors upstate NY corridor."
     },
     {
       "yr": 5,
       "phase": 2,
-      "name": "Raleigh",
-      "state": "NC",
-      "lat": 35.7796,
-      "lon": -78.6382
+      "name": "Buffalo",
+      "state": "NY",
+      "lat": 42.89,
+      "lon": -78.88,
+      "hub": "Hartford",
+      "adu": "Moderate",
+      "note": "NY reform + rust belt revival. Affordability crisis severe. Legacy housing stock generates strong ADU-as-income-property demand. Low land cost = strong modular ROI."
     },
     {
       "yr": 5,
       "phase": 2,
-      "name": "Atlanta",
-      "state": "GA",
-      "lat": 33.749,
-      "lon": -84.388
+      "name": "Syracuse",
+      "state": "NY",
+      "lat": 43.05,
+      "lon": -76.15,
+      "hub": "Hartford",
+      "adu": "Moderate",
+      "note": "NY reform. Syracuse University rental ADU demand. Micron chip factory creating new workforce housing need \u2014 major tailwind. Affordable land makes modular ROI compelling for investors."
     },
     {
-      "yr": 6,
-      "phase": 3,
-      "name": "Philadelphia",
-      "state": "PA",
-      "lat": 39.9526,
-      "lon": -75.1652
+      "yr": 5,
+      "phase": 2,
+      "name": "Manchester",
+      "state": "NH",
+      "lat": 42.99,
+      "lon": -71.46,
+      "hub": "Hartford",
+      "adu": "Moderate",
+      "note": "NH ADU legislation 2017. Boston overflow market. No state income tax draws remote workers creating demand spike. Small but consistent."
     },
     {
-      "yr": 6,
-      "phase": 3,
-      "name": "Pittsburgh",
-      "state": "PA",
-      "lat": 40.4406,
-      "lon": -79.9959
+      "yr": 5,
+      "phase": 2,
+      "name": "Portland",
+      "state": "ME",
+      "lat": 43.66,
+      "lon": -70.26,
+      "hub": "Hartford",
+      "adu": "Moderate",
+      "note": "ME ADU reform active. Remote worker boom drove housing costs sharply up. Density-aware sustainability buyer. Low competition \u2014 early mover captures the whole market."
     },
     {
-      "yr": 6,
-      "phase": 3,
-      "name": "Harrisburg",
-      "state": "PA",
-      "lat": 40.2732,
-      "lon": -76.8867
+      "yr": 5,
+      "phase": 2,
+      "name": "Trenton",
+      "state": "NJ",
+      "lat": 40.22,
+      "lon": -74.76,
+      "hub": "Hartford",
+      "adu": "Moderate",
+      "note": "NJ ADU law 2024. More affordable land than Jersey City while inside NYC commuter shed. Urban renewal opportunity. Completes NJ market alongside Jersey City."
     },
     {
-      "yr": 6,
-      "phase": 3,
-      "name": "Baltimore",
-      "state": "MD",
-      "lat": 39.2904,
-      "lon": -76.6122
+      "yr": 5,
+      "phase": 1,
+      "name": "Worcester",
+      "state": "MA",
+      "lat": 42.26,
+      "lon": -71.8,
+      "hub": "Hartford",
+      "adu": "Moderate",
+      "note": "MA policy excellent but secondary to Boston. Establish Boston Yr 3, expand west Yr 5. WPI/Clark University ADU rental demand. Better modular ROI than Boston. Pushed from Yr 3."
     },
     {
-      "yr": 6,
-      "phase": 3,
-      "name": "DC Suburbs",
-      "state": "MD",
-      "lat": 39,
-      "lon": -77.1
+      "yr": 5,
+      "phase": 1,
+      "name": "Newark",
+      "state": "NJ",
+      "lat": 40.74,
+      "lon": -74.17,
+      "hub": "Hartford",
+      "adu": "Moderate",
+      "note": "NJ ADU law applies. Let Jersey City establish NJ brand first. Newark has real demand \u2014 strong long-term pipeline. Pushed from Yr 3."
     },
     {
-      "yr": 6,
-      "phase": 3,
+      "yr": 5,
+      "phase": 1,
+      "name": "Rochester",
+      "state": "NY",
+      "lat": 43.16,
+      "lon": -77.61,
+      "hub": "Hartford",
+      "adu": "Moderate",
+      "note": "NY reform. Kodak/Paychex/U of R workforce stable. Flat population = lower demand velocity. Enter after NY reform matures and upstate market is primed. Pushed from Yr 3."
+    },
+    {
+      "yr": 5,
+      "phase": 2,
+      "name": "Nashville",
+      "state": "TN",
+      "lat": 36.17,
+      "lon": -86.78,
+      "hub": "Indianapolis",
+      "adu": "Moderate",
+      "note": "Fastest-growing TN city. Healthcare/tech hub, ADU reform accelerating. Moved to Yr 5 from Yr 7 \u2014 TN legislation moving faster than expected."
+    },
+    {
+      "yr": 5,
+      "phase": 2,
+      "name": "San Antonio",
+      "state": "TX",
+      "lat": 29.42,
+      "lon": -98.49,
+      "hub": "Dallas",
+      "adu": "Moderate",
+      "note": "Large military market \u2014 Fort Sam Houston, Lackland, Randolph AFB. VA-financeable ADU demand is consistent and countercyclical. Completes TX triangle."
+    },
+    {
+      "yr": 5,
+      "phase": 2,
       "name": "Richmond",
       "state": "VA",
-      "lat": 37.5407,
-      "lon": -77.436
+      "lat": 37.54,
+      "lon": -77.44,
+      "hub": "Hartford",
+      "adu": "Moderate",
+      "note": "VA ADU reform advancing. State capital stability. Growing tech sector, Amazon HQ2 spillover. Bridges DC Suburbs to the Carolinas."
     },
     {
-      "yr": 6,
-      "phase": 3,
-      "name": "Columbus",
-      "state": "OH",
-      "lat": 39.9612,
-      "lon": -82.9988
+      "yr": 5,
+      "phase": 2,
+      "name": "Omaha",
+      "state": "NE",
+      "lat": 41.26,
+      "lon": -95.94,
+      "hub": "Indianapolis",
+      "adu": "Moderate",
+      "note": "Berkshire/finance hub, stable employment base, affordable land. NE ADU environment improving. Midwest market proving ground."
     },
     {
-      "yr": 6,
-      "phase": 3,
-      "name": "Cleveland",
-      "state": "OH",
-      "lat": 41.4993,
-      "lon": -81.6944
+      "yr": 5,
+      "phase": 2,
+      "name": "Oklahoma City",
+      "state": "OK",
+      "lat": 35.47,
+      "lon": -97.52,
+      "hub": "Dallas",
+      "adu": "Moderate",
+      "note": "OK ADU environment slowly improving. Energy sector workforce. Affordable land = compelling modular ROI for investors. Dallas hub efficient."
     },
     {
-      "yr": 6,
-      "phase": 3,
-      "name": "Cincinnati",
-      "state": "OH",
-      "lat": 39.1031,
-      "lon": -84.512
+      "yr": 5,
+      "phase": 2,
+      "name": "Albuquerque",
+      "state": "NM",
+      "lat": 35.08,
+      "lon": -106.65,
+      "hub": "Denver",
+      "adu": "Moderate",
+      "note": "NM ADU-permissive environment. Growing tech/gov sector, Kirtland AFB workforce housing. Affordable land, constrained supply. Denver hub covers geographically."
     },
     {
-      "yr": 6,
-      "phase": 3,
-      "name": "Chicago",
-      "state": "IL",
-      "lat": 41.8781,
-      "lon": -87.6298
+      "yr": 5,
+      "phase": 2,
+      "name": "Savannah",
+      "state": "GA",
+      "lat": 32.08,
+      "lon": -81.1,
+      "hub": "Indianapolis",
+      "adu": "Moderate",
+      "note": "SCAD arts/design culture = modular-receptive buyer. Port of Savannah workforce housing demand growing rapidly. Bridges Atlanta and FL coastal coverage."
     },
     {
-      "yr": 6,
-      "phase": 3,
-      "name": "Indianapolis",
-      "state": "IN",
-      "lat": 39.7684,
-      "lon": -86.1581
+      "yr": 5,
+      "phase": 2,
+      "name": "Baton Rouge",
+      "state": "LA",
+      "lat": 30.45,
+      "lon": -91.19,
+      "hub": "Dallas",
+      "adu": "Moderate",
+      "note": "LA ADU environment improving. LSU university, petrochemical industry workforce housing. Dallas hub covers efficiently."
     },
     {
       "yr": 6,
       "phase": 3,
       "name": "Miami",
       "state": "FL",
-      "lat": 25.7617,
-      "lon": -80.1918
+      "lat": 25.77,
+      "lon": -80.19,
+      "hub": "Indianapolis",
+      "adu": "Moderate",
+      "note": "FL ADU rules \u2014 Miami permissive. Extreme housing cost pressure, international buyer base, investor-oriented ADU demand. Anchor for FL franchise network."
     },
     {
       "yr": 6,
       "phase": 3,
       "name": "Orlando",
       "state": "FL",
-      "lat": 28.5383,
-      "lon": -81.3792
+      "lat": 28.54,
+      "lon": -81.38,
+      "hub": "Indianapolis",
+      "adu": "Moderate",
+      "note": "Tourism/hospitality workforce housing need. Rapid population growth. Disney/Universal workforce creates consistent rental ADU demand."
     },
     {
       "yr": 6,
       "phase": 3,
       "name": "Tampa",
       "state": "FL",
-      "lat": 27.9506,
-      "lon": -82.4572
+      "lat": 27.95,
+      "lon": -82.46,
+      "hub": "Indianapolis",
+      "adu": "Moderate",
+      "note": "FL Gulf Coast growth corridor. Remote worker influx drove housing costs sharply. Finance/tech relocation hub."
     },
     {
       "yr": 6,
       "phase": 3,
       "name": "Jacksonville",
       "state": "FL",
-      "lat": 30.3322,
-      "lon": -81.6557
+      "lat": 30.33,
+      "lon": -81.66,
+      "hub": "Indianapolis",
+      "adu": "Moderate",
+      "note": "FL, large military presence \u2014 NAS Jax, Mayport. Military ADU demand steady and VA-financeable. Largest land-area US city \u2014 huge lot inventory for ADU infill."
     },
     {
       "yr": 6,
       "phase": 3,
-      "name": "San Antonio",
-      "state": "TX",
-      "lat": 29.4241,
-      "lon": -98.4936
+      "name": "Chicago",
+      "state": "IL",
+      "lat": 41.88,
+      "lon": -87.63,
+      "hub": "Indianapolis",
+      "adu": "Moderate",
+      "note": "Chicago ADU pilot expanded citywide 2023. Deep two-flat/three-flat housing culture aligns with ADU concept. High homeowner equity in established neighborhoods."
     },
     {
-      "yr": 7,
+      "yr": 6,
       "phase": 3,
-      "name": "Detroit",
-      "state": "MI",
-      "lat": 42.3314,
-      "lon": -83.0458
+      "name": "Indianapolis",
+      "state": "IN",
+      "lat": 39.77,
+      "lon": -86.16,
+      "hub": "Indianapolis",
+      "adu": "Moderate",
+      "note": "Midwest hub city \u2014 hub becomes a franchise site. Affordable land, steady workforce growth. Lowest incremental cost market to launch given hub operations already in place."
     },
     {
-      "yr": 7,
+      "yr": 6,
       "phase": 3,
-      "name": "Grand Rapids",
-      "state": "MI",
-      "lat": 42.9634,
-      "lon": -85.6681
+      "name": "Baltimore",
+      "state": "MD",
+      "lat": 39.29,
+      "lon": -76.61,
+      "hub": "Hartford",
+      "adu": "Moderate",
+      "note": "MD ADU legislation advancing. DC metro overflow, large rowhouse inventory ideal for ADU. Healthcare/government workforce stability."
     },
     {
-      "yr": 7,
+      "yr": 6,
       "phase": 3,
-      "name": "Milwaukee",
-      "state": "WI",
-      "lat": 43.0389,
-      "lon": -87.9065
+      "name": "DC Suburbs",
+      "state": "MD",
+      "lat": 38.99,
+      "lon": -77.03,
+      "hub": "Hartford",
+      "adu": "Moderate",
+      "note": "MD/VA ADU-friendly jurisdictions, federal workforce stability. Montgomery County strong ADU permitting. High homeowner equity drives income-generating ADU demand."
     },
     {
-      "yr": 7,
+      "yr": 6,
       "phase": 3,
-      "name": "Nashville",
-      "state": "TN",
-      "lat": 36.1627,
-      "lon": -86.7816
+      "name": "Columbus",
+      "state": "OH",
+      "lat": 39.96,
+      "lon": -82.99,
+      "hub": "Indianapolis",
+      "adu": "Moderate",
+      "note": "Fastest-growing OH city. Intel fab investment creating new workforce housing demand. Ohio State market. Anchors OH cluster."
     },
     {
-      "yr": 7,
+      "yr": 6,
       "phase": 3,
-      "name": "Memphis",
-      "state": "TN",
-      "lat": 35.1495,
-      "lon": -90.049
+      "name": "Cleveland",
+      "state": "OH",
+      "lat": 41.5,
+      "lon": -81.69,
+      "hub": "Indianapolis",
+      "adu": "Lower",
+      "note": "OH market. Healthcare/Case Western anchor. Rust belt revival creates ADU-as-investment demand. Affordable land = strong modular ROI."
     },
     {
-      "yr": 7,
+      "yr": 6,
       "phase": 3,
-      "name": "Knoxville",
-      "state": "TN",
-      "lat": 35.9606,
-      "lon": -83.9207
+      "name": "Cincinnati",
+      "state": "OH",
+      "lat": 39.1,
+      "lon": -84.51,
+      "hub": "Indianapolis",
+      "adu": "Lower",
+      "note": "OH/KY market. P&G/finance workforce stability. Growing tech sector. Completes Indianapolis hub OH coverage."
     },
     {
-      "yr": 7,
+      "yr": 6,
+      "phase": 3,
+      "name": "Philadelphia",
+      "state": "PA",
+      "lat": 39.95,
+      "lon": -75.16,
+      "hub": "Hartford",
+      "adu": "Moderate",
+      "note": "PA ADU rules locally variable \u2014 Philly moving toward reform. Large rowhouse stock, high homeowner equity, major university market."
+    },
+    {
+      "yr": 6,
+      "phase": 3,
+      "name": "Pittsburgh",
+      "state": "PA",
+      "lat": 40.44,
+      "lon": -79.99,
+      "hub": "Indianapolis",
+      "adu": "Lower",
+      "note": "PA tech revival \u2014 CMU/Pitt robotics hub. Google, Uber, Duolingo workforce creates housing demand. Affordable land = strong modular ROI."
+    },
+    {
+      "yr": 6,
+      "phase": 3,
+      "name": "Harrisburg",
+      "state": "PA",
+      "lat": 40.27,
+      "lon": -76.88,
+      "hub": "Hartford",
+      "adu": "Lower",
+      "note": "PA state capital \u2014 government workforce stability. Bridges coverage between Philly and Pittsburgh markets."
+    },
+    {
+      "yr": 6,
       "phase": 3,
       "name": "Louisville",
       "state": "KY",
-      "lat": 38.2527,
-      "lon": -85.7585
+      "lat": 38.25,
+      "lon": -85.76,
+      "hub": "Indianapolis",
+      "adu": "Lower",
+      "note": "KY ADU environment improving. Healthcare/UofL anchor market. Close Indianapolis hub proximity keeps costs low."
     },
     {
-      "yr": 7,
+      "yr": 6,
       "phase": 3,
-      "name": "Charleston SC",
-      "state": "SC",
-      "lat": 32.7765,
-      "lon": -79.9311
+      "name": "Kansas City",
+      "state": "MO",
+      "lat": 39.1,
+      "lon": -94.58,
+      "hub": "Indianapolis",
+      "adu": "Moderate",
+      "note": "MO market improving. Tech hub growth, affordable land. Animal health/veterinary sector unique workforce demand."
     },
     {
-      "yr": 7,
+      "yr": 6,
       "phase": 3,
-      "name": "Greenville",
-      "state": "SC",
-      "lat": 34.8526,
-      "lon": -82.394
+      "name": "St. Louis",
+      "state": "MO",
+      "lat": 38.63,
+      "lon": -90.2,
+      "hub": "Indianapolis",
+      "adu": "Lower",
+      "note": "Population stabilizing. Healthcare/Wash U anchor. Enter once KC franchise proves the MO model."
+    },
+    {
+      "yr": 6,
+      "phase": 3,
+      "name": "New Orleans",
+      "state": "LA",
+      "lat": 29.95,
+      "lon": -90.07,
+      "hub": "Dallas",
+      "adu": "Moderate",
+      "note": "LA ADU improving, historic shotgun house culture already primes the ADU concept culturally. Tourism/port workforce. Unique architectural market."
     },
     {
       "yr": 7,
       "phase": 3,
       "name": "Birmingham",
       "state": "AL",
-      "lat": 33.5186,
-      "lon": -86.8104
+      "lat": 33.52,
+      "lon": -86.8,
+      "hub": "Indianapolis",
+      "adu": "Lower",
+      "note": "AL market maturing slowly. UAB anchor. Enter when Indianapolis hub reaches full capacity and SE coverage gap needs closing."
     },
     {
       "yr": 7,
       "phase": 3,
       "name": "Huntsville",
       "state": "AL",
-      "lat": 34.7304,
-      "lon": -86.5861
+      "lat": 34.73,
+      "lon": -86.59,
+      "hub": "Indianapolis",
+      "adu": "Moderate",
+      "note": "Rocket/defense tech workforce \u2014 NASA, Redstone Arsenal, Boeing. Stable high-income housing demand. Innovation-receptive buyer strongly suited to modular."
     },
     {
       "yr": 7,
       "phase": 3,
-      "name": "Norfolk",
-      "state": "VA",
-      "lat": 36.8508,
-      "lon": -76.2859
+      "name": "Wilmington",
+      "state": "DE",
+      "lat": 39.74,
+      "lon": -75.55,
+      "hub": "Hartford",
+      "adu": "Moderate",
+      "note": "DE ADU-friendly environment, corporate/legal industry workforce. Proximity to Philly and DC extends Northeast coverage efficiently."
     },
     {
       "yr": 7,
       "phase": 3,
       "name": "Ft Lauderdale",
       "state": "FL",
-      "lat": 26.1224,
-      "lon": -80.1373
+      "lat": 26.12,
+      "lon": -80.14,
+      "hub": "Indianapolis",
+      "adu": "Moderate",
+      "note": "FL South corridor. Extends Miami coverage north. High homeowner equity in established beach communities."
     },
     {
       "yr": 7,
       "phase": 3,
-      "name": "Savannah",
-      "state": "GA",
-      "lat": 32.0809,
-      "lon": -81.0912
+      "name": "Detroit",
+      "state": "MI",
+      "lat": 42.33,
+      "lon": -83.05,
+      "hub": "Indianapolis",
+      "adu": "Lower",
+      "note": "MI ADU reform active. EV manufacturing revival (Ford, GM, Rivian) creating new workforce housing demand. Enter if MI legislation moves by 2027."
     },
     {
       "yr": 7,
       "phase": 3,
-      "name": "Wilmington DE",
-      "state": "DE",
-      "lat": 39.7391,
-      "lon": -75.5398
+      "name": "Grand Rapids",
+      "state": "MI",
+      "lat": 42.96,
+      "lon": -85.67,
+      "hub": "Indianapolis",
+      "adu": "Moderate",
+      "note": "West MI furniture/manufacturing hub. Conservative homeowner base responds to property-investment ADU framing. Growing healthcare sector."
     },
     {
-      "yr": 8,
+      "yr": 7,
       "phase": 3,
-      "name": "Minneapolis",
-      "state": "MN",
-      "lat": 44.9778,
-      "lon": -93.265
+      "name": "Charleston",
+      "state": "SC",
+      "lat": 32.78,
+      "lon": -79.93,
+      "hub": "Indianapolis",
+      "adu": "Moderate",
+      "note": "SC growth corridor, Joint Base Charleston military presence. High average home value = compelling ADU ROI story."
     },
     {
-      "yr": 8,
+      "yr": 7,
       "phase": 3,
-      "name": "Madison",
+      "name": "Greenville",
+      "state": "SC",
+      "lat": 34.85,
+      "lon": -82.4,
+      "hub": "Indianapolis",
+      "adu": "Moderate",
+      "note": "Fastest-growing SC city. BMW/Michelin/tech manufacturing workforce housing demand. Upstate SC corridor pairs with Charlotte."
+    },
+    {
+      "yr": 7,
+      "phase": 3,
+      "name": "Memphis",
+      "state": "TN",
+      "lat": 35.15,
+      "lon": -90.05,
+      "hub": "Dallas",
+      "adu": "Lower",
+      "note": "TN market. FedEx logistics hub, large workforce. Affordable land = strong modular ROI for investors. Pairs with Nashville to complete TN coverage."
+    },
+    {
+      "yr": 7,
+      "phase": 3,
+      "name": "Knoxville",
+      "state": "TN",
+      "lat": 35.96,
+      "lon": -83.92,
+      "hub": "Indianapolis",
+      "adu": "Lower",
+      "note": "UT Knoxville university market. Oak Ridge National Lab workforce creates stable high-income demand."
+    },
+    {
+      "yr": 7,
+      "phase": 3,
+      "name": "Norfolk",
+      "state": "VA",
+      "lat": 36.85,
+      "lon": -76.29,
+      "hub": "Hartford",
+      "adu": "Moderate",
+      "note": "Largest naval base in the world \u2014 massive military workforce housing demand. VA loan-compatible modular is a natural fit."
+    },
+    {
+      "yr": 7,
+      "phase": 3,
+      "name": "Milwaukee",
       "state": "WI",
-      "lat": 43.0731,
-      "lon": -89.4012
+      "lat": 43.04,
+      "lon": -87.91,
+      "hub": "Indianapolis",
+      "adu": "Moderate",
+      "note": "WI ADU reform active. Affordable land, rust belt revival, strong union homeowner base responds to ADU-as-income framing."
     },
     {
-      "yr": 8,
-      "phase": 3,
-      "name": "Des Moines",
-      "state": "IA",
-      "lat": 41.5868,
-      "lon": -93.625
-    },
-    {
-      "yr": 8,
-      "phase": 3,
-      "name": "St. Louis",
-      "state": "MO",
-      "lat": 38.627,
-      "lon": -90.1994
-    },
-    {
-      "yr": 8,
-      "phase": 3,
-      "name": "Kansas City",
-      "state": "MO",
-      "lat": 39.0997,
-      "lon": -94.5786
-    },
-    {
-      "yr": 8,
-      "phase": 3,
-      "name": "Oklahoma City",
-      "state": "OK",
-      "lat": 35.4676,
-      "lon": -97.5164
-    },
-    {
-      "yr": 8,
-      "phase": 3,
-      "name": "Tulsa",
-      "state": "OK",
-      "lat": 36.154,
-      "lon": -95.9928
-    },
-    {
-      "yr": 8,
-      "phase": 3,
-      "name": "Omaha",
-      "state": "NE",
-      "lat": 41.2565,
-      "lon": -95.9345
-    },
-    {
-      "yr": 8,
-      "phase": 3,
-      "name": "New Orleans",
-      "state": "LA",
-      "lat": 29.9511,
-      "lon": -90.0715
-    },
-    {
-      "yr": 8,
-      "phase": 3,
-      "name": "Baton Rouge",
-      "state": "LA",
-      "lat": 30.4515,
-      "lon": -91.1871
-    },
-    {
-      "yr": 8,
+      "yr": 7,
       "phase": 3,
       "name": "Little Rock",
       "state": "AR",
-      "lat": 34.7465,
-      "lon": -92.2896
+      "lat": 34.75,
+      "lon": -92.29,
+      "hub": "Dallas",
+      "adu": "Lower",
+      "note": "AR state capital, stable government workforce. Affordable land, low competition. Establishes AR footprint."
     },
     {
-      "yr": 8,
+      "yr": 7,
+      "phase": 3,
+      "name": "Des Moines",
+      "state": "IA",
+      "lat": 41.59,
+      "lon": -93.62,
+      "hub": "Indianapolis",
+      "adu": "Moderate",
+      "note": "IA ADU environment improving. Insurance/finance hub, stable employment base. Affordable land = compelling modular ROI."
+    },
+    {
+      "yr": 7,
+      "phase": 3,
+      "name": "Tulsa",
+      "state": "OK",
+      "lat": 36.15,
+      "lon": -95.99,
+      "hub": "Dallas",
+      "adu": "Moderate",
+      "note": "OK energy/aerospace workforce. Artist District revitalization driving ADU-receptive urban buyer base. Pairs with OKC."
+    },
+    {
+      "yr": 7,
       "phase": 3,
       "name": "El Paso",
       "state": "TX",
-      "lat": 31.7619,
-      "lon": -106.485
+      "lat": 31.76,
+      "lon": -106.49,
+      "hub": "Denver",
+      "adu": "Moderate",
+      "note": "Large military presence \u2014 Fort Bliss. TX ADU environment positive, border market creates unique workforce housing demand. Bridges TX and NM coverage."
+    },
+    {
+      "yr": 7,
+      "phase": 3,
+      "name": "Madison",
+      "state": "WI",
+      "lat": 43.07,
+      "lon": -89.4,
+      "hub": "Indianapolis",
+      "adu": "Moderate",
+      "note": "UW-Madison university market, state capital stability. Progressive buyer base strongly aligned with modular/ADU values."
+    },
+    {
+      "yr": 7,
+      "phase": 3,
+      "name": "Chattanooga",
+      "state": "TN",
+      "lat": 35.05,
+      "lon": -85.31,
+      "hub": "Indianapolis",
+      "adu": "Moderate",
+      "note": "Fast-growing manufacturing/tech hub. Volkswagen EV plant workforce, outdoor recreation culture drives innovation-receptive buyer. Completes TN quad."
     },
     {
       "yr": 8,
       "phase": 3,
-      "name": "Albuquerque",
-      "state": "NM",
-      "lat": 35.0844,
-      "lon": -106.6504
+      "name": "Lexington",
+      "state": "KY",
+      "lat": 38.04,
+      "lon": -84.5,
+      "hub": "Indianapolis",
+      "adu": "Moderate",
+      "note": "UK Lexington university market, horse farm wealth = high homeowner equity for ADU investment. Completes KY coverage."
     },
     {
-      "yr": 9,
+      "yr": 8,
       "phase": 3,
-      "name": "Spokane",
-      "state": "WA",
-      "lat": 47.6588,
-      "lon": -117.426
+      "name": "Bangor",
+      "state": "ME",
+      "lat": 44.8,
+      "lon": -68.78,
+      "hub": "Hartford",
+      "adu": "Moderate",
+      "note": "ME ADU reform, rural coverage extension. University of Maine market. Establishes northern New England presence. Low competition."
     },
     {
-      "yr": 9,
-      "phase": 3,
-      "name": "Eugene",
-      "state": "OR",
-      "lat": 44.0521,
-      "lon": -123.0868
-    },
-    {
-      "yr": 9,
-      "phase": 3,
-      "name": "Bend",
-      "state": "OR",
-      "lat": 44.0582,
-      "lon": -121.3153
-    },
-    {
-      "yr": 9,
-      "phase": 3,
-      "name": "Provo",
-      "state": "UT",
-      "lat": 40.2338,
-      "lon": -111.6585
-    },
-    {
-      "yr": 9,
+      "yr": 8,
       "phase": 3,
       "name": "Billings",
       "state": "MT",
-      "lat": 45.7833,
-      "lon": -108.5007
+      "lat": 45.78,
+      "lon": -108.5,
+      "hub": "Denver",
+      "adu": "Moderate",
+      "note": "MT ADU environment improving. Energy sector workforce, gateway to Northern Plains markets. Largest MT city."
     },
     {
-      "yr": 9,
+      "yr": 8,
       "phase": 3,
       "name": "Bozeman",
       "state": "MT",
-      "lat": 45.677,
-      "lon": -111.0429
+      "lat": 45.68,
+      "lon": -111.04,
+      "hub": "Denver",
+      "adu": "Strong",
+      "note": "Fastest-growing MT city. MSU university, tech/outdoor industry migration from CA. Extreme housing cost spike \u2014 modular is natural solution."
     },
     {
-      "yr": 9,
+      "yr": 8,
+      "phase": 3,
+      "name": "Fargo",
+      "state": "ND",
+      "lat": 46.88,
+      "lon": -96.79,
+      "hub": "Denver",
+      "adu": "Moderate",
+      "note": "ND ADU environment improving. NDSU university, growing tech sector. Affordable land = strong modular ROI. Northern Plains presence."
+    },
+    {
+      "yr": 8,
+      "phase": 3,
+      "name": "Lincoln",
+      "state": "NE",
+      "lat": 40.81,
+      "lon": -96.68,
+      "hub": "Indianapolis",
+      "adu": "Moderate",
+      "note": "UN-Lincoln university market, state capital stability. Pairs with Omaha to complete NE coverage."
+    },
+    {
+      "yr": 8,
+      "phase": 3,
+      "name": "Toledo",
+      "state": "OH",
+      "lat": 41.66,
+      "lon": -83.56,
+      "hub": "Indianapolis",
+      "adu": "Moderate",
+      "note": "OH market, Jeep manufacturing workforce housing. UT Toledo university. Completes OH coverage."
+    },
+    {
+      "yr": 8,
+      "phase": 3,
+      "name": "Eugene",
+      "state": "OR",
+      "lat": 44.05,
+      "lon": -123.09,
+      "hub": "Corona",
+      "adu": "Excellent",
+      "note": "OR ADU law applies statewide. UO Eugene university, strong environmental buyer values. Extends Portland coverage south through the Willamette Valley."
+    },
+    {
+      "yr": 8,
+      "phase": 3,
+      "name": "Bend",
+      "state": "OR",
+      "lat": 44.06,
+      "lon": -121.31,
+      "hub": "Corona",
+      "adu": "Excellent",
+      "note": "OR ADU law applies. Fastest-growing OR city. Outdoor tech/remote worker migration driving extreme housing cost spike. Small market, capturable quickly."
+    },
+    {
+      "yr": 8,
+      "phase": 3,
+      "name": "Sioux Falls",
+      "state": "SD",
+      "lat": 43.55,
+      "lon": -96.73,
+      "hub": "Indianapolis",
+      "adu": "Moderate",
+      "note": "SD ADU environment improving. No state income tax draws remote workers. Growing financial services sector."
+    },
+    {
+      "yr": 8,
+      "phase": 3,
+      "name": "Provo",
+      "state": "UT",
+      "lat": 40.23,
+      "lon": -111.66,
+      "hub": "Denver",
+      "adu": "Strong",
+      "note": "UT ADU by-right law applies. BYU university market, high multigenerational household demand \u2014 natural ADU buyers. Young family demographic suited to modular."
+    },
+    {
+      "yr": 8,
+      "phase": 3,
+      "name": "Burlington",
+      "state": "VT",
+      "lat": 44.48,
+      "lon": -73.21,
+      "hub": "Hartford",
+      "adu": "Strong",
+      "note": "VT ADU legislation 2018 \u2014 statewide by-right. UVM university market, high environmental consciousness buyer. Small but high-value with strong ADU adoption culture."
+    },
+    {
+      "yr": 8,
+      "phase": 3,
+      "name": "Spokane",
+      "state": "WA",
+      "lat": 47.66,
+      "lon": -117.43,
+      "hub": "Denver",
+      "adu": "Strong",
+      "note": "WA ADU reform applies statewide. Eastern WA gateway, affordable land vs Seattle, growing remote worker market."
+    },
+    {
+      "yr": 8,
       "phase": 3,
       "name": "Cheyenne",
       "state": "WY",
       "lat": 41.14,
-      "lon": -104.8202
+      "lon": -104.82,
+      "hub": "Denver",
+      "adu": "Moderate",
+      "note": "WY state capital, F.E. Warren AFB military presence. No state income tax attracting remote workers. Denver hub covers efficiently."
+    },
+    {
+      "yr": 8,
+      "phase": 3,
+      "name": "Jackson",
+      "state": "MS",
+      "lat": 32.3,
+      "lon": -90.18,
+      "hub": "Dallas",
+      "adu": "Lower",
+      "note": "MS state capital, water infrastructure investment creating construction activity. Affordable land, consistent government workforce."
+    },
+    {
+      "yr": 8,
+      "phase": 3,
+      "name": "Shreveport",
+      "state": "LA",
+      "lat": 32.53,
+      "lon": -93.75,
+      "hub": "Dallas",
+      "adu": "Lower",
+      "note": "LA north corridor, Barksdale AFB military workforce housing demand. Completes LA coverage with Baton Rouge and New Orleans."
+    },
+    {
+      "yr": 8,
+      "phase": 3,
+      "name": "Charleston",
+      "state": "WV",
+      "lat": 38.35,
+      "lon": -81.63,
+      "hub": "Indianapolis",
+      "adu": "Lower",
+      "note": "WV state capital, federal infrastructure investment driving new construction. Affordable land = strong modular economics. Appalachian market entry."
+    },
+    {
+      "yr": 8,
+      "phase": 3,
+      "name": "Morgantown",
+      "state": "WV",
+      "lat": 39.63,
+      "lon": -79.96,
+      "hub": "Indianapolis",
+      "adu": "Lower",
+      "note": "WVU university market, federal research workforce. Pairs with Charleston WV to complete Appalachian coverage."
     },
     {
       "yr": 9,
-      "phase": 3,
-      "name": "Fargo",
-      "state": "ND",
-      "lat": 46.8772,
-      "lon": -96.7898
-    },
-    {
-      "yr": 9,
-      "phase": 3,
-      "name": "Sioux Falls",
-      "state": "SD",
-      "lat": 43.5446,
-      "lon": -96.7311
-    },
-    {
-      "yr": 9,
-      "phase": 3,
-      "name": "Lincoln",
-      "state": "NE",
-      "lat": 40.8136,
-      "lon": -96.7026
-    },
-    {
-      "yr": 9,
-      "phase": 3,
-      "name": "Bangor",
-      "state": "ME",
-      "lat": 44.8016,
-      "lon": -68.7712
-    },
-    {
-      "yr": 9,
-      "phase": 3,
-      "name": "Burlington VT",
-      "state": "VT",
-      "lat": 44.4759,
-      "lon": -73.2121
-    },
-    {
-      "yr": 9,
-      "phase": 3,
-      "name": "Toledo",
-      "state": "OH",
-      "lat": 41.6639,
-      "lon": -83.5552
-    },
-    {
-      "yr": 9,
-      "phase": 3,
-      "name": "Lexington",
-      "state": "KY",
-      "lat": 38.0406,
-      "lon": -84.5037
-    },
-    {
-      "yr": 9,
-      "phase": 3,
-      "name": "Chattanooga",
-      "state": "TN",
-      "lat": 35.0456,
-      "lon": -85.3097
-    },
-    {
-      "yr": 10,
       "phase": 3,
       "name": "Anchorage",
       "state": "AK",
-      "lat": 61.2181,
-      "lon": -149.9003
+      "lat": 61.22,
+      "lon": -149.9,
+      "hub": "Corona",
+      "adu": "Moderate",
+      "note": "Modular is essentially the only practical build method in AK. Extreme construction cost and logistics constraints make factory-built the obvious solution. Captive market. Pulled from Yr 10."
     },
     {
-      "yr": 10,
+      "yr": 9,
       "phase": 3,
-      "name": "Honolulu",
-      "state": "HI",
-      "lat": 21.3099,
-      "lon": -157.8581
+      "name": "Mobile",
+      "state": "AL",
+      "lat": 30.7,
+      "lon": -88.04,
+      "hub": "Dallas",
+      "adu": "Lower",
+      "note": "AL Gulf Coast, Airbus manufacturing workforce housing demand. Port/aerospace industry. Completes AL coverage."
     },
     {
-      "yr": 10,
+      "yr": 9,
+      "phase": 3,
+      "name": "Tallahassee",
+      "state": "FL",
+      "lat": 30.44,
+      "lon": -84.28,
+      "hub": "Indianapolis",
+      "adu": "Moderate",
+      "note": "FL state capital, FSU/FAMU university market. State government workforce stability. Completes FL coverage."
+    },
+    {
+      "yr": 9,
+      "phase": 3,
+      "name": "Pensacola",
+      "state": "FL",
+      "lat": 30.42,
+      "lon": -87.22,
+      "hub": "Dallas",
+      "adu": "Moderate",
+      "note": "FL Panhandle, NAS Pensacola \u2014 enormous military workforce housing demand. VA-financeable modular natural fit."
+    },
+    {
+      "yr": 9,
       "phase": 3,
       "name": "Hilo",
       "state": "HI",
-      "lat": 19.7241,
-      "lon": -155.0868
+      "lat": 19.71,
+      "lon": -155.09,
+      "hub": "Corona",
+      "adu": "Excellent",
+      "note": "HI ADU law applies statewide. Big Island workforce housing demand. More affordable than Honolulu but same excellent policy environment."
+    },
+    {
+      "yr": 9,
+      "phase": 3,
+      "name": "Fort Wayne",
+      "state": "IN",
+      "lat": 41.08,
+      "lon": -85.14,
+      "hub": "Indianapolis",
+      "adu": "Moderate",
+      "note": "IN manufacturing workforce housing. Second-largest IN city. Short haul from Indianapolis hub."
+    },
+    {
+      "yr": 9,
+      "phase": 3,
+      "name": "Bismarck",
+      "state": "ND",
+      "lat": 46.81,
+      "lon": -100.78,
+      "hub": "Denver",
+      "adu": "Moderate",
+      "note": "ND state capital, energy sector workforce. Pairs with Fargo to complete ND coverage."
+    },
+    {
+      "yr": 9,
+      "phase": 3,
+      "name": "Concord",
+      "state": "NH",
+      "lat": 43.21,
+      "lon": -71.54,
+      "hub": "Hartford",
+      "adu": "Moderate",
+      "note": "NH state capital, NH ADU law applies. Completes NH coverage with Manchester."
+    },
+    {
+      "yr": 9,
+      "phase": 3,
+      "name": "Allentown",
+      "state": "PA",
+      "lat": 40.6,
+      "lon": -75.49,
+      "hub": "Hartford",
+      "adu": "Moderate",
+      "note": "PA Lehigh Valley, manufacturing/warehouse workforce. Amazon/distribution center demand for worker housing."
+    },
+    {
+      "yr": 9,
+      "phase": 3,
+      "name": "Rapid City",
+      "state": "SD",
+      "lat": 44.08,
+      "lon": -103.23,
+      "hub": "Denver",
+      "adu": "Moderate",
+      "note": "SD Black Hills gateway, Ellsworth AFB military workforce housing. Pairs with Sioux Falls to complete SD."
+    },
+    {
+      "yr": 9,
+      "phase": 3,
+      "name": "Laredo",
+      "state": "TX",
+      "lat": 27.5,
+      "lon": -99.51,
+      "hub": "Dallas",
+      "adu": "Moderate",
+      "note": "TX border market, international trade workforce housing demand. US-Mexico port of entry creates consistent housing need."
+    },
+    {
+      "yr": 9,
+      "phase": 3,
+      "name": "Charlottesville",
+      "state": "VA",
+      "lat": 38.03,
+      "lon": -78.48,
+      "hub": "Hartford",
+      "adu": "Moderate",
+      "note": "UVA university market, high homeowner equity, educated buyer aligned with modular/ADU values. Completes VA coverage."
+    },
+    {
+      "yr": 9,
+      "phase": 3,
+      "name": "Bellingham",
+      "state": "WA",
+      "lat": 48.75,
+      "lon": -122.48,
+      "hub": "Corona",
+      "adu": "Strong",
+      "note": "WA ADU reform applies. Canadian border market, WWU university, outdoor/tech culture. Extends WA coverage north from Seattle."
+    },
+    {
+      "yr": 9,
+      "phase": 3,
+      "name": "Casper",
+      "state": "WY",
+      "lat": 42.87,
+      "lon": -106.31,
+      "hub": "Denver",
+      "adu": "Moderate",
+      "note": "WY energy sector workforce housing demand. Completes WY coverage with Cheyenne."
+    },
+    {
+      "yr": 9,
+      "phase": 3,
+      "name": "Missoula",
+      "state": "MT",
+      "lat": 46.87,
+      "lon": -113.99,
+      "hub": "Denver",
+      "adu": "Strong",
+      "note": "UM Missoula university, outdoor recreation culture = innovation-receptive buyer. Completes MT coverage with Billings and Bozeman."
+    },
+    {
+      "yr": 9,
+      "phase": 3,
+      "name": "Corpus Christi",
+      "state": "TX",
+      "lat": 27.8,
+      "lon": -97.4,
+      "hub": "Dallas",
+      "adu": "Moderate",
+      "note": "TX Gulf Coast, NAS Corpus Christi military workforce, petrochemical industry. Completes TX coastal coverage."
+    },
+    {
+      "yr": 9,
+      "phase": 3,
+      "name": "Gainesville",
+      "state": "FL",
+      "lat": 29.65,
+      "lon": -82.32,
+      "hub": "Indianapolis",
+      "adu": "Moderate",
+      "note": "UF Gainesville university market, consistent rental ADU demand. Completes FL interior coverage."
+    },
+    {
+      "yr": 10,
+      "phase": 3,
+      "name": "Bakersfield",
+      "state": "CA",
+      "lat": 35.37,
+      "lon": -119.02,
+      "hub": "Corona",
+      "adu": "Strong",
+      "note": "CA ADU law applies. Oil/agriculture workforce, affordable Central Valley land. Bridges Fresno and LA Basin coverage. Large underserved housing market."
+    },
+    {
+      "yr": 10,
+      "phase": 3,
+      "name": "Eureka",
+      "state": "CA",
+      "lat": 40.8,
+      "lon": -124.16,
+      "hub": "Corona",
+      "adu": "Strong",
+      "note": "CA ADU law applies. North Coast market, timber/fishing workforce, extremely limited housing supply. Completes CA coastal coverage north of Bay Area."
+    },
+    {
+      "yr": 10,
+      "phase": 3,
+      "name": "Fairbanks",
+      "state": "AK",
+      "lat": 64.84,
+      "lon": -147.72,
+      "hub": "Corona",
+      "adu": "Moderate",
+      "note": "AK modular essential for climate/logistics. UAF university, military (Eielson, Fort Wainwright). Completes AK coverage with Anchorage."
+    },
+    {
+      "yr": 10,
+      "phase": 3,
+      "name": "Flagstaff",
+      "state": "AZ",
+      "lat": 35.2,
+      "lon": -111.65,
+      "hub": "Corona",
+      "adu": "Moderate",
+      "note": "AZ university market (NAU), mountain gateway, tourism workforce housing. Completes AZ triangle with Phoenix and Tucson."
+    },
+    {
+      "yr": 10,
+      "phase": 3,
+      "name": "Meridian",
+      "state": "ID",
+      "lat": 43.61,
+      "lon": -116.39,
+      "hub": "Denver",
+      "adu": "Excellent",
+      "note": "ID ADU-permissive. Boise suburb with fastest growth rate \u2014 modular infill is natural solution. Same excellent demand dynamics as Boise."
+    },
+    {
+      "yr": 10,
+      "phase": 3,
+      "name": "Wichita",
+      "state": "KS",
+      "lat": 37.69,
+      "lon": -97.34,
+      "hub": "Indianapolis",
+      "adu": "Moderate",
+      "note": "KS aerospace manufacturing workforce (Boeing, Spirit AeroSystems). Stable, affordable market. Establishes KS presence."
+    },
+    {
+      "yr": 10,
+      "phase": 3,
+      "name": "Duluth",
+      "state": "MN",
+      "lat": 46.78,
+      "lon": -92.11,
+      "hub": "Indianapolis",
+      "adu": "Moderate",
+      "note": "MN ADU reform applies. Port/manufacturing workforce, UMD university. Completes MN coverage with Minneapolis."
+    },
+    {
+      "yr": 10,
+      "phase": 3,
+      "name": "Springfield",
+      "state": "MO",
+      "lat": 37.22,
+      "lon": -93.29,
+      "hub": "Dallas",
+      "adu": "Moderate",
+      "note": "MO Ozarks gateway, MSU Springfield university. Completes MO coverage with KC and St. Louis."
+    },
+    {
+      "yr": 10,
+      "phase": 3,
+      "name": "Dothan",
+      "state": "AL",
+      "lat": 31.22,
+      "lon": -85.39,
+      "hub": "Dallas",
+      "adu": "Lower",
+      "note": "AL SE corner, Wiregrass region military (Fort Rucker). Completes AL full coverage."
     },
     {
       "yr": 10,
       "phase": 3,
       "name": "Jackson",
-      "state": "MS",
-      "lat": 32.2988,
-      "lon": -90.1848
+      "state": "TN",
+      "lat": 35.61,
+      "lon": -88.81,
+      "hub": "Dallas",
+      "adu": "Lower",
+      "note": "TN west corridor, manufacturing workforce. Completes TN statewide coverage."
     },
     {
       "yr": 10,
       "phase": 3,
-      "name": "Mobile",
-      "state": "AL",
-      "lat": 30.6944,
-      "lon": -88.0431
-    },
-    {
-      "yr": 10,
-      "phase": 3,
-      "name": "Shreveport",
-      "state": "LA",
-      "lat": 32.5252,
-      "lon": -93.7502
-    },
-    {
-      "yr": 10,
-      "phase": 3,
-      "name": "Tallahassee",
-      "state": "FL",
-      "lat": 30.4383,
-      "lon": -84.2807
-    },
-    {
-      "yr": 10,
-      "phase": 3,
-      "name": "Pensacola",
-      "state": "FL",
-      "lat": 30.4213,
-      "lon": -87.2169
-    },
-    {
-      "yr": 10,
-      "phase": 3,
-      "name": "Fort Wayne",
-      "state": "IN",
-      "lat": 41.0793,
-      "lon": -85.1394
-    },
-    {
-      "yr": 10,
-      "phase": 3,
-      "name": "Charleston WV",
-      "state": "WV",
-      "lat": 38.3498,
-      "lon": -81.6326
-    },
-    {
-      "yr": 10,
-      "phase": 3,
-      "name": "Morgantown",
-      "state": "WV",
-      "lat": 39.6295,
-      "lon": -79.9559
-    }
-  ],
-  "hubs": [
-    {
-      "name": "West Coast Core",
-      "city": "Corona",
-      "state": "CA",
-      "lat": 33.8753,
-      "lon": -117.5664,
-      "capex": 15,
-      "opens_yr": 1
-    },
-    {
-      "name": "Northeast Core",
-      "city": "Hartford",
-      "state": "CT",
-      "lat": 41.7658,
-      "lon": -72.6734,
-      "capex": 15,
-      "opens_yr": 3
-    },
-    {
-      "name": "Mountain-Southwest Core",
-      "city": "Denver",
-      "state": "CO",
-      "lat": 39.7392,
-      "lon": -104.9903,
-      "capex": 15,
-      "opens_yr": 3
-    },
-    {
-      "name": "Sun Belt Core",
-      "city": "Dallas-Fort Worth",
+      "name": "Lubbock",
       "state": "TX",
-      "lat": 32.78,
-      "lon": -96.8,
-      "capex": 15,
-      "opens_yr": 5
+      "lat": 33.58,
+      "lon": -101.86,
+      "hub": "Dallas",
+      "adu": "Moderate",
+      "note": "TX Tech university market, West TX gateway. Completes TX statewide coverage."
     },
     {
-      "name": "Midwest Core",
-      "city": "Indianapolis",
-      "state": "IN",
-      "lat": 39.7684,
-      "lon": -86.1581,
-      "capex": 15,
-      "opens_yr": 6
+      "yr": 10,
+      "phase": 3,
+      "name": "Virginia Beach",
+      "state": "VA",
+      "lat": 36.85,
+      "lon": -75.98,
+      "hub": "Hartford",
+      "adu": "Moderate",
+      "note": "Largest VA city by population. Massive military complex (NAS Oceana, Joint Expeditionary Base). VA-financeable modular natural fit."
+    },
+    {
+      "yr": 10,
+      "phase": 3,
+      "name": "Spokane Valley",
+      "state": "WA",
+      "lat": 47.67,
+      "lon": -117.23,
+      "hub": "Denver",
+      "adu": "Strong",
+      "note": "WA ADU reform applies. Pairs with Spokane for full inland WA coverage."
+    },
+    {
+      "yr": 10,
+      "phase": 3,
+      "name": "Green Bay",
+      "state": "WI",
+      "lat": 44.52,
+      "lon": -88.02,
+      "hub": "Indianapolis",
+      "adu": "Moderate",
+      "note": "WI ADU reform. Manufacturing/paper industry workforce. Completes WI coverage with Milwaukee and Madison."
+    },
+    {
+      "yr": 10,
+      "phase": 3,
+      "name": "Macon",
+      "state": "GA",
+      "lat": 32.84,
+      "lon": -83.63,
+      "hub": "Indianapolis",
+      "adu": "Lower",
+      "note": "GA middle corridor, Robins AFB military workforce. Completes GA coverage with Atlanta and Savannah."
+    },
+    {
+      "yr": 10,
+      "phase": 3,
+      "name": "Charleston",
+      "state": "WV",
+      "lat": 38.35,
+      "lon": -81.63,
+      "hub": "Indianapolis",
+      "adu": "Lower",
+      "note": "WV state capital, federal infrastructure investment driving new construction."
+    },
+    {
+      "yr": 9,
+      "phase": 3,
+      "name": "Waco",
+      "state": "TX",
+      "lat": 31.55,
+      "lon": -97.15,
+      "hub": "Dallas",
+      "adu": "Moderate",
+      "note": "TX mid-corridor, Baylor University market, chip manufacturing (Samsung Taylor nearby) creating workforce housing demand. Bridges Dallas and Austin coverage."
+    },
+    {
+      "yr": 10,
+      "phase": 3,
+      "name": "Savannah South",
+      "state": "GA",
+      "lat": 32.0,
+      "lon": -81.1,
+      "hub": "Indianapolis",
+      "adu": "Moderate",
+      "note": "GA coastal coverage extension, Hyundai EV plant workforce housing demand. Completes coastal GA corridor."
+    },
+    {
+      "yr": 10,
+      "phase": 3,
+      "name": "Pocatello",
+      "state": "ID",
+      "lat": 42.87,
+      "lon": -112.45,
+      "hub": "Denver",
+      "adu": "Moderate",
+      "note": "ISU Pocatello university market, ID ADU-permissive. Completes ID coverage from Boise to southeast corridor."
     }
-  ],
-  "assumptions": {
-    "fab_capex_M": 3,
-    "rev_per_home_K": 180,
-    "fab_margin_pct": 22,
-    "hub_capex_M": 15,
-    "kit_price_K": 72,
-    "core_margin_pct": 28,
-    "royalty_pct": 8,
-    "core_opex_pct": 15
-  }
+  ]
 }
