@@ -1,1 +1,64 @@
-{"test":true}
+{
+  "head": "Delivered Home on Bare Land",
+  "volume": {
+    "homes_per_year": 100,
+    "contracts_per_year": 100,
+    "franchises_per_year": 111,
+    "franchises_from_map": true
+  },
+  "products": ["ADUs", "High Density Multi-Family", "Bathroom Pods", "SIPs"],
+  "bus": [
+    {
+      "id": "first_mile",
+      "name": "First Mile",
+      "color_var": "--p1",
+      "owner": "FBX Sales, Inc.",
+      "owner_description": "FBX Sales, Inc. owns and operates all First Mile activities.",
+      "description": "**First Mile** owns the customer-facing experience from initial interest through contract signing.",
+      "functions": [
+        { "id": "home_sales",         "name": "Home Sales",                   "company": "External Partners",    "owner": "External Partners",       "owner_description": "Opportunity for commissioned based partners", "basis": "per_home",     "revenue_K": 0, "cost_K": 0, "time_days": 0, "headcount": 0, "external_rev_pct": 100, "description": "Direct-to-consumer home sales through commissioned external partners." },
+        { "id": "component_sales",    "name": "Component Sales (SIP / Pods)", "company": "External Partners",    "owner": "External Partners",       "owner_description": "Opportunity for commissioned based partners", "basis": "per_year",     "revenue_K": 0, "cost_K": 0, "time_days": 0, "headcount": 0, "external_rev_pct": 100, "description": "SIP panels and bathroom/kitchen pods sold through commissioned external partners." },
+        { "id": "building_contracts", "name": "Building Contracts",           "company": "External Partners",    "owner": "External Partners",       "owner_description": "Opportunity for commissioned based partners", "basis": "per_contract", "revenue_K": 0, "cost_K": 0, "time_days": 0, "headcount": 0, "external_rev_pct": 100, "description": "Contract execution and buyer handoff to construction." },
+        { "id": "entitlement",        "name": "Entitlement / Permit",         "company": "External Partners",    "owner": "apServant, Inc & Others", "owner_description": "apServant, Inc & Others",                    "basis": "per_home",     "revenue_K": 0, "cost_K": 0, "time_days": 0, "headcount": 0, "external_rev_pct": 100, "description": "Securing land entitlements, zoning approvals, and building permits." }
+      ]
+    },
+    {
+      "id": "fbx_core",
+      "name": "FBX Core",
+      "color_var": "--p2",
+      "owner": "FBX Expansion, Inc / FBX Product Dev, Inc",
+      "owner_description": "FBX Expansion, Inc handles design, franchise, licensing and training. FBX Product Dev, Inc handles warehousing, import, and Kit of Parts.",
+      "description": "**FBX Core** is the industrial and commercial middle layer.",
+      "functions": [
+        { "id": "design",          "name": "Design",                      "company": "FBX Expansion, Inc",   "owner": "FBX Expansion, Inc",   "owner_description": "Dave, Tony",                 "basis": "per_home",      "revenue_K": 0,   "cost_K": 0, "time_days": 0, "headcount": 0, "external_rev_pct": 100, "description": "Home design selection and customization with the buyer." },
+        { "id": "rd",              "name": "Research & Development",      "company": "FBX Expansion, Inc",   "owner": "FBX Expansion, Inc",   "owner_description": "Dave, Tony",                 "basis": "per_year",      "revenue_K": 0,   "cost_K": 0, "time_days": 0, "headcount": 0, "external_rev_pct": 0,   "description": "Product development, system improvements, new models." },
+        { "id": "franchise_sales", "name": "Franchise Sales",             "company": "FBX Expansion, Inc",   "owner": "FBX Expansion, Inc",   "owner_description": "Dave, Tony",                 "basis": "per_franchise", "revenue_K": 800, "cost_K": 0, "time_days": 0, "headcount": 0, "external_rev_pct": 100, "description": "Originating new franchise deals. $650K-$950K per franchise." },
+        { "id": "warehousing",     "name": "Warehousing",                 "company": "FBX Product Dev, Inc", "owner": "FBX Product Dev, Inc", "owner_description": "Dave, Tony, Equity Partners", "basis": "per_month",     "revenue_K": 0,   "cost_K": 0, "time_days": 0, "headcount": 0, "external_rev_pct": 0,   "description": "Storage and inventory management at Core hubs." },
+        { "id": "import",          "name": "Import (Foreign & Domestic)", "company": "FBX Product Dev, Inc", "owner": "FBX Product Dev, Inc", "owner_description": "Dave, Tony, Equity Partners", "basis": "per_home",      "revenue_K": 0,   "cost_K": 0, "time_days": 0, "headcount": 0, "external_rev_pct": 0,   "description": "Sourcing components from domestic and international suppliers." },
+        { "id": "kop",             "name": "Kit of Parts Creation",       "company": "FBX Product Dev, Inc", "owner": "FBX Product Dev, Inc", "owner_description": "Dave, Tony, Equity Partners", "basis": "per_home",      "revenue_K": 0,   "cost_K": 0, "time_days": 0, "headcount": 0, "external_rev_pct": 0,   "description": "Assembling components into shippable Kits of Parts. Inter-BU flow." },
+        { "id": "licensing_fees",  "name": "Licensing / Royalties",       "company": "FBX Expansion, Inc",   "owner": "FBX Expansion, Inc",   "owner_description": "Dave, Tony",                 "basis": "per_year",      "revenue_K": 0,   "cost_K": 0, "time_days": 0, "headcount": 0, "external_rev_pct": 0,   "description": "Ongoing 4-8% royalty on franchisee home sales. Inter-BU flow." },
+        { "id": "training",        "name": "Training",                    "company": "FBX Expansion, Inc",   "owner": "FBX Expansion, Inc",   "owner_description": "Dave, Tony",                 "basis": "per_year",      "revenue_K": 0,   "cost_K": 0, "time_days": 0, "headcount": 0, "external_rev_pct": 0,   "description": "Training assembly crews and franchise operators." }
+      ]
+    },
+    {
+      "id": "last_mile",
+      "name": "Last Mile",
+      "color_var": "--p3",
+      "owner": "Franchisees / External Partners",
+      "owner_description": "Franchisees operate assembly and installation. External partners handle distribution, inspections, and delivery.",
+      "description": "**Last Mile** is the GC-led execution layer.",
+      "functions": [
+        { "id": "distribution", "name": "Distribution to Assembly",       "company": "External Partners", "owner": "Stream Logistics",   "owner_description": "Stream Logistics & Fee Based", "basis": "per_home", "revenue_K": 0, "cost_K": 0, "time_days": 0, "headcount": 0, "external_rev_pct": 100, "description": "Logistics from Core hub to assembly factory." },
+        { "id": "assembly",     "name": "Assembly",                       "company": "Franchisees",       "owner": "Franchisees",        "owner_description": "",                             "basis": "per_home", "revenue_K": 0, "cost_K": 0, "time_days": 0, "headcount": 0, "external_rev_pct": 100, "description": "Factory assembly of the home from the Kit of Parts." },
+        { "id": "inspections",  "name": "Building Inspections & Quality", "company": "External Partners", "owner": "ICC or Intertek",    "owner_description": "ICC or Intertek",              "basis": "per_home", "revenue_K": 0, "cost_K": 0, "time_days": 0, "headcount": 0, "external_rev_pct": 100, "description": "Building inspections and quality assurance." },
+        { "id": "delivery",     "name": "Delivery Logistics",             "company": "External Partners", "owner": "Stream Logistics",   "owner_description": "Stream Logistics & Fee Based", "basis": "per_home", "revenue_K": 0, "cost_K": 0, "time_days": 0, "headcount": 0, "external_rev_pct": 100, "description": "Transport from assembly factory to the site." },
+        { "id": "install",      "name": "Installation Site Work",         "company": "Franchisees",       "owner": "Franchisees",        "owner_description": "",                             "basis": "per_home", "revenue_K": 0, "cost_K": 0, "time_days": 0, "headcount": 0, "external_rev_pct": 100, "description": "Foundation, utilities, installation, and finishing on site." }
+      ]
+    }
+  ],
+  "handoffs": [
+    { "after_bu": "first_mile", "label": "contract signed → kit ordered",  "type": "commercial" },
+    { "after_bu": "fbx_core",   "label": "kit shipped → site work begins", "type": "commercial+customer" }
+  ],
+  "customer_ownership": { "sales_owns_through": "fbx_core" }
+}
