@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Precedent — FBX</title>
+  <link rel="stylesheet" href="../css/core.css">
+  <style>
+    .head {
+      position: absolute;
+      top: 130px;
+      left: var(--gutter);
+      right: var(--gutter);
+    }
+    .head h2 {
+      font-family: var(--display);
+      font-weight: 800;
+      font-size: 88px;
+      line-height: 0.92;
+      letter-spacing: -0.035em;
+      max-width: 18ch;
+    }
+    .head h2 em {
+      font-style: italic;
+      font-weight: 500;
+      color: var(--signal);
+    }
+    .head .lede {
+      margin-top: 24px;
+      max-width: 56ch;
+      font-family: var(--display);
+      font-size: 20px;
+      font-weight: 400;
+      line-height: 1.4;
+      color: var(--g-600);
+    }
+
+    /* Three precedent companies in a row, then FBX as the fourth (highlighted) */
+    .precedents {
+      position: absolute;
+      bottom: 90px;
+      left: var(--gutter);
+      right: var(--gutter);
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      border-top: 2px solid var(--ink);
+      border-bottom: 2px solid var(--ink);
+    }
+    .pcol {
+      padding: 28px 24px 28px;
+      border-right: 1px solid rgba(10,22,40,0.15);
+      min-height: 320px;
+      display: flex;
+      flex-direction: column;
+    }
+    .pcol:last-child { border-right: 0; }
+    .pcol.us {
+      background: var(--ink);
+      color: var(--paper);
+      position: relative;
+    }
+    .pcol.us::before {
+      content: "Us";
+      position: absolute;
+      top: 70px;
+      right: 18px;
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.25em;
+      color: var(--signal);
+    }
+
+    .pcol .name {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 28px;
+      letter-spacing: -0.02em;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+    .pcol.us .name em {
+      font-style: italic;
+      color: var(--signal);
+      font-weight: 500;
+    }
+    .pcol .lab {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--g-400);
+      margin-bottom: 22px;
+    }
+    .pcol.us .lab { color: rgba(245,241,232,0.5); }
+
+    .pcol .row {
+      margin-bottom: 14px;
+    }
+    .pcol .row .key {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--signal);
+      margin-bottom: 4px;
+    }
+    .pcol .row .val {
+      font-size: 13px;
+      line-height: 1.5;
+      color: var(--g-600);
+    }
+    .pcol.us .row .val { color: rgba(245,241,232,0.85); }
+    .pcol.us .row .val strong { color: var(--paper); font-weight: 600; }
+
+    /* The arrow flow that ties the four together at the top of the strip */
+    .flow-strip {
+      position: absolute;
+      bottom: 430px;
+      left: var(--gutter);
+      right: var(--gutter);
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--g-400);
+    }
+    .flow-strip .line { flex: 1; height: 1px; background: var(--ink); opacity: 0.2; }
+    .flow-strip strong { color: var(--signal); font-weight: 500; }
+  </style>
+</head>
+<body>
+<div class="stage">
+  <section class="slide">
+
+    <div class="eyebrow">
+      <div class="brand"><div class="brand-mark">F</div><span>FBX · HOMEFAB</span></div>
+      <span>08 · Strategy · Precedent</span>
+    </div>
+
+    <div class="head">
+      <div class="kicker reveal">The Pattern Repeats</div>
+      <h2 class="reveal">
+        Every great moat <em>started as momentum.</em>
+      </h2>
+      <p class="lede reveal">
+        The companies investors point to as having "unbeatable moats" today
+        all started with raw speed and distribution. The defensibility came
+        later — built on top of scale they earned by moving first.
+      </p>
+    </div>
+
+    <div class="flow-strip reveal">
+      <strong>Speed</strong>
+      <span class="line"></span>
+      <strong>Distribution</strong>
+      <span class="line"></span>
+      <strong>Scale</strong>
+      <span class="line"></span>
+      <strong>Moat</strong>
+    </div>
+
+    <div class="precedents">
+      <div class="pcol reveal">
+        <div class="name">Amazon</div>
+        <div class="lab">1994 · E-Commerce</div>
+        <div class="row">
+          <div class="key">Momentum</div>
+          <div class="val">Cheapest, fastest book selection on the web. Loss-leader pricing to capture share.</div>
+        </div>
+        <div class="row">
+          <div class="key">Moat that emerged</div>
+          <div class="val"><strong>Economies of scale.</strong> Massive buying volume → cost advantage no competitor can match.</div>
+        </div>
+      </div>
+
+      <div class="pcol reveal">
+        <div class="name">Airbnb</div>
+        <div class="lab">2008 · Marketplaces</div>
+        <div class="row">
+          <div class="key">Momentum</div>
+          <div class="val">Aggressive host onboarding, design-led trust, viral growth in cities one by one.</div>
+        </div>
+        <div class="row">
+          <div class="key">Moat that emerged</div>
+          <div class="val"><strong>Network effects.</strong> Hosts and guests reinforce each other — a two-sided moat that compounds.</div>
+        </div>
+      </div>
+
+      <div class="pcol reveal">
+        <div class="name">Booking.com</div>
+        <div class="lab">1996 · Travel</div>
+        <div class="row">
+          <div class="key">Momentum</div>
+          <div class="val">Billions in performance marketing. Repeat usage. Relentless conversion optimization.</div>
+        </div>
+        <div class="row">
+          <div class="key">Moat that emerged</div>
+          <div class="val"><strong>Brand trust.</strong> The default verb for booking travel — built one transaction at a time.</div>
+        </div>
+      </div>
+
+      <div class="pcol us reveal">
+        <div class="name">FBX <em>HomeFab</em></div>
+        <div class="lab">2026 · Factory-Built Housing</div>
+        <div class="row">
+          <div class="key">Momentum</div>
+          <div class="val">First-mover franchise rollout. AI-assisted permits. Hub-and-spoke from Day 1.</div>
+        </div>
+        <div class="row">
+          <div class="key">Moat we'll earn</div>
+          <div class="val"><strong>All four.</strong> Network effects across franchisees, scale economics on the kit, brand on the customer side, embedding through systems.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="foot" style="bottom: 32px;">
+      <span></span>
+      <span class="page-no" style="font-size:14px; opacity:0.5;">08</span>
+    </div>
+  </section>
+</div>
+<script src="../js/slide.js"></script>
+</body>
+</html>

@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Thesis — FBX</title>
+  <link rel="stylesheet" href="../css/core.css">
+  <style>
+    .pillar-grid {
+      position: absolute;
+      left: var(--gutter);
+      right: var(--gutter);
+      bottom: 140px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 40px;
+    }
+    .pillar {
+      border-top: 3px solid var(--ink);
+      padding-top: 32px;
+      position: relative;
+    }
+    .pillar.core { border-color: var(--moss); }
+    .pillar.last { border-color: var(--signal); }
+    .pillar .num {
+      position: absolute;
+      top: -52px;
+      left: 0;
+      font-family: var(--display);
+      font-weight: 300;
+      font-size: 32px;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+    }
+    .pillar .label {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--g-400);
+      margin-bottom: 16px;
+    }
+    .pillar h3 {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 38px;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      margin-bottom: 18px;
+    }
+    .pillar.core h3 em { color: var(--moss); font-style: normal; }
+    .pillar p {
+      font-size: 16px;
+      line-height: 1.55;
+      color: var(--g-600);
+      margin-bottom: 20px;
+    }
+    .pillar .scorecard {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 8px 0;
+      border-top: 1px solid rgba(10,22,40,0.15);
+      color: var(--ink);
+    }
+    .pillar .scorecard strong { color: var(--signal); }
+
+    .thesis-head {
+      position: absolute;
+      top: 140px;
+      left: var(--gutter);
+      right: var(--gutter);
+    }
+    .arrow-flow {
+      position: absolute;
+      top: 410px;
+      left: var(--gutter);
+      right: var(--gutter);
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--g-400);
+    }
+    .arrow-flow .line { flex: 1; height: 1px; background: var(--ink); opacity: 0.2; }
+  </style>
+</head>
+<body>
+<div class="stage">
+  <section class="slide">
+
+    <div class="eyebrow">
+      <div class="brand"><div class="brand-mark">F</div><span>FBX · HOMEFAB</span></div>
+      <span>02 · Thesis</span>
+    </div>
+
+    <div class="thesis-head">
+      <div class="kicker reveal">How to Scale Factory-Built Construction</div>
+      <h2 class="section reveal" style="max-width: 22ch;">
+        Three networks. <em>One operating system.</em>
+      </h2>
+    </div>
+
+    <div class="arrow-flow reveal">
+      <span>Demand</span>
+      <span class="line"></span>
+      <span>Aggregation</span>
+      <span class="line"></span>
+      <span>Delivery</span>
+    </div>
+
+    <div class="pillar-grid">
+      <div class="pillar reveal">
+        <div class="num">01</div>
+        <div class="label">First Mile</div>
+        <h3>Get the contract.</h3>
+        <p>Marketing, design, sales, permits — vertically integrated. Think Tesla,
+          Carmax, Carvana, but for a delivered home.</p>
+        <div class="scorecard">Scorecard · <strong>Robust</strong> — needs market education</div>
+      </div>
+
+      <div class="pillar core reveal">
+        <div class="num">02</div>
+        <div class="label">Warehouse · Distribution Hub</div>
+        <h3>Aggregate <em>the kit.</em></h3>
+        <p>Regulatory approvals, structural panels, bath pods, SIPs — sourced,
+          warehoused, and shipped to the Last Mile at scale.</p>
+        <div class="scorecard">Scorecard · <strong>Robust</strong></div>
+      </div>
+
+      <div class="pillar last reveal">
+        <div class="num">03</div>
+        <div class="label">Last Mile Network</div>
+        <h3>Deliver the home.</h3>
+        <p>A trained, equipped franchise network of regional assemblers
+          and installers — the layer no one else has built.</p>
+        <div class="scorecard">Scorecard · <strong>The next IPO of housing</strong></div>
+      </div>
+    </div>
+
+    <div class="foot">
+      <span>FBX · Operating Thesis</span>
+      <span class="page-no">02</span>
+    </div>
+  </section>
+</div>
+<script src="../js/slide.js"></script>
+</body>
+</html>

@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Why — FBX</title>
+  <link rel="stylesheet" href="../css/core.css">
+  <style>
+    .why-layout {
+      position: absolute;
+      inset: 130px var(--gutter) 100px var(--gutter);
+      display: grid;
+      grid-template-columns: 0.75fr 1.25fr;
+      gap: 80px;
+    }
+    .why-thesis {
+      align-self: end;
+    }
+    .why-thesis .big-q {
+      font-family: var(--display);
+      font-weight: 800;
+      font-size: 200px;
+      line-height: 0.85;
+      letter-spacing: -0.05em;
+      color: var(--ink);
+    }
+    .why-thesis .big-q em {
+      font-style: italic;
+      font-weight: 500;
+      color: var(--signal);
+    }
+    .why-thesis .arg {
+      font-family: var(--display);
+      font-size: 22px;
+      line-height: 1.4;
+      font-weight: 400;
+      max-width: 36ch;
+      margin-top: 32px;
+    }
+    .why-thesis .arg strong {
+      font-weight: 600;
+      background: linear-gradient(180deg, transparent 65%, rgba(230,57,70,0.25) 65%);
+      padding: 0 2px;
+    }
+
+    .why-cards {
+      display: grid;
+      grid-template-rows: repeat(3, 1fr);
+      gap: 16px;
+    }
+    .why-card {
+      background: var(--paper-pure);
+      border: 1px solid var(--ink);
+      padding: 26px 32px;
+      display: grid;
+      grid-template-columns: 60px 1fr auto;
+      align-items: center;
+      gap: 28px;
+    }
+    .why-card .num {
+      font-family: var(--display);
+      font-weight: 300;
+      font-size: 56px;
+      line-height: 1;
+      letter-spacing: -0.04em;
+      color: var(--signal);
+    }
+    .why-card .text h4 {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 22px;
+      letter-spacing: -0.01em;
+      margin-bottom: 6px;
+    }
+    .why-card .text p {
+      font-size: 14px;
+      line-height: 1.5;
+      color: var(--g-600);
+    }
+    .why-card .status {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding: 5px 10px;
+      border: 1px solid var(--moss);
+      color: var(--moss);
+      white-space: nowrap;
+    }
+    .why-card .status.gap {
+      border-color: var(--signal);
+      color: var(--signal);
+    }
+  </style>
+</head>
+<body>
+<div class="stage">
+  <section class="slide">
+
+    <div class="eyebrow">
+      <div class="brand"><div class="brand-mark">F</div><span>FBX · HOMEFAB</span></div>
+      <span>05 · Strategy</span>
+    </div>
+
+    <div class="why-layout">
+      <div class="why-thesis">
+        <div class="big-q reveal">Why<em>?</em></div>
+        <p class="arg reveal">
+          Because we already have a <strong>retail market</strong> and a
+          <strong>distribution hub.</strong> The only thing missing from
+          factory-built construction is a robust, well-trained, empowered
+          network of <strong>installers</strong> for delivery.
+        </p>
+      </div>
+
+      <div class="why-cards">
+        <div class="why-card reveal">
+          <div class="num">01</div>
+          <div class="text">
+            <h4>Retail Market</h4>
+            <p>Drive demand up for the prefabricated factory housing industry.</p>
+          </div>
+          <div class="status">We Have It</div>
+        </div>
+
+        <div class="why-card reveal">
+          <div class="num">02</div>
+          <div class="text">
+            <h4>Warehouse / Distribution Hub</h4>
+            <p>Off-site prefab of panels and pods enables faster assembly and
+              reduces on-site resource consumption.</p>
+          </div>
+          <div class="status">We Have It</div>
+        </div>
+
+        <div class="why-card reveal">
+          <div class="num">03</div>
+          <div class="text">
+            <h4>Delivery & Installation Network</h4>
+            <p>Leverages local craftsman talent that wants to scale — by giving them
+              capital, systems, orders, and support.</p>
+          </div>
+          <div class="status gap">We Build This</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="foot">
+      <span>FBX · Why HomeFab Wins</span>
+      <span class="page-no">05</span>
+    </div>
+  </section>
+</div>
+<script src="../js/slide.js"></script>
+</body>
+</html>

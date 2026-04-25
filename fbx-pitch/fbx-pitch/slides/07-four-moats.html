@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Four Moats — FBX</title>
+  <link rel="stylesheet" href="../css/core.css">
+  <style>
+    .head {
+      position: absolute;
+      top: 130px;
+      left: var(--gutter);
+      right: var(--gutter);
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 60px;
+      align-items: end;
+    }
+    .head h2 {
+      font-family: var(--display);
+      font-weight: 800;
+      font-size: 80px;
+      line-height: 0.92;
+      letter-spacing: -0.03em;
+      max-width: 16ch;
+    }
+    .head h2 em {
+      font-style: italic;
+      font-weight: 500;
+      color: var(--signal);
+    }
+    .head .right-note {
+      font-family: var(--display);
+      font-size: 18px;
+      line-height: 1.4;
+      color: var(--g-600);
+      max-width: 38ch;
+      padding-bottom: 12px;
+    }
+    .head .right-note strong {
+      color: var(--ink);
+      font-weight: 600;
+    }
+    .head .source-tag {
+      display: inline-block;
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--signal);
+      border: 1px solid var(--signal);
+      padding: 4px 10px;
+      margin-bottom: 12px;
+    }
+
+    .moats {
+      position: absolute;
+      bottom: 90px;
+      left: var(--gutter);
+      right: var(--gutter);
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+    .moat {
+      background: var(--paper-pure);
+      border: 1px solid var(--ink);
+      border-top: 5px solid var(--signal);
+      padding: 26px 22px 24px;
+      min-height: 380px;
+      display: flex;
+      flex-direction: column;
+    }
+    .moat .num {
+      font-family: var(--display);
+      font-weight: 300;
+      font-size: 42px;
+      line-height: 1;
+      color: var(--signal);
+      letter-spacing: -0.04em;
+      margin-bottom: 8px;
+    }
+    .moat h4 {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 26px;
+      letter-spacing: -0.02em;
+      line-height: 1.05;
+      margin-bottom: 14px;
+    }
+    .moat .nfx-def {
+      font-size: 13px;
+      line-height: 1.55;
+      color: var(--g-600);
+      padding-bottom: 16px;
+      border-bottom: 1px solid rgba(10,22,40,0.15);
+      margin-bottom: 16px;
+    }
+    .moat .fbx-lab {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--ink);
+      margin-bottom: 8px;
+    }
+    .moat .fbx-app {
+      font-size: 13px;
+      line-height: 1.55;
+      color: var(--ink);
+      font-weight: 500;
+      flex: 1;
+    }
+    .moat .fbx-app strong {
+      background: linear-gradient(180deg, transparent 65%, rgba(230,57,70,0.25) 65%);
+      padding: 0 1px;
+    }
+  </style>
+</head>
+<body>
+<div class="stage">
+  <section class="slide">
+
+    <div class="eyebrow">
+      <div class="brand"><div class="brand-mark">F</div><span>FBX · HOMEFAB</span></div>
+      <span>07 · Strategy · The Four Moats</span>
+    </div>
+
+    <div class="head">
+      <div>
+        <div class="kicker reveal">What Defensibility Looks Like</div>
+        <h2 class="reveal">
+          The four moats <em>we're building.</em>
+        </h2>
+      </div>
+      <div class="reveal">
+        <div class="source-tag">NFX Framework</div>
+        <p class="right-note">
+          NFX identifies <strong>four defensibilities that matter most.</strong>
+          Each requires scale — and momentum is what unlocks that scale.
+          FBX is engineered for all four.
+        </p>
+      </div>
+    </div>
+
+    <div class="moats">
+      <div class="moat reveal">
+        <div class="num">01</div>
+        <h4>Network Effects</h4>
+        <p class="nfx-def">
+          Value grows as more participants join the network.
+        </p>
+        <div class="fbx-lab">FBX Application</div>
+        <p class="fbx-app">
+          More <strong>franchisees</strong> means denser delivery coverage,
+          more installer capacity, and richer market data — which makes
+          every additional franchise more valuable than the last.
+        </p>
+      </div>
+
+      <div class="moat reveal">
+        <div class="num">02</div>
+        <h4>Economies of Scale</h4>
+        <p class="nfx-def">
+          Costs drop and pricing power grows with volume.
+        </p>
+        <div class="fbx-lab">FBX Application</div>
+        <p class="fbx-app">
+          Aggregated procurement of <strong>panels, pods, and SIPs</strong>
+          across 137 fabs unlocks pricing no regional builder can match.
+          Hub-and-spoke logistics compound the advantage.
+        </p>
+      </div>
+
+      <div class="moat reveal">
+        <div class="num">03</div>
+        <h4>Brand</h4>
+        <p class="nfx-def">
+          Trust and familiarity built through repeated customer exposure.
+        </p>
+        <div class="fbx-lab">FBX Application</div>
+        <p class="fbx-app">
+          A <strong>standardized customer experience</strong> across every
+          delivery market — Tesla / Carmax for housing. Repeat exposure
+          turns "factory home" into a category we own.
+        </p>
+      </div>
+
+      <div class="moat reveal">
+        <div class="num">04</div>
+        <h4>Embedding</h4>
+        <p class="nfx-def">
+          Becoming hard to replace through depth of integration.
+        </p>
+        <div class="fbx-lab">FBX Application</div>
+        <p class="fbx-app">
+          Franchisees run on <strong>FBX systems</strong> — design,
+          permits, kit, logistics, training. Switching out is replacing
+          the whole operating stack, not just a supplier.
+        </p>
+      </div>
+    </div>
+
+    <div class="foot">
+      <span>Each moat compounds with scale · Scale comes from momentum</span>
+      <span class="page-no">07</span>
+    </div>
+  </section>
+</div>
+<script src="../js/slide.js"></script>
+</body>
+</html>

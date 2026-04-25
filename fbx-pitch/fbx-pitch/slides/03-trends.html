@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Trends — FBX</title>
+  <link rel="stylesheet" href="../css/core.css">
+  <style>
+    .split {
+      position: absolute;
+      inset: 130px var(--gutter) 100px var(--gutter);
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+    .trend-list {
+      list-style: none;
+      counter-reset: t;
+    }
+    .trend-list li {
+      counter-increment: t;
+      padding: 18px 0 18px 80px;
+      border-bottom: 1px solid rgba(10,22,40,0.15);
+      position: relative;
+      font-family: var(--display);
+      font-size: 26px;
+      font-weight: 500;
+      line-height: 1.2;
+      letter-spacing: -0.01em;
+    }
+    .trend-list li:first-child { padding-top: 0; }
+    .trend-list li:last-child { border-bottom: 0; }
+    .trend-list li::before {
+      content: counter(t, decimal-leading-zero);
+      position: absolute;
+      left: 0;
+      top: 18px;
+      font-family: var(--mono);
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      color: var(--signal);
+    }
+    .trend-list li:first-child::before { top: 0; }
+
+    .right-col h3 {
+      font-family: var(--display);
+      font-weight: 600;
+      font-size: 26px;
+      letter-spacing: -0.01em;
+      margin-bottom: 10px;
+    }
+    .right-col p {
+      font-size: 16px;
+      line-height: 1.55;
+      color: var(--g-600);
+      margin-bottom: 24px;
+      max-width: 44ch;
+    }
+    .right-col .block {
+      padding: 20px 22px;
+      background: var(--paper-pure);
+      border: 1px solid rgba(10,22,40,0.12);
+      margin-bottom: 14px;
+    }
+    .objective-strip {
+      position: absolute;
+      bottom: 50px;
+      left: var(--gutter);
+      right: var(--gutter);
+      background: var(--ink);
+      color: var(--paper);
+      padding: 18px 28px;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+    .objective-strip .o-label {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--signal);
+      white-space: nowrap;
+    }
+    .objective-strip .o-text {
+      font-family: var(--display);
+      font-size: 22px;
+      font-weight: 500;
+      line-height: 1.3;
+      letter-spacing: -0.01em;
+    }
+    .objective-strip .o-text em {
+      font-style: italic;
+      color: var(--signal);
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+<div class="stage">
+  <section class="slide">
+    <div class="eyebrow">
+      <div class="brand"><div class="brand-mark">F</div><span>FBX · HOMEFAB</span></div>
+      <span>03 · Market</span>
+    </div>
+
+    <div style="position:absolute; top:130px; left: var(--gutter);">
+      <div class="kicker reveal">Why Now</div>
+      <h2 class="section reveal" style="font-size: 76px;">Trends indicate <em>growth.</em></h2>
+    </div>
+
+    <div class="split" style="top: 320px;">
+      <ol class="trend-list reveal">
+        <li>Sprawl is expensive — capital is shifting to PHX, Utah, Texas.</li>
+        <li>Urban infill is hot — ADUs and density development.</li>
+        <li>Starter homes in high demand — sub-$300K per door.</li>
+        <li>Factory demand from large national builders.</li>
+        <li>National & California laws now permit factory-built homes.</li>
+      </ol>
+
+      <div class="right-col reveal">
+        <div class="block">
+          <h3>Modular is not new.</h3>
+          <p style="margin-bottom: 0; color: var(--g-400); font-style: italic;">
+            And modular's track record is the definition of insanity.</p>
+        </div>
+        <div class="block">
+          <h3>Factory production is not new.</h3>
+          <p style="margin-bottom: 0;">
+            Cars, phones, food — everything is built in a factory.
+            If the trend is smaller, faster, more efficient, the answer is a factory.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="objective-strip reveal">
+      <span class="o-label">Operating Principle</span>
+      <span class="o-text">
+        R&D and infrastructure spend grows <em>linearly.</em>
+        Output grows <em>exponentially.</em>
+      </span>
+    </div>
+
+    <div class="foot" style="bottom: 24px;">
+      <span></span>
+      <span class="page-no" style="font-size:14px; opacity:0.5;">03</span>
+    </div>
+  </section>
+</div>
+<script src="../js/slide.js"></script>
+</body>
+</html>

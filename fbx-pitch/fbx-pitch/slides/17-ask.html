@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>The Ask — FBX</title>
+  <link rel="stylesheet" href="../css/core.css">
+  <style>
+    body { background: var(--signal); }
+    .stage { background: var(--signal); }
+    .slide { background: var(--signal); color: var(--paper); }
+
+    .ask-bg {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 90% 80% at 50% 110%, rgba(0,0,0,0.18) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .ask-content {
+      position: absolute;
+      left: var(--gutter);
+      right: var(--gutter);
+      top: 130px;
+    }
+    .ask-content h1 {
+      font-family: var(--display);
+      font-weight: 800;
+      font-size: 168px;
+      line-height: 0.86;
+      letter-spacing: -0.045em;
+      color: var(--paper);
+    }
+    .ask-content h1 em {
+      font-style: italic;
+      font-weight: 500;
+      color: var(--ink);
+    }
+    .ask-content .sub {
+      font-family: var(--display);
+      font-size: 24px;
+      font-weight: 400;
+      line-height: 1.35;
+      max-width: 55ch;
+      margin-top: 28px;
+      color: rgba(245,241,232,0.95);
+    }
+
+    .ask-numbers {
+      position: absolute;
+      bottom: 160px;
+      left: var(--gutter);
+      right: var(--gutter);
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      border-top: 2px solid var(--paper);
+      border-bottom: 2px solid var(--paper);
+    }
+    .ask-num {
+      padding: 26px 28px;
+      border-right: 1px solid rgba(245,241,232,0.3);
+    }
+    .ask-num:last-child { border-right: 0; }
+    .ask-num .v {
+      font-family: var(--display);
+      font-weight: 800;
+      font-size: 72px;
+      line-height: 1;
+      letter-spacing: -0.03em;
+      color: var(--paper);
+    }
+    .ask-num .v small {
+      font-size: 28px;
+      font-weight: 400;
+      color: rgba(245,241,232,0.7);
+    }
+    .ask-num .l {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(245,241,232,0.85);
+      margin-top: 12px;
+    }
+
+    .ask-foot {
+      position: absolute;
+      bottom: 60px;
+      left: var(--gutter);
+      right: var(--gutter);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--paper);
+    }
+    .ask-foot .contact {
+      display: flex;
+      gap: 32px;
+    }
+    .ask-foot a {
+      color: var(--paper);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(245,241,232,0.4);
+      padding-bottom: 2px;
+    }
+  </style>
+</head>
+<body>
+<div class="stage">
+  <section class="slide">
+    <div class="ask-bg"></div>
+
+    <div class="eyebrow" style="color: rgba(245,241,232,0.7);">
+      <div class="brand"><div class="brand-mark" style="background: var(--paper); color: var(--signal);">F</div><span>FBX · HOMEFAB</span></div>
+      <span>17 · The Ask</span>
+    </div>
+
+    <div class="ask-content">
+      <div class="kicker reveal" style="color: var(--ink);">The Ask</div>
+      <h1 class="reveal">
+        Build the<br>
+        <em>last mile.</em>
+      </h1>
+      <p class="sub reveal">
+        We're raising $4M for FBX Core. Each Fab-Home franchise is funded
+        independently — $900K franchise fee, $450K infrastructure.
+        The model scales linearly in capital, exponentially in delivery.
+      </p>
+    </div>
+
+    <div class="ask-numbers reveal">
+      <div class="ask-num">
+        <div class="v">$4<small>M</small></div>
+        <div class="l">FBX Core · Series A</div>
+      </div>
+      <div class="ask-num">
+        <div class="v">$900<small>K</small></div>
+        <div class="l">Per Franchise · Fee</div>
+      </div>
+      <div class="ask-num">
+        <div class="v">$450<small>K</small></div>
+        <div class="l">Per Franchise · Infrastructure</div>
+      </div>
+    </div>
+
+    <div class="ask-foot reveal">
+      <div>FBX Product Development · 2026</div>
+      <div class="contact">
+        <span>Doc · Founder</span>
+        <span>HomeFab Operating Group</span>
+      </div>
+    </div>
+  </section>
+</div>
+<script src="../js/slide.js"></script>
+</body>
+</html>

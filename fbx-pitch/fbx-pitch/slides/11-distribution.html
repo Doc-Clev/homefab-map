@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Distribution — FBX</title>
+  <link rel="stylesheet" href="../css/core.css">
+  <style>
+    .dist-head {
+      position: absolute;
+      top: 130px;
+      left: var(--gutter);
+      max-width: 50%;
+    }
+    .dist-head h2 {
+      font-family: var(--display);
+      font-weight: 800;
+      font-size: 144px;
+      line-height: 0.9;
+      letter-spacing: -0.04em;
+    }
+    .dist-head h2 em { font-style: italic; font-weight: 500; color: var(--moss); }
+
+    .dist-quote {
+      position: absolute;
+      top: 200px;
+      right: var(--gutter);
+      max-width: 480px;
+      text-align: right;
+    }
+    .dist-quote .q {
+      font-family: var(--display);
+      font-style: italic;
+      font-size: 28px;
+      line-height: 1.35;
+      font-weight: 400;
+      color: var(--ink);
+    }
+    .dist-quote .q em {
+      color: var(--moss);
+      font-style: italic;
+      font-weight: 600;
+    }
+    .dist-quote .attr {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--g-400);
+      margin-top: 18px;
+    }
+
+    /* Schematic flow diagram */
+    .flow {
+      position: absolute;
+      bottom: 150px;
+      left: var(--gutter);
+      right: var(--gutter);
+      display: grid;
+      grid-template-columns: 1fr 60px 1fr 60px 1fr 60px 1fr;
+      align-items: center;
+      gap: 0;
+    }
+    .flow-node {
+      background: var(--paper-pure);
+      border: 1.5px solid var(--ink);
+      padding: 22px 20px;
+      min-height: 130px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .flow-node.hub {
+      background: var(--ink);
+      color: var(--paper);
+      border-color: var(--ink);
+    }
+    .flow-node .lab {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--g-400);
+    }
+    .flow-node.hub .lab { color: rgba(245,241,232,0.6); }
+    .flow-node h5 {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 22px;
+      line-height: 1.05;
+      letter-spacing: -0.015em;
+    }
+    .flow-node .meta {
+      font-size: 12px;
+      color: var(--g-400);
+      margin-top: 8px;
+    }
+    .flow-node.hub .meta { color: rgba(245,241,232,0.6); }
+    .flow-arrow {
+      text-align: center;
+      font-family: var(--mono);
+      font-weight: 600;
+      font-size: 22px;
+      color: var(--signal);
+    }
+    .flow-band {
+      position: absolute;
+      top: -22px;
+      left: 0; right: 0;
+      text-align: center;
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--moss);
+    }
+  </style>
+</head>
+<body>
+<div class="stage">
+  <section class="slide">
+
+    <div class="eyebrow">
+      <div class="brand"><div class="brand-mark">F</div><span>FBX · HOMEFAB</span></div>
+      <span>11 · Operating Model · Layer 2</span>
+    </div>
+
+    <div class="dist-head">
+      <div class="kicker reveal" style="color: var(--moss);">Aggregate & Distribute</div>
+      <h2 class="reveal">Distri-<br><em>bution.</em></h2>
+    </div>
+
+    <div class="dist-quote reveal">
+      <p class="q">
+        "Distribution excellence is the key.<br>
+        Bring in parts, package, ship to the<br>
+        Last Mile — let them earn on the<br>
+        <em>efficiency we created.</em>"
+      </p>
+      <div class="attr">— FBX Operating Principle</div>
+    </div>
+
+    <div class="flow reveal" style="position: absolute; bottom: 220px;">
+      <div style="position: relative;">
+        <div class="flow-band">Suppliers</div>
+        <div class="flow-node">
+          <div class="lab">Inputs</div>
+          <h5>Component Sources</h5>
+          <div class="meta">Panels · Pods · SIPs</div>
+        </div>
+      </div>
+
+      <div class="flow-arrow">→</div>
+
+      <div style="position: relative;">
+        <div class="flow-band">FBX Core</div>
+        <div class="flow-node hub">
+          <div class="lab">Aggregation</div>
+          <h5>Regional Hub</h5>
+          <div class="meta">QA · Staging · Routing</div>
+        </div>
+      </div>
+
+      <div class="flow-arrow">→</div>
+
+      <div style="position: relative;">
+        <div class="flow-band">FBX Fab-Home</div>
+        <div class="flow-node">
+          <div class="lab">Franchise</div>
+          <h5>Assembly Plant</h5>
+          <div class="meta">~150-mile delivery radius</div>
+        </div>
+      </div>
+
+      <div class="flow-arrow">→</div>
+
+      <div style="position: relative;">
+        <div class="flow-band">Last Mile</div>
+        <div class="flow-node">
+          <div class="lab">Delivery</div>
+          <h5>Site Install</h5>
+          <div class="meta">Installer network · Customer</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="foot">
+      <span>Royalty + kit margin compounds with each franchise added</span>
+      <span class="page-no">11</span>
+    </div>
+  </section>
+</div>
+<script src="../js/slide.js"></script>
+</body>
+</html>
