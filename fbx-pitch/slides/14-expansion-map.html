@@ -82,18 +82,18 @@
   <section class="slide">
 
     <div class="eyebrow">
-      <div class="brand"><div class="brand-mark">F</div><span>FBX · HOMEFAB</span></div>
-      <span>11 · Live Tool · 10-Year Plan</span>
+      <div class="brand"><div class="brand-mark">F</div><span data-content="14-expansion-map.eyebrow.left">FBX · HOMEFAB</span></div>
+      <span data-content="14-expansion-map.eyebrow.right">14 · Live Tool · 10-Year Plan</span>
     </div>
 
     <div class="live-head">
       <div class="left">
-        <div class="lab">Interactive Map · Year 1 → Year 10</div>
-        <h2>10-Year <em>Expansion Map</em></h2>
+        <div class="lab" data-content="14-expansion-map.kicker">Interactive Map · Year 1 → Year 10</div>
+        <h2><span data-content="14-expansion-map.headline.a">10-Year</span> <em data-content="14-expansion-map.headline.b">Expansion Map</em></h2>
       </div>
       <div class="right">
-        <div><span class="live-dot"></span><strong>LIVE</strong> — synced with sites.json</div>
-        <div>137 Fabs · 5 Hubs · 50 States by 2035</div>
+        <div><span class="live-dot"></span><span data-content="14-expansion-map.status.line1"><strong>LIVE</strong> — synced with sites.json</span></div>
+        <div data-content="14-expansion-map.status.line2">137 Fabs · 5 Hubs · 50 States by 2035</div>
       </div>
     </div>
 
@@ -110,11 +110,12 @@
 
     <div class="foot" style="bottom: 40px;">
       <span>Source: <code style="font-family: var(--mono); font-size: 11px;">/tools/expansion-map.html</code></span>
-      <span class="page-no">11</span>
+      <span class="page-no">14</span>
     </div>
   </section>
 </div>
 <script src="../js/slide.js"></script>
+<script src="../js/content-loader.js"></script>
 <script>
   const f = document.getElementById('map-frame');
   f.addEventListener('error', showFallback);

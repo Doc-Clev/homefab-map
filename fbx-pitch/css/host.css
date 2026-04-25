@@ -4,22 +4,26 @@
 
 body { overflow: hidden; }
 
-/* Stage scales the 1600x900 slide canvas to fit viewport */
+/* Stage scales the 1600x900 slide canvas to fit viewport.
+   Sits BELOW the 48px topbar so canvas never hides under chrome. */
 #stage {
   position: fixed;
-  inset: 0;
-  display: grid;
-  place-items: center;
+  top: 48px;
+  left: 0; right: 0; bottom: 0;
   background: var(--ink);
+  overflow: hidden;
 }
 
 #scaler {
-  position: relative;
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 1600px;
   height: 900px;
-  transform-origin: center center;
+  transform-origin: 0 0;       /* scale from top-left */
   box-shadow: 0 60px 120px -20px rgba(0,0,0,0.6),
               0 0 0 1px rgba(255,255,255,0.04);
+  /* JS sets translate + scale together to center the scaled canvas */
 }
 
 #slide-frame {
@@ -111,7 +115,7 @@ body { overflow: hidden; }
 
 .nav-arrow {
   position: fixed;
-  top: 50%;
+  top: calc(50% + 24px);          /* center within stage area, not viewport */
   transform: translateY(-50%);
   width: 56px; height: 56px;
   background: rgba(245,241,232,0.06);

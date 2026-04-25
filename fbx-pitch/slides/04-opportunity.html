@@ -5,12 +5,84 @@
   <title>Opportunity — FBX</title>
   <link rel="stylesheet" href="../css/core.css">
   <style>
-    body, html { background: var(--ink); }
+    body, html { background: var(--signal); }
+    /* Distinct from the Ask slide:
+       - Ask is pure red with paper text (closing energy)
+       - Opportunity uses red with INK (deep navy) text (sectional weight)
+       - Adds a darker bottom band to anchor the cards */
+
+    .slide.opp {
+      background: var(--signal);
+      color: var(--ink);
+    }
+    .opp-bg-band {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 360px;
+      background: var(--ink);
+    }
+    .opp-bg-noise {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 60% 40% at 80% 0%, rgba(255,255,255,0.08) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 40% at 10% 30%, rgba(0,0,0,0.06) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
     .head {
       position: absolute;
       top: 130px; left: var(--gutter); right: var(--gutter);
     }
-    .head .pill { color: var(--paper); border-color: var(--paper); }
+    .head .kicker { color: var(--ink); }
+    .head h2 {
+      font-family: var(--display);
+      font-weight: 800;
+      font-size: 96px;
+      line-height: 0.92;
+      letter-spacing: -0.04em;
+      color: var(--ink);
+      max-width: 14ch;
+    }
+    .head h2 em {
+      font-style: italic;
+      font-weight: 500;
+      color: var(--paper);
+    }
+    .head .lede {
+      color: rgba(10,22,40,0.78);
+      max-width: 50ch;
+      margin-top: 24px;
+    }
+
+    .pull-quote {
+      position: absolute;
+      right: var(--gutter);
+      top: 150px;
+      max-width: 380px;
+      text-align: right;
+    }
+    .pull-quote .q {
+      font-family: var(--display);
+      font-style: italic;
+      font-weight: 400;
+      font-size: 24px;
+      line-height: 1.35;
+      color: rgba(10,22,40,0.85);
+    }
+    .pull-quote .q em {
+      font-style: italic;
+      color: var(--paper);
+      font-weight: 500;
+    }
+    .pull-quote .attr {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(10,22,40,0.6);
+      margin-top: 16px;
+    }
+
     .opp-grid {
       position: absolute;
       bottom: 100px;
@@ -19,14 +91,16 @@
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 0;
+      z-index: 2;
     }
     .opp-card {
       padding: 32px 28px;
-      border-left: 1px solid rgba(245,241,232,0.15);
+      border-left: 1px solid rgba(245,241,232,0.18);
       min-height: 280px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+      color: var(--paper);
     }
     .opp-card:first-child { border-left: 0; padding-left: 0; }
     .opp-card .marker {
@@ -44,73 +118,65 @@
     .opp-card h4 {
       font-family: var(--display);
       font-weight: 700;
-      font-size: 26px;
+      font-size: 24px;
       line-height: 1.1;
       letter-spacing: -0.015em;
       color: var(--paper);
       margin-bottom: 12px;
     }
     .opp-card p {
-      font-size: 15px;
+      font-size: 14px;
       line-height: 1.55;
       color: rgba(245,241,232,0.7);
     }
-    .pull-quote {
-      position: absolute;
-      right: var(--gutter);
-      top: 130px;
-      max-width: 380px;
-      text-align: right;
-    }
-    .pull-quote .q {
-      font-family: var(--display);
-      font-style: italic;
-      font-weight: 400;
-      font-size: 24px;
-      line-height: 1.35;
-      color: rgba(245,241,232,0.85);
-    }
-    .pull-quote .q em {
-      font-style: italic;
+
+    /* Override foot/eyebrow color for this slide */
+    .slide.opp .eyebrow { color: rgba(10,22,40,0.65); }
+    .slide.opp .eyebrow .brand-mark {
+      background: var(--ink);
       color: var(--signal);
-      font-weight: 500;
     }
+    .slide.opp .foot { color: rgba(245,241,232,0.6); }
+    .slide.opp .page-no { color: var(--paper); font-size: 14px; opacity: 0.7; }
   </style>
 </head>
 <body>
 <div class="stage">
-  <section class="slide dark">
+  <section class="slide opp">
+    <div class="opp-bg-noise"></div>
+    <div class="opp-bg-band"></div>
 
     <div class="eyebrow">
-      <div class="brand"><div class="brand-mark">F</div><span>FBX · HOMEFAB</span></div>
-      <span>04 · Opportunity</span>
+      <div class="brand"><div class="brand-mark">F</div><span data-content="04-opportunity.eyebrow.left">FBX · HOMEFAB</span></div>
+      <span data-content="04-opportunity.eyebrow.right">04 · Opportunity</span>
     </div>
 
     <div class="head">
-      <div class="kicker reveal" style="color: var(--signal);">The Last Mile Franchise System</div>
-      <h2 class="section reveal" style="color: var(--paper);">
-        Where the <em style="color: var(--signal);">opportunity</em> lives.
+      <div class="kicker reveal" data-content="04-opportunity.kicker">The Last Mile Franchise System</div>
+      <h2 class="reveal">
+        <span data-content="04-opportunity.headline.a">Where the</span><br><em data-content="04-opportunity.headline.b">opportunity</em> <span data-content="04-opportunity.headline.c">lives.</span>
       </h2>
-      <p class="lede reveal" style="color: rgba(245,241,232,0.7); margin-top: 28px; max-width: 50ch;">
+      <p class="lede reveal" data-content="04-opportunity.lede">
         Spool up, empower, and equip small capable craftsmen within
         150 miles of every delivery market in America.
       </p>
     </div>
 
-    <div class="pull-quote reveal" style="top: 300px;">
-      <div class="q">
+    <div class="pull-quote reveal" style="top: 380px;">
+      <div class="q" data-content="04-opportunity.quote.text">
         "HomeFab is the layer<br>
         the rest of the industry<br>
         <em>forgot to build.</em>"
       </div>
+      <div class="attr" data-content="04-opportunity.quote.attr">— FBX Operating Thesis</div>
     </div>
 
     <div class="opp-grid">
       <div class="opp-card reveal">
         <div>
           <div class="marker">01</div>
-          <h4>Franchisee Model</h4>
-          <p>Capital, systems, orders, and support — delivered to small builders
+          <h4 data-content="04-opportunity.card1.title">Franchisee Model</h4>
+          <p data-content="04-opportunity.card1.body">Capital, systems, orders, and support — delivered to small builders
             who want to scale within their region.</p>
         </div>
       </div>
@@ -118,8 +184,8 @@
       <div class="opp-card reveal">
         <div>
           <div class="marker">02</div>
-          <h4>Approved Installers</h4>
-          <p>A trained, vetted sub-contractor network — empowered to install product
+          <h4 data-content="04-opportunity.card2.title">Approved Installers</h4>
+          <p data-content="04-opportunity.card2.body">A trained, vetted sub-contractor network — empowered to install product
             and care for the customer.</p>
         </div>
       </div>
@@ -127,8 +193,8 @@
       <div class="opp-card reveal">
         <div>
           <div class="marker">03</div>
-          <h4>Logistics</h4>
-          <p>Equipment and movers trained to place panels and pods exactly where
+          <h4 data-content="04-opportunity.card3.title">Logistics</h4>
+          <p data-content="04-opportunity.card3.body">Equipment and movers trained to place panels and pods exactly where
             installers need them, when they need them.</p>
         </div>
       </div>
@@ -136,19 +202,20 @@
       <div class="opp-card reveal">
         <div>
           <div class="marker">04</div>
-          <h4>On-Site Assembly Unlock</h4>
-          <p>Systems that allow 100% of land — including infill and difficult
+          <h4 data-content="04-opportunity.card4.title">On-Site Assembly Unlock</h4>
+          <p data-content="04-opportunity.card4.body">Systems that allow 100% of land — including infill and difficult
             sites — to be served by prefabricated product.</p>
         </div>
       </div>
     </div>
 
-    <div class="foot">
-      <span>FBX · Last Mile Network</span>
+    <div class="foot" style="z-index: 3;">
+      <span data-content="04-opportunity.footer.left">FBX · Last Mile Network</span>
       <span class="page-no">04</span>
     </div>
   </section>
 </div>
 <script src="../js/slide.js"></script>
+<script src="../js/content-loader.js"></script>
 </body>
 </html>

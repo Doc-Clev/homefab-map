@@ -24,15 +24,28 @@
   const helpEl     = $("#help");
 
   // --- Scale-to-fit logic. Slide canvas is 1600x900.
+  // We use transform-origin:0,0 + translate+scale so the scaled box
+  // genuinely centers in the available stage area. With transform-origin
+  // set to center, the box's layout width remains 1600px and `place-items
+  // center` mis-centers it on viewports narrower than 1600px.
   function rescale() {
-    const padding = 80;          // breathing room around slide
-    const topbarH = 48;
-    const availW = window.innerWidth - padding;
-    const availH = window.innerHeight - topbarH - padding;
+    const navReserve = 90 * 2;   // 56px arrow + 24px margin + 10 buffer × 2
+    const vPad = 40;
+    const stageH = window.innerHeight - 48;     // minus topbar
+    const availW = window.innerWidth - navReserve;
+    const availH = stageH - vPad;
     const scale = Math.min(availW / 1600, availH / 900);
-    scaler.style.transform = `scale(${scale})`;
+
+    // Center the scaled canvas in the stage area
+    const scaledW = 1600 * scale;
+    const scaledH = 900 * scale;
+    const tx = (window.innerWidth - scaledW) / 2;
+    const ty = (stageH - scaledH) / 2;
+
+    scaler.style.transform = `translate(${tx}px, ${ty}px) scale(${scale})`;
   }
   window.addEventListener("resize", rescale);
+  window.addEventListener("orientationchange", () => setTimeout(rescale, 100));
 
   // --- Render the slide grid index
   function buildIndex() {

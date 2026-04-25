@@ -88,18 +88,18 @@
   <section class="slide">
 
     <div class="eyebrow">
-      <div class="brand"><div class="brand-mark">F</div><span>FBX · HOMEFAB</span></div>
-      <span>10 · Live Tool · Operating Model</span>
+      <div class="brand"><div class="brand-mark">F</div><span data-content="13-fishbone.eyebrow.left">FBX · HOMEFAB</span></div>
+      <span data-content="13-fishbone.eyebrow.right">13 · Live Tool · Operating Model</span>
     </div>
 
     <div class="live-head">
       <div class="left">
-        <div class="lab">Live Diagram</div>
-        <h2>FBX Operating Model · <em>Fishbone</em></h2>
+        <div class="lab" data-content="13-fishbone.kicker">Live Diagram</div>
+        <h2><span data-content="13-fishbone.headline.a">FBX Operating Model ·</span> <em data-content="13-fishbone.headline.b">Fishbone</em></h2>
       </div>
       <div class="right">
-        <div><span class="live-dot"></span><strong>LIVE</strong> — synced with model</div>
-        <div>Three BUs · One delivered home</div>
+        <div><span class="live-dot"></span><span data-content="13-fishbone.status.line1"><strong>LIVE</strong> — synced with model</span></div>
+        <div data-content="13-fishbone.status.line2">Three BUs · One delivered home</div>
       </div>
     </div>
 
@@ -116,11 +116,12 @@
 
     <div class="foot" style="bottom: 40px;">
       <span>Source: <code style="font-family: var(--mono); font-size: 11px;">/tools/fishbone.html</code></span>
-      <span class="page-no">10</span>
+      <span class="page-no">13</span>
     </div>
   </section>
 </div>
 <script src="../js/slide.js"></script>
+<script src="../js/content-loader.js"></script>
 <script>
   // Graceful fallback if the embed file isn't there yet
   const f = document.getElementById('fishbone-frame');

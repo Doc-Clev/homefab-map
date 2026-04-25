@@ -6,7 +6,7 @@
 
 window.DECK = {
   title: "FBX HomeFab — Investor Deck",
-  version: "v0.1",
+  version: "v0.2",
   slides: [
     {
       id: "01-cover",
@@ -44,64 +44,85 @@ window.DECK = {
       live: false
     },
     {
-      id: "06-first-mile",
-      file: "slides/06-first-mile.html",
+      id: "06-momentum",
+      file: "slides/06-momentum.html",
+      title: "Momentum is the Strategy",
+      tag: "Strategy",
+      live: false
+    },
+    {
+      id: "07-four-moats",
+      file: "slides/07-four-moats.html",
+      title: "The Four Moats",
+      tag: "Strategy",
+      live: false
+    },
+    {
+      id: "08-precedent",
+      file: "slides/08-precedent.html",
+      title: "Every Moat Started as Momentum",
+      tag: "Strategy",
+      live: false
+    },
+    {
+      id: "09-first-mile",
+      file: "slides/09-first-mile.html",
       title: "First Mile",
       tag: "Operating Model",
       live: false
     },
     {
-      id: "07-kit-of-parts",
-      file: "slides/07-kit-of-parts.html",
+      id: "10-kit-of-parts",
+      file: "slides/10-kit-of-parts.html",
       title: "Panels & Pod Kit of Parts",
       tag: "Product",
       live: false
     },
     {
-      id: "08-distribution",
-      file: "slides/08-distribution.html",
+      id: "11-distribution",
+      file: "slides/11-distribution.html",
       title: "Distribution",
       tag: "Operating Model",
       live: false
     },
     {
-      id: "09-workforce",
-      file: "slides/09-workforce.html",
+      id: "12-workforce",
+      file: "slides/12-workforce.html",
       title: "Construction Workforce",
       tag: "Operating Model",
       live: false
     },
     {
-      id: "10-fishbone",
-      file: "slides/10-fishbone.html",
+      id: "13-fishbone",
+      file: "slides/13-fishbone.html",
       title: "FBX Operating Model — Fishbone",
       tag: "Live Tool",
       live: true
     },
     {
-      id: "11-expansion-map",
-      file: "slides/11-expansion-map.html",
+      id: "14-expansion-map",
+      file: "slides/14-expansion-map.html",
       title: "10-Year Expansion Map",
       tag: "Live Tool",
       live: true
     },
     {
-      id: "12-economics",
-      file: "slides/12-economics.html",
+      id: "15-economics",
+      file: "slides/15-economics.html",
       title: "Year-10 Economics",
       tag: "Financials",
       live: false
     },
     {
-      id: "13-objections",
-      file: "slides/13-objections.html",
+      id: "16-objections",
+      file: "slides/16-objections.html",
       title: "Objections & Answers",
       tag: "Diligence",
       live: false
     },
     {
-      id: "14-ask",
-      file: "slides/14-ask.html",
+      id: "17-ask",
+      file: "slides/17-ask.html",
       title: "The Ask",
       tag: "Close",
       live: false
