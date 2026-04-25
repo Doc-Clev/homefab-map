@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FBX Admin — Content Editor</title>
+  <link rel="stylesheet" href="../css/core.css">
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+
+<header id="admin-topbar">
+  <div class="tb-brand">
+    <div class="brand-mark">F</div>
+    <span class="brand-label">FBX Admin</span>
+  </div>
+  <div class="tb-sep"></div>
+  <button class="tb-btn" id="btn-export" title="Download content.json with all edits merged in">Export JSON</button>
+  <button class="tb-btn" id="btn-import" title="Load a content.json file as the new draft layer">Import JSON</button>
+  <button class="tb-btn danger" id="btn-reset" title="Discard all drafts and restore content.json defaults">Reset to File</button>
+  <div class="tb-sep"></div>
+  <span id="edit-count">no edits</span>
+  <a class="tb-btn tb-link" id="btn-open-deck" href="../index.html" target="_blank" rel="noopener">Open Deck ↗</a>
+</header>
+
+<div id="admin-body">
+  <nav id="sidebar">
+    <div id="slide-list">
+      <!-- Slide items injected by admin.js -->
+    </div>
+    <p class="sidebar-hint">
+      Hover to highlight · Click to edit<br>
+      <kbd>Enter</kbd> saves &nbsp;·&nbsp; <kbd>Esc</kbd> cancels<br>
+      Inline tags: <code>&lt;strong&gt;</code> <code>&lt;em&gt;</code>
+    </p>
+  </nav>
+
+  <main id="stage">
+    <div id="scaler">
+      <iframe id="slide-frame" title="Slide preview"></iframe>
+    </div>
+  </main>
+</div>
+
+<script src="../js/manifest.js"></script>
+<script src="admin.js"></script>
+</body>
+</html>
