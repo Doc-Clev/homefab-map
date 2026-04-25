@@ -75,6 +75,40 @@
 
     .foot { color: rgba(245,241,232,0.5); }
     .foot .page-no { color: var(--paper); font-size: 14px; opacity: 0.6; }
+    .live-link {
+  position: absolute;
+  bottom: 50px;
+  left: var(--gutter);
+  right: var(--gutter);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 5;
+}
+.live-link a {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--signal);
+  text-decoration: none;
+  border-bottom: 1px solid var(--signal);
+  padding: 4px 0;
+  transition: opacity 150ms;
+}
+.live-link a:hover { opacity: 0.7; }
+.live-link a::after {
+  content: " ↗";
+  font-size: 13px;
+  letter-spacing: 0;
+}
+.live-link .src {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(245,241,232,0.4);
+}
   </style>
 </head>
 <body>
@@ -107,7 +141,13 @@
               title="FBX Expansion Map"
               loading="lazy"></iframe>
     </div>
-
+<div class="live-link">
+  <a href="https://YOUR-FISHBONE-URL-HERE" target="_blank" rel="noopener" data-content="13-fishbone.live.cta">
+    See the full published version
+  </a>
+  <span class="src">homefab-map.onrender.com/fishbone</span>
+</div>
+    
     <div class="foot" style="bottom: 40px;">
       <span>Source: <code style="font-family: var(--mono); font-size: 11px;">/tools/expansion-map.html</code></span>
       <span class="page-no">14</span>
