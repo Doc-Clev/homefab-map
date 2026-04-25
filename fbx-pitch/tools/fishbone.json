@@ -1,0 +1,248 @@
+{
+  "head": "Delivered Home on Bare Land",
+  "volume": {
+    "homes_per_year": 100,
+    "contracts_per_year": 100,
+    "franchises_per_year": 111,
+    "franchises_from_map": true
+  },
+  "bus": [
+    {
+      "id": "first_mile",
+      "name": "First Mile",
+      "color_var": "--p1",
+      "description": "**First Mile** owns the customer-facing experience from initial interest through contract signing.\n\nCovers entitlement, financing, design, sales, franchise origination, contract execution, and ongoing franchise licensing (4–8% royalty on franchisee sales for brand, marketing, and sales support).",
+      "functions": [
+        {
+          "id": "entitlement",
+          "name": "Entitlement / Permit",
+          "description": "Securing land entitlements, zoning approvals, and building permits.",
+          "revenue_K": 0,
+          "cost_K": 0,
+          "time_days": 0,
+          "headcount": 0,
+          "basis": "per_home",
+          "external_rev_pct": 100
+        },
+        {
+          "id": "finance",
+          "name": "Finance",
+          "description": "Construction loans, end-consumer mortgages, and financing coordination.",
+          "revenue_K": 0,
+          "cost_K": 0,
+          "time_days": 0,
+          "headcount": 0,
+          "basis": "per_home",
+          "external_rev_pct": 100
+        },
+        {
+          "id": "design",
+          "name": "Design",
+          "description": "Home design selection and customization with the buyer.",
+          "revenue_K": 0,
+          "cost_K": 0,
+          "time_days": 0,
+          "headcount": 0,
+          "basis": "per_home",
+          "external_rev_pct": 100
+        },
+        {
+          "id": "home_sales",
+          "name": "Home Sales",
+          "description": "Direct-to-consumer home sales (corporate-operated territories).",
+          "revenue_K": 0,
+          "cost_K": 0,
+          "time_days": 0,
+          "headcount": 0,
+          "basis": "per_home",
+          "external_rev_pct": 100
+        },
+        {
+          "id": "franchise_sales",
+          "name": "Franchise Sales",
+          "description": "Originating new franchise deals. One-time fee of $650K–$950K per franchise depending on size/complexity. External revenue — paid by new franchisee.",
+          "revenue_K": 800,
+          "cost_K": 0,
+          "time_days": 0,
+          "headcount": 0,
+          "basis": "per_franchise",
+          "external_rev_pct": 100
+        },
+        {
+          "id": "licensing_fees",
+          "name": "Licensing / Royalties",
+          "description": "Ongoing 4–8% royalty on franchisee home sales volume, in exchange for brand, marketing, and sales support. Paid by franchisees (who operate Last Mile) to First Mile. **Inter-BU flow — eliminates in consolidation.**\n\nRevenue here should be entered as annual $K expected from all franchisees. Last Mile books a matching COGS line.",
+          "revenue_K": 0,
+          "cost_K": 0,
+          "time_days": 0,
+          "headcount": 0,
+          "basis": "per_year",
+          "external_rev_pct": 0
+        },
+        {
+          "id": "building_contracts",
+          "name": "Building Contracts",
+          "description": "Contract execution and buyer handoff to construction.",
+          "revenue_K": 0,
+          "cost_K": 0,
+          "time_days": 0,
+          "headcount": 0,
+          "basis": "per_contract",
+          "external_rev_pct": 100
+        }
+      ]
+    },
+    {
+      "id": "fbx_core",
+      "name": "FBX Core",
+      "color_var": "--p2",
+      "description": "**FBX Core** is the industrial middle — the factory and distribution layer.\n\nImports components, runs warehousing, assembles Kits of Parts, trains operators, runs R&D, distributes to assembly factories, and sells components (SIP panels, bath/kitchen pods) à la carte to external buyers.",
+      "functions": [
+        {
+          "id": "warehousing",
+          "name": "Warehousing",
+          "description": "Storage and inventory management.",
+          "revenue_K": 0,
+          "cost_K": 0,
+          "time_days": 0,
+          "headcount": 0,
+          "basis": "per_month",
+          "external_rev_pct": 0
+        },
+        {
+          "id": "import",
+          "name": "Import (Foreign & Domestic)",
+          "description": "Sourcing components from domestic and international suppliers.",
+          "revenue_K": 0,
+          "cost_K": 0,
+          "time_days": 0,
+          "headcount": 0,
+          "basis": "per_home",
+          "external_rev_pct": 0
+        },
+        {
+          "id": "kop",
+          "name": "Kit of Parts Creation",
+          "description": "Assembling components into shippable Kits of Parts. Sold to Last Mile at transfer price. **Inter-BU flow — eliminates in consolidation.**",
+          "revenue_K": 0,
+          "cost_K": 0,
+          "time_days": 0,
+          "headcount": 0,
+          "basis": "per_home",
+          "external_rev_pct": 0
+        },
+        {
+          "id": "component_sales",
+          "name": "Component Sales (SIP / Pods)",
+          "description": "Wall/roof SIP panels and bath/kitchen pods sold à la carte to external buyers (non-franchisee builders, developers). **External revenue — does not eliminate.** Will become a real line.",
+          "revenue_K": 0,
+          "cost_K": 0,
+          "time_days": 0,
+          "headcount": 0,
+          "basis": "per_year",
+          "external_rev_pct": 100
+        },
+        {
+          "id": "training",
+          "name": "Training",
+          "description": "Training assembly crews and franchise operators.",
+          "revenue_K": 0,
+          "cost_K": 0,
+          "time_days": 0,
+          "headcount": 0,
+          "basis": "per_year",
+          "external_rev_pct": 0
+        },
+        {
+          "id": "rd",
+          "name": "Research & Development",
+          "description": "Product development, system improvements, new models.",
+          "revenue_K": 0,
+          "cost_K": 0,
+          "time_days": 0,
+          "headcount": 0,
+          "basis": "per_year",
+          "external_rev_pct": 0
+        },
+        {
+          "id": "distribution",
+          "name": "Distribution to Assembly",
+          "description": "Logistics from Core to assembly factories.",
+          "revenue_K": 0,
+          "cost_K": 0,
+          "time_days": 0,
+          "headcount": 0,
+          "basis": "per_home",
+          "external_rev_pct": 0
+        }
+      ]
+    },
+    {
+      "id": "last_mile",
+      "name": "Last Mile",
+      "color_var": "--p3",
+      "description": "**Last Mile** is the GC-led execution layer.\n\nAssembly, delivery, site installation, and inspections. Revenue from home construction contracts paid by end buyers. Pays Core for KoP (COGS) and First Mile for ongoing licensing royalties (4–8% of sales).",
+      "functions": [
+        {
+          "id": "assembly",
+          "name": "Assembly",
+          "description": "Factory assembly of the home from the Kit of Parts.",
+          "revenue_K": 0,
+          "cost_K": 0,
+          "time_days": 0,
+          "headcount": 0,
+          "basis": "per_home",
+          "external_rev_pct": 100
+        },
+        {
+          "id": "delivery",
+          "name": "Delivery Logistics",
+          "description": "Transport from assembly factory to the site.",
+          "revenue_K": 0,
+          "cost_K": 0,
+          "time_days": 0,
+          "headcount": 0,
+          "basis": "per_home",
+          "external_rev_pct": 100
+        },
+        {
+          "id": "install",
+          "name": "Installation Site Work",
+          "description": "Foundation, utilities, installation, finishing.",
+          "revenue_K": 0,
+          "cost_K": 0,
+          "time_days": 0,
+          "headcount": 0,
+          "basis": "per_home",
+          "external_rev_pct": 100
+        },
+        {
+          "id": "inspections",
+          "name": "Inspections",
+          "description": "Final inspections, certificates of occupancy.",
+          "revenue_K": 0,
+          "cost_K": 0,
+          "time_days": 0,
+          "headcount": 0,
+          "basis": "per_home",
+          "external_rev_pct": 100
+        }
+      ]
+    }
+  ],
+  "handoffs": [
+    {
+      "after_bu": "first_mile",
+      "label": "contract signed → kit ordered",
+      "type": "commercial"
+    },
+    {
+      "after_bu": "fbx_core",
+      "label": "kit shipped → site work begins",
+      "type": "commercial+customer"
+    }
+  ],
+  "customer_ownership": {
+    "sales_owns_through": "fbx_core"
+  }
+}

@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Economics — FBX</title>
+  <link rel="stylesheet" href="../css/core.css">
+  <style>
+    .econ-head {
+      position: absolute;
+      top: 130px;
+      left: var(--gutter);
+      right: var(--gutter);
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+    .econ-head h2 {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 76px;
+      line-height: 0.95;
+      letter-spacing: -0.025em;
+    }
+    .econ-head h2 em { font-style: italic; color: var(--signal); font-weight: 500; }
+    .econ-head .yr {
+      text-align: right;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--g-400);
+      line-height: 1.7;
+    }
+    .econ-head .yr strong { color: var(--ink); font-weight: 600; }
+
+    .bu-grid {
+      position: absolute;
+      top: 320px;
+      left: var(--gutter);
+      right: var(--gutter);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+    }
+    .bu {
+      background: var(--paper-pure);
+      border: 1px solid var(--ink);
+      padding: 32px;
+      border-top: 6px solid;
+    }
+    .bu.core { border-top-color: var(--moss); }
+    .bu.fab  { border-top-color: var(--clay); }
+
+    .bu .bu-name {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 32px;
+      letter-spacing: -0.015em;
+      margin-bottom: 4px;
+    }
+    .bu.core .bu-name span { color: var(--moss); font-weight: 500; }
+    .bu.fab  .bu-name span { color: var(--clay); font-weight: 500; }
+    .bu .bu-sub {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--g-400);
+      margin-bottom: 24px;
+    }
+
+    .bu-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px 32px;
+    }
+    .bu-stat .v {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 38px;
+      line-height: 1;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      font-feature-settings: "lnum","tnum";
+    }
+    .bu-stat .v small {
+      font-size: 18px;
+      font-weight: 400;
+      color: var(--g-400);
+      letter-spacing: 0;
+    }
+    .bu-stat .l {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--g-400);
+      margin-top: 6px;
+    }
+
+    .totals {
+      position: absolute;
+      bottom: 100px;
+      left: var(--gutter);
+      right: var(--gutter);
+      background: var(--ink);
+      color: var(--paper);
+      padding: 24px 32px;
+      display: grid;
+      grid-template-columns: auto 1fr 1fr 1fr 1fr;
+      align-items: center;
+      gap: 32px;
+    }
+    .totals .lab {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--signal);
+      max-width: 110px;
+      line-height: 1.5;
+    }
+    .totals .stat .v {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 40px;
+      line-height: 1;
+      letter-spacing: -0.02em;
+      color: var(--paper);
+    }
+    .totals .stat .l {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(245,241,232,0.6);
+      margin-top: 6px;
+    }
+  </style>
+</head>
+<body>
+<div class="stage">
+  <section class="slide">
+
+    <div class="eyebrow">
+      <div class="brand"><div class="brand-mark">F</div><span>FBX · HOMEFAB</span></div>
+      <span>12 · Financials · Year 10</span>
+    </div>
+
+    <div class="econ-head">
+      <div>
+        <div class="kicker reveal">At end of Year 10 · 2035</div>
+        <h2 class="reveal">Phase 3 · <em>National scale.</em></h2>
+      </div>
+      <div class="yr reveal">
+        <div><strong>Cumulative</strong> through Year 10</div>
+        <div>Source · Expansion Model v.latest</div>
+      </div>
+    </div>
+
+    <div class="bu-grid">
+      <div class="bu core reveal">
+        <div class="bu-name">FBX <span>Core</span></div>
+        <div class="bu-sub">Warehousing & Distribution</div>
+        <div class="bu-stats">
+          <div class="bu-stat">
+            <div class="v">$12.9<small>B</small></div>
+            <div class="l">Cumulative Revenue</div>
+          </div>
+          <div class="bu-stat">
+            <div class="v">$3.23<small>B</small></div>
+            <div class="l">Cumulative Op. Profit</div>
+          </div>
+          <div class="bu-stat">
+            <div class="v">$10.8<small>B</small></div>
+            <div class="l">Kit Sales (cumul.)</div>
+          </div>
+          <div class="bu-stat">
+            <div class="v">$2.15<small>B</small></div>
+            <div class="l">Royalty (cumul.)</div>
+          </div>
+          <div class="bu-stat">
+            <div class="v">5 <small>of 5</small></div>
+            <div class="l">Hubs Operating</div>
+          </div>
+          <div class="bu-stat">
+            <div class="v">4,305<small>%</small></div>
+            <div class="l">ROI on Core Capital</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bu fab reveal">
+        <div class="bu-name">FBX <span>Fab-Home</span></div>
+        <div class="bu-sub">Franchise Factories</div>
+        <div class="bu-stats">
+          <div class="bu-stat">
+            <div class="v">$26.9<small>B</small></div>
+            <div class="l">Cumulative Revenue</div>
+          </div>
+          <div class="bu-stat">
+            <div class="v">$5.92<small>B</small></div>
+            <div class="l">Cumulative Net Income</div>
+          </div>
+          <div class="bu-stat">
+            <div class="v">43,980<small>/yr</small></div>
+            <div class="l">Annual Run-Rate (homes)</div>
+          </div>
+          <div class="bu-stat">
+            <div class="v">137</div>
+            <div class="l">Fabs Operating</div>
+          </div>
+          <div class="bu-stat">
+            <div class="v">$411<small>M</small></div>
+            <div class="l">Capex Committed</div>
+          </div>
+          <div class="bu-stat">
+            <div class="v">1,440<small>%</small></div>
+            <div class="l">ROI on Fab Capital</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="totals reveal">
+      <div class="lab">Network Totals at Y10</div>
+      <div class="stat"><div class="v">149,490</div><div class="l">Homes Delivered</div></div>
+      <div class="stat"><div class="v">$39.8B</div><div class="l">Combined Revenue</div></div>
+      <div class="stat"><div class="v">$9.15B</div><div class="l">Combined Profit</div></div>
+      <div class="stat"><div class="v">50</div><div class="l">States Covered</div></div>
+    </div>
+
+    <div class="foot" style="bottom: 32px;">
+      <span>Numbers are model-driven · Live in the Expansion Map (slide 11)</span>
+      <span class="page-no" style="font-size:14px; opacity:0.5;">12</span>
+    </div>
+  </section>
+</div>
+<script src="../js/slide.js"></script>
+</body>
+</html>

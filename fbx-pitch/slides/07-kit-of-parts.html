@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Kit of Parts — FBX</title>
+  <link rel="stylesheet" href="../css/core.css">
+  <style>
+    .kop-layout {
+      position: absolute;
+      inset: 130px var(--gutter) 130px var(--gutter);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: start;
+    }
+    .kop-left h2 {
+      font-family: var(--display);
+      font-weight: 800;
+      font-size: 110px;
+      line-height: 0.92;
+      letter-spacing: -0.04em;
+      color: var(--ink);
+    }
+    .kop-left h2 em { font-style: italic; font-weight: 500; color: var(--clay); }
+    .kop-left .lede {
+      margin-top: 32px;
+      max-width: 38ch;
+      font-family: var(--display);
+      font-size: 22px;
+      font-weight: 400;
+      line-height: 1.35;
+      color: var(--ink);
+    }
+
+    .parts-list {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+    .part {
+      display: grid;
+      grid-template-columns: 70px 1fr;
+      gap: 20px;
+      padding: 18px 22px;
+      background: var(--paper-pure);
+      border: 1px solid var(--ink);
+      align-items: start;
+    }
+    .part .icon {
+      width: 48px;
+      height: 48px;
+      border: 1.5px solid var(--ink);
+      display: grid;
+      place-items: center;
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 22px;
+      color: var(--ink);
+    }
+    .part h4 {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 20px;
+      letter-spacing: -0.01em;
+      margin-bottom: 4px;
+    }
+    .part .lab {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--clay);
+      margin-bottom: 6px;
+    }
+    .part p {
+      font-size: 13px;
+      line-height: 1.5;
+      color: var(--g-600);
+    }
+
+    .objective-strip {
+      position: absolute;
+      bottom: 60px;
+      left: var(--gutter);
+      right: var(--gutter);
+      display: flex;
+      gap: 24px;
+      align-items: center;
+      padding: 18px 28px;
+      border-top: 2px solid var(--ink);
+      border-bottom: 2px solid var(--ink);
+    }
+    .objective-strip .o-label {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--signal);
+      white-space: nowrap;
+    }
+    .objective-strip .o-text {
+      font-family: var(--display);
+      font-size: 22px;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+    }
+  </style>
+</head>
+<body>
+<div class="stage">
+  <section class="slide">
+
+    <div class="eyebrow">
+      <div class="brand"><div class="brand-mark">F</div><span>FBX · HOMEFAB</span></div>
+      <span>07 · Product</span>
+    </div>
+
+    <div class="kop-layout">
+      <div class="kop-left">
+        <div class="kicker reveal" style="color: var(--clay);">From Tradition to Innovation</div>
+        <h2 class="reveal">Panels & pod <em>kit of parts.</em></h2>
+        <p class="lede reveal">
+          A standardized, factory-built component system —
+          assembled in the field by trained, regional teams.
+        </p>
+        <hr class="rule reveal" style="margin-top: 32px; width: 120px;">
+        <p class="reveal" style="margin-top: 20px; font-family: var(--mono); font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--g-400);">
+          Products: ADUs · High-Density Multi-Family · Bathroom Pods · SIPs
+        </p>
+      </div>
+
+      <div class="parts-list">
+        <div class="part reveal">
+          <div class="icon">▱</div>
+          <div>
+            <div class="lab">Component · 01</div>
+            <h4>Structural Panels</h4>
+            <p>AI-assisted, pre-cut panels — field installed by trained crews
+              with engineered placement guides.</p>
+          </div>
+        </div>
+        <div class="part reveal">
+          <div class="icon">◫</div>
+          <div>
+            <div class="lab">Component · 02</div>
+            <h4>Bathroom Pods</h4>
+            <p>The technical, plumbing-heavy work — built in a controlled
+              factory environment, dropped in place on site.</p>
+          </div>
+        </div>
+        <div class="part reveal">
+          <div class="icon">▤</div>
+          <div>
+            <div class="lab">Component · 03</div>
+            <h4>Warehousing</h4>
+            <p>Cost efficiency at scale — aggregated procurement and
+              regional staging across the FBX Core network.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="objective-strip reveal">
+      <span class="o-label">Objective</span>
+      <span class="o-text">
+        Regulatory clearance · Efficient design · Best product · Best distribution.
+      </span>
+    </div>
+
+    <div class="foot" style="bottom: 24px;">
+      <span></span>
+      <span class="page-no" style="font-size: 14px; opacity: 0.5;">07</span>
+    </div>
+  </section>
+</div>
+<script src="../js/slide.js"></script>
+</body>
+</html>

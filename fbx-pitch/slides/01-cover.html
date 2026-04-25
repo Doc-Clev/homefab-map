@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Cover — FBX</title>
+  <link rel="stylesheet" href="../css/core.css">
+  <style>
+    .cover-bg {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 70% 30%, rgba(230,57,70,0.08) 0%, transparent 60%),
+        linear-gradient(180deg, #F5F1E8 0%, #EAE5D8 100%);
+    }
+    /* Decorative rule grid */
+    .grid-deco {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(to right, rgba(10,22,40,0.04) 1px, transparent 1px);
+      background-size: calc(100% / 12) 100%;
+      pointer-events: none;
+    }
+    .cover-content {
+      position: absolute;
+      left: var(--gutter);
+      right: var(--gutter);
+      top: 50%;
+      transform: translateY(-50%);
+    }
+    .cover-meta {
+      position: absolute;
+      left: var(--gutter);
+      bottom: var(--gutter);
+      right: var(--gutter);
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+    .cover-meta .right-meta {
+      text-align: right;
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--g-400);
+      line-height: 1.8;
+    }
+    .cover-meta .right-meta strong {
+      color: var(--ink);
+      font-weight: 600;
+    }
+    .big-x {
+      position: absolute;
+      right: -80px;
+      top: -100px;
+      font-family: var(--display);
+      font-style: italic;
+      font-size: 880px;
+      font-weight: 400;
+      color: var(--ink);
+      opacity: 0.04;
+      line-height: 0.8;
+      letter-spacing: -0.05em;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+<div class="stage">
+  <section class="slide">
+    <div class="cover-bg"></div>
+    <div class="grid-deco"></div>
+    <div class="big-x">X</div>
+
+    <div class="eyebrow">
+      <div class="brand">
+        <div class="brand-mark">F</div>
+        <span>FBX · HOMEFAB</span>
+      </div>
+      <span>Investor Memorandum · Confidential</span>
+    </div>
+
+    <div class="cover-content">
+      <div class="kicker reveal">Scaled Housing Factories</div>
+      <h1 class="display reveal">
+        Change<br>
+        <em>Homebuilding.</em>
+      </h1>
+      <p class="lede reveal" style="margin-top: 40px; max-width: 52ch;">
+        A franchise-powered, kit-of-parts operating system for factory-built
+        housing — engineered to scale linearly in cost and exponentially in output.
+      </p>
+    </div>
+
+    <div class="cover-meta">
+      <div class="reveal">
+        <hr class="rule" style="width: 80px; margin-bottom: 14px;">
+        <div style="font-family: var(--mono); font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;">
+          FBX Product Development · 2026
+        </div>
+      </div>
+      <div class="right-meta reveal">
+        <div><strong>Series A</strong> · $4M Core</div>
+        <div>$900K Fab-Home franchise · $450K infra</div>
+      </div>
+    </div>
+
+    <div class="foot" style="bottom: 16px;">
+      <span></span>
+      <span class="page-no" style="font-size: 14px; opacity: 0.5;">01</span>
+    </div>
+  </section>
+</div>
+<script src="../js/slide.js"></script>
+</body>
+</html>

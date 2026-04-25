@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>First Mile — FBX</title>
+  <link rel="stylesheet" href="../css/core.css">
+  <style>
+    .fm-head {
+      position: absolute;
+      top: 130px;
+      left: var(--gutter);
+      right: var(--gutter);
+    }
+    .fm-headline {
+      display: flex;
+      align-items: flex-start;
+      gap: 32px;
+    }
+    .fm-headline .num {
+      font-family: var(--mono);
+      font-size: 13px;
+      letter-spacing: 0.2em;
+      color: var(--signal);
+      padding-top: 18px;
+    }
+    .fm-headline h2 {
+      font-family: var(--display);
+      font-weight: 800;
+      font-size: 132px;
+      line-height: 0.92;
+      letter-spacing: -0.04em;
+    }
+    .fm-headline h2 em {
+      font-style: italic;
+      font-weight: 500;
+      color: var(--signal);
+    }
+    .fm-sub {
+      margin-top: 32px;
+      font-family: var(--display);
+      font-size: 26px;
+      font-weight: 400;
+      line-height: 1.3;
+      letter-spacing: -0.01em;
+      max-width: 50ch;
+      color: var(--ink);
+    }
+    .fm-grid {
+      position: absolute;
+      bottom: 180px;
+      left: var(--gutter);
+      right: var(--gutter);
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      border-top: 2px solid var(--ink);
+      border-bottom: 2px solid var(--ink);
+    }
+    .fm-cell {
+      padding: 28px 24px 28px 24px;
+      border-right: 1px solid rgba(10,22,40,0.2);
+      min-height: 200px;
+    }
+    .fm-cell:last-child { border-right: 0; }
+    .fm-cell .label {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--g-400);
+      margin-bottom: 18px;
+    }
+    .fm-cell h4 {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 26px;
+      line-height: 1.1;
+      letter-spacing: -0.015em;
+      margin-bottom: 14px;
+    }
+    .fm-cell p {
+      font-size: 14px;
+      line-height: 1.5;
+      color: var(--g-600);
+    }
+    .fm-cta {
+      position: absolute;
+      bottom: 80px;
+      left: var(--gutter);
+      right: var(--gutter);
+      background: var(--signal);
+      color: var(--paper);
+      padding: 18px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .fm-cta .lab {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      opacity: 0.8;
+    }
+    .fm-cta .text {
+      font-family: var(--display);
+      font-size: 22px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+    }
+  </style>
+</head>
+<body>
+<div class="stage">
+  <section class="slide">
+
+    <div class="eyebrow">
+      <div class="brand"><div class="brand-mark">F</div><span>FBX · HOMEFAB</span></div>
+      <span>06 · Operating Model · Layer 1</span>
+    </div>
+
+    <div class="fm-head">
+      <div class="fm-headline">
+        <span class="num reveal">01 / 03</span>
+        <h2 class="reveal">First <em>Mile.</em></h2>
+      </div>
+      <p class="fm-sub reveal">
+        Established. Vertically integrated sales, finance, and customer care.
+        Think Tesla, Carmax, Carvana — for a delivered home.
+      </p>
+    </div>
+
+    <div class="fm-grid reveal">
+      <div class="fm-cell">
+        <div class="label">Function · A</div>
+        <h4>Financial Sector</h4>
+        <p>Leverages trust and product standardization.</p>
+      </div>
+      <div class="fm-cell">
+        <div class="label">Function · B</div>
+        <h4>Design & Approvals</h4>
+        <p>Leverages systems, regulatory hurdles, and engineering efficiency.</p>
+      </div>
+      <div class="fm-cell">
+        <div class="label">Function · C</div>
+        <h4>Sales</h4>
+        <p>Leverages domain expertise and reduced product variation.</p>
+      </div>
+      <div class="fm-cell">
+        <div class="label">Function · D</div>
+        <h4>Permits</h4>
+        <p>AI-assisted standardization unlocks municipal throughput.</p>
+      </div>
+    </div>
+
+    <div class="fm-cta reveal">
+      <span class="lab">Objective</span>
+      <span class="text">Hand the Last Mile a steady stream of homes to build & support.</span>
+      <span class="lab">→</span>
+    </div>
+
+    <div class="foot" style="bottom: 28px;">
+      <span>Pricing controlled · Customer experience maximized · Tech-leveraged</span>
+      <span class="page-no" style="font-size: 14px; opacity: 0.5;">06</span>
+    </div>
+  </section>
+</div>
+<script src="../js/slide.js"></script>
+</body>
+</html>

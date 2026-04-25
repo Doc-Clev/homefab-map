@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Objections — FBX</title>
+  <link rel="stylesheet" href="../css/core.css">
+  <style>
+    .obj-head {
+      position: absolute;
+      top: 130px;
+      left: var(--gutter);
+      right: var(--gutter);
+    }
+    .obj-list {
+      position: absolute;
+      top: 290px;
+      left: var(--gutter);
+      right: var(--gutter);
+      bottom: 100px;
+      display: grid;
+      gap: 18px;
+      grid-template-rows: 1fr 1fr 1fr;
+    }
+    .obj {
+      display: grid;
+      grid-template-columns: 80px 1fr 1.4fr;
+      gap: 32px;
+      padding: 22px 28px;
+      background: var(--paper-pure);
+      border: 1px solid var(--ink);
+      align-items: center;
+    }
+    .obj .num {
+      font-family: var(--display);
+      font-weight: 300;
+      font-size: 56px;
+      line-height: 1;
+      color: var(--signal);
+      letter-spacing: -0.04em;
+    }
+    .obj .q {
+      border-right: 1px solid rgba(10,22,40,0.15);
+      padding-right: 32px;
+    }
+    .obj .q-lab {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--g-400);
+      margin-bottom: 6px;
+    }
+    .obj .q .text {
+      font-family: var(--display);
+      font-weight: 600;
+      font-size: 22px;
+      line-height: 1.2;
+      letter-spacing: -0.015em;
+      color: var(--ink);
+    }
+    .obj .a-lab {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--signal);
+      margin-bottom: 6px;
+    }
+    .obj .a .text {
+      font-size: 15px;
+      line-height: 1.55;
+      color: var(--g-600);
+    }
+    .obj .a .text strong { color: var(--ink); font-weight: 600; }
+  </style>
+</head>
+<body>
+<div class="stage">
+  <section class="slide">
+
+    <div class="eyebrow">
+      <div class="brand"><div class="brand-mark">F</div><span>FBX · HOMEFAB</span></div>
+      <span>13 · Diligence</span>
+    </div>
+
+    <div class="obj-head">
+      <div class="kicker reveal">Objections We Anticipate</div>
+      <h2 class="section reveal" style="font-size: 76px;">
+        The hard <em>questions.</em>
+      </h2>
+    </div>
+
+    <div class="obj-list">
+      <div class="obj reveal">
+        <div class="num">01</div>
+        <div class="q">
+          <div class="q-lab">The Question</div>
+          <div class="text">How big can this get? Homes per year?</div>
+        </div>
+        <div class="a">
+          <div class="a-lab">Our Answer</div>
+          <div class="text">
+            See the model and the map (slide 11). The plan is
+            <strong>149,490 homes delivered by Year 10</strong> at a 43,980/yr run-rate.
+            We can dial it more aggressive or more conservative — the model recalcs live.
+          </div>
+        </div>
+      </div>
+
+      <div class="obj reveal">
+        <div class="num">02</div>
+        <div class="q">
+          <div class="q-lab">The Question</div>
+          <div class="text">What is your moat? How do you fend off copycats?</div>
+        </div>
+        <div class="a">
+          <div class="a-lab">Our Answer</div>
+          <div class="text">
+            <strong>(1)</strong> First-mile expertise — regulatory & AI-assisted design is the barrier.
+            <strong>(2)</strong> Franchise leverage — first-mover, faster than incumbents.
+            <strong>(3)</strong> Diversified revenue lines baked into the operating model.
+          </div>
+        </div>
+      </div>
+
+      <div class="obj reveal">
+        <div class="num">03</div>
+        <div class="q">
+          <div class="q-lab">The Question</div>
+          <div class="text">Are you national, or competing with Lennar / Champion?</div>
+        </div>
+        <div class="a">
+          <div class="a-lab">Our Answer</div>
+          <div class="text">
+            <strong>Adding to the market</strong> — demand is enormous. Our edge is
+            <strong>speed</strong> and <strong>cost of capital</strong>, which is why
+            the moat matters more than the comparison.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="foot">
+      <span>FBX · Investor Q&A</span>
+      <span class="page-no">13</span>
+    </div>
+  </section>
+</div>
+<script src="../js/slide.js"></script>
+</body>
+</html>

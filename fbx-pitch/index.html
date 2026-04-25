@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>FBX HomeFab — Investor Deck</title>
+  <link rel="stylesheet" href="css/core.css">
+  <link rel="stylesheet" href="css/host.css">
+</head>
+<body>
+
+  <!-- TOP BAR -->
+  <div id="topbar">
+    <div class="brand">
+      <div class="brand-mark">F</div>
+      <div class="brand-name">FBX</div>
+    </div>
+    <div class="sep"></div>
+    <div class="deck-title" id="deck-title-current">Loading…</div>
+
+    <div class="right">
+      <div class="progress"><div class="progress-fill" id="progress-fill"></div></div>
+      <div id="counter">— / —</div>
+      <button id="open-index" title="Slide index (i / Esc)">Index</button>
+      <button id="fullscreen" title="Fullscreen (f)">Full</button>
+    </div>
+  </div>
+
+  <!-- STAGE -->
+  <div id="stage">
+    <div id="scaler">
+      <iframe id="slide-frame"
+              src="about:blank"
+              title="Slide"
+              style="opacity:0; transition:opacity 280ms ease;"
+              allow="fullscreen"></iframe>
+    </div>
+  </div>
+
+  <!-- NAV ARROWS -->
+  <button class="nav-arrow prev" id="prev" aria-label="Previous slide">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+      <path d="M15 5 L8 12 L15 19" stroke-linecap="square"/>
+    </svg>
+  </button>
+  <button class="nav-arrow next" id="next" aria-label="Next slide">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+      <path d="M9 5 L16 12 L9 19" stroke-linecap="square"/>
+    </svg>
+  </button>
+
+  <!-- HELP TOAST -->
+  <div id="help">
+    <span><kbd>←</kbd><kbd>→</kbd> nav</span>
+    <span><kbd>i</kbd> index</span>
+    <span><kbd>f</kbd> full</span>
+    <span><kbd>?</kbd> help</span>
+  </div>
+
+  <!-- INDEX OVERLAY -->
+  <div id="index-overlay">
+    <div class="index-head">
+      <h2>Deck <em>Index</em></h2>
+      <button class="index-close" id="close-index">Close · Esc</button>
+    </div>
+    <div class="index-grid" id="index-grid"></div>
+  </div>
+
+  <script src="js/manifest.js"></script>
+  <script src="js/host.js"></script>
+</body>
+</html>

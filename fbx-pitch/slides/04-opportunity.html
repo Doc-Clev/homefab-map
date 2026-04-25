@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Opportunity — FBX</title>
+  <link rel="stylesheet" href="../css/core.css">
+  <style>
+    body, html { background: var(--ink); }
+    .head {
+      position: absolute;
+      top: 130px; left: var(--gutter); right: var(--gutter);
+    }
+    .head .pill { color: var(--paper); border-color: var(--paper); }
+    .opp-grid {
+      position: absolute;
+      bottom: 100px;
+      left: var(--gutter);
+      right: var(--gutter);
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+    }
+    .opp-card {
+      padding: 32px 28px;
+      border-left: 1px solid rgba(245,241,232,0.15);
+      min-height: 280px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .opp-card:first-child { border-left: 0; padding-left: 0; }
+    .opp-card .marker {
+      width: 36px; height: 36px;
+      border: 1.5px solid var(--signal);
+      color: var(--signal);
+      display: grid;
+      place-items: center;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      margin-bottom: 24px;
+    }
+    .opp-card h4 {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 26px;
+      line-height: 1.1;
+      letter-spacing: -0.015em;
+      color: var(--paper);
+      margin-bottom: 12px;
+    }
+    .opp-card p {
+      font-size: 15px;
+      line-height: 1.55;
+      color: rgba(245,241,232,0.7);
+    }
+    .pull-quote {
+      position: absolute;
+      right: var(--gutter);
+      top: 130px;
+      max-width: 380px;
+      text-align: right;
+    }
+    .pull-quote .q {
+      font-family: var(--display);
+      font-style: italic;
+      font-weight: 400;
+      font-size: 24px;
+      line-height: 1.35;
+      color: rgba(245,241,232,0.85);
+    }
+    .pull-quote .q em {
+      font-style: italic;
+      color: var(--signal);
+      font-weight: 500;
+    }
+  </style>
+</head>
+<body>
+<div class="stage">
+  <section class="slide dark">
+
+    <div class="eyebrow">
+      <div class="brand"><div class="brand-mark">F</div><span>FBX · HOMEFAB</span></div>
+      <span>04 · Opportunity</span>
+    </div>
+
+    <div class="head">
+      <div class="kicker reveal" style="color: var(--signal);">The Last Mile Franchise System</div>
+      <h2 class="section reveal" style="color: var(--paper);">
+        Where the <em style="color: var(--signal);">opportunity</em> lives.
+      </h2>
+      <p class="lede reveal" style="color: rgba(245,241,232,0.7); margin-top: 28px; max-width: 50ch;">
+        Spool up, empower, and equip small capable craftsmen within
+        150 miles of every delivery market in America.
+      </p>
+    </div>
+
+    <div class="pull-quote reveal" style="top: 300px;">
+      <div class="q">
+        "HomeFab is the layer<br>
+        the rest of the industry<br>
+        <em>forgot to build.</em>"
+      </div>
+    </div>
+
+    <div class="opp-grid">
+      <div class="opp-card reveal">
+        <div>
+          <div class="marker">01</div>
+          <h4>Franchisee Model</h4>
+          <p>Capital, systems, orders, and support — delivered to small builders
+            who want to scale within their region.</p>
+        </div>
+      </div>
+
+      <div class="opp-card reveal">
+        <div>
+          <div class="marker">02</div>
+          <h4>Approved Installers</h4>
+          <p>A trained, vetted sub-contractor network — empowered to install product
+            and care for the customer.</p>
+        </div>
+      </div>
+
+      <div class="opp-card reveal">
+        <div>
+          <div class="marker">03</div>
+          <h4>Logistics</h4>
+          <p>Equipment and movers trained to place panels and pods exactly where
+            installers need them, when they need them.</p>
+        </div>
+      </div>
+
+      <div class="opp-card reveal">
+        <div>
+          <div class="marker">04</div>
+          <h4>On-Site Assembly Unlock</h4>
+          <p>Systems that allow 100% of land — including infill and difficult
+            sites — to be served by prefabricated product.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="foot">
+      <span>FBX · Last Mile Network</span>
+      <span class="page-no">04</span>
+    </div>
+  </section>
+</div>
+<script src="../js/slide.js"></script>
+</body>
+</html>
