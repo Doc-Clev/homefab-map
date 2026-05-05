@@ -91,6 +91,21 @@ def safe_rename(src: Path, dst: Path, retries: int = 5, delay: float = 0.2) -> N
             time.sleep(delay)
 
 
+def safe_write_text(path: Path, content: str, retries: int = 8, delay: float = 0.3) -> None:
+    """Retry write_text on Windows/Dropbox file locking (Errno 22 etc.).
+
+    Dropbox aggressively re-opens files mid-sync, which collides with our
+    write attempts and surfaces as OSError. Retry with backoff."""
+    for i in range(retries):
+        try:
+            path.write_text(content, encoding="utf-8")
+            return
+        except OSError:
+            if i == retries - 1:
+                raise
+            time.sleep(delay)
+
+
 # ---- Path resolution ----------------------------------------------------------
 
 def find_project_root(spec_path: Path) -> Path:
@@ -182,7 +197,7 @@ def write_manifest(path: Path, version: str, slides: list[dict]) -> None:
     lines.append("  ]")
     lines.append("};")
     lines.append("")
-    path.write_text("\n".join(lines), encoding="utf-8")
+    safe_write_text(path, "\n".join(lines))
 
 
 def read_manifest_metadata(path: Path) -> dict[str, dict]:
@@ -227,7 +242,7 @@ def renumber_slide_html(path: Path, old_id: str, new_id: str) -> tuple[int, int,
     pn_pattern = rf'(<span class="page-no"[^>]*>){old_num}(</span>)'
     src, n_pn = re.subn(pn_pattern, rf'\g<1>{new_num}\g<2>', src)
 
-    path.write_text(src, encoding="utf-8")
+    safe_write_text(path, src)
     return n_dc, n_eb, n_pn
 
 
@@ -479,7 +494,7 @@ def apply_spec(root: Path, spec: dict, *, dry_run: bool = False) -> None:
             text = path.read_text(encoding="utf-8")
             new_text, warns = fix_xrefs_in_text(text, slot_map)
             if new_text != text:
-                path.write_text(new_text, encoding="utf-8")
+                safe_write_text(path, new_text)
             for w in warns:
                 xref_warnings.append((f"{new_id}.html", w))
     print(f"[5/7] auto-fixed cross-references")
@@ -512,10 +527,8 @@ def apply_spec(root: Path, spec: dict, *, dry_run: bool = False) -> None:
         baseline = json.loads(backup_path.read_text(encoding="utf-8"))
         fresh = extract_html_defaults(slides_dir)
         content, restored = build_content_json(fresh, baseline, prefix_map, new_version)
-        content_path.write_text(
-            json.dumps(content, indent=2, ensure_ascii=False), encoding="utf-8"
-        )
-        backup_path.unlink()
+        safe_write_text(content_path, json.dumps(content, indent=2, ensure_ascii=False))
+        safe_unlink(backup_path)
         total_fields = sum(len(v) for k, v in content.items() if k != "_meta")
         print(f"[7/7] rebuilt content.json ({len(content) - 1} slides, {total_fields} fields)")
         print(f"      restored {len(restored)} user edits from backup")
