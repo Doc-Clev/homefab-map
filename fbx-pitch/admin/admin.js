@@ -53,15 +53,32 @@
   function setStoredDeletions(s) { localStorage.setItem(DELETE_KEY, JSON.stringify([...s])); }
 
   /** Effective order: stored override (if any), filtered to valid IDs, with new
-      manifest entries appended at the end. Falls back to manifest order. */
+      manifest entries appended at the end. Falls back to manifest order.
+      Auto-clears stale stored orders that don't match the current manifest. */
   function getEffectiveOrder() {
-    const valid = new Set(DECK.slides.map(s => s.id));
+    const validIds = new Set(DECK.slides.map(s => s.id));
     const stored = getStoredOrder();
     if (!stored) return DECK.slides.map(s => s.id);
-    const filtered = stored.filter(id => valid.has(id));
-    const seen = new Set(filtered);
-    DECK.slides.forEach(s => { if (!seen.has(s.id)) filtered.push(s.id); });
-    return filtered;
+
+    // Stale-detection: if any stored ID is no longer in the manifest, the
+    // stored order is from before a rename/reorder and we should reset it.
+    // Same goes for any deletions stale.
+    const hasStaleId = stored.some(id => !validIds.has(id));
+    const missingIds = DECK.slides.filter(s => !stored.includes(s.id));
+    if (hasStaleId || missingIds.length > 0) {
+      console.warn('[admin] stored deck order is stale (missing or unknown IDs); auto-resetting to manifest order');
+      localStorage.removeItem(ORDER_KEY);
+      // Also clear deletions if they reference unknown IDs
+      const dels = getStoredDeletions();
+      const staleDels = [...dels].filter(id => !validIds.has(id));
+      if (staleDels.length > 0) {
+        const fresh = new Set([...dels].filter(id => validIds.has(id)));
+        setStoredDeletions(fresh);
+      }
+      return DECK.slides.map(s => s.id);
+    }
+
+    return [...stored];
   }
 
   // =============================================================
