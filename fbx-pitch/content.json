@@ -1,7 +1,7 @@
 {
   "_meta": {
-    "version": "0.9",
-    "description": "Editable content for FBX deck. Edit via /admin/ or directly. Slide HTML reads keys via data-content attributes; localStorage overrides this file at runtime. v0.9 = problem-first reorder + backup-intro divider at slot 20."
+    "version": "v0.10",
+    "description": "Editable content for FBX deck. Edit via /admin/ or directly. Slide HTML reads keys via data-content attributes; localStorage overrides this file at runtime."
   },
   "01-cover": {
     "eyebrow.left": "FBX · HOMEFAB",
@@ -14,27 +14,9 @@
     "meta.line1": "<strong>Series A</strong> · $4M Core",
     "meta.line2": "$900K Fab-Home franchise · $450K infra"
   },
-  "02-trends": {
+  "02-predecessors": {
     "eyebrow.left": "FBX · HOMEFAB",
-    "eyebrow.right": "02 · PROBLEM",
-    "kicker": "THE PROBLEM - HOW DOes an industry MEET THIS DEMAND!?!",
-    "headline.a": "Trends indicate",
-    "headline.b": "growth.",
-    "trend.1": "Sprawl is expensive — capital is shifting to dense micro.",
-    "trend.2": "Urban infill is hot — ADUs and density development.",
-    "trend.3": "Starter homes in high demand — sub-$300K per door.",
-    "trend.4": "Factory demand from large national builders.",
-    "trend.5": "National & California laws now permit factory-built homes.",
-    "block1.title": "Modular is not new.",
-    "block1.body": "Modular's track record is the definition of insanity. <br>Time for change!",
-    "block2.title": "Factory production is not new.",
-    "block2.body": "Cars, phones, food — everything is built in a factory. If the trend is smaller, faster, more efficient, the answer is a factory.",
-    "principle.label": "Operating Principle",
-    "principle.text": "R&D and infrastructure spend grows <em>linearly.</em> Output grows <em>exponentially.</em>"
-  },
-  "03-predecessors": {
-    "eyebrow.left": "FBX · HOMEFAB",
-    "eyebrow.right": "03 · PROBLEM",
+    "eyebrow.right": "02 · Strategy · Why We Win",
     "kicker": "Where Every Predecessor Failed",
     "headline.a": "They tried to own the factory.",
     "headline.b": "We own the kit.",
@@ -68,6 +50,24 @@
     "punchline": "<strong>Software-on-top, partnership-scaled, moodboard-first.</strong> <em>None of the predecessors had any of the three.</em>",
     "footer.left": "Capital-light · Manufacturer-agnostic · Customer feels in control · Constraint-aware by design"
   },
+  "03-trends": {
+    "eyebrow.left": "FBX · HOMEFAB",
+    "eyebrow.right": "03 · Market",
+    "kicker": "THE PROBLEM - HOW DOes an industry MEET THIS DEMAND!?!",
+    "headline.a": "Trends indicate",
+    "headline.b": "growth.",
+    "trend.1": "Sprawl is expensive — capital is shifting to dense micro.",
+    "trend.2": "Urban infill is hot — ADUs and density development.",
+    "trend.3": "Starter homes in high demand — sub-$300K per door.",
+    "trend.4": "Factory demand from large national builders.",
+    "trend.5": "National & California laws now permit factory-built homes.",
+    "block1.title": "Modular is not new.",
+    "block1.body": "Modular's track record is the definition of insanity. <br>Time for change!",
+    "block2.title": "Factory production is not new.",
+    "block2.body": "Cars, phones, food — everything is built in a factory. If the trend is smaller, faster, more efficient, the answer is a factory.",
+    "principle.label": "Operating Principle",
+    "principle.text": "R&D and infrastructure spend grows <em>linearly.</em> Output grows <em>exponentially.</em>"
+  },
   "04-thesis": {
     "eyebrow.left": "FBX · HOMEFAB",
     "eyebrow.right": "04 · Thesis",
@@ -92,29 +92,9 @@
     "p3.scorecard": "The next IPO of housing",
     "footer.left": "FBX · Operating Thesis"
   },
-  "05-opportunity": {
+  "05-solution": {
     "eyebrow.left": "FBX · HOMEFAB",
-    "eyebrow.right": "05 · Opportunity",
-    "kicker": "The Last Mile Franchise System",
-    "headline.a": "Where the",
-    "headline.b": "opportunity",
-    "headline.c": "lives.",
-    "lede": "Spool up, empower, and equip small capable craftsmen within 150 miles of every delivery market in America - help them build in factories. Then they scale - we empower them!",
-    "quote.text": "\"A 'HomeFab' is the layer<br> the rest of the industry<br> <em>forgot to build.</em>\"",
-    "quote.attr": "— FBX Operating Thesis",
-    "card1.title": "Franchisee Model",
-    "card1.body": "Capital, systems, orders, and support — delivered to small builders who want to scale within their region.",
-    "card2.title": "Approved Installers",
-    "card2.body": "A trained, vetted sub-contractor network — empowered to install product and care for the customer.",
-    "card3.title": "Logistics",
-    "card3.body": "Equipment and movers trained to place panels and pods exactly where installers need them, when they need them.",
-    "card4.title": "On-Site Assembly Unlock",
-    "card4.body": "Systems that allow 100% of land — including infill and difficult sites — to be served by prefabricated product.",
-    "footer.left": "FBX · Last Mile Network"
-  },
-  "06-solution": {
-    "eyebrow.left": "FBX · HOMEFAB",
-    "eyebrow.right": "06 · Strategy · The Solution",
+    "eyebrow.right": "05 · Strategy · The Solution",
     "kicker": "THE FBX SYSTEM SOLUTION",
     "headline.a": "Three distinct networks.",
     "headline.b": "One system.",
@@ -157,6 +137,26 @@
     "callout.lab": "The Pattern",
     "callout.text": "People want to <strong>trust the brand</strong> but want the <em>uniqueness of iterative design.</em> Automobiles cracked this fifty years ago — standardized platforms, configurable trims. <b>FBX</b><strong>&nbsp;is the same idea, applied to housing.</strong>",
     "footer.left": "FBX · The Solution Architecture"
+  },
+  "06-opportunity": {
+    "eyebrow.left": "FBX · HOMEFAB",
+    "eyebrow.right": "06 · Opportunity",
+    "kicker": "The Last Mile Franchise System",
+    "headline.a": "Where the",
+    "headline.b": "opportunity",
+    "headline.c": "lives.",
+    "lede": "Spool up, empower, and equip small capable craftsmen within 150 miles of every delivery market in America - help them build in factories. Then they scale - we empower them!",
+    "quote.text": "\"A 'HomeFab' is the layer<br> the rest of the industry<br> <em>forgot to build.</em>\"",
+    "quote.attr": "— FBX Operating Thesis",
+    "card1.title": "Franchisee Model",
+    "card1.body": "Capital, systems, orders, and support — delivered to small builders who want to scale within their region.",
+    "card2.title": "Approved Installers",
+    "card2.body": "A trained, vetted sub-contractor network — empowered to install product and care for the customer.",
+    "card3.title": "Logistics",
+    "card3.body": "Equipment and movers trained to place panels and pods exactly where installers need them, when they need them.",
+    "card4.title": "On-Site Assembly Unlock",
+    "card4.body": "Systems that allow 100% of land — including infill and difficult sites — to be served by prefabricated product.",
+    "footer.left": "FBX · Last Mile Network"
   },
   "07-first-mile": {
     "eyebrow.left": "FBX · HOMEFAB",

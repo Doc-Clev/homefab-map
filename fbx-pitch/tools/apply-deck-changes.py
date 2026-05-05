@@ -553,6 +553,13 @@ def git_run(root: Path, *args: str, capture: bool = False) -> subprocess.Complet
     return subprocess.run(["git", "-C", str(root), *args], capture_output=capture, text=True)
 
 def git_commit(root: Path, spec: dict) -> None:
+    """Stage the actual deck files we modified and commit.
+
+    The deck dir (`root`) might be the git repo root, or it might be a
+    subdirectory of the repo (e.g. `homefab-map-clone/fbx-pitch/`).
+    Either way, stage by exact paths we touched — avoids accidentally
+    staging stray subdirectories like a stale duplicate folder.
+    """
     n = len(spec["order"])
     d = len(spec.get("deletions", []))
     moves = sum(1 for e in spec["order"] if int(e["slot"]) != int(e["from_slot"]))
@@ -562,11 +569,32 @@ def git_commit(root: Path, spec: dict) -> None:
         f"Source manifest version: {spec.get('deck_version', 'unknown')}.\n\n"
         "Co-Authored-By: Claude Opus 4.7 (1M context) <noreply@anthropic.com>\n"
     )
-    git_run(root, "add", "fbx-pitch/" if (root / "fbx-pitch").is_dir() else ".")
-    git_run(root, "commit", "-m", msg)
+    # Stage the specific paths the script modifies, relative to the deck root
+    # (which is also the cwd for `git -C root`).
+    git_run(root, "add", "slides", "js/manifest.js", "content.json")
+
+    # Sanity check: if nothing got staged, complain rather than commit empty.
+    diff = git_run(root, "diff", "--cached", "--name-only", capture=True)
+    staged = [ln for ln in diff.stdout.splitlines() if ln.strip()]
+    if not staged:
+        print(
+            "WARN: nothing staged for commit — apply step may have produced no changes.\n"
+            "      No commit will be created. Run `git status` to investigate.",
+            file=sys.stderr,
+        )
+        return
+
+    print(f"      staged {len(staged)} path(s) for commit")
+    res = git_run(root, "commit", "-m", msg, capture=True)
+    if res.returncode != 0:
+        print(f"git commit failed:\n{res.stdout}\n{res.stderr}", file=sys.stderr)
+        sys.exit(res.returncode)
 
 def git_push(root: Path) -> None:
-    git_run(root, "push", "origin", "HEAD")
+    res = git_run(root, "push", "origin", "HEAD", capture=True)
+    if res.returncode != 0:
+        print(f"git push failed:\n{res.stdout}\n{res.stderr}", file=sys.stderr)
+        sys.exit(res.returncode)
 
 
 # ---- CLI ----------------------------------------------------------------------
