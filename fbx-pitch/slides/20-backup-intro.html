@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Backup — FBX</title>
+  <link rel="stylesheet" href="../css/core.css">
+  <style>
+    .bk-bg {
+      position: absolute; inset: 0;
+      background: linear-gradient(180deg, #F5F1E8 0%, #EAE5D8 100%);
+    }
+    .bk-rules {
+      position: absolute; inset: 0;
+      background-image: linear-gradient(to right, rgba(10,22,40,0.04) 1px, transparent 1px);
+      background-size: calc(100% / 12) 100%;
+      pointer-events: none;
+    }
+    .bk-mark {
+      position: absolute;
+      right: -40px;
+      bottom: -120px;
+      font-family: var(--display);
+      font-style: italic;
+      font-weight: 300;
+      font-size: 720px;
+      letter-spacing: -0.05em;
+      color: var(--ink);
+      opacity: 0.04;
+      line-height: 0.8;
+      pointer-events: none;
+    }
+
+    .bk-layout {
+      position: absolute;
+      inset: 130px var(--gutter) 110px var(--gutter);
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+    .bk-left .kicker {
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--clay);
+      margin-bottom: 18px;
+    }
+    .bk-left h2 {
+      font-family: var(--display);
+      font-weight: 800;
+      font-size: 110px;
+      line-height: 0.9;
+      letter-spacing: -0.04em;
+      color: var(--ink);
+      margin-bottom: 28px;
+    }
+    .bk-left h2 em {
+      font-style: italic;
+      font-weight: 500;
+      color: var(--signal);
+    }
+    .bk-left .lede {
+      font-family: var(--display);
+      font-size: 22px;
+      font-weight: 400;
+      line-height: 1.4;
+      color: var(--g-600);
+      max-width: 36ch;
+    }
+    .bk-left .lede strong {
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    .bk-right {
+      border-left: 2px solid var(--ink);
+      padding: 4px 0 4px 36px;
+    }
+    .bk-right .lab {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--g-400);
+      margin-bottom: 18px;
+    }
+    .bk-right ul {
+      list-style: none;
+      padding: 0;
+    }
+    .bk-right ul li {
+      font-family: var(--display);
+      font-size: 18px;
+      font-weight: 500;
+      color: var(--ink);
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(10, 22, 40, 0.12);
+      display: grid;
+      grid-template-columns: 32px 1fr;
+      gap: 12px;
+      letter-spacing: -0.005em;
+    }
+    .bk-right ul li:last-child { border-bottom: 0; }
+    .bk-right ul li .n {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      color: var(--clay);
+      align-self: center;
+    }
+  </style>
+</head>
+<body>
+<div class="stage">
+  <section class="slide">
+    <div class="bk-bg"></div>
+    <div class="bk-rules"></div>
+    <div class="bk-mark">?</div>
+
+    <div class="eyebrow">
+      <div class="brand"><div class="brand-mark">F</div><span data-content="20-backup-intro.eyebrow.left">FBX · HOMEFAB</span></div>
+      <span data-content="20-backup-intro.eyebrow.right">20 · Backup · Reference Material</span>
+    </div>
+
+    <div class="bk-layout">
+      <div class="bk-left">
+        <div class="kicker reveal" data-content="20-backup-intro.kicker">Reference Material</div>
+        <h2 class="reveal">
+          <span data-content="20-backup-intro.headline.a">The questions</span><br>
+          <em data-content="20-backup-intro.headline.b">that come next.</em>
+        </h2>
+        <p class="lede reveal" data-content="20-backup-intro.lede">
+          What follows is the deeper material — the <strong>operating truths</strong>,
+          the <strong>system layers</strong>, the projection model, and the standard
+          objections. Pulled forward when asked.
+        </p>
+      </div>
+
+      <div class="bk-right reveal">
+        <div class="lab" data-content="20-backup-intro.list.label">In this section</div>
+        <ul>
+          <li><span class="n">21</span><span data-content="20-backup-intro.item1">What has to be true</span></li>
+          <li><span class="n">22</span><span data-content="20-backup-intro.item2">Operating model — Fishbone</span></li>
+          <li><span class="n">23</span><span data-content="20-backup-intro.item3">10-year expansion map</span></li>
+          <li><span class="n">24</span><span data-content="20-backup-intro.item4">Construction workforce</span></li>
+          <li><span class="n">25</span><span data-content="20-backup-intro.item5">Objections &amp; answers</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="foot" style="bottom: 24px;">
+      <span data-content="20-backup-intro.footer.left">FBX · Backup Material Begins Here</span>
+      <span class="page-no" style="font-size: 14px; opacity: 0.5;">20</span>
+    </div>
+  </section>
+</div>
+<script src="../js/slide.js"></script>
+<script src="../js/content-loader.js"></script>
+</body>
+</html>
