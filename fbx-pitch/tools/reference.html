@@ -418,6 +418,204 @@
     body.drawer-open .wrap { transform: translateX(calc(var(--drawer-w) / -2)); transition: transform 0.22s ease; }
     .wrap { transition: transform 0.22s ease; }
   }
+
+  /* ── Edit mode ──────────────────────────────────── */
+
+  #edit-toggle {
+    position: fixed;
+    top: 14px;
+    right: 14px;
+    background: var(--card-bg);
+    border: 1px solid var(--rule);
+    color: var(--ink-soft);
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    z-index: 90;
+    transition: background 0.12s, border-color 0.12s, color 0.12s;
+  }
+  #edit-toggle:hover {
+    border-color: var(--ink-mute);
+    color: var(--ink);
+  }
+  body.edit-mode #edit-toggle {
+    background: var(--accent);
+    color: white;
+    border-color: var(--accent);
+  }
+
+  #edit-toolbar {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    background: var(--ink);
+    color: var(--paper);
+    padding: 10px 18px;
+    z-index: 95;
+    align-items: center;
+    gap: 14px;
+    font-family: ui-monospace, SFMono-Regular, "JetBrains Mono", monospace;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+  }
+  body.edit-mode #edit-toolbar { display: flex; }
+  body.edit-mode .wrap { padding-top: 80px; }
+  body.edit-mode { --drawer-w: 540px; }
+
+  #edit-toolbar .et-brand {
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+  #edit-toolbar .et-count {
+    color: rgba(245, 245, 245, 0.5);
+    text-transform: uppercase;
+  }
+  #edit-toolbar .et-count.has-edits { color: var(--accent); font-weight: 600; }
+  #edit-toolbar .et-spacer { flex: 1; }
+  #edit-toolbar button {
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.18);
+    color: rgba(255,255,255,0.78);
+    font-family: inherit;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    padding: 5px 12px;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background 0.12s, border-color 0.12s;
+  }
+  #edit-toolbar button:hover {
+    background: rgba(255,255,255,0.08);
+    border-color: rgba(255,255,255,0.32);
+    color: white;
+  }
+  #edit-toolbar button.primary {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: white;
+  }
+  #edit-toolbar button.primary:hover {
+    background: #a30b24;
+    border-color: #a30b24;
+  }
+  #edit-toolbar button.danger:hover {
+    background: rgba(230,57,70,0.18);
+    border-color: rgba(230,57,70,0.4);
+    color: #ff8b8b;
+  }
+
+  /* Card affordances when in edit mode */
+  body.edit-mode .card { position: relative; }
+  body.edit-mode .card.has-draft {
+    border-left: 3px solid #2da94f;
+    padding-left: 11px;
+  }
+  body.edit-mode .card.has-draft::after {
+    content: "draft";
+    position: absolute;
+    top: 4px;
+    right: 6px;
+    font-size: 8px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #2da94f;
+    font-weight: 700;
+  }
+
+  /* Drawer in edit mode */
+  body.edit-mode #ref-drawer .drawer-title,
+  body.edit-mode #ref-drawer .drawer-subtitle {
+    outline: 1px dashed transparent;
+    outline-offset: 4px;
+    border-radius: 2px;
+    cursor: text;
+    transition: outline-color 0.12s;
+  }
+  body.edit-mode #ref-drawer [contenteditable="true"]:hover,
+  body.edit-mode #ref-drawer [contenteditable="true"]:focus {
+    outline-color: rgba(200, 16, 46, 0.6);
+  }
+  body.edit-mode #ref-drawer .drawer-pill[contenteditable="true"] {
+    outline: 1px dashed rgba(200, 16, 46, 0.4);
+    outline-offset: 2px;
+  }
+
+  /* Edit mode body textarea */
+  #ref-drawer textarea.edit-body {
+    width: 100%;
+    min-height: 360px;
+    font-family: ui-monospace, SFMono-Regular, "JetBrains Mono", monospace;
+    font-size: 12px;
+    line-height: 1.5;
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    padding: 12px;
+    background: var(--card-bg);
+    color: var(--ink);
+    resize: vertical;
+  }
+  #ref-drawer textarea.edit-body:focus {
+    outline: none;
+    border-color: var(--accent);
+  }
+  #ref-drawer .edit-help {
+    font-size: 11px;
+    color: var(--ink-mute);
+    margin: 8px 0 16px;
+    line-height: 1.5;
+  }
+  #ref-drawer .edit-help code {
+    font-size: 10px;
+    background: var(--rule-soft);
+    padding: 1px 5px;
+    border-radius: 2px;
+  }
+
+  #ref-drawer .edit-actions {
+    margin-top: 18px;
+    padding-top: 16px;
+    border-top: 1px solid var(--rule);
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+  }
+  #ref-drawer .edit-actions button {
+    background: transparent;
+    border: 1px solid var(--rule);
+    font-family: inherit;
+    font-size: 12px;
+    padding: 6px 14px;
+    border-radius: 3px;
+    cursor: pointer;
+    color: var(--ink-soft);
+  }
+  #ref-drawer .edit-actions button:hover {
+    background: var(--card-hover);
+    border-color: var(--ink-mute);
+    color: var(--ink);
+  }
+  #ref-drawer .edit-actions button.primary {
+    background: var(--accent);
+    color: white;
+    border-color: var(--accent);
+  }
+  #ref-drawer .edit-actions button.primary:hover {
+    background: #a30b24;
+    border-color: #a30b24;
+  }
+  #ref-drawer .edit-actions button.danger {
+    color: var(--accent);
+  }
+  #ref-drawer .edit-actions button.danger:hover {
+    background: var(--pill-bg);
+    border-color: var(--accent);
+  }
 </style>
 </head>
 <body>
@@ -799,6 +997,17 @@
 
 </div>
 
+<!-- Edit-mode controls -->
+<button id="edit-toggle" type="button" title="Toggle inline edit mode">✎ Edit</button>
+<div id="edit-toolbar" role="toolbar" aria-label="Reference edit toolbar">
+  <span class="et-brand">FBX · REF EDIT</span>
+  <span class="et-count" id="et-count">no edits</span>
+  <span class="et-spacer"></span>
+  <button type="button" id="et-export" class="primary" title="Download reference-content.json with drafts merged">Export JSON</button>
+  <button type="button" id="et-reset" class="danger" title="Discard all draft edits">Reset drafts</button>
+  <button type="button" id="et-close" title="Exit edit mode">Done</button>
+</div>
+
 <!-- Drawer -->
 <div id="ref-overlay"></div>
 <aside id="ref-drawer" aria-hidden="true" role="dialog" aria-labelledby="drawer-title">
@@ -819,11 +1028,22 @@
   'use strict';
 
   // ──────────────────────────────────────────────────────────────
-  // Reference page client. Reads ../reference-content.json and
-  // wires card clicks to a side drawer. Falls back gracefully if
-  // the JSON is unavailable so the page is still readable as
-  // a static document.
+  // Reference page client.
+  //
+  // Read mode (default):
+  //   - Loads ../reference-content.json
+  //   - Wires card clicks to a side drawer that renders content
+  //
+  // Edit mode (toggled by ✎ button or ?edit=1):
+  //   - Drawer becomes editable (title/subtitle/pill inline,
+  //     body in a textarea showing raw HTML)
+  //   - Edits saved to localStorage as draft layer
+  //   - Top toolbar with edit count, Export, Reset, Done
+  //   - Export merges the file content with drafts and downloads
+  //     a fresh reference-content.json that you commit to the repo
   // ──────────────────────────────────────────────────────────────
+
+  const STORAGE_KEY = 'fbx-reference-overrides';
 
   const drawer    = document.getElementById('ref-drawer');
   const overlay   = document.getElementById('ref-overlay');
@@ -833,16 +1053,44 @@
   const pillEl    = drawer.querySelector('.drawer-pill');
   const bodyEl    = drawer.querySelector('.drawer-body');
 
-  let content = null;     // loaded JSON
-  let lastTrigger = null; // for focus restoration on close
+  const editToggle = document.getElementById('edit-toggle');
+  const editBar    = document.getElementById('edit-toolbar');
+  const etCount    = document.getElementById('et-count');
+  const etExport   = document.getElementById('et-export');
+  const etReset    = document.getElementById('et-reset');
+  const etClose    = document.getElementById('et-close');
 
-  // Resolve content.json relative to this HTML's location so the
-  // page works whether served from /tools/, /, or anywhere else.
+  let content = null;     // loaded JSON
+  let lastTrigger = null; // focus restoration
+  let editMode = false;
+  let activeBodyTextarea = null;
+
+  // ── Storage ────────────────────────────────────────
+  function getOverrides() {
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); }
+    catch { return {}; }
+  }
+  function setOverrides(obj) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(obj));
+  }
+  function setOverride(cardId, fields) {
+    const all = getOverrides();
+    all[cardId] = { ...(all[cardId] || {}), ...fields };
+    // Clean up empty/identical-to-source fields
+    Object.keys(all[cardId]).forEach(k => {
+      if (all[cardId][k] === undefined || all[cardId][k] === null) delete all[cardId][k];
+    });
+    if (Object.keys(all[cardId]).length === 0) delete all[cardId];
+    setOverrides(all);
+    updateEditCount();
+    markCardsWithContent();
+  }
+
+  // ── Resolve & load JSON ────────────────────────────
   function resolveContentURL() {
     const here = new URL(window.location.href);
-    // Strip the filename and tools/ if present, then append reference-content.json
-    const path = here.pathname.replace(/\/[^\/]*$/, '');           // dir of this page
-    const projectRoot = path.replace(/\/tools$/, '');               // up one if in /tools/
+    const path = here.pathname.replace(/\/[^\/]*$/, '');
+    const projectRoot = path.replace(/\/tools$/, '');
     return new URL(projectRoot + '/reference-content.json', here.origin).toString();
   }
 
@@ -868,13 +1116,23 @@
     });
   }
 
+  // Returns the merged entry (file + draft override)
   function getCardEntry(id) {
-    if (!content || !content.cards) return null;
-    return content.cards[id] || null;
+    const fileEntry = (content && content.cards) ? (content.cards[id] || null) : null;
+    const draftEntry = getOverrides()[id] || null;
+    if (!fileEntry && !draftEntry) return null;
+    return { ...(fileEntry || {}), ...(draftEntry || {}) };
   }
 
+  function getDraftEntry(id) {
+    return getOverrides()[id] || null;
+  }
+
+  // ── Drawer (read/edit) ─────────────────────────────
   function openDrawer(card) {
     const id = card.dataset.cardId;
+    drawer.dataset.cardId = id;
+
     const titleNode = card.querySelector('.label .title');
     const subNode   = card.querySelector('.label .sub');
     const pillNode  = card.querySelector('.pill');
@@ -886,24 +1144,22 @@
     const entry = getCardEntry(id);
     const t = (entry && entry.title) || fallbackTitle;
     const s = (entry && entry.subtitle) || fallbackSub;
-    const p = (entry && entry.pill)  || fallbackPill;
+    const p = (entry && entry.pill) || fallbackPill;
     const body = (entry && entry.body_html) || '';
 
     titleEl.textContent = t;
-    drawer.dataset.cardId = id;
-
     if (s) { subEl.textContent = s; subEl.hidden = false; }
     else   { subEl.hidden = true; subEl.textContent = ''; }
 
-    if (p) { pillEl.textContent = `Slide ${p}`; pillEl.hidden = false; }
-    else   { pillEl.hidden = true; pillEl.textContent = ''; }
-
-    if (body) {
-      bodyEl.innerHTML = body;
+    if (editMode) {
+      // Show pill always in edit mode (so user can add one)
+      pillEl.textContent = p || '';
+      pillEl.hidden = false;
+      renderEditDrawer(id, body);
     } else {
-      bodyEl.innerHTML =
-        `<div class="empty">No content yet for <code>${id}</code>.<br>` +
-        `Add an entry in <code>reference-content.json</code> under <code>cards.${id}</code>.</div>`;
+      if (p) { pillEl.textContent = `Slide ${p}`; pillEl.hidden = false; }
+      else   { pillEl.hidden = true; pillEl.textContent = ''; }
+      renderReadDrawer(id, body);
     }
 
     drawer.classList.add('open');
@@ -912,8 +1168,98 @@
     document.body.classList.add('drawer-open');
     lastTrigger = card;
 
-    // Focus management
-    setTimeout(() => closeBtn.focus(), 50);
+    setTimeout(() => {
+      if (editMode && activeBodyTextarea) activeBodyTextarea.focus();
+      else closeBtn.focus();
+    }, 50);
+  }
+
+  function renderReadDrawer(id, body) {
+    titleEl.contentEditable = 'false';
+    subEl.contentEditable = 'false';
+    pillEl.contentEditable = 'false';
+    titleEl.classList.remove('editable');
+    activeBodyTextarea = null;
+
+    if (body) {
+      bodyEl.innerHTML = body;
+    } else {
+      bodyEl.innerHTML =
+        `<div class="empty">No content yet for <code>${id}</code>.<br>` +
+        `Toggle <strong>✎ Edit</strong> in the corner to add a readme.</div>`;
+    }
+  }
+
+  function renderEditDrawer(id, body) {
+    titleEl.contentEditable = 'true';
+    subEl.contentEditable = 'true';
+    pillEl.contentEditable = 'true';
+    if (subEl.hidden) { subEl.hidden = false; subEl.textContent = ''; }
+
+    bodyEl.innerHTML =
+      `<p class="edit-help">Edit the body as raw HTML. Allowed tags: ` +
+      `<code>&lt;p&gt;</code> <code>&lt;h3&gt;</code> <code>&lt;ul&gt;</code>/<code>&lt;li&gt;</code> ` +
+      `<code>&lt;strong&gt;</code> <code>&lt;em&gt;</code> <code>&lt;code&gt;</code> ` +
+      `<code>&lt;blockquote&gt;</code>. Inline <code>&amp;nbsp;</code> works.</p>`;
+
+    const ta = document.createElement('textarea');
+    ta.className = 'edit-body';
+    ta.value = body;
+    ta.placeholder = '<p>Body HTML goes here…</p>';
+    bodyEl.appendChild(ta);
+    activeBodyTextarea = ta;
+
+    const actions = document.createElement('div');
+    actions.className = 'edit-actions';
+    actions.innerHTML = `
+      <button type="button" class="danger" data-act="clear">Clear draft</button>
+      <button type="button" data-act="cancel">Cancel</button>
+      <button type="button" class="primary" data-act="save">Save draft</button>
+    `;
+    bodyEl.appendChild(actions);
+
+    actions.querySelector('[data-act="save"]').onclick = () => saveDrawer(id);
+    actions.querySelector('[data-act="cancel"]').onclick = () => closeDrawer();
+    actions.querySelector('[data-act="clear"]').onclick = () => clearDraft(id);
+  }
+
+  function saveDrawer(id) {
+    const fileEntry = (content && content.cards && content.cards[id]) || {};
+
+    const newTitle = titleEl.textContent.trim();
+    const newSub   = subEl.textContent.trim();
+    const newPill  = pillEl.textContent.trim();
+    const newBody  = activeBodyTextarea ? activeBodyTextarea.value : '';
+
+    const fields = {};
+    if (newTitle && newTitle !== (fileEntry.title || ''))     fields.title    = newTitle;
+    if (newSub   && newSub   !== (fileEntry.subtitle || ''))  fields.subtitle = newSub;
+    if (newPill  && newPill  !== (fileEntry.pill || ''))      fields.pill     = newPill;
+    if (newBody  !== (fileEntry.body_html || ''))             fields.body_html = newBody;
+
+    // If draft fields exactly match the file entry now, drop the override entirely
+    const all = getOverrides();
+    if (Object.keys(fields).length === 0) {
+      delete all[id];
+      setOverrides(all);
+    } else {
+      all[id] = fields;
+      setOverrides(all);
+    }
+    updateEditCount();
+    markCardsWithContent();
+    closeDrawer();
+  }
+
+  function clearDraft(id) {
+    const all = getOverrides();
+    if (all[id]) {
+      delete all[id];
+      setOverrides(all);
+      updateEditCount();
+      markCardsWithContent();
+    }
+    closeDrawer();
   }
 
   function closeDrawer() {
@@ -921,27 +1267,109 @@
     drawer.setAttribute('aria-hidden', 'true');
     overlay.classList.remove('open');
     document.body.classList.remove('drawer-open');
+    activeBodyTextarea = null;
     if (lastTrigger) lastTrigger.focus();
   }
 
+  // ── Card indicators ────────────────────────────────
   function markCardsWithContent() {
-    if (!content || !content.cards) return;
+    const fileCards = (content && content.cards) ? content.cards : {};
+    const draftCards = getOverrides();
     document.querySelectorAll('.card[data-card-id]').forEach(c => {
-      if (content.cards[c.dataset.cardId]) c.classList.add('has-content');
+      const id = c.dataset.cardId;
+      c.classList.toggle('has-content', !!fileCards[id]);
+      c.classList.toggle('has-draft',   !!draftCards[id]);
     });
   }
 
+  // ── Edit mode toggle ───────────────────────────────
+  function setEditMode(on) {
+    editMode = on;
+    document.body.classList.toggle('edit-mode', on);
+    editToggle.textContent = on ? '✓ Done' : '✎ Edit';
+    editToggle.title = on ? 'Exit edit mode' : 'Toggle inline edit mode';
+    if (drawer.classList.contains('open')) closeDrawer();
+    updateEditCount();
+  }
+
+  function updateEditCount() {
+    const all = getOverrides();
+    const n = Object.keys(all).length;
+    if (n === 0) {
+      etCount.textContent = 'no edits';
+      etCount.classList.remove('has-edits');
+    } else {
+      etCount.textContent = `${n} card${n !== 1 ? 's' : ''} with drafts`;
+      etCount.classList.add('has-edits');
+    }
+  }
+
+  // ── Export / Reset ─────────────────────────────────
+  async function exportReferenceJSON() {
+    let original;
+    try {
+      const res = await fetch(resolveContentURL(), { cache: 'no-cache' });
+      if (!res.ok) throw new Error(res.status);
+      original = await res.json();
+    } catch (err) {
+      alert('Could not load reference-content.json: ' + err.message);
+      return;
+    }
+
+    const overrides = getOverrides();
+    const merged = JSON.parse(JSON.stringify(original));
+    if (!merged.cards) merged.cards = {};
+
+    Object.entries(overrides).forEach(([cardId, fields]) => {
+      merged.cards[cardId] = { ...(merged.cards[cardId] || {}), ...fields };
+    });
+
+    const blob = new Blob([JSON.stringify(merged, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'reference-content.json';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }
+
+  function resetDrafts() {
+    const all = getOverrides();
+    const n = Object.keys(all).length;
+    if (n === 0) { alert('No drafts to reset.'); return; }
+    if (!confirm(`Discard ${n} draft edit${n !== 1 ? 's' : ''}? This cannot be undone.`)) return;
+    localStorage.removeItem(STORAGE_KEY);
+    updateEditCount();
+    markCardsWithContent();
+  }
+
+  // ── Init ────────────────────────────────────────────
   function init() {
-    loadContent().then(markCardsWithContent);
+    loadContent().then(() => {
+      markCardsWithContent();
+      updateEditCount();
+    });
 
     document.querySelectorAll('.card[data-card-id]').forEach(card => {
       card.addEventListener('click', () => openDrawer(card));
     });
+
     closeBtn.addEventListener('click', closeDrawer);
     overlay.addEventListener('click', closeDrawer);
     document.addEventListener('keydown', e => {
       if (e.key === 'Escape' && drawer.classList.contains('open')) closeDrawer();
     });
+
+    editToggle.addEventListener('click', () => setEditMode(!editMode));
+    etClose.addEventListener('click', () => setEditMode(false));
+    etExport.addEventListener('click', exportReferenceJSON);
+    etReset.addEventListener('click', resetDrafts);
+
+    // Auto-enable edit mode if ?edit=1 is present
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('edit') === '1') setEditMode(true);
   }
 
   if (document.readyState === 'loading') {
