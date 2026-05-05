@@ -17,7 +17,7 @@ window.DECK = {
     { id: "07-wedge",          file: "slides/07-wedge.html",          title: "The SIP Software Wedge",              tag: "Strategy",         live: false },
     { id: "08-predecessors",   file: "slides/08-predecessors.html",   title: "Why We Win Where They Failed",        tag: "Strategy",         live: false },
     { id: "09-truths",         file: "slides/09-truths.html",         title: "What Has to Be True",                 tag: "Strategy",         live: false },
-    { id: "10-why",            file: "slides/10-why.html",            title: "Why This Wins",                       tag: "Strategy",         live: false },
+    { id: "10-solution",       file: "slides/10-solution.html",       title: "The Solution — Three Focuses, One System", tag: "Strategy",     live: false },
     { id: "11-momentum",       file: "slides/11-momentum.html",       title: "Momentum is the Strategy",            tag: "Strategy",         live: false },
     { id: "12-four-moats",     file: "slides/12-four-moats.html",     title: "The Four Moats",                      tag: "Strategy",         live: false },
     { id: "13-precedent",      file: "slides/13-precedent.html",      title: "Every Moat Started as Momentum",      tag: "Strategy",         live: false },
