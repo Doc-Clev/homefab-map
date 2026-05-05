@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FBX HomeFab · Reference</title>
+<style>
+  :root {
+    --paper: #faf9f6;
+    --ink: #1a1a1a;
+    --ink-soft: #4a4a4a;
+    --ink-mute: #8a8a8a;
+    --rule: #e6e3dc;
+    --rule-soft: #f0ede5;
+    --accent: #c8102e;
+    --num-bg: #f0ede5;
+    --num-ink: #6a6a6a;
+    --card-bg: #ffffff;
+    --card-hover: #fbfaf5;
+    --tab-active: #c8102e;
+    --pill-bg: #f5e6e8;
+    --pill-ink: #c8102e;
+    --drawer-w: 480px;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Inter", system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    font-size: 15px;
+    line-height: 1.5;
+  }
+
+  .wrap {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 32px 40px 80px;
+  }
+
+  /* Top header */
+  .topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--rule);
+    margin-bottom: 28px;
+  }
+  .topbar .brand {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .topbar .brand span { color: var(--accent); }
+  .topbar .meta {
+    font-size: 12px;
+    color: var(--ink-mute);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  /* Title block */
+  .title-block { margin-bottom: 28px; }
+  .title-block h1 {
+    font-size: 28px;
+    font-weight: 600;
+    margin: 0 0 6px;
+    letter-spacing: -0.01em;
+  }
+  .title-block .lede {
+    font-size: 14px;
+    color: var(--ink-soft);
+    max-width: 760px;
+    margin: 0;
+  }
+
+  /* Tabs */
+  .tabs {
+    display: flex;
+    gap: 28px;
+    border-bottom: 1px solid var(--rule);
+    margin-bottom: 36px;
+  }
+  .tab {
+    font-size: 14px;
+    font-weight: 500;
+    padding: 10px 2px 12px;
+    color: var(--ink-mute);
+    cursor: default;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+  }
+  .tab.active {
+    color: var(--ink);
+    border-bottom-color: var(--tab-active);
+  }
+
+  /* Section */
+  .section {
+    display: grid;
+    grid-template-columns: 56px 1fr;
+    column-gap: 24px;
+    margin-bottom: 36px;
+    align-items: start;
+  }
+  .section-num {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--num-bg);
+    color: var(--num-ink);
+    font-size: 13px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2px;
+    flex-shrink: 0;
+  }
+  .section-body { min-width: 0; }
+  .section-head {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0 0 4px;
+    letter-spacing: -0.005em;
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .section-head .alias {
+    font-size: 13px;
+    color: var(--ink-mute);
+    font-weight: 400;
+  }
+  .section-sub {
+    font-size: 13px;
+    color: var(--ink-mute);
+    margin: 0 0 16px;
+  }
+
+  /* Connector line */
+  .section-col { position: relative; }
+  .section:not(:last-of-type) .section-col::after {
+    content: "";
+    position: absolute;
+    left: 13px;
+    top: 32px;
+    bottom: -36px;
+    width: 1px;
+    background: var(--rule);
+  }
+
+  /* Subsection */
+  .subsection { margin-top: 18px; }
+  .subsection:first-child { margin-top: 0; }
+  .subsection-head {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin: 0 0 10px;
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+  }
+  .subsection-head .letter {
+    color: var(--ink-mute);
+    font-weight: 600;
+    font-size: 11px;
+  }
+
+  /* Card grid */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+  @media (max-width: 900px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 600px) {
+    .grid { grid-template-columns: 1fr; }
+    .wrap { padding: 24px 20px 60px; }
+    .section { grid-template-columns: 36px 1fr; column-gap: 16px; }
+  }
+
+  .card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 14px;
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    background: var(--card-bg);
+    text-decoration: none;
+    color: var(--ink);
+    font-size: 14px;
+    font-weight: 500;
+    transition: border-color 0.15s, background 0.15s, transform 0.08s;
+    cursor: pointer;
+    min-height: 48px;
+    text-align: left;
+    width: 100%;
+    font-family: inherit;
+  }
+  .card:hover {
+    border-color: var(--ink-mute);
+    background: var(--card-hover);
+  }
+  .card:active { transform: translateY(1px); }
+  .card.has-content { border-left: 3px solid var(--accent); padding-left: 11px; }
+
+  .card .icon {
+    flex-shrink: 0;
+    width: 18px;
+    height: 18px;
+    color: var(--ink-mute);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .card .icon svg {
+    width: 16px;
+    height: 16px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 1.6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .card .label { flex: 1; line-height: 1.3; min-width: 0; }
+  .card .label .title { display: block; }
+  .card .label .sub {
+    display: block;
+    font-size: 11px;
+    color: var(--ink-mute);
+    font-weight: 400;
+    margin-top: 1px;
+  }
+  .card .pill {
+    flex-shrink: 0;
+    font-size: 10px;
+    color: var(--pill-ink);
+    background: var(--pill-bg);
+    padding: 2px 7px;
+    border-radius: 999px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+
+  /* Footer */
+  .foot {
+    margin-top: 56px;
+    padding-top: 24px;
+    border-top: 1px solid var(--rule);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    color: var(--ink-mute);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .foot .right { color: var(--accent); font-weight: 600; }
+
+  /* ── Drawer ──────────────────────────────────────── */
+  #ref-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(20, 20, 20, 0.4);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.18s ease;
+    z-index: 100;
+  }
+  #ref-overlay.open { opacity: 1; pointer-events: auto; }
+
+  #ref-drawer {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100vh;
+    width: var(--drawer-w);
+    max-width: 92vw;
+    background: var(--paper);
+    border-left: 1px solid var(--rule);
+    box-shadow: -8px 0 30px rgba(0,0,0,0.08);
+    transform: translateX(100%);
+    transition: transform 0.22s ease;
+    z-index: 101;
+    display: flex;
+    flex-direction: column;
+  }
+  #ref-drawer.open { transform: translateX(0); }
+
+  #ref-drawer .drawer-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 24px;
+    border-bottom: 1px solid var(--rule);
+    flex-shrink: 0;
+  }
+  #ref-drawer .drawer-eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+  }
+  #ref-drawer .drawer-eyebrow .accent { color: var(--accent); }
+  #ref-drawer .drawer-close {
+    width: 32px;
+    height: 32px;
+    border: 1px solid var(--rule);
+    background: transparent;
+    border-radius: 4px;
+    cursor: pointer;
+    color: var(--ink-soft);
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    transition: background 0.12s, border-color 0.12s;
+    font-family: inherit;
+  }
+  #ref-drawer .drawer-close:hover {
+    background: var(--rule-soft);
+    border-color: var(--ink-mute);
+  }
+
+  #ref-drawer .drawer-content {
+    padding: 22px 28px 32px;
+    overflow-y: auto;
+    flex: 1;
+  }
+  #ref-drawer .drawer-pill {
+    display: inline-block;
+    font-size: 10px;
+    color: var(--pill-ink);
+    background: var(--pill-bg);
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    margin-bottom: 14px;
+  }
+  #ref-drawer .drawer-title {
+    font-size: 22px;
+    font-weight: 600;
+    margin: 0 0 12px;
+    letter-spacing: -0.01em;
+    line-height: 1.25;
+  }
+  #ref-drawer .drawer-subtitle {
+    font-size: 14px;
+    color: var(--ink-soft);
+    margin: 0 0 18px;
+    font-style: italic;
+  }
+  #ref-drawer .drawer-body {
+    font-size: 14px;
+    color: var(--ink);
+    line-height: 1.6;
+  }
+  #ref-drawer .drawer-body h3 {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin: 22px 0 8px;
+  }
+  #ref-drawer .drawer-body p { margin: 0 0 10px; }
+  #ref-drawer .drawer-body ul,
+  #ref-drawer .drawer-body ol { margin: 0 0 12px 20px; padding: 0; }
+  #ref-drawer .drawer-body li { margin-bottom: 4px; }
+  #ref-drawer .drawer-body strong { font-weight: 700; }
+  #ref-drawer .drawer-body em { font-style: italic; color: var(--ink-soft); }
+  #ref-drawer .drawer-body code {
+    font-family: ui-monospace, SFMono-Regular, "JetBrains Mono", monospace;
+    font-size: 12px;
+    background: var(--rule-soft);
+    padding: 1px 5px;
+    border-radius: 3px;
+  }
+  #ref-drawer .drawer-body blockquote {
+    border-left: 3px solid var(--accent);
+    margin: 12px 0;
+    padding: 4px 0 4px 14px;
+    color: var(--ink-soft);
+    font-style: italic;
+  }
+  #ref-drawer .drawer-body .empty {
+    color: var(--ink-mute);
+    font-style: italic;
+    padding: 40px 0;
+    text-align: center;
+    font-size: 13px;
+  }
+  #ref-drawer .drawer-body .empty code {
+    font-size: 11px;
+    background: var(--rule-soft);
+    padding: 2px 5px;
+    border-radius: 3px;
+  }
+
+  /* On wide screens, push reference content over so drawer doesn't overlap */
+  @media (min-width: 1400px) {
+    body.drawer-open .wrap { transform: translateX(calc(var(--drawer-w) / -2)); transition: transform 0.22s ease; }
+    .wrap { transition: transform 0.22s ease; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- Top bar -->
+  <div class="topbar">
+    <div class="brand" data-ref="brand">FBX <span>·</span> HOMEFAB</div>
+    <div class="meta" data-ref="meta">Investor Reference · Confidential · 2026</div>
+  </div>
+
+  <!-- Title block -->
+  <div class="title-block">
+    <h1 data-ref="heading">Reference</h1>
+    <p class="lede" data-ref="lede">The operating system underneath the deck. Five pillars — three miles, the modular industry argument, and the 10-year expansion plan. Each topic links to a deeper readme; pills cross-reference the slide(s) that present it.</p>
+  </div>
+
+  <!-- Tabs -->
+  <div class="tabs">
+    <div class="tab active">Reference</div>
+    <div class="tab">FAQ</div>
+    <div class="tab">Slides</div>
+  </div>
+
+  <!-- 1 · 1st Mile -->
+  <div class="section">
+    <div class="section-col"><div class="section-num">1</div></div>
+    <div class="section-body">
+      <h2 class="section-head">1st Mile <span class="alias">Retail Market Demand</span></h2>
+      <p class="section-sub">Demand generation, design, and the sale — the layer that hands a signed contract to FBX Core.</p>
+
+      <div class="subsection">
+        <div class="subsection-head"><span class="letter">A</span><span>Customer Desires</span></div>
+        <div class="grid">
+          <button class="card" type="button" data-card-id="energy-efficiency">
+            <span class="icon"><svg viewBox="0 0 24 24"><path d="M13 2L4 14h7l-1 8 9-12h-7l1-8z"/></svg></span>
+            <span class="label"><span class="title">Energy Efficiency</span></span>
+            <span class="pill">04</span>
+          </button>
+          <button class="card" type="button" data-card-id="ease-of-design">
+            <span class="icon"><svg viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-9"/><path d="M14 6h6v6"/></svg></span>
+            <span class="label"><span class="title">Ease of Design</span></span>
+            <span class="pill">07</span>
+          </button>
+          <button class="card" type="button" data-card-id="speed">
+            <span class="icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
+            <span class="label"><span class="title">Speed</span><span class="sub">Fast permits</span></span>
+            <span class="pill">14</span>
+          </button>
+          <button class="card" type="button" data-card-id="customization">
+            <span class="icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1"/></svg></span>
+            <span class="label"><span class="title">Customization</span><span class="sub">Trust the brand, love the iteration</span></span>
+            <span class="pill">07</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="subsection">
+        <div class="subsection-head"><span class="letter">B</span><span>Design Constraints &amp; Product Development</span></div>
+        <div class="grid">
+          <button class="card" type="button" data-card-id="rd">
+            <span class="icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6"/><path d="M16 16l5 5"/></svg></span>
+            <span class="label"><span class="title">Research &amp; Development</span></span>
+            <span class="pill">07</span>
+          </button>
+          <button class="card" type="button" data-card-id="engineers">
+            <span class="icon"><svg viewBox="0 0 24 24"><path d="M3 21l4-2 4 2 4-2 6 2V7l-6-2-4 2-4-2-4 2v14z"/><path d="M9 5v14"/></svg></span>
+            <span class="label"><span class="title">Engineers</span></span>
+            <span class="pill">09 · 14</span>
+          </button>
+          <button class="card" type="button" data-card-id="regulatory-approvals">
+            <span class="icon"><svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4"/><path d="M5 7l7-4 7 4v6c0 4-3 7-7 8-4-1-7-4-7-8V7z"/></svg></span>
+            <span class="label"><span class="title">Regulatory Approvals</span></span>
+            <span class="pill">09 · 14</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="subsection">
+        <div class="subsection-head"><span class="letter">C</span><span>Sales Cycle</span></div>
+        <div class="grid">
+          <button class="card" type="button" data-card-id="home-sales">
+            <span class="icon"><svg viewBox="0 0 24 24"><path d="M3 21V10l9-6 9 6v11"/><path d="M9 21v-7h6v7"/></svg></span>
+            <span class="label"><span class="title">Home Sales</span></span>
+            <span class="pill">02 · 14</span>
+          </button>
+          <button class="card" type="button" data-card-id="franchise-sales">
+            <span class="icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 3v18M3 12h18"/></svg></span>
+            <span class="label"><span class="title">Franchise Sales</span></span>
+            <span class="pill">14 · 24</span>
+          </button>
+          <button class="card" type="button" data-card-id="training">
+            <span class="icon"><svg viewBox="0 0 24 24"><path d="M12 14l9-5-9-5-9 5 9 5z"/><path d="M3 9v6l9 5 9-5V9"/></svg></span>
+            <span class="label"><span class="title">Training</span></span>
+            <span class="pill">17</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2 · FBX Core -->
+  <div class="section">
+    <div class="section-col"><div class="section-num">2</div></div>
+    <div class="section-body">
+      <h2 class="section-head">FBX Core <span class="alias">Aggregation, Warehousing &amp; Distribution</span></h2>
+      <p class="section-sub">The kit-of-parts engine. Standardize the design, aggregate the supply, ship to the Home-Fab.</p>
+
+      <div class="subsection">
+        <div class="subsection-head"><span class="letter">A</span><span>Factory Standard Design</span></div>
+        <div class="grid">
+          <button class="card" type="button" data-card-id="factory-standard">
+            <span class="icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="1"/><path d="M9 3v18M3 9h18M3 15h18M15 3v18"/></svg></span>
+            <span class="label"><span class="title">Factory Standard Design</span><span class="sub">One spec across the network</span></span>
+            <span class="pill">15</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="subsection">
+        <div class="subsection-head"><span class="letter">B</span><span>Suppliers</span></div>
+        <div class="grid">
+          <button class="card" type="button" data-card-id="sips">
+            <span class="icon"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="12" rx="1"/><path d="M3 12h18M9 6v12M15 6v12"/></svg></span>
+            <span class="label"><span class="title">SIPs</span><span class="sub">Panelization · primary</span></span>
+            <span class="pill">07 · 15</span>
+          </button>
+          <button class="card" type="button" data-card-id="cold-formed-steel">
+            <span class="icon"><svg viewBox="0 0 24 24"><path d="M4 8h16M4 12h16M4 16h16M4 8l2-4h12l2 4M4 16l2 4h12l2-4"/></svg></span>
+            <span class="label"><span class="title">Cold-Formed Steel</span><span class="sub">Panelization · option</span></span>
+            <span class="pill">15</span>
+          </button>
+          <button class="card" type="button" data-card-id="esips">
+            <span class="icon"><svg viewBox="0 0 24 24"><path d="M13 2L4 14h7l-1 8 9-12h-7l1-8z"/></svg></span>
+            <span class="label"><span class="title">eSIPs</span><span class="sub">Panelization · enhanced</span></span>
+            <span class="pill">15</span>
+          </button>
+          <button class="card" type="button" data-card-id="bath-kitchen-pods">
+            <span class="icon"><svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="1"/><circle cx="12" cy="10" r="2"/><path d="M8 16h8M8 19h5"/></svg></span>
+            <span class="label"><span class="title">Bath / Kitchen Pods</span><span class="sub">Plumbing-heavy modules</span></span>
+            <span class="pill">15</span>
+          </button>
+          <button class="card" type="button" data-card-id="demand-signals">
+            <span class="icon"><svg viewBox="0 0 24 24"><path d="M3 17l5-5 4 4 8-9"/><path d="M14 7h6v6"/></svg></span>
+            <span class="label"><span class="title">Demand Signals</span><span class="sub">What suppliers want from us</span></span>
+            <span class="pill">11</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="subsection">
+        <div class="subsection-head"><span class="letter">C</span><span>Warehousing</span></div>
+        <div class="grid">
+          <button class="card" type="button" data-card-id="receiving">
+            <span class="icon"><svg viewBox="0 0 24 24"><path d="M3 21h18M5 21V10l7-5 7 5v11"/><rect x="9" y="13" width="6" height="8"/></svg></span>
+            <span class="label"><span class="title">Receiving</span><span class="sub">Domestic &amp; foreign · containers</span></span>
+            <span class="pill">16</span>
+          </button>
+          <button class="card" type="button" data-card-id="sorting">
+            <span class="icon"><svg viewBox="0 0 24 24"><path d="M3 6h18M3 12h12M3 18h6"/></svg></span>
+            <span class="label"><span class="title">Sorting</span><span class="sub">Create the kit of parts</span></span>
+            <span class="pill">15 · 16</span>
+          </button>
+          <button class="card" type="button" data-card-id="ship-to-home-fab">
+            <span class="icon"><svg viewBox="0 0 24 24"><rect x="2" y="8" width="13" height="10" rx="1"/><path d="M15 11h4l3 3v4h-7"/><circle cx="6" cy="20" r="2"/><circle cx="18" cy="20" r="2"/></svg></span>
+            <span class="label"><span class="title">Ship to Home-Fab</span><span class="sub">Containers to assembly factory</span></span>
+            <span class="pill">16</span>
+          </button>
+          <button class="card" type="button" data-card-id="franchisee-establishment">
+            <span class="icon"><svg viewBox="0 0 24 24"><path d="M3 21V11l9-7 9 7v10"/><path d="M9 21v-6h6v6"/><circle cx="12" cy="13" r="1.5"/></svg></span>
+            <span class="label"><span class="title">Franchisee Establishment</span><span class="sub">Home-Fab launch playbook</span></span>
+            <span class="pill">16 · 24</span>
+          </button>
+          <button class="card" type="button" data-card-id="quality-assurance">
+            <span class="icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg></span>
+            <span class="label"><span class="title">Quality Assurance</span><span class="sub">Cross-Fab consistency</span></span>
+            <span class="pill">15</span>
+          </button>
+          <button class="card" type="button" data-card-id="regional-expansion">
+            <span class="icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="8"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg></span>
+            <span class="label"><span class="title">Regional Expansion</span><span class="sub">Hub-and-spoke rollout</span></span>
+            <span class="pill">19 · 20</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3 · Last Mile -->
+  <div class="section">
+    <div class="section-col"><div class="section-num">3</div></div>
+    <div class="section-body">
+      <h2 class="section-head">Last Mile <span class="alias">Site Delivery &amp; Installation</span></h2>
+      <p class="section-sub">The franchise network that takes the kit and turns it into a finished home on the lot.</p>
+
+      <div class="grid">
+        <button class="card" type="button" data-card-id="site-work">
+          <span class="icon"><svg viewBox="0 0 24 24"><path d="M2 20h20M4 20V8l4-2 4 2 4-2 4 2v12"/></svg></span>
+          <span class="label"><span class="title">Site Work</span><span class="sub">Foundation, utilities, prep</span></span>
+          <span class="pill">04</span>
+        </button>
+        <button class="card" type="button" data-card-id="last-mile-logistics">
+          <span class="icon"><svg viewBox="0 0 24 24"><rect x="2" y="8" width="13" height="10" rx="1"/><path d="M15 11h4l3 3v4h-7"/><circle cx="6" cy="20" r="2"/><circle cx="18" cy="20" r="2"/></svg></span>
+          <span class="label"><span class="title">Home-Fab to Lot Logistics</span><span class="sub">Last 150 miles</span></span>
+          <span class="pill">16</span>
+        </button>
+        <button class="card" type="button" data-card-id="inspections">
+          <span class="icon"><svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg></span>
+          <span class="label"><span class="title">Inspections</span><span class="sub">Jurisdictional sign-off</span></span>
+          <span class="pill">09</span>
+        </button>
+        <button class="card" type="button" data-card-id="construction-workforce">
+          <span class="icon"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="10" r="2"/><path d="M3 20c0-3 3-6 6-6s6 3 6 6M15 20c0-2 2-4 4-4s2 2 2 4"/></svg></span>
+          <span class="label"><span class="title">Construction Workforce</span><span class="sub">Vetted installer network</span></span>
+          <span class="pill">04 · 17</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4 · Modular Industry -->
+  <div class="section">
+    <div class="section-col"><div class="section-num">4</div></div>
+    <div class="section-body">
+      <h2 class="section-head">Modular Industry <span class="alias">Why This Time Is Different</span></h2>
+      <p class="section-sub">The post-mortem on every predecessor, the four moats we're engineered for, and why the curve actually bends this time.</p>
+
+      <div class="subsection">
+        <div class="subsection-head"><span class="letter">A</span><span>What Went Wrong</span></div>
+        <div class="grid">
+          <button class="card" type="button" data-card-id="what-went-wrong">
+            <span class="icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 8l8 8M16 8l-8 8"/></svg></span>
+            <span class="label"><span class="title">What Went Wrong</span><span class="sub">Katerra, Connect, Cover, Blokable</span></span>
+            <span class="pill">08</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="subsection">
+        <div class="subsection-head"><span class="letter">B</span><span>Why This Will Work · The Four Moats</span></div>
+        <div class="grid">
+          <button class="card" type="button" data-card-id="network-effect">
+            <span class="icon"><svg viewBox="0 0 24 24"><circle cx="6" cy="6" r="2"/><circle cx="18" cy="6" r="2"/><circle cx="12" cy="18" r="2"/><circle cx="12" cy="12" r="2"/><path d="M7 7l4 4M17 7l-4 4M12 14v2"/></svg></span>
+            <span class="label"><span class="title">Network Effect</span><span class="sub">Franchisees compound</span></span>
+            <span class="pill">12 · 13</span>
+          </button>
+          <button class="card" type="button" data-card-id="economy-of-scale">
+            <span class="icon"><svg viewBox="0 0 24 24"><path d="M3 20V8M10 20V4M16 20v-9M22 20H2"/></svg></span>
+            <span class="label"><span class="title">Economy of Scale</span><span class="sub">Aggregated procurement</span></span>
+            <span class="pill">12 · 13</span>
+          </button>
+          <button class="card" type="button" data-card-id="brand">
+            <span class="icon"><svg viewBox="0 0 24 24"><path d="M3 7l9-4 9 4v10l-9 4-9-4V7z"/><path d="M3 7l9 4 9-4M12 11v10"/></svg></span>
+            <span class="label"><span class="title">Brand</span><span class="sub">Tesla / Carmax for housing</span></span>
+            <span class="pill">12 · 13</span>
+          </button>
+          <button class="card" type="button" data-card-id="embedding-tech">
+            <span class="icon"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 4v16M15 4v16M4 9h16M4 15h16"/></svg></span>
+            <span class="label"><span class="title">Embedding Technology</span><span class="sub">Run on FBX systems</span></span>
+            <span class="pill">12</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="subsection">
+        <div class="subsection-head"><span class="letter">C</span><span>Why This Is Scalable</span></div>
+        <div class="grid">
+          <button class="card" type="button" data-card-id="linear-exponential">
+            <span class="icon"><svg viewBox="0 0 24 24"><path d="M3 17l5-5 4 4 8-9"/><path d="M14 7h6v6"/></svg></span>
+            <span class="label"><span class="title">Linear Cost · Exponential Output</span><span class="sub">The operating principle</span></span>
+            <span class="pill">03 · 11</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="subsection">
+        <div class="subsection-head"><span class="letter">D</span><span>Momentum</span></div>
+        <div class="grid">
+          <button class="card" type="button" data-card-id="momentum">
+            <span class="icon"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+            <span class="label"><span class="title">Momentum</span><span class="sub">Speed before moats</span></span>
+            <span class="pill">11</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="subsection">
+        <div class="subsection-head"><span class="letter">E</span><span>Adoption</span></div>
+        <div class="grid">
+          <button class="card" type="button" data-card-id="adoption">
+            <span class="icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg></span>
+            <span class="label"><span class="title">Adoption</span><span class="sub">Repeat behavior · contract velocity</span></span>
+            <span class="pill">05 · 11</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5 · 10-Year Expansion -->
+  <div class="section">
+    <div class="section-col"><div class="section-num">5</div></div>
+    <div class="section-body">
+      <h2 class="section-head">10-Year Expansion <span class="alias">National Scale Plan</span></h2>
+      <p class="section-sub">137 fabs across 50 states by 2035. The map shows the path; the model proves it pencils.</p>
+
+      <div class="grid">
+        <button class="card" type="button" data-card-id="expansion-map">
+          <span class="icon"><svg viewBox="0 0 24 24"><path d="M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2V6z"/><path d="M9 4v14M15 6v14"/></svg></span>
+          <span class="label"><span class="title">Map</span><span class="sub">Year 1 → Year 10 · live tool</span></span>
+          <span class="pill">19</span>
+        </button>
+        <button class="card" type="button" data-card-id="feasibility">
+          <span class="icon"><svg viewBox="0 0 24 24"><path d="M12 3v18M7 7h7a3 3 0 010 6H9a3 3 0 000 6h8"/></svg></span>
+          <span class="label"><span class="title">Feasibility</span><span class="sub">Year-10 economics · $39.8B</span></span>
+          <span class="pill">06 · 20</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="foot">
+    <div data-ref="footer.left">FBX Product Development</div>
+    <div class="right" data-ref="footer.right">Series A · $4M Core</div>
+  </div>
+
+</div>
+
+<!-- Drawer -->
+<div id="ref-overlay"></div>
+<aside id="ref-drawer" aria-hidden="true" role="dialog" aria-labelledby="drawer-title">
+  <div class="drawer-head">
+    <span class="drawer-eyebrow">FBX <span class="accent">·</span> REFERENCE</span>
+    <button class="drawer-close" aria-label="Close" type="button">×</button>
+  </div>
+  <div class="drawer-content">
+    <div class="drawer-pill" hidden></div>
+    <h2 id="drawer-title" class="drawer-title"></h2>
+    <p class="drawer-subtitle" hidden></p>
+    <div class="drawer-body"></div>
+  </div>
+</aside>
+
+<script>
+(() => {
+  'use strict';
+
+  // ──────────────────────────────────────────────────────────────
+  // Reference page client. Reads ../reference-content.json and
+  // wires card clicks to a side drawer. Falls back gracefully if
+  // the JSON is unavailable so the page is still readable as
+  // a static document.
+  // ──────────────────────────────────────────────────────────────
+
+  const drawer    = document.getElementById('ref-drawer');
+  const overlay   = document.getElementById('ref-overlay');
+  const closeBtn  = drawer.querySelector('.drawer-close');
+  const titleEl   = drawer.querySelector('.drawer-title');
+  const subEl     = drawer.querySelector('.drawer-subtitle');
+  const pillEl    = drawer.querySelector('.drawer-pill');
+  const bodyEl    = drawer.querySelector('.drawer-body');
+
+  let content = null;     // loaded JSON
+  let lastTrigger = null; // for focus restoration on close
+
+  // Resolve content.json relative to this HTML's location so the
+  // page works whether served from /tools/, /, or anywhere else.
+  function resolveContentURL() {
+    const here = new URL(window.location.href);
+    // Strip the filename and tools/ if present, then append reference-content.json
+    const path = here.pathname.replace(/\/[^\/]*$/, '');           // dir of this page
+    const projectRoot = path.replace(/\/tools$/, '');               // up one if in /tools/
+    return new URL(projectRoot + '/reference-content.json', here.origin).toString();
+  }
+
+  async function loadContent() {
+    try {
+      const res = await fetch(resolveContentURL(), { cache: 'no-cache' });
+      if (!res.ok) throw new Error(res.status);
+      content = await res.json();
+    } catch (err) {
+      console.warn('[reference] could not load reference-content.json:', err);
+      content = null;
+    }
+    applyHeaderOverrides();
+  }
+
+  function applyHeaderOverrides() {
+    if (!content) return;
+    document.querySelectorAll('[data-ref]').forEach(el => {
+      const path = el.dataset.ref.split('.');
+      let v = content;
+      for (const seg of path) v = v?.[seg];
+      if (typeof v === 'string') el.innerHTML = v;
+    });
+  }
+
+  function getCardEntry(id) {
+    if (!content || !content.cards) return null;
+    return content.cards[id] || null;
+  }
+
+  function openDrawer(card) {
+    const id = card.dataset.cardId;
+    const titleNode = card.querySelector('.label .title');
+    const subNode   = card.querySelector('.label .sub');
+    const pillNode  = card.querySelector('.pill');
+
+    const fallbackTitle = titleNode ? titleNode.textContent.trim() : id;
+    const fallbackSub   = subNode ? subNode.textContent.trim() : '';
+    const fallbackPill  = pillNode ? pillNode.textContent.trim() : '';
+
+    const entry = getCardEntry(id);
+    const t = (entry && entry.title) || fallbackTitle;
+    const s = (entry && entry.subtitle) || fallbackSub;
+    const p = (entry && entry.pill)  || fallbackPill;
+    const body = (entry && entry.body_html) || '';
+
+    titleEl.textContent = t;
+    drawer.dataset.cardId = id;
+
+    if (s) { subEl.textContent = s; subEl.hidden = false; }
+    else   { subEl.hidden = true; subEl.textContent = ''; }
+
+    if (p) { pillEl.textContent = `Slide ${p}`; pillEl.hidden = false; }
+    else   { pillEl.hidden = true; pillEl.textContent = ''; }
+
+    if (body) {
+      bodyEl.innerHTML = body;
+    } else {
+      bodyEl.innerHTML =
+        `<div class="empty">No content yet for <code>${id}</code>.<br>` +
+        `Add an entry in <code>reference-content.json</code> under <code>cards.${id}</code>.</div>`;
+    }
+
+    drawer.classList.add('open');
+    drawer.setAttribute('aria-hidden', 'false');
+    overlay.classList.add('open');
+    document.body.classList.add('drawer-open');
+    lastTrigger = card;
+
+    // Focus management
+    setTimeout(() => closeBtn.focus(), 50);
+  }
+
+  function closeDrawer() {
+    drawer.classList.remove('open');
+    drawer.setAttribute('aria-hidden', 'true');
+    overlay.classList.remove('open');
+    document.body.classList.remove('drawer-open');
+    if (lastTrigger) lastTrigger.focus();
+  }
+
+  function markCardsWithContent() {
+    if (!content || !content.cards) return;
+    document.querySelectorAll('.card[data-card-id]').forEach(c => {
+      if (content.cards[c.dataset.cardId]) c.classList.add('has-content');
+    });
+  }
+
+  function init() {
+    loadContent().then(markCardsWithContent);
+
+    document.querySelectorAll('.card[data-card-id]').forEach(card => {
+      card.addEventListener('click', () => openDrawer(card));
+    });
+    closeBtn.addEventListener('click', closeDrawer);
+    overlay.addEventListener('click', closeDrawer);
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && drawer.classList.contains('open')) closeDrawer();
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+</script>
+</body>
+</html>

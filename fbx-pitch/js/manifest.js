@@ -7,7 +7,7 @@
 
 window.DECK = {
   title: "FBX HomeFab — Investor Deck",
-  version: "v0.10",
+  version: "v0.11",
   slides: [
     { id: "01-cover",          file: "slides/01-cover.html",          title: "Scaled Housing Factories",              tag: "Cover",          live: false },
     { id: "02-predecessors",   file: "slides/02-predecessors.html",   title: "Why We Win Where They Failed",          tag: "Problem",        live: false },
@@ -33,6 +33,7 @@ window.DECK = {
     { id: "22-fishbone",       file: "slides/22-fishbone.html",       title: "FBX Operating Model — Fishbone",        tag: "Backup",         live: true  },
     { id: "23-expansion-map",  file: "slides/23-expansion-map.html",  title: "10-Year Expansion Map",                 tag: "Backup",         live: true  },
     { id: "24-workforce",      file: "slides/24-workforce.html",      title: "Construction Workforce",                tag: "Backup",         live: false },
-    { id: "25-objections",     file: "slides/25-objections.html",     title: "Objections & Answers",                  tag: "Backup",         live: false }
+    { id: "25-objections",     file: "slides/25-objections.html",     title: "Objections & Answers",                  tag: "Backup",         live: false },
+    { id: "26-reference",      file: "slides/26-reference.html",      title: "Reference — Operating System Map",      tag: "Backup",         live: true  }
   ]
 };
