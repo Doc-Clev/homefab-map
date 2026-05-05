@@ -17,7 +17,11 @@
   <div class="tb-sep"></div>
   <button class="tb-btn" id="btn-export" title="Download content.json with all edits merged in">Export JSON</button>
   <button class="tb-btn" id="btn-import" title="Load a content.json file as the new draft layer">Import JSON</button>
-  <button class="tb-btn danger" id="btn-reset" title="Discard all drafts and restore content.json defaults">Reset to File</button>
+  <button class="tb-btn danger" id="btn-reset" title="Discard all drafts and restore content.json defaults">Reset Edits</button>
+  <div class="tb-sep"></div>
+  <button class="tb-btn" id="btn-save-order" title="Apply pending reorder/delete to the deck">Save Order</button>
+  <button class="tb-btn" id="btn-reset-order" title="Revert order and undo deletion marks">Reset Order</button>
+  <span id="pending-indicator" hidden></span>
   <div class="tb-sep"></div>
   <span id="edit-count">no edits</span>
   <a class="tb-btn tb-link" id="btn-open-deck" href="../index.html" target="_blank" rel="noopener">Open Deck ↗</a>
@@ -29,8 +33,9 @@
       <!-- Slide items injected by admin.js -->
     </div>
     <p class="sidebar-hint">
-      Hover to highlight · Click to edit<br>
-      <kbd>Enter</kbd> saves &nbsp;·&nbsp; <kbd>Esc</kbd> cancels<br>
+      Click row to edit content<br>
+      Drag <code>⠿</code> to reorder &nbsp;·&nbsp; <code>✕</code> marks for deletion<br>
+      <kbd>Enter</kbd> saves edit &nbsp;·&nbsp; <kbd>Esc</kbd> cancels<br>
       Inline tags: <code>&lt;strong&gt;</code> <code>&lt;em&gt;</code>
     </p>
   </nav>
@@ -40,6 +45,36 @@
       <iframe id="slide-frame" title="Slide preview"></iframe>
     </div>
   </main>
+</div>
+
+<!-- Save Order modal -->
+<div id="save-modal" role="dialog" aria-modal="true" aria-labelledby="save-modal-title">
+  <div class="panel">
+    <h2 id="save-modal-title">Apply deck changes</h2>
+    <div class="subhead">Reorder + deletions are stored locally until you apply them</div>
+
+    <div class="body">
+      <div class="changes-summary" id="changes-summary"></div>
+
+      <p>
+        The admin can't rename files or rewrite slide HTML from the browser.
+        Either <strong>download the spec</strong> and run
+        <code>python tools/apply-deck-changes.py</code> in the project,
+        or <strong>copy the prompt</strong> and paste it into a Claude session.
+      </p>
+
+      <p style="margin-top: 16px; margin-bottom: 6px;">
+        <span style="font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.5;">Spec preview</span>
+      </p>
+      <pre id="save-modal-spec"></pre>
+    </div>
+
+    <div class="actions">
+      <button class="tb-btn" id="btn-modal-cancel" type="button">Cancel</button>
+      <button class="tb-btn" id="btn-modal-copy" type="button" title="Copy a Claude-ready prompt to clipboard">Copy prompt</button>
+      <button class="tb-btn primary" id="btn-modal-download" type="button" title="Download deck-changes.json">Download spec</button>
+    </div>
+  </div>
 </div>
 
 <script src="../js/manifest.js"></script>

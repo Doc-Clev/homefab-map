@@ -10,6 +10,8 @@
   const SLIDE_W     = 1600;
   const SLIDE_H     = 900;
   const STORAGE_KEY = 'fbx-content-overrides';
+  const ORDER_KEY   = 'fbx-deck-order';      // [slideId, slideId, ...]
+  const DELETE_KEY  = 'fbx-deck-deleted';    // [slideId, ...]
 
   // --- DOM refs ------------------------------------------------
   const slideList  = document.getElementById('slide-list');
@@ -17,9 +19,11 @@
   const stage      = document.getElementById('stage');
   const scaler     = document.getElementById('scaler');
   const editCountEl = document.getElementById('edit-count');
+  const pendingEl   = document.getElementById('pending-indicator');
 
   let currentIndex = 0;
   let activeEditor = null;   // the iframe element currently in edit mode
+  let draggedId    = null;   // id of slide being dragged
 
   // =============================================================
   // INIT
@@ -34,24 +38,193 @@
   }
 
   // =============================================================
+  // DECK ORDER + DELETIONS (local pending state)
+  // =============================================================
+
+  function getStoredOrder() {
+    try { return JSON.parse(localStorage.getItem(ORDER_KEY) || 'null'); }
+    catch { return null; }
+  }
+  function getStoredDeletions() {
+    try { return new Set(JSON.parse(localStorage.getItem(DELETE_KEY) || '[]')); }
+    catch { return new Set(); }
+  }
+  function setStoredOrder(arr)   { localStorage.setItem(ORDER_KEY, JSON.stringify(arr)); }
+  function setStoredDeletions(s) { localStorage.setItem(DELETE_KEY, JSON.stringify([...s])); }
+
+  /** Effective order: stored override (if any), filtered to valid IDs, with new
+      manifest entries appended at the end. Falls back to manifest order. */
+  function getEffectiveOrder() {
+    const valid = new Set(DECK.slides.map(s => s.id));
+    const stored = getStoredOrder();
+    if (!stored) return DECK.slides.map(s => s.id);
+    const filtered = stored.filter(id => valid.has(id));
+    const seen = new Set(filtered);
+    DECK.slides.forEach(s => { if (!seen.has(s.id)) filtered.push(s.id); });
+    return filtered;
+  }
+
+  // =============================================================
   // SIDEBAR
   // =============================================================
 
   function buildSidebar() {
-    DECK.slides.forEach((slide, i) => {
-      const btn = document.createElement('button');
-      btn.className = 'slide-item';
-      btn.dataset.index   = i;
-      btn.dataset.slideId = slide.id;
-      btn.innerHTML =
+    slideList.innerHTML = '';
+    const order = getEffectiveOrder();
+    const deletions = getStoredDeletions();
+    const slideById = Object.fromEntries(DECK.slides.map(s => [s.id, s]));
+
+    order.forEach((id, i) => {
+      const slide = slideById[id];
+      if (!slide) return;
+      const row = document.createElement('div');
+      row.className = 'slide-item';
+      if (deletions.has(id)) row.classList.add('deleted');
+      row.dataset.index   = i;
+      row.dataset.slideId = id;
+      row.draggable = true;
+      row.innerHTML =
+        `<span class="drag-handle" aria-hidden="true">⠿</span>` +
         `<span class="slide-num">${String(i + 1).padStart(2, '0')}</span>` +
         `<span class="slide-title">${slide.title}</span>` +
-        `<span class="edit-dot" hidden aria-label="has edits"></span>`;
-      btn.addEventListener('click', () => loadSlide(i));
-      slideList.appendChild(btn);
+        `<span class="edit-dot" hidden aria-label="has edits"></span>` +
+        `<button class="row-btn delete-btn" type="button" title="Mark for deletion (toggle)" aria-label="Mark for deletion">✕</button>`;
+
+      // Click to load slide — but ignore clicks on inner controls
+      // (i is effective-order position; loadSlide takes the DECK.slides index)
+      row.addEventListener('click', e => {
+        if (e.target.closest('.delete-btn, .drag-handle')) return;
+        const deckIndex = DECK.slides.findIndex(s => s.id === id);
+        if (deckIndex >= 0) loadSlide(deckIndex);
+      });
+
+      // Delete toggle
+      row.querySelector('.delete-btn').addEventListener('click', e => {
+        e.stopPropagation();
+        toggleDelete(id);
+      });
+
+      // Drag-drop
+      row.addEventListener('dragstart', onDragStart);
+      row.addEventListener('dragover',  onDragOver);
+      row.addEventListener('dragleave', onDragLeave);
+      row.addEventListener('drop',      onDrop);
+      row.addEventListener('dragend',   onDragEnd);
+
+      slideList.appendChild(row);
     });
+
+    // Restore active highlight if the current slide still exists.
+    // currentIndex stays as the DECK.slides index — only the visual position changes.
+    const activeId = DECK.slides[currentIndex]?.id;
+    if (activeId) {
+      const activeRow = slideList.querySelector(`[data-slide-id="${activeId}"]`);
+      if (activeRow) activeRow.classList.add('active');
+    }
+
     updateSidebarIndicators();
     updateEditCount();
+    updatePendingIndicator();
+  }
+
+  // =============================================================
+  // DRAG & DROP REORDER
+  // =============================================================
+
+  function onDragStart(e) {
+    draggedId = this.dataset.slideId;
+    this.classList.add('dragging');
+    e.dataTransfer.effectAllowed = 'move';
+    try { e.dataTransfer.setData('text/plain', draggedId); } catch {}
+  }
+
+  function onDragOver(e) {
+    if (!draggedId) return;
+    e.preventDefault();
+    e.dataTransfer.dropEffect = 'move';
+    const rect = this.getBoundingClientRect();
+    const above = e.clientY < rect.top + rect.height / 2;
+    slideList.querySelectorAll('.drop-above, .drop-below').forEach(el => {
+      el.classList.remove('drop-above', 'drop-below');
+    });
+    this.classList.add(above ? 'drop-above' : 'drop-below');
+  }
+
+  function onDragLeave() { /* indicator managed by dragover on the new target */ }
+
+  function onDrop(e) {
+    e.preventDefault();
+    if (!draggedId) return;
+
+    const rect = this.getBoundingClientRect();
+    const above = e.clientY < rect.top + rect.height / 2;
+    const targetId = this.dataset.slideId;
+    if (draggedId === targetId) { onDragEnd(); return; }
+
+    const order = getEffectiveOrder();
+    const fromIdx = order.indexOf(draggedId);
+    if (fromIdx === -1) { onDragEnd(); return; }
+
+    order.splice(fromIdx, 1);
+    const toIdx = order.indexOf(targetId);
+    const insertAt = above ? toIdx : toIdx + 1;
+    order.splice(insertAt, 0, draggedId);
+
+    setStoredOrder(order);
+    onDragEnd();
+    buildSidebar();
+  }
+
+  function onDragEnd() {
+    slideList.querySelectorAll('.dragging, .drop-above, .drop-below').forEach(el => {
+      el.classList.remove('dragging', 'drop-above', 'drop-below');
+    });
+    draggedId = null;
+  }
+
+  // =============================================================
+  // DELETE TOGGLE
+  // =============================================================
+
+  function toggleDelete(slideId) {
+    const dels = getStoredDeletions();
+    if (dels.has(slideId)) dels.delete(slideId);
+    else dels.add(slideId);
+    setStoredDeletions(dels);
+    buildSidebar();
+  }
+
+  function resetOrder() {
+    if (!confirm('Reset slide order and clear deletion marks?\n\nContent edits are kept.'))
+      return;
+    localStorage.removeItem(ORDER_KEY);
+    localStorage.removeItem(DELETE_KEY);
+    buildSidebar();
+  }
+
+  function updatePendingIndicator() {
+    const stored = getStoredOrder();
+    const dels   = getStoredDeletions();
+    let moves = 0;
+    if (stored) {
+      const original = DECK.slides.map(s => s.id);
+      const eff = getEffectiveOrder();
+      moves = eff.reduce((n, id, i) => n + (original[i] !== id ? 1 : 0), 0);
+    }
+    const total = moves + dels.size;
+    const saveBtn = document.getElementById('btn-save-order');
+    if (total === 0) {
+      pendingEl.hidden = true;
+      pendingEl.textContent = '';
+      saveBtn.classList.remove('primary');
+    } else {
+      const parts = [];
+      if (moves > 0)   parts.push(`${moves} moved`);
+      if (dels.size)   parts.push(`${dels.size} to delete`);
+      pendingEl.hidden = false;
+      pendingEl.textContent = parts.join(' · ');
+      saveBtn.classList.add('primary');
+    }
   }
 
   // =============================================================
@@ -80,8 +253,9 @@
     currentIndex = index;
     const slide  = DECK.slides[index];
 
-    document.querySelectorAll('.slide-item').forEach((item, i) => {
-      item.classList.toggle('active', i === index);
+    // Highlight active row by slide id (NodeList order != DECK order after reorder)
+    document.querySelectorAll('.slide-item').forEach(item => {
+      item.classList.toggle('active', item.dataset.slideId === slide.id);
     });
 
     // file paths in manifest are relative to project root: "slides/01-cover.html"
@@ -316,6 +490,145 @@
     document.getElementById('btn-export').addEventListener('click', exportJSON);
     document.getElementById('btn-import').addEventListener('click', importJSON);
     document.getElementById('btn-reset').addEventListener('click', resetToFile);
+    document.getElementById('btn-save-order').addEventListener('click', openSaveModal);
+    document.getElementById('btn-reset-order').addEventListener('click', resetOrder);
+
+    // Save Order modal wiring
+    document.getElementById('btn-modal-cancel').addEventListener('click', closeSaveModal);
+    document.getElementById('btn-modal-download').addEventListener('click', downloadSpec);
+    document.getElementById('btn-modal-copy').addEventListener('click', copyClaudePrompt);
+    document.getElementById('save-modal').addEventListener('click', e => {
+      if (e.target.id === 'save-modal') closeSaveModal();
+    });
+  }
+
+  // =============================================================
+  // SAVE ORDER MODAL — generate spec + Claude prompt
+  // =============================================================
+
+  /** Build the change spec object. */
+  function buildSpec() {
+    const original = DECK.slides.map(s => s.id);
+    const effective = getEffectiveOrder();
+    const dels = getStoredDeletions();
+    const slideById = Object.fromEntries(DECK.slides.map(s => [s.id, s]));
+
+    const kept = effective.filter(id => !dels.has(id));
+    const newOrder = kept.map((id, i) => ({
+      slot:  i + 1,
+      id:    id,
+      title: slideById[id]?.title || '',
+      tag:   slideById[id]?.tag   || '',
+      from_slot: original.indexOf(id) + 1,
+    }));
+
+    const deletedList = [...dels].map(id => ({
+      id:    id,
+      title: slideById[id]?.title || '',
+      from_slot: original.indexOf(id) + 1,
+    }));
+
+    return {
+      generated_at: new Date().toISOString(),
+      deck_version: DECK.version || 'unknown',
+      total_slides: kept.length,
+      order: newOrder,
+      deletions: deletedList,
+    };
+  }
+
+  function hasPendingChanges() {
+    const stored = getStoredOrder();
+    const dels = getStoredDeletions();
+    if (dels.size > 0) return true;
+    if (!stored) return false;
+    const original = DECK.slides.map(s => s.id);
+    const eff = getEffectiveOrder();
+    return eff.some((id, i) => original[i] !== id);
+  }
+
+  function openSaveModal() {
+    if (!hasPendingChanges()) {
+      alert('No reorder or deletion changes to apply.\n\nDrag slides in the sidebar or click ✕ to mark for deletion.');
+      return;
+    }
+    const spec = buildSpec();
+
+    // Summary
+    const summary = document.getElementById('changes-summary');
+    const moves = spec.order.filter(o => o.from_slot !== o.slot).length;
+    summary.innerHTML =
+      `<span class="lab">Final size</span><span class="val">${spec.total_slides} slides</span>` +
+      `<span class="lab">Moved</span><span class="val">${moves}</span>` +
+      `<span class="lab">Deleted</span><span class="val">${spec.deletions.length}</span>` +
+      `<span class="lab">Source ver</span><span class="val">${spec.deck_version}</span>`;
+
+    // Spec preview
+    document.getElementById('save-modal-spec').textContent = JSON.stringify(spec, null, 2);
+
+    document.getElementById('save-modal').classList.add('open');
+  }
+
+  function closeSaveModal() {
+    document.getElementById('save-modal').classList.remove('open');
+  }
+
+  function downloadSpec() {
+    const spec = buildSpec();
+    const blob = new Blob([JSON.stringify(spec, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'deck-changes.json';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    closeSaveModal();
+  }
+
+  function buildClaudePrompt(spec) {
+    const lines = [];
+    lines.push('Apply this slide reorder/delete spec to the deck. Use the standard reorder pipeline (stage to slides_new/, renumber chrome, fix cross-refs, rewrite manifest, rebuild content.json with edit preservation, commit & push).');
+    lines.push('');
+    lines.push('## Final order');
+    lines.push('');
+    lines.push('| Slot | Slide ID | Title | From slot |');
+    lines.push('|---|---|---|---|');
+    spec.order.forEach(o => {
+      const from = o.from_slot ? String(o.from_slot).padStart(2, '0') : '—';
+      lines.push(`| ${String(o.slot).padStart(2, '0')} | ${o.id} | ${o.title} | ${from} |`);
+    });
+
+    if (spec.deletions.length > 0) {
+      lines.push('');
+      lines.push('## Slides to delete');
+      lines.push('');
+      lines.push('| Slide ID | Title | Was at slot |');
+      lines.push('|---|---|---|');
+      spec.deletions.forEach(d => {
+        lines.push(`| ${d.id} | ${d.title} | ${String(d.from_slot).padStart(2, '0')} |`);
+      });
+      lines.push('');
+      lines.push('Confirm before removing files — these may be backup-worthy.');
+    }
+    lines.push('');
+    lines.push(`Total ${spec.total_slides} slides post-reorder. Source manifest version: ${spec.deck_version}.`);
+    return lines.join('\n');
+  }
+
+  async function copyClaudePrompt() {
+    const spec = buildSpec();
+    const text = buildClaudePrompt(spec);
+    try {
+      await navigator.clipboard.writeText(text);
+      const btn = document.getElementById('btn-modal-copy');
+      const orig = btn.textContent;
+      btn.textContent = 'Copied ✓';
+      setTimeout(() => { btn.textContent = orig; }, 1400);
+    } catch (err) {
+      alert('Could not copy to clipboard: ' + err.message + '\n\nThe prompt is in the spec preview below — copy it manually.');
+    }
   }
 
   async function exportJSON() {

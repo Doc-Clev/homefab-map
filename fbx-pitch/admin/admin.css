@@ -155,7 +155,7 @@ body {
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 8px 14px;
+  padding: 8px 8px 8px 14px;
   background: none;
   border: none;
   border-left: 2px solid transparent;
@@ -166,6 +166,8 @@ body {
   cursor: pointer;
   text-align: left;
   width: 100%;
+  position: relative;
+  user-select: none;
   transition: background 0.1s, color 0.1s, border-color 0.1s;
 }
 
@@ -178,6 +180,205 @@ body {
   background: rgba(255,255,255,0.06);
   color: var(--paper);
   border-left-color: var(--signal);
+}
+
+/* Drag handle — visible on hover, indicates row is reorderable */
+.drag-handle {
+  display: inline-block;
+  width: 10px;
+  font-size: 13px;
+  line-height: 1;
+  color: rgba(255,255,255,0.18);
+  cursor: grab;
+  flex-shrink: 0;
+  text-align: center;
+  user-select: none;
+  transition: color 0.1s;
+}
+.slide-item:hover .drag-handle { color: rgba(255,255,255,0.55); }
+.slide-item .drag-handle:active { cursor: grabbing; }
+
+/* Per-row buttons (delete) — hidden by default, revealed on hover */
+.row-btn {
+  background: transparent;
+  border: 1px solid transparent;
+  color: rgba(245,241,232,0.35);
+  font-family: var(--mono);
+  font-size: 11px;
+  width: 18px;
+  height: 18px;
+  border-radius: 2px;
+  cursor: pointer;
+  padding: 0;
+  flex-shrink: 0;
+  opacity: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.1s, background 0.1s, border-color 0.1s, color 0.1s;
+}
+.slide-item:hover .row-btn,
+.slide-item.deleted .row-btn { opacity: 1; }
+
+.row-btn:hover {
+  background: rgba(230,57,70,0.16);
+  border-color: rgba(230,57,70,0.45);
+  color: #ff9090;
+}
+.row-btn.delete-btn.active,
+.slide-item.deleted .row-btn.delete-btn {
+  opacity: 1;
+  color: var(--signal);
+  border-color: rgba(230,57,70,0.4);
+}
+
+/* Marked-for-deletion state */
+.slide-item.deleted {
+  opacity: 0.55;
+}
+.slide-item.deleted .slide-title {
+  text-decoration: line-through;
+  text-decoration-color: rgba(230,57,70,0.7);
+  text-decoration-thickness: 1px;
+}
+.slide-item.deleted .slide-num {
+  color: var(--signal);
+  opacity: 0.55;
+}
+
+/* Drag indicators */
+.slide-item.dragging { opacity: 0.4; }
+.slide-item.drop-above { box-shadow: inset 0 2px 0 0 var(--signal); }
+.slide-item.drop-below { box-shadow: inset 0 -2px 0 0 var(--signal); }
+
+/* Pending changes indicator in topbar */
+#pending-indicator {
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--signal);
+  margin-left: 6px;
+  white-space: nowrap;
+}
+#pending-indicator[hidden] { display: none; }
+
+/* "Save Order" button — emphasis state when there are pending changes */
+.tb-btn.primary {
+  background: rgba(230,57,70,0.14);
+  border-color: rgba(230,57,70,0.38);
+  color: #ff9090;
+}
+.tb-btn.primary:hover {
+  background: rgba(230,57,70,0.24);
+  border-color: rgba(230,57,70,0.6);
+  color: #ffb0b0;
+}
+.tb-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+/* ── Save Order Modal ───────────────────────────── */
+
+#save-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(8, 12, 20, 0.78);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+  padding: 24px;
+}
+#save-modal.open { display: flex; }
+
+#save-modal .panel {
+  background: var(--ink);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  width: min(720px, 100%);
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+}
+#save-modal h2 {
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 18px;
+  letter-spacing: -0.01em;
+  padding: 18px 22px 6px;
+  color: var(--paper);
+}
+#save-modal .subhead {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(245,241,232,0.35);
+  padding: 0 22px 14px;
+  border-bottom: 1px solid var(--border);
+}
+#save-modal .body {
+  padding: 16px 22px;
+  overflow-y: auto;
+  flex: 1;
+}
+#save-modal .body p {
+  font-family: var(--mono);
+  font-size: 11px;
+  line-height: 1.55;
+  color: rgba(245,241,232,0.65);
+  margin-bottom: 14px;
+}
+#save-modal .body code {
+  font-family: var(--mono);
+  font-size: 11px;
+  background: rgba(255,255,255,0.06);
+  padding: 1px 5px;
+  border-radius: 2px;
+  color: rgba(245,241,232,0.85);
+}
+#save-modal pre {
+  background: var(--sidebar-bg);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 12px;
+  font-family: var(--mono);
+  font-size: 11px;
+  line-height: 1.5;
+  color: rgba(245,241,232,0.82);
+  max-height: 320px;
+  overflow: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+#save-modal .changes-summary {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 6px 16px;
+  font-family: var(--mono);
+  font-size: 11px;
+  margin-bottom: 14px;
+}
+#save-modal .changes-summary .lab {
+  color: rgba(245,241,232,0.4);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 9px;
+  align-self: center;
+}
+#save-modal .changes-summary .val {
+  color: var(--paper);
+  font-size: 11px;
+}
+#save-modal .actions {
+  padding: 14px 22px 18px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  flex-wrap: wrap;
 }
 
 .slide-num {
