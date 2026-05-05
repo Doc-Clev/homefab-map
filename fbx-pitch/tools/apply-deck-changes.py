@@ -50,14 +50,56 @@ from pathlib import Path
 
 # ---- Path resolution ----------------------------------------------------------
 
-def find_project_root(start: Path) -> Path:
-    """Walk up from `start` looking for the deck root (has slides/ + js/manifest.js)."""
-    cur = start.resolve()
+def find_project_root(spec_path: Path) -> Path:
+    """Find the deck root (a dir with slides/ + js/manifest.js).
+
+    Search order:
+      1. Walk up from CWD
+      2. Walk up from the spec file's directory
+      3. Common subdirs of CWD (e.g. cwd/fbx-pitch)
+    """
+    def _has_deck(p: Path) -> bool:
+        return (p / "slides").is_dir() and (p / "js" / "manifest.js").is_file()
+
+    candidates: list[Path] = []
+    seen: set[Path] = set()
+
+    # 1. Walk up from cwd
+    cur = Path.cwd().resolve()
     for _ in range(6):
-        if (cur / "slides").is_dir() and (cur / "js" / "manifest.js").is_file():
-            return cur
+        candidates.append(cur)
+        if cur.parent == cur:
+            break
         cur = cur.parent
-    print(f"ERROR: could not find deck root from {start}", file=sys.stderr)
+
+    # 2. Walk up from spec dir
+    cur = spec_path.resolve().parent
+    for _ in range(6):
+        candidates.append(cur)
+        if cur.parent == cur:
+            break
+        cur = cur.parent
+
+    # 3. Common subdirs of cwd
+    cwd = Path.cwd().resolve()
+    for sub in ("fbx-pitch", "deck", "src"):
+        candidates.append(cwd / sub)
+
+    for c in candidates:
+        c = c.resolve()
+        if c in seen:
+            continue
+        seen.add(c)
+        if _has_deck(c):
+            return c
+
+    print(
+        f"ERROR: could not find deck root.\n"
+        f"  cwd: {Path.cwd()}\n"
+        f"  spec dir: {spec_path.resolve().parent}\n"
+        f"  Pass --root <path-to-deck-dir> explicitly, or run from the deck root.",
+        file=sys.stderr,
+    )
     sys.exit(2)
 
 
@@ -470,7 +512,7 @@ def main() -> None:
 
     spec = json.loads(args.spec.read_text(encoding="utf-8"))
 
-    root = args.root or find_project_root(args.spec.parent if args.spec.parent != Path() else Path.cwd())
+    root = args.root.resolve() if args.root else find_project_root(args.spec)
     apply_spec(root, spec, dry_run=args.dry_run)
 
     if args.dry_run:
