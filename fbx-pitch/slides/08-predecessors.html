@@ -1,0 +1,306 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Why We Win — FBX</title>
+  <link rel="stylesheet" href="../css/core.css">
+  <style>
+    .head {
+      position: absolute;
+      top: 130px;
+      left: var(--gutter);
+      right: var(--gutter);
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 60px;
+      align-items: end;
+    }
+    .head h2 {
+      font-family: var(--display);
+      font-weight: 800;
+      font-size: 76px;
+      line-height: 0.92;
+      letter-spacing: -0.035em;
+      max-width: 18ch;
+    }
+    .head h2 em {
+      font-style: italic;
+      font-weight: 500;
+      color: var(--signal);
+    }
+    .head .right-note {
+      max-width: 42ch;
+      padding-bottom: 6px;
+    }
+    .head .right-note .tag {
+      display: inline-block;
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--signal);
+      border: 1px solid var(--signal);
+      padding: 4px 10px;
+      margin-bottom: 12px;
+    }
+    .head .right-note p {
+      font-family: var(--display);
+      font-size: 17px;
+      font-weight: 400;
+      line-height: 1.45;
+      color: var(--g-600);
+    }
+    .head .right-note p strong { color: var(--ink); font-weight: 600; }
+
+    /* The graveyard: list of failed predecessors with diagnosis */
+    .graveyard {
+      position: absolute;
+      top: 360px;
+      left: var(--gutter);
+      right: var(--gutter);
+    }
+    .graveyard h3 {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--signal);
+      margin-bottom: 12px;
+    }
+    .pred-list {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+    .pred {
+      padding: 14px 12px 14px;
+      background: var(--paper-pure);
+      border: 1px solid rgba(10,22,40,0.18);
+      border-top: 3px solid var(--g-400);
+      position: relative;
+    }
+    .pred .name {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 16px;
+      letter-spacing: -0.01em;
+      line-height: 1.1;
+      margin-bottom: 6px;
+      color: var(--ink);
+    }
+    .pred .marker {
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--signal);
+      margin-bottom: 8px;
+    }
+    .pred .verdict {
+      font-size: 11px;
+      line-height: 1.4;
+      color: var(--g-600);
+    }
+    .pred.flagship {
+      border-top-color: var(--signal);
+      border-top-width: 4px;
+    }
+    .pred.flagship .name {
+      color: var(--ink);
+    }
+
+    /* The two structural mistakes — frames the diagnosis */
+    .mistakes {
+      position: absolute;
+      top: 580px;
+      left: var(--gutter);
+      right: var(--gutter);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .mistake {
+      padding: 22px 24px;
+      background: var(--paper-pure);
+      border: 1px solid var(--ink);
+      border-left: 4px solid var(--signal);
+    }
+    .mistake .lab {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--signal);
+      margin-bottom: 8px;
+    }
+    .mistake h4 {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 22px;
+      letter-spacing: -0.015em;
+      line-height: 1.2;
+      color: var(--ink);
+      margin-bottom: 10px;
+    }
+    .mistake h4 em {
+      font-style: italic;
+      color: var(--signal);
+      font-weight: 500;
+    }
+    .mistake p {
+      font-size: 13px;
+      line-height: 1.5;
+      color: var(--g-600);
+    }
+    .mistake p strong { color: var(--ink); font-weight: 600; }
+
+    /* Bottom punchline strip */
+    .punchline {
+      position: absolute;
+      bottom: 70px;
+      left: var(--gutter);
+      right: var(--gutter);
+      background: var(--ink);
+      color: var(--paper);
+      padding: 16px 28px;
+      font-family: var(--display);
+      font-size: 22px;
+      font-weight: 500;
+      line-height: 1.3;
+      letter-spacing: -0.015em;
+      text-align: center;
+    }
+    .punchline em {
+      font-style: italic;
+      color: var(--signal);
+      font-weight: 500;
+    }
+    .punchline strong {
+      color: var(--paper);
+      font-weight: 700;
+    }
+
+    .footnote {
+      position: absolute;
+      bottom: 24px;
+      left: var(--gutter);
+      right: var(--gutter);
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--g-400);
+      display: flex;
+      justify-content: space-between;
+    }
+  </style>
+</head>
+<body>
+<div class="stage">
+  <section class="slide">
+
+    <div class="eyebrow">
+      <div class="brand"><div class="brand-mark">F</div><span data-content="08-predecessors.eyebrow.left">FBX · HOMEFAB</span></div>
+      <span data-content="08-predecessors.eyebrow.right">08 · Strategy · Why We Win</span>
+    </div>
+
+    <div class="head">
+      <div>
+        <div class="kicker reveal" data-content="08-predecessors.kicker">Where Every Predecessor Failed</div>
+        <h2 class="reveal">
+          <span data-content="08-predecessors.headline.a">They tried to own the factory.</span>
+          <em data-content="08-predecessors.headline.b">We own the kit.</em>
+        </h2>
+      </div>
+      <div class="reveal">
+        <div class="right-note">
+          <div class="tag" data-content="08-predecessors.tag">The Vertical Integration Trap</div>
+          <p data-content="08-predecessors.note">
+            Every previous attempt tried to own design, factory,
+            <em>and</em> construction. That requires hundreds of millions
+            and rarely works. <strong>FBX is a software layer on the existing
+            SIP manufacturer network.</strong> We scale by partnership,
+            not by pouring concrete.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- The graveyard of predecessors -->
+    <div class="graveyard">
+      <h3 class="reveal" data-content="08-predecessors.graveyard.head">Companies That Tried · Same Mistake, Different Logos</h3>
+
+      <div class="pred-list">
+        <div class="pred flagship reveal">
+          <div class="marker" data-content="08-predecessors.p1.marker">$2B Lost</div>
+          <div class="name" data-content="08-predecessors.p1.name">Katerra</div>
+          <div class="verdict" data-content="08-predecessors.p1.verdict">Vertical at maximum scale. Bankrupt 2021.</div>
+        </div>
+        <div class="pred reveal">
+          <div class="marker" data-content="08-predecessors.p2.marker">Wound Down</div>
+          <div class="name" data-content="08-predecessors.p2.name">Connect Homes</div>
+          <div class="verdict" data-content="08-predecessors.p2.verdict">Pre-designed catalog. Built each home in a captive factory.</div>
+        </div>
+        <div class="pred reveal">
+          <div class="marker" data-content="08-predecessors.p3.marker">Stalled</div>
+          <div class="name" data-content="08-predecessors.p3.name">Plant Prefab</div>
+          <div class="verdict" data-content="08-predecessors.p3.verdict">Boutique modular. Couldn't escape architect-led pricing.</div>
+        </div>
+        <div class="pred reveal">
+          <div class="marker" data-content="08-predecessors.p4.marker">Pivoted</div>
+          <div class="name" data-content="08-predecessors.p4.name">Method Homes</div>
+          <div class="verdict" data-content="08-predecessors.p4.verdict">Boxed customers into pre-set models. Scale never came.</div>
+        </div>
+        <div class="pred reveal">
+          <div class="marker" data-content="08-predecessors.p5.marker">Closed</div>
+          <div class="name" data-content="08-predecessors.p5.name">Blokable</div>
+          <div class="verdict" data-content="08-predecessors.p5.verdict">Owned the factory. Couldn't fund the next one.</div>
+        </div>
+        <div class="pred reveal">
+          <div class="marker" data-content="08-predecessors.p6.marker">Closed 2023</div>
+          <div class="name" data-content="08-predecessors.p6.name">Cover</div>
+          <div class="verdict" data-content="08-predecessors.p6.verdict">Backyard ADUs only. Vertical from clay to crew.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- The two structural mistakes -->
+    <div class="mistakes reveal">
+      <div class="mistake">
+        <div class="lab" data-content="08-predecessors.m1.lab">Mistake 01 · Structural</div>
+        <h4 data-content="08-predecessors.m1.title">They tried to own <em>the whole vertical.</em></h4>
+        <p data-content="08-predecessors.m1.body">
+          Design, factory, and construction under one roof. <strong>$100M+ in capex
+          before a single home delivers.</strong> FBX skips the factory layer entirely
+          — partnerships with existing SIP manufacturers do the work.
+        </p>
+      </div>
+      <div class="mistake">
+        <div class="lab" data-content="08-predecessors.m2.lab">Mistake 02 · Customer Experience</div>
+        <h4 data-content="08-predecessors.m2.title">They sold a <em>catalog of plans.</em></h4>
+        <p data-content="08-predecessors.m2.body">
+          Lindal Cedar, Deltec, every modular brand — all forced customers to pick
+          from a fixed menu. <strong>That's the boxed-in feeling that kills the
+          category.</strong> FBX inverts this with a moodboard-first sandbox.
+        </p>
+      </div>
+    </div>
+
+    <div class="punchline reveal">
+      <span data-content="08-predecessors.punchline">
+        <strong>Software-on-top, partnership-scaled, moodboard-first.</strong> <em>None of the predecessors had any of the three.</em>
+      </span>
+    </div>
+
+    <div class="footnote">
+      <span data-content="08-predecessors.footer.left">Capital-light · Manufacturer-agnostic · Customer feels in control · Constraint-aware by design</span>
+      <span class="page-no" style="font-size:14px; opacity:0.5;">08</span>
+    </div>
+
+  </section>
+</div>
+<script src="../js/slide.js"></script>
+<script src="../js/content-loader.js"></script>
+</body>
+</html>

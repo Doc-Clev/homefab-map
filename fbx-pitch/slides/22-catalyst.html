@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>The Catalyst — FBX</title>
+  <link rel="stylesheet" href="../css/core.css">
+  <style>
+    .head {
+      position: absolute;
+      top: 130px;
+      left: var(--gutter);
+      right: var(--gutter);
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 60px;
+      align-items: end;
+    }
+    .head h2 {
+      font-family: var(--display);
+      font-weight: 800;
+      font-size: 84px;
+      line-height: 0.9;
+      letter-spacing: -0.035em;
+      max-width: 16ch;
+    }
+    .head h2 em {
+      font-style: italic;
+      font-weight: 500;
+      color: var(--signal);
+    }
+    .head .right-note {
+      max-width: 38ch;
+      padding-bottom: 8px;
+    }
+    .head .right-note .tag {
+      display: inline-block;
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--signal);
+      border: 1px solid var(--signal);
+      padding: 4px 10px;
+      margin-bottom: 12px;
+    }
+    .head .right-note p {
+      font-family: var(--display);
+      font-size: 17px;
+      font-weight: 400;
+      line-height: 1.45;
+      color: var(--g-600);
+    }
+    .head .right-note p strong { color: var(--ink); font-weight: 600; }
+
+    /* Three-step bridge: Floor → Catalyst → Outcome */
+    .bridge {
+      position: absolute;
+      top: 380px;
+      left: var(--gutter);
+      right: var(--gutter);
+      display: grid;
+      grid-template-columns: 1fr 60px 1fr 60px 1fr;
+      gap: 0;
+      align-items: stretch;
+    }
+    .bridge-step {
+      padding: 26px 24px;
+      border: 1.5px solid var(--ink);
+      background: var(--paper-pure);
+      position: relative;
+      min-height: 240px;
+      display: flex;
+      flex-direction: column;
+    }
+    .bridge-step.terminal {
+      background: var(--ink);
+      color: var(--paper);
+    }
+    .bridge-step .stage-no {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--g-400);
+      margin-bottom: 14px;
+    }
+    .bridge-step.terminal .stage-no { color: var(--signal); }
+    .bridge-step h4 {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 26px;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      margin-bottom: 16px;
+    }
+    .bridge-step.terminal h4 em {
+      font-style: italic;
+      color: var(--signal);
+      font-weight: 500;
+    }
+    .bridge-step .big-stat {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 44px;
+      line-height: 1;
+      letter-spacing: -0.03em;
+      color: var(--ink);
+      margin-bottom: 6px;
+    }
+    .bridge-step .big-stat small {
+      font-size: 22px;
+      font-weight: 400;
+      color: var(--g-400);
+    }
+    .bridge-step.terminal .big-stat {
+      color: var(--paper);
+    }
+    .bridge-step.terminal .big-stat small {
+      color: rgba(245,241,232,0.5);
+    }
+    .bridge-step.terminal .big-stat em {
+      font-style: italic;
+      color: var(--signal);
+      font-weight: 500;
+    }
+    .bridge-step .stat-lab {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--g-400);
+      margin-bottom: 18px;
+    }
+    .bridge-step.terminal .stat-lab {
+      color: rgba(245,241,232,0.6);
+    }
+    .bridge-step p {
+      font-size: 13px;
+      line-height: 1.55;
+      color: var(--g-600);
+      margin-top: auto;
+    }
+    .bridge-step.terminal p {
+      color: rgba(245,241,232,0.78);
+    }
+    .bridge-step p strong {
+      color: var(--ink);
+      font-weight: 600;
+    }
+    .bridge-step.terminal p strong {
+      color: var(--paper);
+    }
+
+    .bridge-arrow {
+      display: grid;
+      place-items: center;
+      font-family: var(--display);
+      font-weight: 300;
+      font-size: 44px;
+      color: var(--signal);
+      line-height: 1;
+    }
+
+    /* Bottom math strip */
+    .math-strip {
+      position: absolute;
+      bottom: 70px;
+      left: var(--gutter);
+      right: var(--gutter);
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      border-top: 2px solid var(--ink);
+      border-bottom: 2px solid var(--ink);
+    }
+    .math-cell {
+      padding: 18px 22px;
+      border-right: 1px solid rgba(10,22,40,0.18);
+    }
+    .math-cell:last-child { border-right: 0; }
+    .math-cell .v {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 28px;
+      line-height: 1;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+    }
+    .math-cell .v em {
+      font-style: italic;
+      color: var(--signal);
+      font-weight: 500;
+    }
+    .math-cell .v small {
+      font-size: 16px;
+      font-weight: 400;
+      color: var(--g-400);
+    }
+    .math-cell .l {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--g-400);
+      margin-top: 6px;
+      max-width: 28ch;
+      line-height: 1.5;
+    }
+
+    .footnote {
+      position: absolute;
+      bottom: 24px;
+      left: var(--gutter);
+      right: var(--gutter);
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--g-400);
+      display: flex;
+      justify-content: space-between;
+    }
+  </style>
+</head>
+<body>
+<div class="stage">
+  <section class="slide">
+
+    <div class="eyebrow">
+      <div class="brand"><div class="brand-mark">F</div><span data-content="22-catalyst.eyebrow.left">FBX · HOMEFAB</span></div>
+      <span data-content="22-catalyst.eyebrow.right">22 · Investor Economics · The Catalyst</span>
+    </div>
+
+    <div class="head">
+      <div>
+        <div class="kicker reveal" data-content="22-catalyst.kicker">The Strategic Multiplier</div>
+        <h2 class="reveal">
+          <span data-content="22-catalyst.headline.a">$4M is the</span> <em data-content="22-catalyst.headline.b">catalyst.</em>
+        </h2>
+      </div>
+      <div class="reveal">
+        <div class="right-note">
+          <div class="tag" data-content="22-catalyst.tag">$4M → $80M · 22% IRR · 20× MOIC</div>
+          <p data-content="22-catalyst.note">
+            The Core check pays back from contracts in hand. Then it
+            <strong>catalyzes the franchise rollout</strong> —
+            137 Home-Fabs deploying $123.3M in franchise capital
+            across the network. Total cash returned to Series A:
+            <strong>$80M at 22% IRR</strong> over the 15-year horizon.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Three-step bridge -->
+    <div class="bridge reveal">
+      <!-- Step 1: The Floor -->
+      <div class="bridge-step">
+        <div class="stage-no" data-content="22-catalyst.s1.stage">Years 1–2 · The Floor</div>
+        <h4 data-content="22-catalyst.s1.title">Contracted book delivers.</h4>
+        <div class="big-stat" data-content="22-catalyst.s1.stat">$12.9<small>M</small></div>
+        <div class="stat-lab" data-content="22-catalyst.s1.lab">Core Op Profit · 599 Buildings · By Mid-2028</div>
+        <p data-content="22-catalyst.s1.body">
+          $4M Series A funds Core operations through delivery of the
+          <strong>already-signed pipeline</strong>. Returns 3.2× the raise
+          before any franchise activity.
+        </p>
+      </div>
+
+      <div class="bridge-arrow">→</div>
+
+      <!-- Step 2: The Catalyst -->
+      <div class="bridge-step">
+        <div class="stage-no" data-content="22-catalyst.s2.stage">Years 3–10 · The Catalyst</div>
+        <h4 data-content="22-catalyst.s2.title">Franchise rollout activates.</h4>
+        <div class="big-stat" data-content="22-catalyst.s2.stat">$123.3<small>M</small></div>
+        <div class="stat-lab" data-content="22-catalyst.s2.lab">Franchise Capital Deployed · 137 Fabs × $900K</div>
+        <p data-content="22-catalyst.s2.body">
+          Every Home-Fab is independently funded by its franchisee — but each
+          one runs on Core's kit, royalty, and systems.
+          <strong>The $4M Core seed unlocks the entire network.</strong>
+        </p>
+      </div>
+
+      <div class="bridge-arrow">→</div>
+
+      <!-- Step 3: The Outcome -->
+      <div class="bridge-step terminal">
+        <div class="stage-no" data-content="22-catalyst.s3.stage">By Year 15 · The Outcome</div>
+        <h4 data-content="22-catalyst.s3.title">$4M becomes <em>$80M.</em></h4>
+        <div class="big-stat" data-content="22-catalyst.s3.stat"><em>20×</em> <small>MOIC</small></div>
+        <div class="stat-lab" data-content="22-catalyst.s3.lab">Total Cash Returned · 22% IRR Over Hold</div>
+        <p data-content="22-catalyst.s3.body">
+          The contracted floor de-risks the entry. The franchise rollout
+          drives the upside. Core's Year-10 economics
+          (<strong>$3.23B cumulative profit</strong>) translates the catalyst into
+          investor cash returned.
+        </p>
+      </div>
+    </div>
+
+    <!-- Bottom math strip -->
+    <div class="math-strip reveal">
+      <div class="math-cell">
+        <div class="v" data-content="22-catalyst.m1.v">$4<small>M</small></div>
+        <div class="l" data-content="22-catalyst.m1.l">Series A · FBX Core</div>
+      </div>
+      <div class="math-cell">
+        <div class="v" data-content="22-catalyst.m2.v">137 <em>fabs</em></div>
+        <div class="l" data-content="22-catalyst.m2.l">National Network · Each Independently Funded</div>
+      </div>
+      <div class="math-cell">
+        <div class="v" data-content="22-catalyst.m3.v">$80<small>M</small></div>
+        <div class="l" data-content="22-catalyst.m3.l">Total Return · 20× the Series A Check</div>
+      </div>
+      <div class="math-cell">
+        <div class="v" data-content="22-catalyst.m4.v">22<em>%</em></div>
+        <div class="l" data-content="22-catalyst.m4.l">IRR Over Hold · Annualized</div>
+      </div>
+    </div>
+
+    <div class="footnote">
+      <span data-content="22-catalyst.footer.left">Floor: 599 contracted bldgs × $21,607 Core profit/home = $12.9M · Catalyst: 137 fabs × $900K franchise fee = $123.3M · Outcome: $4M × 1.22^15 = $80M</span>
+      <span class="page-no" style="font-size:14px; opacity:0.5;">22</span>
+    </div>
+
+  </section>
+</div>
+<script src="../js/slide.js"></script>
+<script src="../js/content-loader.js"></script>
+</body>
+</html>

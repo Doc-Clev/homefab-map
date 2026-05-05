@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Pipeline — FBX</title>
+  <link rel="stylesheet" href="../css/core.css">
+  <style>
+    .head {
+      position: absolute;
+      top: 130px;
+      left: var(--gutter);
+      right: var(--gutter);
+      display: grid;
+      grid-template-columns: 1.3fr 1fr;
+      gap: 60px;
+      align-items: end;
+    }
+    .head h2 {
+      font-family: var(--display);
+      font-weight: 800;
+      font-size: 88px;
+      line-height: 0.92;
+      letter-spacing: -0.035em;
+      max-width: 14ch;
+    }
+    .head h2 em {
+      font-style: italic;
+      font-weight: 500;
+      color: var(--signal);
+    }
+    .head .lede {
+      max-width: 42ch;
+      font-family: var(--display);
+      font-size: 18px;
+      font-weight: 400;
+      line-height: 1.45;
+      color: var(--g-600);
+      padding-bottom: 12px;
+    }
+    .head .lede strong { color: var(--ink); font-weight: 600; }
+
+    /* The big-number row anchoring the slide */
+    .topline {
+      position: absolute;
+      top: 360px;
+      left: var(--gutter);
+      right: var(--gutter);
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      border-top: 2px solid var(--ink);
+      border-bottom: 2px solid var(--ink);
+    }
+    .topline .cell {
+      padding: 22px 26px 22px;
+      border-right: 1px solid rgba(10,22,40,0.18);
+    }
+    .topline .cell:last-child { border-right: 0; }
+    .topline .cell .v {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 56px;
+      line-height: 1;
+      letter-spacing: -0.025em;
+      color: var(--ink);
+      font-feature-settings: "lnum","tnum";
+    }
+    .topline .cell .v small {
+      font-size: 22px;
+      font-weight: 400;
+      color: var(--g-400);
+      letter-spacing: 0;
+    }
+    .topline .cell .v em {
+      font-style: italic;
+      color: var(--signal);
+      font-weight: 500;
+    }
+    .topline .cell .l {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--g-400);
+      margin-top: 8px;
+      max-width: 22ch;
+      line-height: 1.5;
+    }
+
+    /* Mix table — left side highlights ADU & Multi-Fam, right side shows full mix */
+    .mix-section {
+      position: absolute;
+      top: 540px;
+      left: var(--gutter);
+      right: var(--gutter);
+      bottom: 90px;
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 40px;
+    }
+
+    .mix-left h3, .mix-right h3 {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--signal);
+      margin-bottom: 14px;
+    }
+    .mix-right h3 { color: var(--g-400); }
+
+    /* The featured ADU/Multi-Fam cards */
+    .featured {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    .feat-card {
+      background: var(--paper-pure);
+      border: 1px solid var(--ink);
+      border-top: 4px solid var(--signal);
+      padding: 18px 20px;
+    }
+    .feat-card .name {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 24px;
+      letter-spacing: -0.015em;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+    .feat-card .desc {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--g-400);
+      margin-bottom: 16px;
+    }
+    .feat-card .stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 12px;
+    }
+    .feat-card .stat .v {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 22px;
+      line-height: 1;
+      letter-spacing: -0.015em;
+    }
+    .feat-card .stat .l {
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--g-400);
+      margin-top: 4px;
+      line-height: 1.4;
+    }
+
+    /* Right-side: the full mix as a horizontal stacked bar with rows */
+    .full-mix-rows {
+      display: grid;
+      gap: 8px;
+    }
+    .mix-row {
+      display: grid;
+      grid-template-columns: 80px 1fr 80px;
+      gap: 12px;
+      align-items: center;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .mix-row .label { color: var(--ink); }
+    .mix-row .bar {
+      height: 18px;
+      background: rgba(10,22,40,0.08);
+      position: relative;
+      overflow: hidden;
+    }
+    .mix-row .bar-fill {
+      position: absolute;
+      top: 0; bottom: 0; left: 0;
+      background: var(--ink);
+    }
+    .mix-row.adu .bar-fill { background: var(--signal); }
+    .mix-row.multi .bar-fill { background: var(--clay, #C97B4A); }
+    .mix-row.duplex .bar-fill { background: var(--ink); }
+    .mix-row.sfr .bar-fill { background: var(--ink); opacity: 0.4; }
+    .mix-row .v {
+      text-align: right;
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    .footnote {
+      position: absolute;
+      bottom: 42px;
+      left: var(--gutter);
+      right: var(--gutter);
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--g-400);
+      display: flex;
+      justify-content: space-between;
+    }
+  </style>
+</head>
+<body>
+<div class="stage">
+  <section class="slide">
+
+    <div class="eyebrow">
+      <div class="brand"><div class="brand-mark">F</div><span data-content="05-pipeline.eyebrow.left">FBX · HOMEFAB</span></div>
+      <span data-content="05-pipeline.eyebrow.right">05 · Traction · Current Book</span>
+    </div>
+
+    <div class="head">
+      <div>
+        <div class="kicker reveal" data-content="05-pipeline.kicker">Real Orders. Real Volume. Already Sold.</div>
+        <h2 class="reveal">
+          <span data-content="05-pipeline.headline.a">The pipeline is</span> <em data-content="05-pipeline.headline.b">already here.</em>
+        </h2>
+      </div>
+      <div class="reveal">
+        <p class="lede" data-content="05-pipeline.lede">
+          243 buildings in the per-unit waterfall — <strong>$30.9M of revenue</strong>
+          delivering across the next twelve months. The Rosamond projects extend
+          the book to <strong>599 buildings</strong> through 2028.
+        </p>
+      </div>
+    </div>
+
+    <div class="topline reveal">
+      <div class="cell">
+        <div class="v" data-content="05-pipeline.top1.v">599</div>
+        <div class="l" data-content="05-pipeline.top1.l">Total Buildings in Book</div>
+      </div>
+      <div class="cell">
+        <div class="v" data-content="05-pipeline.top2.v">$80.8<small>M</small></div>
+        <div class="l" data-content="05-pipeline.top2.l">Combined Revenue</div>
+      </div>
+      <div class="cell">
+        <div class="v" data-content="05-pipeline.top3.v">243 <em>bldgs</em></div>
+        <div class="l" data-content="05-pipeline.top3.l">Delivering · Jun 2026 → May 2027</div>
+      </div>
+      <div class="cell">
+        <div class="v" data-content="05-pipeline.top4.v">~$135<small>K</small></div>
+        <div class="l" data-content="05-pipeline.top4.l">Avg Revenue Per Building</div>
+      </div>
+    </div>
+
+    <div class="mix-section">
+      <div class="mix-left">
+        <h3 data-content="05-pipeline.featured.head">Featured Products · ADU & Townhomes</h3>
+        <div class="featured">
+          <div class="feat-card reveal">
+            <div class="name" data-content="05-pipeline.adu.name">ADU</div>
+            <div class="desc" data-content="05-pipeline.adu.desc">Accessory Dwelling Units · Single-Family Lots</div>
+            <div class="stats">
+              <div class="stat">
+                <div class="v" data-content="05-pipeline.adu.s1.v">211</div>
+                <div class="l" data-content="05-pipeline.adu.s1.l">Buildings Booked</div>
+              </div>
+              <div class="stat">
+                <div class="v" data-content="05-pipeline.adu.s2.v">$28.3<small>M</small></div>
+                <div class="l" data-content="05-pipeline.adu.s2.l">Total Revenue</div>
+              </div>
+              <div class="stat">
+                <div class="v" data-content="05-pipeline.adu.s3.v">35<small>%</small></div>
+                <div class="l" data-content="05-pipeline.adu.s3.l">Of Pipeline Mix</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="feat-card reveal">
+            <div class="name" data-content="05-pipeline.mf.name">Townhomes</div>
+            <div class="desc" data-content="05-pipeline.mf.desc">Density · Duplex By-Right Eligible</div>
+            <div class="stats">
+              <div class="stat">
+                <div class="v" data-content="05-pipeline.mf.s1.v">214</div>
+                <div class="l" data-content="05-pipeline.mf.s1.l">Buildings Booked</div>
+              </div>
+              <div class="stat">
+                <div class="v" data-content="05-pipeline.mf.s2.v">$30.5<small>M</small></div>
+                <div class="l" data-content="05-pipeline.mf.s2.l">Total Revenue</div>
+              </div>
+              <div class="stat">
+                <div class="v" data-content="05-pipeline.mf.s3.v">36<small>%</small></div>
+                <div class="l" data-content="05-pipeline.mf.s3.l">Of Pipeline Mix</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mix-right reveal">
+        <h3 data-content="05-pipeline.fullmix.head">Full Pipeline Mix · 599 Buildings</h3>
+        <div class="full-mix-rows">
+          <div class="mix-row multi">
+            <span class="label" data-content="05-pipeline.row1.label">Townhomes</span>
+            <div class="bar"><div class="bar-fill" style="width: 100%;"></div></div>
+            <span class="v" data-content="05-pipeline.row1.v">214 · 36%</span>
+          </div>
+          <div class="mix-row adu">
+            <span class="label" data-content="05-pipeline.row2.label">ADU</span>
+            <div class="bar"><div class="bar-fill" style="width: 98.5%;"></div></div>
+            <span class="v" data-content="05-pipeline.row2.v">211 · 35%</span>
+          </div>
+          <div class="mix-row duplex">
+            <span class="label" data-content="05-pipeline.row3.label">Duplex</span>
+            <div class="bar"><div class="bar-fill" style="width: 74.7%;"></div></div>
+            <span class="v" data-content="05-pipeline.row3.v">160 · 27%</span>
+          </div>
+          <div class="mix-row sfr">
+            <span class="label" data-content="05-pipeline.row4.label">SFR</span>
+            <div class="bar"><div class="bar-fill" style="width: 6.5%;"></div></div>
+            <span class="v" data-content="05-pipeline.row4.v">14 · 2%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footnote">
+      <span data-content="05-pipeline.footer.left">Source · Jobs Waterfall v2 · Per-unit detail Jun 2026 → May 2027 · Rosamond aggregate 2027–28</span>
+      <span class="page-no" style="font-size:14px; opacity:0.5;">05</span>
+    </div>
+
+  </section>
+</div>
+<script src="../js/slide.js"></script>
+<script src="../js/content-loader.js"></script>
+</body>
+</html>

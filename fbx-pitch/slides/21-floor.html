@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Two Years Pays It Back — FBX</title>
+  <link rel="stylesheet" href="../css/core.css">
+  <style>
+    .head {
+      position: absolute;
+      top: 130px;
+      left: var(--gutter);
+      right: var(--gutter);
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 60px;
+      align-items: end;
+    }
+    .head h2 {
+      font-family: var(--display);
+      font-weight: 800;
+      font-size: 84px;
+      line-height: 0.9;
+      letter-spacing: -0.035em;
+      max-width: 16ch;
+    }
+    .head h2 em {
+      font-style: italic;
+      font-weight: 500;
+      color: var(--signal);
+    }
+    .head .right-note {
+      max-width: 38ch;
+      padding-bottom: 8px;
+    }
+    .head .right-note .tag {
+      display: inline-block;
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--signal);
+      border: 1px solid var(--signal);
+      padding: 4px 10px;
+      margin-bottom: 12px;
+    }
+    .head .right-note p {
+      font-family: var(--display);
+      font-size: 17px;
+      font-weight: 400;
+      line-height: 1.45;
+      color: var(--g-600);
+    }
+    .head .right-note p strong { color: var(--ink); font-weight: 600; }
+
+    /* Big-number hero strip — the headline ROI */
+    .hero {
+      position: absolute;
+      top: 380px;
+      left: var(--gutter);
+      right: var(--gutter);
+      background: var(--ink);
+      color: var(--paper);
+      padding: 32px 36px;
+      display: grid;
+      grid-template-columns: auto 1fr auto auto;
+      gap: 36px;
+      align-items: center;
+    }
+    .hero .raise-num {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 76px;
+      line-height: 1;
+      letter-spacing: -0.03em;
+      color: var(--paper);
+    }
+    .hero .raise-num small {
+      font-size: 36px;
+      font-weight: 400;
+      color: rgba(245,241,232,0.6);
+    }
+    .hero .raise-lab {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(245,241,232,0.6);
+      max-width: 22ch;
+      line-height: 1.5;
+    }
+    .hero .arrow {
+      font-family: var(--display);
+      font-size: 60px;
+      font-weight: 300;
+      color: var(--signal);
+      line-height: 1;
+    }
+    .hero .return-block {
+      text-align: right;
+    }
+    .hero .return-num {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 76px;
+      line-height: 1;
+      letter-spacing: -0.03em;
+      color: var(--paper);
+    }
+    .hero .return-num em {
+      font-style: italic;
+      color: var(--signal);
+      font-weight: 500;
+    }
+    .hero .return-num small {
+      font-size: 36px;
+      font-weight: 400;
+      color: rgba(245,241,232,0.6);
+    }
+    .hero .return-lab {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(245,241,232,0.6);
+      margin-top: 6px;
+      max-width: 28ch;
+      line-height: 1.5;
+    }
+
+    /* Mix of contracted book — what's the breakdown */
+    .mix-grid {
+      position: absolute;
+      top: 580px;
+      left: var(--gutter);
+      right: var(--gutter);
+      bottom: 100px;
+    }
+    .mix-grid .mix-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 14px;
+    }
+    .mix-grid .mix-head h3 {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--signal);
+    }
+    .mix-grid .mix-head .total {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      color: var(--g-400);
+      text-transform: uppercase;
+    }
+    .mix-grid .mix-head .total strong { color: var(--ink); font-weight: 600; }
+
+    .mix-row {
+      display: grid;
+      grid-template-columns: 130px 60px 1fr 90px 100px;
+      gap: 14px;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(10,22,40,0.1);
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: 0.06em;
+    }
+    .mix-row:first-of-type { border-top: 1px solid rgba(10,22,40,0.18); }
+    .mix-row .label {
+      font-family: var(--display);
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+    }
+    .mix-row .bldgs {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--g-400);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+    .mix-row .bar {
+      height: 18px;
+      background: rgba(10,22,40,0.06);
+      position: relative;
+      overflow: hidden;
+    }
+    .mix-row .bar-fill {
+      position: absolute; top: 0; bottom: 0; left: 0;
+    }
+    .mix-row.adu       .bar-fill { background: var(--signal); }
+    .mix-row.townhomes .bar-fill { background: var(--clay, #C97B4A); }
+    .mix-row.duplex    .bar-fill { background: var(--ink); }
+    .mix-row.sfr       .bar-fill { background: var(--ink); opacity: 0.4; }
+    .mix-row .rev {
+      text-align: right;
+      font-family: var(--display);
+      font-weight: 600;
+      font-size: 14px;
+      color: var(--ink);
+      letter-spacing: -0.01em;
+    }
+    .mix-row .core {
+      text-align: right;
+      font-family: var(--display);
+      font-weight: 600;
+      font-size: 14px;
+      color: var(--signal);
+      letter-spacing: -0.01em;
+    }
+
+    .footnote {
+      position: absolute;
+      bottom: 24px;
+      left: var(--gutter);
+      right: var(--gutter);
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--g-400);
+      display: flex;
+      justify-content: space-between;
+    }
+  </style>
+</head>
+<body>
+<div class="stage">
+  <section class="slide">
+
+    <div class="eyebrow">
+      <div class="brand"><div class="brand-mark">F</div><span data-content="21-floor.eyebrow.left">FBX · HOMEFAB</span></div>
+      <span data-content="21-floor.eyebrow.right">21 · Investor Economics · The Floor</span>
+    </div>
+
+    <div class="head">
+      <div>
+        <div class="kicker reveal" data-content="21-floor.kicker">The Contracted Floor</div>
+        <h2 class="reveal">
+          <span data-content="21-floor.headline.a">Two years</span> <em data-content="21-floor.headline.b">pays it back.</em>
+        </h2>
+      </div>
+      <div class="reveal">
+        <div class="right-note">
+          <div class="tag" data-content="21-floor.tag">Contracted Pipeline · Jun 2026 → Jun 2028</div>
+          <p data-content="21-floor.note">
+            <strong>599 buildings already under contract</strong> deliver before the
+            franchise rollout begins. At Core's plan-economics ($21,607 op profit per
+            home from slide 20), the contracted book alone returns
+            <strong>3.2× the $4M raise</strong> by mid-2028 — before a single
+            new fab is added.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- The hero: $4M → $12.9M (3.2x floor) -->
+    <div class="hero reveal">
+      <div>
+        <div class="raise-num">$4<small>M</small></div>
+        <div class="raise-lab" data-content="21-floor.hero.raise.lab">FBX Core · Series A · Single Check</div>
+      </div>
+      <div class="arrow">→</div>
+      <div class="return-block">
+        <div class="return-num" data-content="21-floor.hero.return.num">$12.9<small>M</small></div>
+        <div class="return-lab" data-content="21-floor.hero.return.lab">Core Op Profit · 24-Month Contracted Book</div>
+      </div>
+      <div class="return-block">
+        <div class="return-num" data-content="21-floor.hero.multiple"><em>3.2×</em></div>
+        <div class="return-lab" data-content="21-floor.hero.multiple.lab">Floor Multiple · Before Franchise Rollout</div>
+      </div>
+    </div>
+
+    <!-- The mix breakdown -->
+    <div class="mix-grid">
+      <div class="mix-head">
+        <h3 data-content="21-floor.mix.head">Mix of the 599-Building Contracted Book</h3>
+        <span class="total" data-content="21-floor.mix.total"><strong>$80.8M total revenue</strong> · $51.7M Core revenue · $12.9M Core profit</span>
+      </div>
+
+      <div class="mix-row townhomes reveal">
+        <span class="label" data-content="21-floor.mix.row1.name">Townhomes</span>
+        <span class="bldgs" data-content="21-floor.mix.row1.bldgs">214 bldgs · 36%</span>
+        <div class="bar"><div class="bar-fill" style="width: 100%;"></div></div>
+        <span class="rev" data-content="21-floor.mix.row1.rev">$30.5M</span>
+        <span class="core" data-content="21-floor.mix.row1.core">$4.6M Core</span>
+      </div>
+      <div class="mix-row adu reveal">
+        <span class="label" data-content="21-floor.mix.row2.name">ADU</span>
+        <span class="bldgs" data-content="21-floor.mix.row2.bldgs">211 bldgs · 35%</span>
+        <div class="bar"><div class="bar-fill" style="width: 98.5%;"></div></div>
+        <span class="rev" data-content="21-floor.mix.row2.rev">$28.3M</span>
+        <span class="core" data-content="21-floor.mix.row2.core">$4.6M Core</span>
+      </div>
+      <div class="mix-row duplex reveal">
+        <span class="label" data-content="21-floor.mix.row3.name">Duplex</span>
+        <span class="bldgs" data-content="21-floor.mix.row3.bldgs">160 bldgs · 27%</span>
+        <div class="bar"><div class="bar-fill" style="width: 74.7%;"></div></div>
+        <span class="rev" data-content="21-floor.mix.row3.rev">$19.5M</span>
+        <span class="core" data-content="21-floor.mix.row3.core">$3.5M Core</span>
+      </div>
+      <div class="mix-row sfr reveal">
+        <span class="label" data-content="21-floor.mix.row4.name">SFR</span>
+        <span class="bldgs" data-content="21-floor.mix.row4.bldgs">14 bldgs · 2%</span>
+        <div class="bar"><div class="bar-fill" style="width: 6.5%;"></div></div>
+        <span class="rev" data-content="21-floor.mix.row4.rev">$2.5M</span>
+        <span class="core" data-content="21-floor.mix.row4.core">$0.3M Core</span>
+      </div>
+    </div>
+
+    <div class="footnote">
+      <span data-content="21-floor.footer.left">Core unit economics from slide 20 plan ($86,293 rev/home · $21,607 op profit/home · 25% margin) applied to 599 contracted buildings</span>
+      <span class="page-no" style="font-size:14px; opacity:0.5;">21</span>
+    </div>
+
+  </section>
+</div>
+<script src="../js/slide.js"></script>
+<script src="../js/content-loader.js"></script>
+</body>
+</html>

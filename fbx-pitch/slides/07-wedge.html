@@ -1,0 +1,361 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>The Wedge — FBX</title>
+  <link rel="stylesheet" href="../css/core.css">
+  <style>
+    .head {
+      position: absolute;
+      top: 130px;
+      left: var(--gutter);
+      right: var(--gutter);
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 60px;
+      align-items: end;
+    }
+    .head h2 {
+      font-family: var(--display);
+      font-weight: 800;
+      font-size: 68px;
+      line-height: 0.95;
+      letter-spacing: -0.03em;
+      max-width: 22ch;
+    }
+    .head h2 em {
+      font-style: italic;
+      font-weight: 500;
+      color: var(--signal);
+    }
+    .head .right-note {
+      max-width: 42ch;
+      padding-bottom: 6px;
+    }
+    .head .right-note .tag {
+      display: inline-block;
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--signal);
+      border: 1px solid var(--signal);
+      padding: 4px 10px;
+      margin-bottom: 12px;
+    }
+    .head .right-note p {
+      font-family: var(--display);
+      font-size: 17px;
+      font-weight: 400;
+      line-height: 1.45;
+      color: var(--g-600);
+    }
+    .head .right-note p strong { color: var(--ink); font-weight: 600; }
+
+    /* The two columns: Old Way vs New Way */
+    .compare {
+      position: absolute;
+      top: 380px;
+      left: var(--gutter);
+      right: var(--gutter);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      border: 1.5px solid var(--ink);
+    }
+    .col {
+      padding: 22px 26px 22px;
+      min-height: 240px;
+      position: relative;
+    }
+    .col + .col { border-left: 1.5px solid var(--ink); }
+    .col.old {
+      background: var(--paper-pure);
+    }
+    .col.new {
+      background: var(--ink);
+      color: var(--paper);
+    }
+    .col .col-tag {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .col.old .col-tag { color: var(--g-400); }
+    .col.new .col-tag { color: var(--signal); }
+    .col h3 {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 26px;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      margin-bottom: 22px;
+      max-width: 22ch;
+    }
+    .col.old h3 { color: var(--ink); }
+    .col.new h3 em {
+      font-style: italic;
+      color: var(--signal);
+      font-weight: 500;
+    }
+
+    /* Linear sequence (old way) */
+    .flow {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 22px;
+    }
+    .flow .node {
+      flex: 1;
+      padding: 10px 6px;
+      border: 1px solid rgba(10,22,40,0.25);
+      text-align: center;
+      font-family: var(--mono);
+      font-size: 9px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ink);
+      background: var(--paper);
+      line-height: 1.3;
+    }
+    .flow .arrow {
+      font-family: var(--display);
+      font-weight: 300;
+      font-size: 16px;
+      color: var(--g-400);
+      flex-shrink: 0;
+    }
+    .flow .arrow.broken {
+      color: var(--signal);
+      font-weight: 500;
+    }
+    .flow .node.fail {
+      border-color: var(--signal);
+      color: var(--signal);
+      background: rgba(230,57,70,0.06);
+    }
+
+    /* Constraint loop (new way) */
+    .loop {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 22px;
+    }
+    .loop .node {
+      padding: 10px 8px;
+      border: 1px solid rgba(245,241,232,0.3);
+      text-align: center;
+      font-family: var(--mono);
+      font-size: 9px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--paper);
+      background: rgba(245,241,232,0.04);
+      line-height: 1.3;
+    }
+    .loop .node.signal {
+      border-color: var(--signal);
+      color: var(--signal);
+    }
+    .loop .arrows {
+      grid-column: 1 / -1;
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+      font-family: var(--display);
+      font-size: 15px;
+      color: var(--signal);
+      font-weight: 400;
+      letter-spacing: 0.4em;
+    }
+
+    .col p.body {
+      font-size: 13px;
+      line-height: 1.55;
+      color: var(--g-600);
+    }
+    .col.new p.body {
+      color: rgba(245,241,232,0.78);
+    }
+    .col p.body strong { font-weight: 600; }
+    .col.old p.body strong { color: var(--ink); }
+    .col.new p.body strong { color: var(--paper); }
+
+    /* The grammar block — bottom strip */
+    .grammar {
+      position: absolute;
+      bottom: 80px;
+      left: var(--gutter);
+      right: var(--gutter);
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      gap: 28px;
+      align-items: center;
+      padding-top: 18px;
+      border-top: 2px solid var(--ink);
+    }
+    .grammar h4 {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 22px;
+      letter-spacing: -0.015em;
+      line-height: 1.15;
+      color: var(--ink);
+      max-width: 16ch;
+    }
+    .grammar h4 em {
+      font-style: italic;
+      color: var(--signal);
+      font-weight: 500;
+    }
+    .grammar .rules {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+    .grammar .rule {
+      padding: 12px 14px;
+      background: var(--paper-pure);
+      border: 1px solid rgba(10,22,40,0.18);
+    }
+    .grammar .rule .lab {
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--signal);
+      margin-bottom: 4px;
+    }
+    .grammar .rule .text {
+      font-family: var(--display);
+      font-size: 13px;
+      font-weight: 500;
+      line-height: 1.35;
+      color: var(--ink);
+    }
+
+    .footnote {
+      position: absolute;
+      bottom: 24px;
+      left: var(--gutter);
+      right: var(--gutter);
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--g-400);
+      display: flex;
+      justify-content: space-between;
+    }
+  </style>
+</head>
+<body>
+<div class="stage">
+  <section class="slide">
+
+    <div class="eyebrow">
+      <div class="brand"><div class="brand-mark">F</div><span data-content="07-wedge.eyebrow.left">FBX · HOMEFAB</span></div>
+      <span data-content="07-wedge.eyebrow.right">07 · Strategy · The Wedge</span>
+    </div>
+
+    <div class="head">
+      <div>
+        <div class="kicker reveal" data-content="07-wedge.kicker">Design Inside the Grammar</div>
+        <h2 class="reveal">
+          <span data-content="07-wedge.headline.a">The constraints aren't the enemy.</span>
+          <em data-content="07-wedge.headline.b">They're the engine.</em>
+        </h2>
+      </div>
+      <div class="reveal">
+        <div class="right-note">
+          <div class="tag" data-content="07-wedge.tag">The SIP Software Wedge</div>
+          <p data-content="07-wedge.note">
+            Every previous SIP company treated design as upstream and panel cutting
+            as downstream. We flip that — <strong>the customer designs in a sandbox
+            where every move is already SIP-feasible.</strong> They never see an
+            option that can't be built.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- The compare: Old Way vs New Way -->
+    <div class="compare reveal">
+      <div class="col old">
+        <div class="col-tag" data-content="07-wedge.old.tag">The Old Way · Sequential Handoff</div>
+        <h3 data-content="07-wedge.old.title">Design first. Hand off. Rework half of it.</h3>
+
+        <div class="flow">
+          <div class="node">Architect</div>
+          <span class="arrow">→</span>
+          <div class="node">PDF</div>
+          <span class="arrow broken">⚠</span>
+          <div class="node fail">Rework</div>
+          <span class="arrow">→</span>
+          <div class="node">SIP&nbsp;Mfr</div>
+        </div>
+
+        <p class="body" data-content="07-wedge.old.body">
+          The architect designs whatever they want and hands a PDF to the SIP
+          manufacturer. Half the design has to be reworked because it can't be
+          paneled efficiently. <strong>Schedule slips, margin evaporates, and
+          the customer feels the friction.</strong>
+        </p>
+      </div>
+
+      <div class="col new">
+        <div class="col-tag" data-content="07-wedge.new.tag">The FBX Way · Constraint-Coupled Design</div>
+        <h3 data-content="07-wedge.new.title">Design <em>inside</em> the grammar. Always feasible.</h3>
+
+        <div class="loop">
+          <div class="node signal">Customer<br>Designs</div>
+          <div class="node">Constraint<br>Solver</div>
+          <div class="arrows">↑ ↓</div>
+          <div class="node">Manufacturer<br>Quote</div>
+          <div class="node">Site<br>Logistics</div>
+        </div>
+
+        <p class="body" data-content="07-wedge.new.body">
+          Every move the customer makes is already SIP-feasible — checked against
+          panel grammar, manufacturer specs, and site logistics in real time.
+          <strong>No rework, no surprises, no "we can't actually build that."</strong>
+        </p>
+      </div>
+    </div>
+
+    <!-- The grammar — making constraints visible -->
+    <div class="grammar reveal">
+      <h4 data-content="07-wedge.grammar.title">The SIP <em>grammar</em> the system enforces:</h4>
+      <div class="rules">
+        <div class="rule">
+          <div class="lab" data-content="07-wedge.rule1.lab">Panel Widths</div>
+          <div class="text" data-content="07-wedge.rule1.text">Standard 4', 8' — sometimes wider</div>
+        </div>
+        <div class="rule">
+          <div class="lab" data-content="07-wedge.rule2.lab">Panel Heights</div>
+          <div class="text" data-content="07-wedge.rule2.text">8'–12' typical, up to 24' with engineered splines</div>
+        </div>
+        <div class="rule">
+          <div class="lab" data-content="07-wedge.rule3.lab">Openings</div>
+          <div class="text" data-content="07-wedge.rule3.text">Windows & doors that respect panel layout</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footnote">
+      <span data-content="07-wedge.footer.left">Software-layer wedge · Constraint-coupled design · No vertical integration · Capital-efficient</span>
+      <span class="page-no" style="font-size:14px; opacity:0.5;">07</span>
+    </div>
+
+  </section>
+</div>
+<script src="../js/slide.js"></script>
+<script src="../js/content-loader.js"></script>
+</body>
+</html>
