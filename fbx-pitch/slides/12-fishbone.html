@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Expansion Map — FBX</title>
+  <title>Fishbone — FBX</title>
   <link rel="stylesheet" href="../css/core.css">
   <style>
     body { background: var(--ink); }
@@ -26,6 +26,7 @@
       font-size: 56px;
       line-height: 1;
       letter-spacing: -0.02em;
+      color: var(--paper);
     }
     .live-head .left h2 em { font-style: italic; color: var(--signal); font-weight: 500; }
     .live-head .left .lab {
@@ -36,6 +37,7 @@
       color: var(--signal);
       margin-bottom: 12px;
     }
+
     .live-head .right {
       text-align: right;
       font-family: var(--mono);
@@ -45,7 +47,10 @@
       color: rgba(245,241,232,0.6);
       line-height: 1.7;
     }
-    .live-head .right strong { color: var(--paper); font-weight: 600; }
+    .live-head .right strong {
+      color: var(--paper);
+      font-weight: 600;
+    }
     .live-head .right .live-dot {
       display: inline-block;
       width: 8px; height: 8px;
@@ -55,7 +60,8 @@
       animation: pulse 1.6s ease-in-out infinite;
     }
     @keyframes pulse {
-      0%, 100% { opacity: 1; } 50% { opacity: 0.3; }
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
     }
 
     .embed {
@@ -116,49 +122,51 @@
   <section class="slide">
 
     <div class="eyebrow">
-      <div class="brand"><div class="brand-mark">F</div><span data-content="19-expansion-map.eyebrow.left">FBX · HOMEFAB</span></div>
-      <span data-content="19-expansion-map.eyebrow.right">19 · Live Tool · 10-Year Plan</span>
+      <div class="brand"><div class="brand-mark">F</div><span data-content="12-fishbone.eyebrow.left">FBX · HOMEFAB</span></div>
+      <span data-content="12-fishbone.eyebrow.right">12 · Live Tool · Operating Model</span>
     </div>
 
     <div class="live-head">
       <div class="left">
-        <div class="lab" data-content="19-expansion-map.kicker">Interactive Map · Year 1 → Year 10</div>
-        <h2><span data-content="19-expansion-map.headline.a">10-Year</span> <em data-content="19-expansion-map.headline.b">Expansion Map</em></h2>
+        <div class="lab" data-content="12-fishbone.kicker">Live Diagram</div>
+        <h2><span data-content="12-fishbone.headline.a">FBX Operating Model ·</span> <em data-content="12-fishbone.headline.b">Fishbone</em></h2>
       </div>
       <div class="right">
-        <div><span class="live-dot"></span><span data-content="19-expansion-map.status.line1"><strong>LIVE</strong> — synced with sites.json</span></div>
-        <div data-content="19-expansion-map.status.line2">137 Fabs · 5 Hubs · 50 States by 2035</div>
+        <div><span class="live-dot"></span><span data-content="12-fishbone.status.line1"><strong>LIVE</strong> — synced with model</span></div>
+        <div data-content="12-fishbone.status.line2">Three BUs · One delivered home</div>
       </div>
     </div>
 
     <div class="embed">
       <!-- INTEGRATION POINT
-           Drop your expansion-map HTML at: tools/expansion-map.html
+           Drop your fishbone HTML at: tools/fishbone.html
            Or change the src below to point to your hosted version
-           (e.g. https://homefab-map.onrender.com/). -->
-      <iframe id="map-frame"
-              src="https://homefab-map.onrender.com/"
-              title="FBX Expansion Map"
+           (e.g. https://homefab-map.onrender.com/fishbone). -->
+      <iframe id="fishbone-frame"
+              src="https://homefab-map.onrender.com/fishbone"
+              title="FBX Fishbone"
               loading="lazy"></iframe>
     </div>
 <div class="live-link">
-  <a href="https://homefab-map.onrender.com/" target="_blank" rel="noopener" data-content="13-fishbone.live.cta">
+  <a href="https://homefab-map.onrender.com/fishbone" target="_blank" rel="noopener" data-content="12-fishbone.live.cta">
     See the full published version
   </a>
-  <span class="src">homefab-map.onrender.com/fishbone</span>
+  <span class="src">homefab-map.onrender.com</span>
 </div>
     
     <div class="foot" style="bottom: 40px;">
-      <span>Source: <code style="font-family: var(--mono); font-size: 11px;">/tools/expansion-map.html</code></span>
-      <span class="page-no">19</span>
+      <span>Source: <code style="font-family: var(--mono); font-size: 11px;">/tools/fishbone.html</code></span>
+      <span class="page-no">12</span>
     </div>
   </section>
 </div>
 <script src="../js/slide.js"></script>
 <script src="../js/content-loader.js"></script>
 <script>
-  const f = document.getElementById('map-frame');
+  // Graceful fallback if the embed file isn't there yet
+  const f = document.getElementById('fishbone-frame');
   f.addEventListener('error', showFallback);
+  // Some browsers don't fire 'error' for 404s on iframes; do a fetch probe.
   fetch(f.src, { method: 'HEAD' }).catch(showFallback)
     .then(r => { if (r && !r.ok) showFallback(); });
 
@@ -167,14 +175,12 @@
     e.innerHTML = `
       <div class="embed-missing" style="position:relative;height:100%;">
         <div>
-          <div class="label">Expansion Map not yet linked</div>
-          <div class="path">tools/expansion-map.html</div>
-          <p style="margin-top: 24px; max-width: 520px; font-size: 14px; line-height: 1.55; color: var(--g-600);">
-            Drop your existing <strong>index.html + sites.json</strong> into
-            <strong>/tools/expansion-map.html</strong>, or update the iframe
-            <code>src</code> in <strong>slides/11-expansion-map.html</strong>
-            to point at your hosted version
-            (e.g. <code>https://homefab-map.onrender.com/</code>).
+          <div class="label">Fishbone tool not yet linked</div>
+          <div class="path">tools/fishbone.html</div>
+          <p style="margin-top: 24px; max-width: 480px; font-size: 14px; line-height: 1.5; color: var(--g-600);">
+            Drop your existing fishbone HTML into <strong>/tools/fishbone.html</strong>,
+            or update the iframe <code>src</code> in <strong>slides/10-fishbone.html</strong>
+            to point to your hosted version (e.g. homefab-map.onrender.com/fishbone).
           </p>
         </div>
       </div>`;
