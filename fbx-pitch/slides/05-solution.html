@@ -5,168 +5,235 @@
   <title>The Solution — FBX</title>
   <link rel="stylesheet" href="../css/core.css">
   <style>
-    .sol-layout {
+    /* ===== Header ===== */
+    .head {
       position: absolute;
-      inset: 100px var(--gutter) 130px var(--gutter);
+      top: 130px;
+      left: var(--gutter);
+      right: var(--gutter);
       display: grid;
-      grid-template-rows: auto 1fr;
-      gap: 28px;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 60px;
+      align-items: end;
     }
-    .sol-head .kicker {
-      font-family: var(--mono);
-      font-size: 12px;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--clay);
-      margin-bottom: 14px;
-    }
-    .sol-head h2 {
+    .head h2 {
       font-family: var(--display);
       font-weight: 800;
-      font-size: 64px;
-      line-height: 0.95;
-      letter-spacing: -0.03em;
-      color: var(--ink);
+      font-size: 76px;
+      line-height: 0.94;
+      letter-spacing: -0.035em;
+      max-width: 16ch;
     }
-    .sol-head h2 em {
+    .head h2 em {
       font-style: italic;
       font-weight: 500;
       color: var(--signal);
     }
-    .sol-head .tag {
-      font-family: var(--mono);
-      font-size: 11px;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--g-400);
-      margin-top: 18px;
+    .head .right-note {
+      max-width: 42ch;
+      padding-bottom: 8px;
     }
-    .sol-head .note {
-      max-width: 96ch;
-      margin-top: 6px;
+    .head .right-note .tag {
+      display: inline-block;
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--signal);
+      border: 1px solid var(--signal);
+      padding: 4px 10px;
+      margin-bottom: 12px;
+    }
+    .head .right-note p {
       font-family: var(--display);
       font-size: 17px;
-      line-height: 1.5;
+      font-weight: 400;
+      line-height: 1.45;
       color: var(--g-600);
     }
-    .sol-head .note strong {
-      color: var(--ink);
-      font-weight: 600;
-    }
+    .head .right-note p strong { color: var(--ink); font-weight: 600; }
 
-    .sol-cols {
+    /* ===== Three-column flow ===== */
+    .flow {
+      position: absolute;
+      top: 350px;
+      left: var(--gutter);
+      right: var(--gutter);
       display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 24px;
+      grid-template-columns: 1fr 36px 1fr 36px 1fr;
+      gap: 0;
       align-items: stretch;
     }
-    .sol-col {
+    .col {
       background: var(--paper-pure);
-      border: 1px solid var(--ink);
-      padding: 20px 22px 22px;
+      border: 1.5px solid var(--ink);
+      padding: 22px 24px 24px;
+      min-height: 360px;
       display: flex;
       flex-direction: column;
-      gap: 16px;
     }
-    .sol-col .col-head {
+    .col.center {
+      background: var(--ink);
+      color: var(--paper);
+    }
+    .col-head {
       display: flex;
-      align-items: center;
+      align-items: baseline;
       justify-content: space-between;
+      margin-bottom: 14px;
       padding-bottom: 12px;
-      border-bottom: 2px solid var(--ink);
+      border-bottom: 1px solid rgba(10,22,40,0.18);
     }
-    .sol-col .col-head h3 {
+    .col.center .col-head {
+      border-bottom-color: rgba(245,241,232,0.18);
+    }
+    .col-num {
       font-family: var(--display);
       font-weight: 700;
-      font-size: 26px;
-      letter-spacing: -0.01em;
+      font-size: 42px;
+      line-height: 1;
+      letter-spacing: -0.03em;
+      color: var(--signal);
     }
-    .sol-col .status {
+    .col-title {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 22px;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      line-height: 1.1;
+      flex: 1;
+      padding-left: 14px;
+    }
+    .col.center .col-title { color: var(--paper); }
+    .col-status {
       font-family: var(--mono);
-      font-size: 10px;
+      font-size: 9px;
       letter-spacing: 0.18em;
       text-transform: uppercase;
-      padding: 5px 10px;
-      border: 1px solid var(--moss);
-      color: var(--moss);
-      white-space: nowrap;
+      padding: 3px 7px;
+      border: 1px solid currentColor;
+      flex-shrink: 0;
     }
-    .sol-col.c1 .status { border-color: var(--moss);   color: var(--moss); }
-    .sol-col.c2 .status { border-color: var(--clay);   color: var(--clay); }
-    .sol-col.c3 .status { border-color: var(--signal); color: var(--signal); }
+    .col-status.have { color: var(--moss); }
+    .col-status.building { color: var(--clay); border-color: var(--clay); }
+    .col.center .col-status.building { color: var(--clay); border-color: var(--clay); }
+    .col-status.raising { color: var(--signal); border-color: var(--signal); }
 
-    .sol-col .sub .lab {
-      font-family: var(--mono);
-      font-size: 10px;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--g-400);
-      margin-bottom: 4px;
+    /* Sub-section block inside each column */
+    .sub {
+      margin-top: 14px;
     }
-    .sol-col .sub .name {
+    .sub:first-of-type { margin-top: 0; }
+    .sub-lab {
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--signal);
+      margin-bottom: 6px;
+    }
+    .sub-name {
       font-family: var(--display);
       font-weight: 600;
-      font-size: 14px;
+      font-size: 15px;
+      letter-spacing: -0.01em;
+      line-height: 1.2;
       color: var(--ink);
       margin-bottom: 6px;
     }
-    .sol-col .sub ul {
+    .col.center .sub-name { color: var(--paper); }
+
+    .bullets {
       list-style: none;
+      padding: 0;
+      margin: 0;
     }
-    .sol-col .sub ul li {
-      font-size: 12.5px;
+    .bullets li {
+      font-size: 12px;
       line-height: 1.5;
       color: var(--g-600);
       padding-left: 14px;
       position: relative;
       margin-bottom: 4px;
     }
-    .sol-col .sub ul li::before {
+    .col.center .bullets li {
+      color: rgba(245,241,232,0.72);
+    }
+    .bullets li::before {
       content: "·";
       position: absolute;
-      left: 2px;
-      top: -3px;
-      color: var(--clay);
+      left: 4px;
+      top: -2px;
+      color: var(--signal);
       font-weight: 700;
-      font-size: 18px;
-    }
-    .sol-col .sub + .sub {
-      padding-top: 14px;
-      border-top: 1px dashed var(--g-200);
+      font-size: 16px;
     }
 
-    .sol-callout {
+    /* Connector arrows between columns */
+    .arrow {
+      display: grid;
+      place-items: center;
+      font-family: var(--display);
+      font-size: 28px;
+      font-weight: 300;
+      color: var(--signal);
+      line-height: 1;
+    }
+
+    /* ===== Bottom callout: car analogy ===== */
+    .callout {
       position: absolute;
-      bottom: 60px;
+      bottom: 80px;
       left: var(--gutter);
       right: var(--gutter);
+      background: var(--ink);
+      color: var(--paper);
+      padding: 18px 28px;
       display: grid;
       grid-template-columns: auto 1fr;
       gap: 28px;
-      align-items: baseline;
-      padding: 14px 0 0;
-      border-top: 2px solid var(--ink);
+      align-items: center;
     }
-    .sol-callout .lab {
+    .callout .lab {
       font-family: var(--mono);
-      font-size: 11px;
+      font-size: 10px;
       letter-spacing: 0.22em;
       text-transform: uppercase;
       color: var(--signal);
-      white-space: nowrap;
+      max-width: 14ch;
+      line-height: 1.5;
     }
-    .sol-callout p {
+    .callout .text {
       font-family: var(--display);
-      font-size: 16px;
-      font-weight: 400;
-      line-height: 1.45;
-      color: var(--ink);
-    }
-    .sol-callout p strong { font-weight: 700; }
-    .sol-callout p em {
-      font-style: italic;
+      font-size: 19px;
       font-weight: 500;
-      color: var(--clay);
+      line-height: 1.35;
+      letter-spacing: -0.01em;
+      color: var(--paper);
+    }
+    .callout .text em {
+      font-style: italic;
+      color: var(--signal);
+      font-weight: 500;
+    }
+    .callout .text strong {
+      color: var(--paper);
+      font-weight: 700;
+    }
+
+    .footnote {
+      position: absolute;
+      bottom: 24px;
+      left: var(--gutter);
+      right: var(--gutter);
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--g-400);
+      display: flex;
+      justify-content: space-between;
     }
   </style>
 </head>
@@ -179,115 +246,146 @@
       <span data-content="05-solution.eyebrow.right">05 · Strategy · The Solution</span>
     </div>
 
-    <div class="sol-layout">
-      <header class="sol-head">
+    <div class="head">
+      <div>
         <div class="kicker reveal" data-content="05-solution.kicker">How HomeFab Solves It</div>
         <h2 class="reveal">
           <span data-content="05-solution.headline.a">Three distinct focuses.</span>
           <em data-content="05-solution.headline.b">One system.</em>
         </h2>
-        <div class="tag reveal" data-content="05-solution.tag">Solving Direction · Demand → Kit → Install</div>
-        <p class="note reveal" data-content="05-solution.note">
-          The retail market signals demand. <strong>FBX Core</strong> ingests it, standardizes it into a kit, and ships it to the Home-Fab. The <strong>Last Mile</strong> installs. Each layer is a distinct discipline — but they only work as one operating system.
-        </p>
-      </header>
-
-      <div class="sol-cols">
-        <!-- Column 1: 1st Mile -->
-        <div class="sol-col c1 reveal">
-          <div class="col-head">
-            <h3 data-content="05-solution.c1.title">1st Mile</h3>
-            <span class="status" data-content="05-solution.c1.status">We Have It</span>
-          </div>
-          <section class="sub">
-            <div class="lab" data-content="05-solution.c1.s1.lab">Customer Desires · Served by AI Software</div>
-            <ul>
-              <li data-content="05-solution.c1.s1.b1">Energy efficiency by default</li>
-              <li data-content="05-solution.c1.s1.b2">Ease of design — guided, not gated</li>
-              <li data-content="05-solution.c1.s1.b3">Speed — fast permits, AI-assisted</li>
-              <li data-content="05-solution.c1.s1.b4">Trusted brand · iterative customization</li>
-            </ul>
-          </section>
-          <section class="sub">
-            <div class="lab" data-content="05-solution.c1.s2.lab">Design Constraints &amp; Product Dev</div>
-            <ul>
-              <li data-content="05-solution.c1.s2.b1">Focus on panels &amp; kit-of-parts</li>
-              <li data-content="05-solution.c1.s2.b2">Every move is SIP-feasible</li>
-            </ul>
-          </section>
-        </div>
-
-        <!-- Column 2: FBX Core -->
-        <div class="sol-col c2 reveal">
-          <div class="col-head">
-            <h3 data-content="05-solution.c2.title">FBX Core</h3>
-            <span class="status" data-content="05-solution.c2.status">Building Now</span>
-          </div>
-          <section class="sub">
-            <div class="lab" data-content="05-solution.c2.s1.lab">Supplier Network</div>
-            <div class="name" data-content="05-solution.c2.s1.name">Wall/Roof Panels &amp; Bath/Kitchen Pods</div>
-            <ul>
-              <li data-content="05-solution.c2.s1.b1">Multi-vendor abstraction layer</li>
-              <li data-content="05-solution.c2.s1.b2">Domestic + foreign price competition</li>
-            </ul>
-          </section>
-          <section class="sub">
-            <div class="lab" data-content="05-solution.c2.s2.lab">Aggregation</div>
-            <div class="name" data-content="05-solution.c2.s2.name">Create the Kit of Parts</div>
-            <ul>
-              <li data-content="05-solution.c2.s2.b1">QA, sort, sequence for assembly</li>
-              <li data-content="05-solution.c2.s2.b2">Ship to "Home-Fab" by container</li>
-            </ul>
-          </section>
-          <section class="sub">
-            <div class="lab" data-content="05-solution.c2.s3.lab">Network Build</div>
-            <div class="name" data-content="05-solution.c2.s3.name">Create the "Home-Fab" Network</div>
-            <ul>
-              <li data-content="05-solution.c2.s3.b1">Franchise establishment · QA · regional expansion</li>
-            </ul>
-          </section>
-        </div>
-
-        <!-- Column 3: Last Mile -->
-        <div class="sol-col c3 reveal">
-          <div class="col-head">
-            <h3 data-content="05-solution.c3.title">Last Mile</h3>
-            <span class="status" data-content="05-solution.c3.status">Raising Now</span>
-          </div>
-          <section class="sub">
-            <div class="lab" data-content="05-solution.c3.s1.lab">Site Work</div>
-            <ul>
-              <li data-content="05-solution.c3.s1.b1">Foundation, utilities, prep</li>
-              <li data-content="05-solution.c3.s1.b2">Permit-to-pour readiness</li>
-            </ul>
-          </section>
-          <section class="sub">
-            <div class="lab" data-content="05-solution.c3.s2.lab">Fab-to-Lot Logistics</div>
-            <ul>
-              <li data-content="05-solution.c3.s2.b1">~150-mile delivery radius per Fab</li>
-              <li data-content="05-solution.c3.s2.b2">Crane &amp; transport pre-cleared</li>
-            </ul>
-          </section>
-          <section class="sub">
-            <div class="lab" data-content="05-solution.c3.s3.lab">Construction Workforce</div>
-            <ul>
-              <li data-content="05-solution.c3.s3.b1">Training simplicity — kit assembly, not bespoke build</li>
-              <li data-content="05-solution.c3.s3.b2">Vetted installer network · franchise-owned</li>
-            </ul>
-          </section>
+      </div>
+      <div class="reveal">
+        <div class="right-note">
+          <div class="tag" data-content="05-solution.tag">Solving Direction · Demand → Kit → Install</div>
+          <p data-content="05-solution.note">
+            The retail market signals demand. <strong>FBX Core</strong> ingests it,
+            standardizes it into a kit, and ships it to the Home-Fab. The
+            <strong>Last Mile</strong> installs. Each layer is a distinct discipline —
+            but they only work as one operating system.
+          </p>
         </div>
       </div>
     </div>
 
-    <div class="sol-callout reveal">
-      <span class="lab" data-content="05-solution.callout.lab">The Pattern</span>
-      <p data-content="05-solution.callout.text">People want to <strong>trust the brand</strong> but want the <em>uniqueness of iterative design.</em> Automobiles cracked this fifty years ago — standardized platforms, configurable trims. <strong>HomeFab is the same idea, applied to housing.</strong></p>
+    <!-- Three-column system flow -->
+    <div class="flow reveal">
+
+      <!-- Column 1: 1st Mile -->
+      <div class="col">
+        <div class="col-head">
+          <span class="col-num">01</span>
+          <span class="col-title" data-content="05-solution.c1.title">1st Mile</span>
+          <span class="col-status have" data-content="05-solution.c1.status">We Have It</span>
+        </div>
+
+        <div class="sub">
+          <div class="sub-lab" data-content="05-solution.c1.s1.lab">Customer Desires · Served by AI Software</div>
+          <ul class="bullets">
+            <li data-content="05-solution.c1.s1.b1">Energy efficiency by default</li>
+            <li data-content="05-solution.c1.s1.b2">Ease of design — guided, not gated</li>
+            <li data-content="05-solution.c1.s1.b3">Speed — fast permits, AI-assisted</li>
+            <li data-content="05-solution.c1.s1.b4">Trusted brand · iterative customization</li>
+          </ul>
+        </div>
+
+        <div class="sub">
+          <div class="sub-lab" data-content="05-solution.c1.s2.lab">Design Constraints &amp; Product Dev</div>
+          <ul class="bullets">
+            <li data-content="05-solution.c1.s2.b1">Focus on panels &amp; kit-of-parts</li>
+            <li data-content="05-solution.c1.s2.b2">Every move is SIP-feasible</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="arrow">→</div>
+
+      <!-- Column 2: FBX Core (the dark, central one) -->
+      <div class="col center">
+        <div class="col-head">
+          <span class="col-num">02</span>
+          <span class="col-title" data-content="05-solution.c2.title">FBX Core</span>
+          <span class="col-status building" data-content="05-solution.c2.status">Building Now</span>
+        </div>
+
+        <div class="sub">
+          <div class="sub-lab" data-content="05-solution.c2.s1.lab">Supplier Network</div>
+          <div class="sub-name" data-content="05-solution.c2.s1.name">Wall/Roof Panels &amp; Bath/Kitchen Pods</div>
+          <ul class="bullets">
+            <li data-content="05-solution.c2.s1.b1">Multi-vendor abstraction layer</li>
+            <li data-content="05-solution.c2.s1.b2">Domestic + foreign price competition</li>
+          </ul>
+        </div>
+
+        <div class="sub">
+          <div class="sub-lab" data-content="05-solution.c2.s2.lab">Aggregation</div>
+          <div class="sub-name" data-content="05-solution.c2.s2.name">Create the Kit of Parts</div>
+          <ul class="bullets">
+            <li data-content="05-solution.c2.s2.b1">QA, sort, sequence for assembly</li>
+            <li data-content="05-solution.c2.s2.b2">Ship to "Home-Fab" by container</li>
+          </ul>
+        </div>
+
+        <div class="sub">
+          <div class="sub-lab" data-content="05-solution.c2.s3.lab">Network Build</div>
+          <div class="sub-name" data-content="05-solution.c2.s3.name">Create the "Home-Fab" Network</div>
+          <ul class="bullets">
+            <li data-content="05-solution.c2.s3.b1">Franchise establishment · QA · regional expansion</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="arrow">→</div>
+
+      <!-- Column 3: Last Mile -->
+      <div class="col">
+        <div class="col-head">
+          <span class="col-num">03</span>
+          <span class="col-title" data-content="05-solution.c3.title">Last Mile</span>
+          <span class="col-status raising" data-content="05-solution.c3.status">Raising Now</span>
+        </div>
+
+        <div class="sub">
+          <div class="sub-lab" data-content="05-solution.c3.s1.lab">Site Work</div>
+          <ul class="bullets">
+            <li data-content="05-solution.c3.s1.b1">Foundation, utilities, prep</li>
+            <li data-content="05-solution.c3.s1.b2">Permit-to-pour readiness</li>
+          </ul>
+        </div>
+
+        <div class="sub">
+          <div class="sub-lab" data-content="05-solution.c3.s2.lab">Fab-to-Lot Logistics</div>
+          <ul class="bullets">
+            <li data-content="05-solution.c3.s2.b1">~150-mile delivery radius per Fab</li>
+            <li data-content="05-solution.c3.s2.b2">Crane &amp; transport pre-cleared</li>
+          </ul>
+        </div>
+
+        <div class="sub">
+          <div class="sub-lab" data-content="05-solution.c3.s3.lab">Construction Workforce</div>
+          <ul class="bullets">
+            <li data-content="05-solution.c3.s3.b1">Training simplicity — kit assembly, not bespoke build</li>
+            <li data-content="05-solution.c3.s3.b2">Vetted installer network · franchise-owned</li>
+          </ul>
+        </div>
+      </div>
+
     </div>
 
-    <div class="foot">
-      <span data-content="05-solution.footer.left">FBX · The Solution Architecture</span>
-      <span class="page-no">05</span>
+    <!-- The auto-industry analogy callout -->
+    <div class="callout reveal">
+      <div class="lab" data-content="05-solution.callout.lab">The Pattern</div>
+      <div class="text" data-content="05-solution.callout.text">
+        People want to <strong>trust the brand</strong> but want the
+        <em>uniqueness of iterative design.</em> Automobiles cracked this fifty
+        years ago — standardized platforms, configurable trims. <strong>HomeFab is the same idea, applied to housing.</strong>
+      </div>
     </div>
+
+    <div class="footnote">
+      <span data-content="05-solution.footer.left">FBX · The Solution Architecture</span>
+      <span class="page-no" style="font-size:14px; opacity:0.5;">05</span>
+    </div>
+
   </section>
 </div>
 <script src="../js/slide.js"></script>
