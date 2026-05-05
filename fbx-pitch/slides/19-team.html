@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Team — FBX</title>
+  <link rel="stylesheet" href="../css/core.css">
+  <style>
+    .team-layout {
+      position: absolute;
+      inset: 110px var(--gutter) 130px var(--gutter);
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      gap: 40px;
+    }
+
+    .team-head .kicker {
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--clay);
+      margin-bottom: 14px;
+    }
+    .team-head h2 {
+      font-family: var(--display);
+      font-weight: 800;
+      font-size: 96px;
+      line-height: 0.92;
+      letter-spacing: -0.04em;
+      color: var(--ink);
+      margin-bottom: 18px;
+    }
+    .team-head h2 em {
+      font-style: italic;
+      font-weight: 500;
+      color: var(--signal);
+    }
+    .team-head .subhead {
+      font-family: var(--display);
+      font-size: 22px;
+      font-weight: 400;
+      line-height: 1.4;
+      color: var(--g-600);
+      max-width: 64ch;
+    }
+    .team-head .subhead strong { color: var(--ink); font-weight: 600; }
+
+    .team-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 36px;
+      align-items: start;
+    }
+    .member {
+      display: grid;
+      grid-template-columns: 88px 1fr;
+      gap: 18px;
+      align-items: start;
+    }
+    .member .avatar {
+      width: 88px;
+      height: 88px;
+      border-radius: 50%;
+      background: var(--paper-pure);
+      border: 1.5px solid var(--ink);
+      display: grid;
+      place-items: center;
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 36px;
+      color: var(--ink);
+      letter-spacing: -0.02em;
+    }
+    .member .info { min-width: 0; }
+    .member .info h3 {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 22px;
+      letter-spacing: -0.01em;
+      margin-bottom: 2px;
+      color: var(--ink);
+    }
+    .member .info .role {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--signal);
+      margin-bottom: 10px;
+    }
+    .member .info .bio {
+      font-size: 13px;
+      line-height: 1.5;
+      color: var(--g-600);
+    }
+    .member .info .bio strong { color: var(--ink); font-weight: 600; }
+
+    .contact-strip {
+      display: grid;
+      grid-template-columns: auto 1fr 1fr 1fr;
+      gap: 28px;
+      align-items: baseline;
+      padding-top: 22px;
+      border-top: 2px solid var(--ink);
+    }
+    .contact-strip .lab-block .label {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--signal);
+      margin-bottom: 4px;
+    }
+    .contact-strip .lab-block .value {
+      font-family: var(--display);
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--ink);
+    }
+    .contact-strip .lab-block .value a {
+      color: var(--ink);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(10,22,40,0.25);
+    }
+    .contact-strip .lab-block .value a:hover { border-bottom-color: var(--signal); }
+    .contact-strip .heading {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--g-400);
+      align-self: center;
+      white-space: nowrap;
+    }
+  </style>
+</head>
+<body>
+<div class="stage">
+  <section class="slide">
+
+    <div class="eyebrow">
+      <div class="brand"><div class="brand-mark">F</div><span data-content="19-team.eyebrow.left">FBX · HOMEFAB</span></div>
+      <span data-content="19-team.eyebrow.right">19 · Team &amp; Contact</span>
+    </div>
+
+    <div class="team-layout">
+
+      <header class="team-head">
+        <div class="kicker reveal" data-content="19-team.kicker">Who's Building This</div>
+        <h2 class="reveal">
+          <span data-content="19-team.headline.a">The team</span>
+          <em data-content="19-team.headline.b">running this.</em>
+        </h2>
+        <p class="subhead reveal" data-content="19-team.subhead">
+          A small group, building a network. <strong>Operations-first execution</strong>,
+          franchise-aware product design, and a bias toward shipping the next Home-Fab
+          before the last one is fully baked.
+        </p>
+      </header>
+
+      <div class="team-grid reveal">
+        <div class="member">
+          <div class="avatar" data-content="19-team.m1.initials">DC</div>
+          <div class="info">
+            <h3 data-content="19-team.m1.name">Doc Clev</h3>
+            <div class="role" data-content="19-team.m1.role">Founder &amp; CEO</div>
+            <p class="bio" data-content="19-team.m1.bio">
+              Founder. Originator of the FBX operating model, the kit-of-parts spec,
+              and the franchise rollout sequence. <strong>Drives strategy, raises capital,
+              owns the customer.</strong>
+            </p>
+          </div>
+        </div>
+
+        <div class="member">
+          <div class="avatar" data-content="19-team.m2.initials">—</div>
+          <div class="info">
+            <h3 data-content="19-team.m2.name">Open Seat</h3>
+            <div class="role" data-content="19-team.m2.role">Operations Lead</div>
+            <p class="bio" data-content="19-team.m2.bio">
+              Owns Core warehouse, supplier abstraction, and Home-Fab launch playbook.
+              Manufacturing or logistics background; multi-site rollout experience.
+              <strong>Hiring with the Series A close.</strong>
+            </p>
+          </div>
+        </div>
+
+        <div class="member">
+          <div class="avatar" data-content="19-team.m3.initials">—</div>
+          <div class="info">
+            <h3 data-content="19-team.m3.name">Open Seat</h3>
+            <div class="role" data-content="19-team.m3.role">Engineering Lead</div>
+            <p class="bio" data-content="19-team.m3.bio">
+              Constraint-aware design platform, supplier abstraction layer, and the
+              configurator-to-quote pipeline. Strong systems chops, comfortable with
+              both software and physical constraints. <strong>Hiring with the Series A close.</strong>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="contact-strip">
+        <div class="heading" data-content="19-team.contact.heading">Reach us</div>
+        <div class="lab-block">
+          <div class="label">Email</div>
+          <div class="value"><a href="mailto:doc@simplyprovable.com" data-content="19-team.contact.email">doc@simplyprovable.com</a></div>
+        </div>
+        <div class="lab-block">
+          <div class="label">Web</div>
+          <div class="value"><a href="https://homefab-map.onrender.com/" target="_blank" rel="noopener" data-content="19-team.contact.web">homefab-map.onrender.com</a></div>
+        </div>
+        <div class="lab-block">
+          <div class="label">Based</div>
+          <div class="value" data-content="19-team.contact.based">United States · Remote-first</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="foot" style="bottom: 24px;">
+      <span data-content="19-team.footer.left">FBX · Who's running this</span>
+      <span class="page-no" style="font-size: 14px; opacity: 0.5;">19</span>
+    </div>
+  </section>
+</div>
+<script src="../js/slide.js"></script>
+<script src="../js/content-loader.js"></script>
+</body>
+</html>

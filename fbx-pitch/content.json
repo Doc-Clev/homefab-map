@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "version": "0.12",
+    "version": "0.13",
     "description": "Editable content for FBX deck. Edit via /admin/ or directly. Slide HTML reads keys via data-content attributes; localStorage overrides this file at runtime."
   },
   "01-cover": {
@@ -499,9 +499,34 @@
     "moat4.app": "Franchisees run on <strong>FBX systems</strong> — design, permits, kit, logistics, training. Switching out is replacing the whole operating stack, not just a supplier.",
     "footer.left": "Each moat compounds with scale · Scale comes from momentum"
   },
-  "19-momentum": {
+  "19-team": {
     "eyebrow.left": "FBX · HOMEFAB",
-    "eyebrow.right": "19 · Strategy · Momentum",
+    "eyebrow.right": "19 · Team &amp; Contact",
+    "kicker": "Who's Building This",
+    "headline.a": "The team",
+    "headline.b": "running this.",
+    "subhead": "A small group, building a network. <strong>Operations-first execution</strong>, franchise-aware product design, and a bias toward shipping the next Home-Fab before the last one is fully baked.",
+    "m1.initials": "DC",
+    "m1.name": "Doc Clev",
+    "m1.role": "Founder &amp; CEO",
+    "m1.bio": "Founder. Originator of the FBX operating model, the kit-of-parts spec, and the franchise rollout sequence. <strong>Drives strategy, raises capital, owns the customer.</strong>",
+    "m2.initials": "—",
+    "m2.name": "Open Seat",
+    "m2.role": "Operations Lead",
+    "m2.bio": "Owns Core warehouse, supplier abstraction, and Home-Fab launch playbook. Manufacturing or logistics background; multi-site rollout experience. <strong>Hiring with the Series A close.</strong>",
+    "m3.initials": "—",
+    "m3.name": "Open Seat",
+    "m3.role": "Engineering Lead",
+    "m3.bio": "Constraint-aware design platform, supplier abstraction layer, and the configurator-to-quote pipeline. Strong systems chops, comfortable with both software and physical constraints. <strong>Hiring with the Series A close.</strong>",
+    "contact.heading": "Reach us",
+    "contact.email": "doc@simplyprovable.com",
+    "contact.web": "homefab-map.onrender.com",
+    "contact.based": "United States · Remote-first",
+    "footer.left": "FBX · Who's running this"
+  },
+  "20-momentum": {
+    "eyebrow.left": "FBX · HOMEFAB",
+    "eyebrow.right": "20 · Strategy · Momentum",
     "kicker": "The Strategy",
     "headline.a": "Momentum first.",
     "headline.b": "Moats follow.",
@@ -519,22 +544,22 @@
     "reframe2.label": "Defensibility — the Moat",
     "reframe2.text": "Long-term <strong>protection from competitors.</strong> Keeps you alive once everyone else notices."
   },
-  "20-backup-intro": {
+  "21-backup-intro": {
     "eyebrow.left": "FBX · HOMEFAB",
-    "eyebrow.right": "20 · Backup · Reference Material",
+    "eyebrow.right": "21 · Backup · Reference Material",
     "kicker": "Reference Material",
     "headline.a": "Backup Slides",
     "headline.b": "Questions/Answers",
-    "lede": "What follows is the deeper material — the <strong>system layers</strong> and the <strong>operating-system reference</strong>. Truths, workforce, and objections live in the live Reference (slide 23). Pulled forward when asked.",
+    "lede": "What follows is the deeper material — the <strong>system layers</strong> and the <strong>operating-system reference</strong>. Truths, workforce, and objections live in the live Reference (slide 24). Pulled forward when asked.",
     "list.label": "In this section",
     "item1": "Operating model — Fishbone",
     "item2": "10-year expansion map",
     "item3": "Reference — Operating system map",
     "footer.left": "FBX · Backup Material Begins Here"
   },
-  "21-fishbone": {
+  "22-fishbone": {
     "eyebrow.left": "FBX · HOMEFAB",
-    "eyebrow.right": "21 · Live Tool · Operating Model",
+    "eyebrow.right": "22 · Live Tool · Operating Model",
     "kicker": "Live Diagram",
     "headline.a": "FBX Operating Model ·",
     "headline.b": "Fishbone",
@@ -542,9 +567,9 @@
     "status.line2": "Three BUs · One delivered home",
     "live.cta": "See the full published version"
   },
-  "22-expansion-map": {
+  "23-expansion-map": {
     "eyebrow.left": "FBX · HOMEFAB",
-    "eyebrow.right": "22 · Live Tool · 10-Year Plan",
+    "eyebrow.right": "23 · Live Tool · 10-Year Plan",
     "kicker": "Interactive Map · Year 1 → Year 10",
     "headline.a": "10-Year",
     "headline.b": "Expansion Map",
@@ -552,9 +577,9 @@
     "status.line2": "137 Fabs · 5 Hubs · 50 States by 2035",
     "live.cta": "See the full published version"
   },
-  "23-reference": {
+  "24-reference": {
     "eyebrow.left": "FBX · HOMEFAB",
-    "eyebrow.right": "23 · Backup · Operating System Reference",
+    "eyebrow.right": "24 · Backup · Operating System Reference",
     "kicker": "Live Reference",
     "headline.a": "The operating system,",
     "headline.b": "card by card.",
