@@ -6,10 +6,10 @@
   "01-cover": {
     "eyebrow.left": "FBX · HOMEFAB",
     "eyebrow.right": "Investor Memorandum · Confidential",
-    "kicker": "Scaled Housing Factories",
-    "headline.line1": "Change",
-    "headline.line2": "Homebuilding to factory- building.",
-    "lede": "A franchise-powered, kit-of-parts operating system for factory-built housing — engineered to scale linearly in cost and exponentially in output. Welcome to the next IPO of Housing.",
+    "kicker": "THE FBX SYSTEM",
+    "headline.line1": "Change Construction",
+    "headline.line2": "Once-in-a-lifetime Opo",
+    "lede": "Invest in a franchise-powered, kit-of-parts operating system for factory-built housing — engineered to scale linearly in cost and exponentially in output. Welcome to the next IPO of Housing. Change like this only happens once!",
     "footer.left": "FBX Product Development · 2026",
     "meta.line1": "<strong>Series A</strong> · $4M Core",
     "meta.line2": "$900K Fab-Home franchise · $450K infra"
@@ -24,7 +24,7 @@
     "flow.2": "Aggregation",
     "flow.3": "Delivery",
     "p1.label": "First Mile",
-    "p1.title": "Get the contract.",
+    "p1.title": "AI-Assisted Initiation",
     "p1.body": "Marketing, design, sales, permits — vertically integrated. Think Tesla, Carmax, Carvana, but for a delivered home.",
     "p1.scorecard": "Robust",
     "p1.scorenote": "needs market education",
@@ -41,7 +41,7 @@
   "03-trends": {
     "eyebrow.left": "FBX · HOMEFAB",
     "eyebrow.right": "03 · Market",
-    "kicker": "Why Now",
+    "kicker": "THE PROBLEM - HOW DO YOU MEET THIS DEMAND!?!",
     "headline.a": "Trends indicate",
     "headline.b": "growth.",
     "trend.1": "Sprawl is expensive — capital is shifting to dense micro.",
@@ -79,7 +79,7 @@
   "05-solution": {
     "eyebrow.left": "FBX · HOMEFAB",
     "eyebrow.right": "05 · Strategy · The Solution",
-    "kicker": "How HomeFab Solves It",
+    "kicker": "THE FBX SYSTEM SOLUTION",
     "headline.a": "Three distinct focuses.",
     "headline.b": "One system.",
     "tag": "Solving Direction · Demand → Kit → Install",
@@ -119,7 +119,7 @@
     "c3.s3.b1": "Training simplicity — kit assembly, not bespoke build",
     "c3.s3.b2": "Vetted installer network · franchise-owned",
     "callout.lab": "The Pattern",
-    "callout.text": "People want to <strong>trust the brand</strong> but want the <em>uniqueness of iterative design.</em> Automobiles cracked this fifty years ago — standardized platforms, configurable trims. <strong>HomeFab is the same idea, applied to housing.</strong>",
+    "callout.text": "People want to <strong>trust the brand</strong> but want the <em>uniqueness of iterative design.</em> Automobiles cracked this fifty years ago — standardized platforms, configurable trims. <b>FBX</b><strong>&nbsp;is the same idea, applied to housing.</strong>",
     "footer.left": "FBX · The Solution Architecture"
   },
   "06-pipeline": {
@@ -444,8 +444,8 @@
     "eyebrow.right": "18 · The Ask",
     "kicker": "The Ask",
     "headline.a": "Build the",
-    "headline.b": "last mile.",
-    "sub": "We're raising $4M for FBX Core. Each Fab-Home franchise is funded independently — $900K franchise fee, $450K infrastructure. The model scales linearly in capital, exponentially in delivery.",
+    "headline.b": "FBX Core.",
+    "sub": "We're raising $4M for FBX Core. <br>Each Fab-Home franchise is funded independently — $900K franchise fee, $450K infrastructure. The model scales linearly in capital, exponentially in delivery.",
     "n1.value": "$4<small>M</small>",
     "n1.label": "FBX Core · Series A",
     "n2.value": "$900<small>K</small>",
