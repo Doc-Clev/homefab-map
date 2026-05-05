@@ -7,14 +7,14 @@
 
 window.DECK = {
   title: "FBX HomeFab — Investor Deck",
-  version: "v0.13",
+  version: "v0.14",
   slides: [
     { id: "01-cover",          file: "slides/01-cover.html",          title: "Scaled Housing Factories",              tag: "Cover",          live: false },
     { id: "02-predecessors",   file: "slides/02-predecessors.html",   title: "Why We Win Where They Failed",          tag: "Problem",        live: false },
     { id: "03-trends",         file: "slides/03-trends.html",         title: "Why Now — Market Signals",              tag: "Problem",        live: false },
     { id: "04-thesis",         file: "slides/04-thesis.html",         title: "How We Change Homebuilding",            tag: "Problem",        live: false },
-    { id: "05-solution",       file: "slides/05-solution.html",       title: "The Solution — Three Focuses",          tag: "Hero",           live: false },
-    { id: "06-opportunity",    file: "slides/06-opportunity.html",    title: "The Missing Layer",                     tag: "Hero",           live: false },
+    { id: "05-opportunity",    file: "slides/05-opportunity.html",    title: "The Missing Layer",                     tag: "Hero",           live: false },
+    { id: "06-solution",       file: "slides/06-solution.html",       title: "The Solution — Three Focuses",          tag: "Hero",           live: false },
     { id: "07-first-mile",     file: "slides/07-first-mile.html",     title: "First Mile",                            tag: "Hero",           live: false },
     { id: "08-wedge",          file: "slides/08-wedge.html",          title: "The SIP Software Wedge",                tag: "Hero",           live: false },
     { id: "09-pipeline",       file: "slides/09-pipeline.html",       title: "We're Real — 599 Buildings",            tag: "Hero",           live: false },
@@ -27,8 +27,8 @@ window.DECK = {
     { id: "16-floor",          file: "slides/16-floor.html",          title: "Two Years Pays It Back",                tag: "The Ask",        live: false },
     { id: "17-precedent",      file: "slides/17-precedent.html",      title: "Every Moat Started as Momentum",        tag: "Defensibility",  live: false },
     { id: "18-four-moats",     file: "slides/18-four-moats.html",     title: "The Four Moats",                        tag: "Defensibility",  live: false },
-    { id: "19-team",          file: "slides/19-team.html",          title: "Team & Contact",                        tag: "Defensibility",  live: false },
-    { id: "20-momentum",       file: "slides/20-momentum.html",       title: "Momentum is the Strategy",              tag: "Defensibility",  live: false },
+    { id: "19-momentum",       file: "slides/19-momentum.html",       title: "Momentum is the Strategy",              tag: "Defensibility",  live: false },
+    { id: "20-team",           file: "slides/20-team.html",           title: "Team & Contact",                        tag: "Defensibility",  live: false },
     { id: "21-backup-intro",   file: "slides/21-backup-intro.html",   title: "Backup — Reference Material",           tag: "Backup",         live: false },
     { id: "22-fishbone",       file: "slides/22-fishbone.html",       title: "FBX Operating Model — Fishbone",        tag: "Backup",         live: true  },
     { id: "23-expansion-map",  file: "slides/23-expansion-map.html",  title: "10-Year Expansion Map",                 tag: "Backup",         live: true  },

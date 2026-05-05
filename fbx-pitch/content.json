@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "version": "0.13",
+    "version": "v0.14",
     "description": "Editable content for FBX deck. Edit via /admin/ or directly. Slide HTML reads keys via data-content attributes; localStorage overrides this file at runtime."
   },
   "01-cover": {
@@ -92,9 +92,29 @@
     "p3.scorecard": "The next IPO of housing",
     "footer.left": "FBX · Operating Thesis"
   },
-  "05-solution": {
+  "05-opportunity": {
     "eyebrow.left": "FBX · HOMEFAB",
-    "eyebrow.right": "05 · Strategy · The Solution",
+    "eyebrow.right": "05 · Opportunity",
+    "kicker": "The FBX&nbsp; System",
+    "headline.a": "Where the",
+    "headline.b": "opportunity",
+    "headline.c": "lives.",
+    "lede": "Spool up, empower, and equip small capable craftsmen within 150 miles of every delivery market in America - help them build in factories. Then they scale!",
+    "quote.text": "\"A 'HomeFab' is the layer<br> the rest of the industry<br> <em>forgot to build.</em>\"",
+    "quote.attr": "— FBX Operating Thesis",
+    "card1.title": "Franchisee Model",
+    "card1.body": "Capital, systems, orders, and support — delivered to small builders who want to scale within their region.",
+    "card2.title": "Approved Installers",
+    "card2.body": "A trained, vetted sub-contractor network — empowered to install product and care for the customer.",
+    "card3.title": "Logistics",
+    "card3.body": "Equipment and movers trained to place panels and pods exactly where installers need them, when they need them.",
+    "card4.title": "On-Site Assembly Unlock",
+    "card4.body": "Systems that allow 100% of land — including infill and difficult sites — to be served by prefabricated product.",
+    "footer.left": "FBX SYSTEM SOLUTION"
+  },
+  "06-solution": {
+    "eyebrow.left": "FBX · HOMEFAB",
+    "eyebrow.right": "06 · Strategy · The Solution",
     "kicker": "THE FBX SYSTEM SOLUTION",
     "headline.a": "Three distinct networks.",
     "headline.b": "One system.",
@@ -137,26 +157,6 @@
     "callout.lab": "The Pattern",
     "callout.text": "People want to <strong>trust the brand</strong> but want the <em>uniqueness of iterative design.</em> Automobiles cracked this fifty years ago — standardized platforms, configurable trims. <b>FBX</b><strong>&nbsp;is the same idea, applied to housing.</strong>",
     "footer.left": "FBX · The Solution Architecture"
-  },
-  "06-opportunity": {
-    "eyebrow.left": "FBX · HOMEFAB",
-    "eyebrow.right": "06 · Opportunity",
-    "kicker": "The FBX&nbsp; System",
-    "headline.a": "Where the",
-    "headline.b": "opportunity",
-    "headline.c": "lives.",
-    "lede": "Spool up, empower, and equip small capable craftsmen within 150 miles of every delivery market in America - help them build in factories. Then they scale!",
-    "quote.text": "\"A 'HomeFab' is the layer<br> the rest of the industry<br> <em>forgot to build.</em>\"",
-    "quote.attr": "— FBX Operating Thesis",
-    "card1.title": "Franchisee Model",
-    "card1.body": "Capital, systems, orders, and support — delivered to small builders who want to scale within their region.",
-    "card2.title": "Approved Installers",
-    "card2.body": "A trained, vetted sub-contractor network — empowered to install product and care for the customer.",
-    "card3.title": "Logistics",
-    "card3.body": "Equipment and movers trained to place panels and pods exactly where installers need them, when they need them.",
-    "card4.title": "On-Site Assembly Unlock",
-    "card4.body": "Systems that allow 100% of land — including infill and difficult sites — to be served by prefabricated product.",
-    "footer.left": "FBX SYSTEM SOLUTION"
   },
   "07-first-mile": {
     "eyebrow.left": "FBX · HOMEFAB",
@@ -499,9 +499,29 @@
     "moat4.app": "Franchisees run on <strong>FBX systems</strong> — design, permits, kit, logistics, training. Switching out is replacing the whole operating stack, not just a supplier.",
     "footer.left": "Each moat compounds with scale · Scale comes from momentum"
   },
-  "19-team": {
+  "19-momentum": {
     "eyebrow.left": "FBX · HOMEFAB",
-    "eyebrow.right": "19 · Team &amp; Contact",
+    "eyebrow.right": "19 · Strategy · Momentum",
+    "kicker": "The Strategy",
+    "headline.a": "Momentum first.",
+    "headline.b": "Moats follow.",
+    "lede": "Defensibility doesn't exist on Day 0 — it emerges after a startup has already grown. Move fast, gain users, build leverage. The moat shows up once the conditions for it actually exist.",
+    "step1.title": "Momentum",
+    "step1.body": "Speed, growth, attention. Adoption loops. Fast iteration. The narrative.",
+    "step2.title": "Adoption",
+    "step2.body": "Users committing. First-mile contracts signed. Repeat behavior emerging.",
+    "step3.title": "Scale",
+    "step3.body": "Volume hits the threshold where unit costs drop and leverage compounds.",
+    "step4.title": "The <em>Moat.</em>",
+    "step4.body": "Defensibility emerges from accumulated scale. Now we're hard to dislodge.",
+    "reframe1.label": "Momentum",
+    "reframe1.text": "Short-term <strong>speed, growth, attention.</strong> Gets you noticed and funded.",
+    "reframe2.label": "Defensibility — the Moat",
+    "reframe2.text": "Long-term <strong>protection from competitors.</strong> Keeps you alive once everyone else notices."
+  },
+  "20-team": {
+    "eyebrow.left": "FBX · HOMEFAB",
+    "eyebrow.right": "20 · Team &amp; Contact",
     "kicker": "Who's Building This",
     "headline.a": "The team",
     "headline.b": "running this.",
@@ -523,26 +543,6 @@
     "contact.web": "homefab-map.onrender.com",
     "contact.based": "United States · Remote-first",
     "footer.left": "FBX · Who's running this"
-  },
-  "20-momentum": {
-    "eyebrow.left": "FBX · HOMEFAB",
-    "eyebrow.right": "20 · Strategy · Momentum",
-    "kicker": "The Strategy",
-    "headline.a": "Momentum first.",
-    "headline.b": "Moats follow.",
-    "lede": "Defensibility doesn't exist on Day 0 — it emerges after a startup has already grown. Move fast, gain users, build leverage. The moat shows up once the conditions for it actually exist.",
-    "step1.title": "Momentum",
-    "step1.body": "Speed, growth, attention. Adoption loops. Fast iteration. The narrative.",
-    "step2.title": "Adoption",
-    "step2.body": "Users committing. First-mile contracts signed. Repeat behavior emerging.",
-    "step3.title": "Scale",
-    "step3.body": "Volume hits the threshold where unit costs drop and leverage compounds.",
-    "step4.title": "The <em>Moat.</em>",
-    "step4.body": "Defensibility emerges from accumulated scale. Now we're hard to dislodge.",
-    "reframe1.label": "Momentum",
-    "reframe1.text": "Short-term <strong>speed, growth, attention.</strong> Gets you noticed and funded.",
-    "reframe2.label": "Defensibility — the Moat",
-    "reframe2.text": "Long-term <strong>protection from competitors.</strong> Keeps you alive once everyone else notices."
   },
   "21-backup-intro": {
     "eyebrow.left": "FBX · HOMEFAB",
