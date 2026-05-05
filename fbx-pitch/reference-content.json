@@ -164,8 +164,8 @@
 
     "construction-workforce": {
       "title": "Construction Workforce",
-      "subtitle": "Vetted installer network",
-      "body_html": "<p>The construction labor problem isn't volume — it's <em>training simplicity</em>. Conventional builds need every trade to be a craftsman. Kit assembly needs them to follow a sequence and use a torque wrench.</p><h3>Workforce funnel</h3><ul><li>Recruit from existing trades + new entrants</li><li>4-week certification program at the Home-Fab</li><li>Continuous-learning track for advancement</li><li>Franchisee-employed, network-portable certification</li></ul>"
+      "subtitle": "Skilled people · empowered by systems",
+      "body_html": "<p>Behind every structure is a diverse team — engineers, laborers, surveyors, project managers. They want to scale. They demand support. <strong>We empower their rise.</strong></p><h3>Six core roles</h3><ul><li><strong>Engineers</strong> — centralized at Core, distributed via stamped drawings</li><li><strong>Skilled Trades</strong> — kit-assembly certified, network-portable</li><li><strong>Surveyors</strong> — site readiness verification</li><li><strong>Project Managers</strong> — multi-trade coordination at the Home-Fab</li><li><strong>Logistics Operators</strong> — Fab-to-lot transport &amp; crane scheduling</li><li><strong>Permit Specialists</strong> — jurisdictional compliance</li></ul><h3>The training thesis</h3><p>The construction labor problem isn't volume — it's <em>training simplicity</em>. Conventional builds need every trade to be a craftsman. Kit assembly needs them to follow a sequence and use a torque wrench.</p><h3>Workforce funnel</h3><ul><li>Recruit from existing trades + new entrants</li><li>4-week certification program at the Home-Fab</li><li>Continuous-learning track for advancement</li><li>Franchisee-employed, network-portable certification</li></ul><h3>Network at scale</h3><ul><li><strong>150-mile</strong> franchise service radius</li><li><strong>137 fabs</strong> at Year 10 (national)</li><li><strong>50 states</strong> covered (Year 10)</li><li><strong>3 BUs</strong> · One delivered home</li></ul>"
     },
 
     "what-went-wrong": {
@@ -226,6 +226,48 @@
       "title": "Feasibility",
       "subtitle": "Year-10 economics · $39.8B revenue",
       "body_html": "<p>At steady-state Year-10:</p><ul><li>137 fabs × 1,090 homes/yr avg = ~149,000 homes/yr</li><li>$86,293 avg revenue per home — <strong>$39.8B network revenue</strong></li><li>$21,607 op profit per home — <strong>$3.2B network EBITDA</strong></li><li>~25% margin at scale</li></ul><p>The model is in the live tool at slide 13 (Year-10 Economics). Numbers update as inputs change.</p>"
+    },
+
+    "truth-stamping": {
+      "title": "Code &amp; Stamping",
+      "subtitle": "Per-jurisdiction PE partnerships",
+      "body_html": "<p>Output has to be stamped by licensed engineers, jurisdiction by jurisdiction. <strong>Not a feature flag</strong> — a real operations layer with PE partnerships in each target state.</p><h3>Approach</h3><p>Start in <strong>3–5 permissive states</strong>. Expand on demand as franchise rollout reaches new regions.</p><blockquote>Not a research problem. A solvable operations problem with a clear sequence.</blockquote>"
+    },
+
+    "truth-mfr-abstraction": {
+      "title": "Manufacturer Abstraction",
+      "subtitle": "One design file → 2–3 quotes",
+      "body_html": "<p>Each SIP manufacturer has its own panel specs, splines, and tolerances. <strong>One design file → 2–3 manufacturer quotes</strong>. The kit-of-parts standardization the industry never bothered to build.</p><h3>Approach</h3><p>Clean abstraction layer with per-manufacturer config. Suppliers compete on price and lead time without forcing the customer or the design tool to know about it.</p>"
+    },
+
+    "truth-transport": {
+      "title": "Transport &amp; Crane Planning",
+      "subtitle": "Logistics-aware constraint solver",
+      "body_html": "<p>A design that's perfect on paper but needs a crane the local rental yard doesn't carry is a failed design. <strong>The constraint solver has to know logistics, not just geometry.</strong></p><h3>Approach</h3><p>Site-aware solver with regional equipment lookups. Transport, crane reach, and access road constraints are inputs, not afterthoughts.</p>"
+    },
+
+    "truth-builder-network": {
+      "title": "Builder Network",
+      "subtitle": "Last Mile franchise as the install layer",
+      "body_html": "<p>Even a perfect kit needs a crew that can erect it. <strong>The Last Mile franchise is exactly this layer</strong> — vetted installers and GCs who learn the system and own the customer relationship.</p><h3>Approach</h3><p>Already in the deck — the franchise model is the operational answer to the &quot;who actually builds it&quot; question.</p><p>See <em>Last Mile</em> section above and the <em>Construction Workforce</em> card for the workforce thesis.</p>"
+    },
+
+    "obj-scale": {
+      "title": "How big can this get? Homes per year?",
+      "subtitle": "The scale objection",
+      "body_html": "<p>Review the live <strong>Expansion Map</strong> (in this reference, section 5) and the <strong>Year-10 Economics</strong> model.</p><p>The plan is <strong>149,490 homes delivered by Year 10</strong> at a 43,980/yr run-rate. We can dial it more aggressive or more conservative — the model recalcs live as franchise pace, geography, and unit economics change.</p>"
+    },
+
+    "obj-moat": {
+      "title": "What is your moat? How do you fend off copycats?",
+      "subtitle": "The defensibility objection",
+      "body_html": "<p><strong>Wrong question at this stage.</strong></p><p>See the moat material in <em>Modular Industry → Why This Will Work</em>. Moats emerge from <strong>scale</strong>, and scale comes from <strong>momentum</strong>. We're engineered for all four <em>a16z defensibilities</em> (network effects, scale economics, brand, embedding) once we hit volume.</p><p><strong>First-mover speed is the strategy.</strong> The defensibility is a consequence of running fast enough to compound, not a substitute for it.</p>"
+    },
+
+    "obj-national": {
+      "title": "Are you national, or competing with Lennar / Champion?",
+      "subtitle": "The competition objection",
+      "body_html": "<p><strong>Adding to the market</strong> — demand is enormous and we're not zero-sum with the incumbents.</p><p>Our edge is <strong>speed</strong> and <strong>cost of capital</strong>, which is why the moat matters more than the head-to-head comparison. Lennar and Champion can keep doing what they do; we're building a different operating system on top of an industry the incumbents have collectively under-served for two decades.</p>"
     }
   }
 }

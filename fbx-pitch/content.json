@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "version": "v0.10",
+    "version": "0.12",
     "description": "Editable content for FBX deck. Edit via /admin/ or directly. Slide HTML reads keys via data-content attributes; localStorage overrides this file at runtime."
   },
   "01-cover": {
@@ -16,7 +16,7 @@
   },
   "02-predecessors": {
     "eyebrow.left": "FBX · HOMEFAB",
-    "eyebrow.right": "",
+    "eyebrow.right": "02 · Strategy · Why We Win",
     "kicker": "Where Every Predecessor Failed",
     "headline.a": "They tried to own the factory.",
     "headline.b": "We own the kit.",
@@ -52,7 +52,7 @@
   },
   "03-trends": {
     "eyebrow.left": "FBX · HOMEFAB",
-    "eyebrow.right": "",
+    "eyebrow.right": "03 · Market",
     "kicker": "THE PROBLEM - HOW DOes an industry MEET THIS DEMAND!?!",
     "headline.a": "Trends indicate",
     "headline.b": "factory-housing growth.",
@@ -525,50 +525,16 @@
     "kicker": "Reference Material",
     "headline.a": "Backup Slides",
     "headline.b": "Questions/Answers",
-    "lede": "What follows is the deeper material — the <strong>operating truths</strong>, the <strong>system layers</strong>, the projection model, and the standard objections. Pulled forward when asked.",
+    "lede": "What follows is the deeper material — the <strong>system layers</strong> and the <strong>operating-system reference</strong>. Truths, workforce, and objections live in the live Reference (slide 23). Pulled forward when asked.",
     "list.label": "In this section",
-    "item1": "What has to be true",
-    "item2": "Operating model — Fishbone",
-    "item3": "10-year expansion map",
-    "item4": "Construction workforce",
-    "item5": "Objections &amp; answers",
+    "item1": "Operating model — Fishbone",
+    "item2": "10-year expansion map",
+    "item3": "Reference — Operating system map",
     "footer.left": "FBX · Backup Material Begins Here"
   },
-  "21-truths": {
+  "21-fishbone": {
     "eyebrow.left": "FBX · HOMEFAB",
-    "eyebrow.right": "21 · Strategy · What Has To Be True",
-    "kicker": "The Operational Layers — Honestly",
-    "headline.a": "The unsexy parts",
-    "headline.b": "that actually matter.",
-    "tag": "What We're Not Hand-Waving",
-    "note": "A constraint-aware design platform is the wedge. But it only matters if four operational layers actually work. <strong>None are research problems. All are solvable. None should be hand-waved.</strong>",
-    "t1.num": "Truth 01",
-    "t1.title": "Code & <em>stamping.</em>",
-    "t1.body": "Output has to be stamped by licensed engineers, jurisdiction by jurisdiction. <strong>Not a feature flag</strong> — a real operations layer with PE partnerships in each target state.",
-    "t1.verdict.lab": "Approach",
-    "t1.verdict.text": "Start in 3–5 permissive states. Expand on demand.",
-    "t2.num": "Truth 02",
-    "t2.title": "Manufacturer <em>abstraction.</em>",
-    "t2.body": "Each SIP manufacturer has its own panel specs, splines, and tolerances. <strong>One design file → 2–3 manufacturer quotes.</strong> The kit-of-parts standardization the industry never bothered to build.",
-    "t2.verdict.lab": "Approach",
-    "t2.verdict.text": "Clean abstraction layer · per-mfr config",
-    "t3.num": "Truth 03",
-    "t3.title": "Transport & <em>crane planning.</em>",
-    "t3.body": "A design that's perfect on paper but needs a crane the local rental yard doesn't carry is a failed design. <strong>The constraint solver has to know logistics, not just geometry.</strong>",
-    "t3.verdict.lab": "Approach",
-    "t3.verdict.text": "Site-aware solver · regional equipment lookups",
-    "t4.num": "Truth 04",
-    "t4.title": "Builder <em>network.</em>",
-    "t4.body": "Even a perfect kit needs a crew that can erect it. <strong>The Last Mile franchise (slides 05, 11) is exactly this layer</strong> — vetted installers and GCs who learn the system and own the customer relationship.",
-    "t4.verdict.lab": "Approach",
-    "t4.verdict.text": "Already in the deck · Last Mile network",
-    "frame.lab": "Framing",
-    "frame.text": "<strong>None of these are research problems.</strong> All are solvable with operations rigor and a focused rollout. <em>This is what we've already started building.</em>",
-    "footer.left": "We know what we don't know · Operations-first execution · Fault-tolerant rollout sequence"
-  },
-  "22-fishbone": {
-    "eyebrow.left": "FBX · HOMEFAB",
-    "eyebrow.right": "22 · Live Tool · Operating Model",
+    "eyebrow.right": "21 · Live Tool · Operating Model",
     "kicker": "Live Diagram",
     "headline.a": "FBX Operating Model ·",
     "headline.b": "Fishbone",
@@ -576,9 +542,9 @@
     "status.line2": "Three BUs · One delivered home",
     "live.cta": "See the full published version"
   },
-  "23-expansion-map": {
+  "22-expansion-map": {
     "eyebrow.left": "FBX · HOMEFAB",
-    "eyebrow.right": "23 · Live Tool · 10-Year Plan",
+    "eyebrow.right": "22 · Live Tool · 10-Year Plan",
     "kicker": "Interactive Map · Year 1 → Year 10",
     "headline.a": "10-Year",
     "headline.b": "Expansion Map",
@@ -586,41 +552,15 @@
     "status.line2": "137 Fabs · 5 Hubs · 50 States by 2035",
     "live.cta": "See the full published version"
   },
-  "24-workforce": {
+  "23-reference": {
     "eyebrow.left": "FBX · HOMEFAB",
-    "eyebrow.right": "24 · Operating Model · Layer 3",
-    "kicker": "Skilled People · Empowered by Systems",
-    "headline.a": "The construction",
-    "headline.b": "workforce.",
-    "subhead": "Behind every structure is a diverse team — engineers, laborers, surveyors, project managers. They want to scale. They demand support. <strong style=\"color: var(--paper);\">We empower their rise.</strong>",
-    "role.1": "Engineers",
-    "role.2": "Skilled Trades",
-    "role.3": "Surveyors",
-    "role.4": "Project Managers",
-    "role.5": "Logistics Operators",
-    "role.6": "Permit Specialists",
-    "stat1.value": "150<em>mi</em>",
-    "stat1.label": "Franchise Service Radius",
-    "stat2.value": "137",
-    "stat2.label": "Fabs at Year 10 (national)",
-    "stat3.value": "50",
-    "stat3.label": "States Covered (Year 10)",
-    "stat4.value": "3<em>BU</em>",
-    "stat4.label": "Business Units · One Outcome",
-    "footer.left": "FBX · Workforce Strategy"
-  },
-  "25-objections": {
-    "eyebrow.left": "FBX · HOMEFAB",
-    "eyebrow.right": "25 · Diligence",
-    "kicker": "Objections We Anticipate",
-    "headline.a": "The hard",
-    "headline.b": "questions.",
-    "obj1.q": "How big can this get? Homes per year?",
-    "obj1.a": "Review https://https://homefab-map.onrender.com/. The plan is <strong>149,490 homes delivered by Year 10</strong> at a 43,980/yr run-rate. We can dial it more aggressive or more conservative — the model recalcs live.",
-    "obj2.q": "What is your moat? How do you fend off copycats?",
-    "obj2.a": "<strong>Wrong question at this stage.</strong> See slides 17–19 — moats emerge from <strong>scale</strong>, and scale comes from <strong>momentum</strong>. We're engineered for all four a16z defensibilities (network effects, scale economics, brand, embedding) once we hit volume. First-mover speed is the strategy.",
-    "obj3.q": "Are you national, or competing with Lennar / Champion?",
-    "obj3.a": "<strong>Adding to the market</strong> — demand is enormous. Our edge is <strong>speed</strong> and <strong>cost of capital</strong>, which is why the moat matters more than the comparison.",
-    "footer.left": "FBX · Investor Q&A"
+    "eyebrow.right": "23 · Backup · Operating System Reference",
+    "kicker": "Live Reference",
+    "headline.a": "The operating system,",
+    "headline.b": "card by card.",
+    "status.line1": "<strong>LIVE</strong> — JSON-driven content",
+    "status.line2": "Click any card · drawer reveals the readme",
+    "live.cta": "Open in a new tab",
+    "footer.left": "Source: <code style=\"font-family: var(--mono); font-size: 11px;\">/tools/reference.html</code> + <code style=\"font-family: var(--mono); font-size: 11px;\">/reference-content.json</code>"
   }
 }

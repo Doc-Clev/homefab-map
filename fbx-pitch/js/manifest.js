@@ -7,7 +7,7 @@
 
 window.DECK = {
   title: "FBX HomeFab — Investor Deck",
-  version: "v0.11",
+  version: "v0.12",
   slides: [
     { id: "01-cover",          file: "slides/01-cover.html",          title: "Scaled Housing Factories",              tag: "Cover",          live: false },
     { id: "02-predecessors",   file: "slides/02-predecessors.html",   title: "Why We Win Where They Failed",          tag: "Problem",        live: false },
@@ -29,11 +29,8 @@ window.DECK = {
     { id: "18-four-moats",     file: "slides/18-four-moats.html",     title: "The Four Moats",                        tag: "Defensibility",  live: false },
     { id: "19-momentum",       file: "slides/19-momentum.html",       title: "Momentum is the Strategy",              tag: "Defensibility",  live: false },
     { id: "20-backup-intro",   file: "slides/20-backup-intro.html",   title: "Backup — Reference Material",           tag: "Backup",         live: false },
-    { id: "21-truths",         file: "slides/21-truths.html",         title: "What Has to Be True",                   tag: "Backup",         live: false },
-    { id: "22-fishbone",       file: "slides/22-fishbone.html",       title: "FBX Operating Model — Fishbone",        tag: "Backup",         live: true  },
-    { id: "23-expansion-map",  file: "slides/23-expansion-map.html",  title: "10-Year Expansion Map",                 tag: "Backup",         live: true  },
-    { id: "24-workforce",      file: "slides/24-workforce.html",      title: "Construction Workforce",                tag: "Backup",         live: false },
-    { id: "25-objections",     file: "slides/25-objections.html",     title: "Objections & Answers",                  tag: "Backup",         live: false },
-    { id: "26-reference",      file: "slides/26-reference.html",      title: "Reference — Operating System Map",      tag: "Backup",         live: true  }
+    { id: "21-fishbone",       file: "slides/21-fishbone.html",       title: "FBX Operating Model — Fishbone",        tag: "Backup",         live: true  },
+    { id: "22-expansion-map",  file: "slides/22-expansion-map.html",  title: "10-Year Expansion Map",                 tag: "Backup",         live: true  },
+    { id: "23-reference",      file: "slides/23-reference.html",      title: "Reference — Operating System Map",      tag: "Backup",         live: true  }
   ]
 };
