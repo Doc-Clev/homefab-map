@@ -45,7 +45,50 @@ import re
 import shutil
 import subprocess
 import sys
+import time
 from pathlib import Path
+
+
+def safe_rmdir(path: Path, retries: int = 8, delay: float = 0.3) -> bool:
+    """Retry rmdir on Windows/Dropbox where directory handles linger briefly.
+    Returns True on success, False if all retries exhausted."""
+    for i in range(retries):
+        try:
+            path.rmdir()
+            return True
+        except FileNotFoundError:
+            return True
+        except OSError:
+            if i == retries - 1:
+                return False
+            time.sleep(delay)
+    return False
+
+
+def safe_unlink(path: Path, retries: int = 5, delay: float = 0.2) -> None:
+    """Retry unlink on Windows/Dropbox file locking."""
+    for i in range(retries):
+        try:
+            path.unlink()
+            return
+        except FileNotFoundError:
+            return
+        except OSError:
+            if i == retries - 1:
+                raise
+            time.sleep(delay)
+
+
+def safe_rename(src: Path, dst: Path, retries: int = 5, delay: float = 0.2) -> None:
+    """Retry rename on Windows/Dropbox file locking."""
+    for i in range(retries):
+        try:
+            src.rename(dst)
+            return
+        except OSError:
+            if i == retries - 1:
+                raise
+            time.sleep(delay)
 
 
 # ---- Path resolution ----------------------------------------------------------
@@ -374,7 +417,17 @@ def apply_spec(root: Path, spec: dict, *, dry_run: bool = False) -> None:
     staging = slides_dir.parent / "slides_new"
     if not dry_run:
         if staging.exists():
-            shutil.rmtree(staging)
+            # Try to clean up leftover staging from a crashed prior run.
+            # If Dropbox is still holding handles, be loud about it.
+            try:
+                shutil.rmtree(staging)
+            except OSError as e:
+                raise SystemExit(
+                    f"ERROR: {staging} exists and can't be removed ({e}).\n"
+                    f"  Likely a prior run crashed and Dropbox/AV is still holding it.\n"
+                    f"  Wait ~10s and try again, or remove the directory manually:\n"
+                    f"    rmdir /s {staging}"
+                )
         staging.mkdir()
         for entry in new_order:
             old_id = entry["id"]
@@ -389,12 +442,20 @@ def apply_spec(root: Path, spec: dict, *, dry_run: bool = False) -> None:
 
     # ---- Swap into slides/ -----------------------------------------------------
     if not dry_run:
-        for f in slides_dir.iterdir():
+        # Remove old html files
+        for f in list(slides_dir.iterdir()):
             if f.suffix == ".html":
-                f.unlink()
-        for f in staging.iterdir():
-            f.rename(slides_dir / f.name)
-        staging.rmdir()
+                safe_unlink(f)
+        # Move new files in (materialize iterator first so the dir handle releases)
+        for f in list(staging.iterdir()):
+            safe_rename(f, slides_dir / f.name)
+        # Cleanup staging — Dropbox/Windows often holds the handle briefly
+        if not safe_rmdir(staging):
+            print(
+                f"      WARN: could not remove {staging.name}/ (still locked by Dropbox/AV).\n"
+                f"            The rename succeeded; remove the empty dir manually when free.",
+                file=sys.stderr,
+            )
     print(f"[3/7] swapped slides_new/ into slides/ (now {sum(1 for _ in slides_dir.glob('*.html')) if not dry_run else len(new_order)} files)")
 
     # ---- Renumber chrome inside each renamed slide -----------------------------
