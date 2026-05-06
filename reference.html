@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FBX HomeFab — Reference</title>
+<style>
+  :root {
+    --bg: #f5f4ef;
+    --bg-2: #faf9f5;
+    --panel: #ffffff;
+    --border: rgba(0,0,0,0.10);
+    --border-strong: rgba(0,0,0,0.18);
+    --text: #1a1a1a;
+    --text-2: #3d3a35;
+    --text-dim: #6b6760;
+    --text-muted: #8a857c;
+    --maroon: #A32D2D;
+    --maroon-bg: #FCEBEB;
+    --green: #639922;
+    --amber: #BA7517;
+    --pill-bg: #FCEBEB;
+    --pill-text: #A32D2D;
+    --pill-bg-soft: #f0eee8;
+    --pill-text-soft: #888780;
+    --display: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+    --mono: 'JetBrains Mono', 'SF Mono', ui-monospace, Menlo, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1a1916;
+      --bg-2: #221f1c;
+      --panel: #26231f;
+      --border: rgba(255,255,255,0.10);
+      --border-strong: rgba(255,255,255,0.18);
+      --text: #f0efea;
+      --text-2: #d8d4cc;
+      --text-dim: #b4b2a9;
+      --text-muted: #888780;
+      --maroon: #e58585;
+      --maroon-bg: #3a1818;
+      --pill-bg: #3a1818;
+      --pill-text: #e58585;
+      --pill-bg-soft: #2d2a25;
+      --pill-text-soft: #b4b2a9;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--text);
+    font-family: var(--display); font-size: 14px; line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 1100px; margin: 0 auto; padding: 32px 28px 80px; }
+
+  header { margin-bottom: 18px; }
+  header h1 { font-size: 28px; font-weight: 700; margin: 0 0 8px; letter-spacing: -0.01em; }
+  header p { font-size: 14px; color: var(--text-dim); margin: 0; max-width: 78ch; line-height: 1.6; }
+
+  .tab-nav {
+    display: flex; gap: 28px; border-bottom: 1px solid var(--border);
+    margin: 22px 0 32px;
+  }
+  .tab-nav button {
+    background: none; border: none; padding: 10px 0; cursor: pointer;
+    font-family: var(--display); font-size: 14px; color: var(--text-dim);
+    border-bottom: 2px solid transparent; margin-bottom: -1px;
+    transition: color .12s, border-color .12s;
+  }
+  .tab-nav button.active { color: var(--maroon); border-bottom-color: var(--maroon); font-weight: 500; }
+  .tab-nav button:not(.active):hover { color: var(--text); }
+
+  .module {
+    display: grid; grid-template-columns: 50px 1fr; gap: 16px;
+    margin-bottom: 56px;
+  }
+  .module-num-wrap { position: relative; padding-top: 4px; }
+  .module-num {
+    width: 32px; height: 32px; border-radius: 50%;
+    background: var(--bg-2); border: 1px solid var(--border-strong);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; color: var(--text-dim); font-weight: 500;
+  }
+  .module-num-wrap::after {
+    content: ''; position: absolute; left: 16px; top: 38px; bottom: -40px;
+    border-left: 1px dashed var(--border-strong);
+  }
+  .module:last-child .module-num-wrap::after { display: none; }
+
+  .module-body { min-width: 0; }
+  .module-h {
+    display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap;
+    margin-bottom: 4px;
+  }
+  .module-name { font-size: 22px; font-weight: 700; letter-spacing: -0.01em; }
+  .module-tag { font-size: 14px; font-weight: 500; }
+  .module-desc {
+    color: var(--text-dim); font-size: 14px; margin: 0 0 22px;
+    max-width: 70ch; line-height: 1.55;
+  }
+
+  .category { margin-bottom: 18px; }
+  .cat-h {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em;
+    color: var(--text-dim); font-weight: 600; margin-bottom: 10px;
+  }
+  .cat-letter {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 18px; height: 18px; border-radius: 50%;
+    background: transparent; color: var(--text-dim);
+    border: 1px solid var(--border-strong);
+    font-size: 10px; font-weight: 600; flex-shrink: 0;
+  }
+
+  .cards-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 10px;
+  }
+  .card {
+    background: var(--panel); border: 1px solid var(--border);
+    border-left: 3px solid var(--maroon); border-radius: 8px;
+    padding: 12px 14px; cursor: pointer;
+    transition: border-color .12s, box-shadow .12s, transform .08s;
+    display: grid; grid-template-columns: 22px 1fr auto; gap: 10px; align-items: center;
+    text-align: left;
+  }
+  .card:hover { box-shadow: 0 2px 10px rgba(0,0,0,0.07); }
+  .card:active { transform: translateY(1px); }
+  .card-icon {
+    color: var(--text-muted); font-size: 14px;
+    display: flex; align-items: center; justify-content: center;
+    width: 22px; height: 22px;
+  }
+  .card-icon svg { width: 16px; height: 16px; stroke: currentColor; stroke-width: 1.8; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+  .card-title { min-width: 0; }
+  .card-name { font-weight: 600; font-size: 13.5px; color: var(--text); line-height: 1.3; }
+  .card-subtitle { font-size: 11.5px; color: var(--text-dim); margin-top: 1px; line-height: 1.35; }
+  .card-pill {
+    flex-shrink: 0; padding: 3px 9px; border-radius: 12px;
+    background: var(--pill-bg); color: var(--pill-text);
+    font-family: var(--mono); font-size: 10px; font-weight: 500; letter-spacing: 0.04em;
+    white-space: nowrap;
+  }
+  .card-pill.placeholder { background: var(--pill-bg-soft); color: var(--pill-text-soft); }
+
+  /* Slide-out drawer */
+  .overlay {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.35);
+    display: none; z-index: 50;
+    opacity: 0; transition: opacity .2s ease;
+  }
+  .overlay.open { display: block; opacity: 1; }
+  .drawer {
+    position: fixed; top: 0; right: 0; bottom: 0; width: 480px; max-width: 95vw;
+    background: var(--panel); z-index: 60;
+    transform: translateX(100%); transition: transform .25s ease;
+    overflow-y: auto;
+    box-shadow: -8px 0 32px rgba(0,0,0,0.16);
+  }
+  .drawer.open { transform: translateX(0); }
+  .drawer-inner { padding: 32px 36px 60px; }
+  .drawer-pill {
+    display: inline-block; padding: 4px 11px; border-radius: 12px;
+    background: var(--pill-bg); color: var(--pill-text);
+    font-family: var(--mono); font-size: 10px; font-weight: 500;
+    letter-spacing: 0.06em; margin-bottom: 18px;
+  }
+  .drawer-pill.placeholder { background: var(--pill-bg-soft); color: var(--pill-text-soft); }
+  .drawer-name {
+    font-size: 24px; font-weight: 700; letter-spacing: -0.01em; margin: 0 0 4px;
+  }
+  .drawer-subtitle {
+    color: var(--text-dim); font-size: 14px; margin: 0 0 24px;
+    line-height: 1.4;
+  }
+  .drawer-content { font-size: 14px; line-height: 1.65; color: var(--text-2); }
+  .drawer-content p { margin: 0 0 14px; }
+  .drawer-content h3 {
+    font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em;
+    color: var(--text-dim); font-weight: 600; margin: 24px 0 10px;
+  }
+  .drawer-content ul, .drawer-content ol { margin: 0 0 14px; padding-left: 22px; }
+  .drawer-content li { font-size: 13.5px; line-height: 1.6; margin-bottom: 8px; color: var(--text-2); }
+  .drawer-content li strong { color: var(--text); font-weight: 600; }
+  .drawer-content blockquote {
+    margin: 18px 0; padding: 12px 16px;
+    background: var(--bg-2); border-left: 3px solid var(--maroon);
+    border-radius: 0 6px 6px 0; font-style: italic; color: var(--text-2);
+    font-size: 13.5px; line-height: 1.6;
+  }
+  .drawer-content code {
+    font-family: var(--mono); font-size: 12px;
+    background: var(--bg-2); padding: 1px 5px; border-radius: 3px;
+    color: var(--text);
+  }
+  .drawer-content em { color: var(--text); }
+  .drawer-close {
+    position: absolute; top: 16px; right: 20px; background: none; border: none;
+    cursor: pointer; font-size: 24px; color: var(--text-muted); line-height: 1;
+    padding: 4px 10px; border-radius: 4px;
+  }
+  .drawer-close:hover { background: var(--bg-2); color: var(--text); }
+
+  .empty-tab {
+    padding: 60px 20px; text-align: center;
+    color: var(--text-muted); font-style: italic;
+    border: 1px dashed var(--border-strong); border-radius: 8px;
+  }
+
+  @media (max-width: 700px) {
+    .module { grid-template-columns: 36px 1fr; gap: 12px; }
+    .module-num { width: 26px; height: 26px; font-size: 11px; }
+    .module-num-wrap::after { left: 13px; }
+    .wrap { padding: 20px 16px 60px; }
+    .drawer { width: 100vw; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Reference</h1>
+    <p id="lede">Loading…</p>
+  </header>
+
+  <nav class="tab-nav">
+    <button class="active" data-tab="reference">Reference</button>
+    <button data-tab="faq">FAQ</button>
+    <button data-tab="slides">Slides</button>
+  </nav>
+
+  <div id="content">
+    <div style="padding:60px 20px;text-align:center;color:var(--text-muted);">Loading reference content…</div>
+  </div>
+</div>
+
+<div class="overlay" id="overlay"></div>
+<aside class="drawer" id="drawer" aria-hidden="true">
+  <button class="drawer-close" id="drawer-close" aria-label="Close">×</button>
+  <div class="drawer-inner" id="drawer-inner"></div>
+</aside>
+
+<script>
+// ── Module / category structure (drives layout; card content comes from reference-content.json) ──
+const STRUCTURE = [
+  {
+    num: 1, name: "1st Mile", tag: "Retail Market Demand", color: "#639922",
+    description: "Demand generation, design, and the sale — the layer that hands a signed contract to FBX Core.",
+    categories: [
+      { letter: "A", name: "Customer Desires", cards: [
+        { id: "energy-efficiency",   icon: "bolt" },
+        { id: "ease-of-design",      icon: "trending-up" },
+        { id: "speed",               icon: "clock" },
+        { id: "customization",       icon: "sparkles" }
+      ]},
+      { letter: "B", name: "Design Constraints & Product Development", cards: [
+        { id: "rd",                  icon: "search" },
+        { id: "engineers",           icon: "book" },
+        { id: "regulatory-approvals",icon: "shield" }
+      ]},
+      { letter: "C", name: "Sales Cycle", cards: [
+        { id: "home-sales",          icon: "home" },
+        { id: "franchise-sales",     icon: "briefcase" },
+        { id: "training",            icon: "graduation" }
+      ]}
+    ]
+  },
+  {
+    num: 2, name: "FBX Core", tag: "Aggregation, Warehousing & Distribution", color: "#BA7517",
+    description: "The kit-of-parts engine. Standardize the design, aggregate the supply, ship to the Home-Fab.",
+    categories: [
+      { letter: "A", name: "Factory Standard Design", cards: [
+        { id: "factory-standard",    icon: "grid" }
+      ]},
+      { letter: "B", name: "Suppliers", cards: [
+        { id: "sips",                icon: "panel" },
+        { id: "cold-formed-steel",   icon: "panel" },
+        { id: "esips",               icon: "bolt" },
+        { id: "bath-kitchen-pods",   icon: "bath" },
+        { id: "demand-signals",      icon: "trending-up" }
+      ]},
+      { letter: "C", name: "Warehousing", cards: [
+        { id: "receiving",           icon: "package" },
+        { id: "sorting",             icon: "sort" },
+        { id: "ship-to-home-fab",    icon: "truck" }
+      ]},
+      { letter: "D", name: "Network Operations", cards: [
+        { id: "franchisee-establishment", icon: "users" },
+        { id: "quality-assurance",        icon: "check" },
+        { id: "regional-expansion",       icon: "map" }
+      ]}
+    ]
+  },
+  {
+    num: 3, name: "Cost & Economics", tag: "How the Per-Door Math Works", color: "#f59e0b",
+    description: "The unit-economics layer that ties every site, every product, and every market back to a comparable cost-per-door — and makes modular efficiency legible against NAHB national turnkey.",
+    categories: [
+      { letter: "A", name: "The Cascade", cards: [
+        { id: "cost-cascade",        icon: "layers" },
+        { id: "tier-strip",          icon: "split" }
+      ]},
+      { letter: "B", name: "The Stack", cards: [
+        { id: "entitlement-stack",   icon: "stack" }
+      ]},
+      { letter: "C", name: "Blending & Benchmark", cards: [
+        { id: "demand-weighted-blending", icon: "weight" },
+        { id: "vs-nahb-benchmark",        icon: "compare" }
+      ]}
+    ]
+  },
+  {
+    num: 4, name: "Last Mile", tag: "Site Execution & Workforce", color: "#A32D2D",
+    description: "The franchise-led delivery layer — turning a kit-of-parts into a finished home on the ground.",
+    categories: [
+      { letter: "A", name: "Site Execution", cards: [
+        { id: "site-work",           icon: "tool" },
+        { id: "last-mile-logistics", icon: "truck" },
+        { id: "inspections",         icon: "check" }
+      ]},
+      { letter: "B", name: "Workforce", cards: [
+        { id: "construction-workforce", icon: "users" }
+      ]}
+    ]
+  },
+  {
+    num: 5, name: "Modular Industry", tag: "Why This Will Work", color: "#185FA5",
+    description: "What broke for the prior wave of modular companies, and the four moats this network gets that they didn't.",
+    categories: [
+      { letter: "A", name: "What Went Wrong", cards: [
+        { id: "what-went-wrong",     icon: "alert" }
+      ]},
+      { letter: "B", name: "The Four Moats", cards: [
+        { id: "network-effect",      icon: "network" },
+        { id: "economy-of-scale",    icon: "coin" },
+        { id: "brand",               icon: "target" },
+        { id: "embedding-tech",      icon: "chip" }
+      ]},
+      { letter: "C", name: "Operating Principles", cards: [
+        { id: "linear-exponential",  icon: "trending-up" },
+        { id: "momentum",            icon: "fast-forward" },
+        { id: "adoption",            icon: "chart" }
+      ]}
+    ]
+  },
+  {
+    num: 6, name: "10-Year Plan", tag: "The Network at Scale", color: "#0F6E56",
+    description: "Year-by-year fab rollout and the unit economics at steady state.",
+    categories: [
+      { letter: "A", name: "The Map", cards: [
+        { id: "expansion-map",       icon: "map" }
+      ]},
+      { letter: "B", name: "Year-10 Economics", cards: [
+        { id: "feasibility",         icon: "chart" }
+      ]}
+    ]
+  },
+  {
+    num: 7, name: "Hard Truths", tag: "Operational Reality", color: "#854F0B",
+    description: "The four operational hurdles that stood in the way of prior attempts — and our concrete plan for each.",
+    categories: [
+      { letter: "A", name: "Operational Reality", cards: [
+        { id: "truth-stamping",         icon: "stamp" },
+        { id: "truth-mfr-abstraction",  icon: "plug" },
+        { id: "truth-transport",        icon: "truck-fast" },
+        { id: "truth-builder-network",  icon: "hammer" }
+      ]}
+    ]
+  },
+  {
+    num: 8, name: "Objections", tag: "Investor Pre-Reads", color: "#5f5e5a",
+    description: "The three questions every investor asks first — answered.",
+    categories: [
+      { letter: "A", name: "Pre-Reads", cards: [
+        { id: "obj-scale",           icon: "question" },
+        { id: "obj-moat",            icon: "question" },
+        { id: "obj-national",        icon: "question" }
+      ]}
+    ]
+  }
+];
+
+// ── Inline SVG icon library (lucide-style) ─────────────────────────────────
+const ICONS = {
+  bolt:         '<polyline points="13 2 3 14 12 14 11 22 21 10 12 10"/>',
+  'trending-up':'<polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/>',
+  clock:        '<circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>',
+  sparkles:     '<path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1"/>',
+  search:       '<circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.5" y2="16.5"/>',
+  book:         '<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>',
+  shield:       '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/>',
+  home:         '<path d="M3 12L12 3l9 9"/><path d="M5 10v10h14V10"/>',
+  briefcase:    '<rect x="2" y="7" width="20" height="14" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>',
+  graduation:   '<path d="M22 10L12 4 2 10l10 6 10-6z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/>',
+  grid:         '<rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>',
+  panel:        '<rect x="3" y="3" width="18" height="18" rx="1"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/>',
+  bath:         '<path d="M5 12V6a3 3 0 0 1 5-2.5"/><path d="M9 4h2"/><path d="M3 12h18"/><path d="M5 12v3a3 3 0 0 0 3 3h8a3 3 0 0 0 3-3v-3"/><path d="M7 21l-1-2M17 21l1-2"/>',
+  package:      '<path d="M16.5 9.4l-9-5.2"/><path d="M21 16V8a2 2 0 0 0-1-1.7l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.7l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.3 7 12 12 20.7 7"/><line x1="12" y1="22" x2="12" y2="12"/>',
+  sort:         '<path d="M3 6h18"/><path d="M7 12h10"/><path d="M11 18h2"/>',
+  truck:        '<rect x="1" y="6" width="14" height="11" rx="1"/><path d="M15 9h4l3 3v5h-7"/><circle cx="6" cy="19" r="2"/><circle cx="18" cy="19" r="2"/>',
+  users:        '<path d="M16 20v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 20v-2a4 4 0 0 0-3-3.9"/><path d="M16 3.1a4 4 0 0 1 0 7.8"/>',
+  check:        '<circle cx="12" cy="12" r="10"/><polyline points="8 12 11 15 16 9"/>',
+  map:          '<polygon points="1 6 8 3 16 6 23 3 23 18 16 21 8 18 1 21"/><line x1="8" y1="3" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="21"/>',
+  layers:       '<polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/>',
+  split:        '<polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/><line x1="4" y1="4" x2="9" y2="9"/>',
+  stack:        '<path d="M3 6h18M3 12h18M3 18h18"/>',
+  weight:       '<path d="M12 2L3 7v10l9 5 9-5V7l-9-5z"/><path d="M3 7l9 5 9-5"/><path d="M12 22V12"/>',
+  compare:      '<path d="M3 7h18M3 17h18"/><polyline points="7 3 3 7 7 11"/><polyline points="17 13 21 17 17 21"/>',
+  tool:         '<path d="M14.7 6.3a3 3 0 0 0 4 4l4 4a4.2 4.2 0 0 1-6 6l-4-4-4 4-4-4 4-4-4-4a4.2 4.2 0 0 1 6-6z"/>',
+  alert:        '<path d="M12 9v4M12 17h.01"/><path d="M10.3 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>',
+  network:      '<circle cx="12" cy="12" r="3"/><circle cx="5" cy="5" r="2"/><circle cx="19" cy="5" r="2"/><circle cx="5" cy="19" r="2"/><circle cx="19" cy="19" r="2"/><line x1="6.5" y1="6.5" x2="9.5" y2="9.5"/><line x1="17.5" y1="6.5" x2="14.5" y2="9.5"/><line x1="6.5" y1="17.5" x2="9.5" y2="14.5"/><line x1="17.5" y1="17.5" x2="14.5" y2="14.5"/>',
+  coin:         '<circle cx="12" cy="12" r="9"/><path d="M9 9h4.5a2.5 2.5 0 0 1 0 5H9"/><path d="M9 15h5"/><line x1="12" y1="6" x2="12" y2="18"/>',
+  target:       '<circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/>',
+  chip:         '<rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="2" x2="9" y2="4"/><line x1="15" y1="2" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="22"/><line x1="15" y1="20" x2="15" y2="22"/><line x1="20" y1="9" x2="22" y2="9"/><line x1="20" y1="14" x2="22" y2="14"/><line x1="2" y1="9" x2="4" y2="9"/><line x1="2" y1="14" x2="4" y2="14"/>',
+  'fast-forward':'<polygon points="13 19 22 12 13 5 13 19"/><polygon points="2 19 11 12 2 5 2 19"/>',
+  chart:        '<path d="M3 21h18"/><rect x="6" y="14" width="3" height="7"/><rect x="11" y="9" width="3" height="12"/><rect x="16" y="4" width="3" height="17"/>',
+  stamp:        '<path d="M5 22h14"/><path d="M19 14H5l1.7-2.3a3 3 0 0 0 .3-2.7l-.7-2A3 3 0 0 1 9.1 3h5.8a3 3 0 0 1 2.8 4l-.7 2a3 3 0 0 0 .3 2.7L19 14z"/>',
+  plug:         '<path d="M9 2v6M15 2v6"/><path d="M6 8h12v4a6 6 0 0 1-12 0V8z"/><path d="M12 18v4"/>',
+  'truck-fast': '<path d="M2 12h11"/><rect x="3" y="6" width="13" height="11" rx="1"/><path d="M16 9h4l3 3v5h-7"/><circle cx="7" cy="19" r="2"/><circle cx="18" cy="19" r="2"/>',
+  hammer:       '<path d="M15 12l-8.5 8.5a2.1 2.1 0 0 1-3-3L12 9"/><path d="M17.6 6.6L22 11l-5 5-4.4-4.4 5-5z"/><path d="M12 9l4-4"/>',
+  question:     '<circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/>'
+};
+
+// ── State / data ───────────────────────────────────────────────────────────
+let CONTENT = null;
+
+function $(s, root) { return (root || document).querySelector(s); }
+function $$(s, root) { return Array.from((root || document).querySelectorAll(s)); }
+function svgIcon(name) {
+  const inner = ICONS[name] || ICONS.question;
+  return `<svg viewBox="0 0 24 24">${inner}</svg>`;
+}
+
+// ── Render the Reference tab ───────────────────────────────────────────────
+function renderReference() {
+  if (!CONTENT) {
+    $('#content').innerHTML = '<div class="empty-tab">Reference content not loaded.</div>';
+    return;
+  }
+  const cards = CONTENT.cards || {};
+  const html = STRUCTURE.map((mod, mi) => `
+    <div class="module" data-mod="${mod.num}">
+      <div class="module-num-wrap">
+        <div class="module-num">${mod.num}</div>
+      </div>
+      <div class="module-body">
+        <div class="module-h">
+          <span class="module-name">${escHtml(mod.name)}</span>
+          <span class="module-tag" style="color:${mod.color}">${escHtml(mod.tag)}</span>
+        </div>
+        <p class="module-desc">${escHtml(mod.description)}</p>
+        ${mod.categories.map(cat => `
+          <div class="category">
+            <div class="cat-h">
+              <span class="cat-letter">${cat.letter}</span>
+              <span>${escHtml(cat.name).toUpperCase()}</span>
+            </div>
+            <div class="cards-grid">
+              ${cat.cards.map(c => renderCardPreview(c, cards[c.id])).join('')}
+            </div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `).join('');
+  $('#content').innerHTML = html;
+  $$('.card').forEach(el => el.addEventListener('click', () => openDrawer(el.dataset.id)));
+}
+
+function renderCardPreview(meta, content) {
+  if (!content) {
+    return `<div class="card" data-id="${escAttr(meta.id)}" style="opacity:0.5">
+      <div class="card-icon">${svgIcon(meta.icon)}</div>
+      <div class="card-title"><div class="card-name">${escHtml(meta.id)}</div><div class="card-subtitle">missing in JSON</div></div>
+      <div class="card-pill placeholder">—</div>
+    </div>`;
+  }
+  const pill = content.pill || '___';
+  const isPlaceholder = pill === '___' || pill === '';
+  return `<div class="card" data-id="${escAttr(meta.id)}">
+    <div class="card-icon">${svgIcon(meta.icon)}</div>
+    <div class="card-title">
+      <div class="card-name">${escHtml(content.title || meta.id)}</div>
+      ${content.subtitle ? `<div class="card-subtitle">${content.subtitle}</div>` : ''}
+    </div>
+    <div class="card-pill${isPlaceholder ? ' placeholder' : ''}">${escHtml(pill)}</div>
+  </div>`;
+}
+
+function openDrawer(cardId) {
+  const card = (CONTENT.cards || {})[cardId];
+  if (!card) return;
+  const pill = card.pill || '___';
+  const isPlaceholder = pill === '___' || pill === '';
+  $('#drawer-inner').innerHTML = `
+    <span class="drawer-pill${isPlaceholder ? ' placeholder' : ''}">${escHtml(isPlaceholder ? 'Slide ___' : 'Slide ' + pill)}</span>
+    <h2 class="drawer-name">${escHtml(card.title || cardId)}</h2>
+    ${card.subtitle ? `<p class="drawer-subtitle">${card.subtitle}</p>` : ''}
+    <div class="drawer-content">${card.body_html || ''}</div>
+  `;
+  $('#overlay').classList.add('open');
+  $('#drawer').classList.add('open');
+  $('#drawer').setAttribute('aria-hidden', 'false');
+}
+
+function closeDrawer() {
+  $('#overlay').classList.remove('open');
+  $('#drawer').classList.remove('open');
+  $('#drawer').setAttribute('aria-hidden', 'true');
+}
+
+function escHtml(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+function escAttr(s) { return String(s == null ? '' : s).replace(/"/g, '&quot;'); }
+
+// ── Tabs (FAQ/Slides are placeholders) ─────────────────────────────────────
+function renderTab(name) {
+  if (name === 'reference') return renderReference();
+  if (name === 'faq') {
+    $('#content').innerHTML = '<div class="empty-tab">FAQ content lives on the deck side. Not embedded in this platform yet.</div>';
+    return;
+  }
+  if (name === 'slides') {
+    $('#content').innerHTML = '<div class="empty-tab">Slides browser lives on the deck side. Not embedded in this platform yet.</div>';
+    return;
+  }
+}
+
+// ── Wire ───────────────────────────────────────────────────────────────────
+$('#drawer-close').addEventListener('click', closeDrawer);
+$('#overlay').addEventListener('click', closeDrawer);
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDrawer(); });
+
+$$('.tab-nav button').forEach(btn => {
+  btn.addEventListener('click', () => {
+    $$('.tab-nav button').forEach(b => b.classList.toggle('active', b === btn));
+    renderTab(btn.dataset.tab);
+  });
+});
+
+// ── Load ───────────────────────────────────────────────────────────────────
+(async function init() {
+  try {
+    const res = await fetch('reference-content.json?t=' + Date.now(), { cache: 'no-store' });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    CONTENT = await res.json();
+    if (CONTENT.lede) $('#lede').textContent = CONTENT.lede;
+    renderReference();
+  } catch (e) {
+    $('#lede').textContent = 'Failed to load reference-content.json: ' + e.message;
+    $('#content').innerHTML = '<div class="empty-tab">Could not load reference data. Check that reference-content.json is at the same path as this page.</div>';
+  }
+})();
+</script>
+</body>
+</html>

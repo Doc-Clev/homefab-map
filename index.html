@@ -90,7 +90,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-seri
 .cmdk-item .cmdk-shortcut{font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:11px;color:#888780;background:rgba(0,0,0,0.05);padding:2px 7px;border-radius:4px}
 @media(prefers-color-scheme:dark){.cmdk-item .cmdk-shortcut{background:rgba(255,255,255,0.08)}}
 .cmdk-empty{padding:20px;text-align:center;color:#888780;font-style:italic;font-size:12px}
-</style></head><body><nav id="nav"><span class="nav-brand">FBX HomeFab</span><div class="nav-sep"></div><div class="nav-group" data-group="map"><button class="nav-tab nav-view" data-page="map">🗺 Expansion Map</button><button class="nav-tab nav-edit" data-page="editor" title="Edit map data (Ctrl+E)" aria-label="Edit map data">✏</button></div><div class="nav-group" data-group="cost"><button class="nav-tab nav-view" data-page="cost-calibrator">💰 Cost Calibrator</button></div><div class="nav-group" data-group="fishbone"><button class="nav-tab nav-view" data-page="fishbone">🐟 Fishbone</button><button class="nav-tab nav-edit" data-page="fishbone-editor" title="Edit fishbone (Ctrl+E)" aria-label="Edit fishbone">✏</button></div><div class="nav-group" data-group="sites"><button class="nav-tab nav-view" data-page="sitelist">📋 Sites Detail</button></div><div class="nav-spacer"></div><div class="nav-actions"><div id="save-status"><div class="status-dot"></div><span id="save-status-text"></span></div><button id="nav-cmdk-btn" title="Quick switch (Ctrl+K)">⌘K</button><button id="nav-ver-btn" onclick="_toggleVers()">Versions ▾</button><button id="nav-save-btn"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M10.5 3.5L9 2H2C1.72 2 1.5 2.22 1.5 2.5V10.5C1.5 10.78 1.72 11 2 11H11C11.28 11 11.5 10.78 11.5 10.5V3.5H10.5Z" stroke="white" stroke-width="1.1"/><path d="M4.5 2V5H8.5V2" stroke="white" stroke-width="1.1"/><path d="M3.5 7.5H9.5V11H3.5V7.5Z" stroke="white" stroke-width="1.1"/></svg> Save Version</button></div></nav><div id="frame-container"><iframe class="page-frame" data-page="map" sandbox="allow-scripts allow-same-origin allow-downloads allow-forms allow-modals allow-popups" srcdoc="<!DOCTYPE html><html lang=&quot;en&quot;><head><meta charset=&quot;UTF-8&quot;><meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1.0&quot;><script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js&quot;></script>
+</style></head><body><nav id="nav"><span class="nav-brand">FBX HomeFab</span><div class="nav-sep"></div><div class="nav-group" data-group="map"><button class="nav-tab nav-view" data-page="map">🗺 Expansion Map</button><button class="nav-tab nav-edit" data-page="editor" title="Edit map data (Ctrl+E)" aria-label="Edit map data">✏</button></div><div class="nav-group" data-group="cost"><button class="nav-tab nav-view" data-page="cost-calibrator">💰 Cost Calibrator</button></div><div class="nav-group" data-group="fishbone"><button class="nav-tab nav-view" data-page="fishbone">🐟 Fishbone</button><button class="nav-tab nav-edit" data-page="fishbone-editor" title="Edit fishbone (Ctrl+E)" aria-label="Edit fishbone">✏</button></div><div class="nav-group" data-group="sites"><button class="nav-tab nav-view" data-page="sitelist">📋 Sites Detail</button></div><div class="nav-group" data-group="reference"><button class="nav-tab nav-view" data-page="reference">📚 Reference</button></div><div class="nav-spacer"></div><div class="nav-actions"><div id="save-status"><div class="status-dot"></div><span id="save-status-text"></span></div><button id="nav-cmdk-btn" title="Quick switch (Ctrl+K)">⌘K</button><button id="nav-ver-btn" onclick="_toggleVers()">Versions ▾</button><button id="nav-save-btn"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M10.5 3.5L9 2H2C1.72 2 1.5 2.22 1.5 2.5V10.5C1.5 10.78 1.72 11 2 11H11C11.28 11 11.5 10.78 11.5 10.5V3.5H10.5Z" stroke="white" stroke-width="1.1"/><path d="M4.5 2V5H8.5V2" stroke="white" stroke-width="1.1"/><path d="M3.5 7.5H9.5V11H3.5V7.5Z" stroke="white" stroke-width="1.1"/></svg> Save Version</button></div></nav><div id="frame-container"><iframe class="page-frame" data-page="map" sandbox="allow-scripts allow-same-origin allow-downloads allow-forms allow-modals allow-popups" srcdoc="<!DOCTYPE html><html lang=&quot;en&quot;><head><meta charset=&quot;UTF-8&quot;><meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1.0&quot;><script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js&quot;></script>
 <script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js&quot;></script><style>*{box-sizing:border-box}body{margin:0}
   :root {
     --bg-primary: #ffffff;
@@ -19602,16 +19602,571 @@ init();
 &lt;/script&gt;
 &lt;/body&gt;
 &lt;/html&gt;
+"></iframe><iframe class="page-frame" data-page="reference" sandbox="allow-scripts allow-same-origin allow-downloads allow-forms allow-modals allow-popups" srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;UTF-8&quot;&gt;
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+&lt;title&gt;FBX HomeFab — Reference&lt;/title&gt;
+&lt;style&gt;
+  :root {
+    --bg: #f5f4ef;
+    --bg-2: #faf9f5;
+    --panel: #ffffff;
+    --border: rgba(0,0,0,0.10);
+    --border-strong: rgba(0,0,0,0.18);
+    --text: #1a1a1a;
+    --text-2: #3d3a35;
+    --text-dim: #6b6760;
+    --text-muted: #8a857c;
+    --maroon: #A32D2D;
+    --maroon-bg: #FCEBEB;
+    --green: #639922;
+    --amber: #BA7517;
+    --pill-bg: #FCEBEB;
+    --pill-text: #A32D2D;
+    --pill-bg-soft: #f0eee8;
+    --pill-text-soft: #888780;
+    --display: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, system-ui, sans-serif;
+    --mono: &#x27;JetBrains Mono&#x27;, &#x27;SF Mono&#x27;, ui-monospace, Menlo, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1a1916;
+      --bg-2: #221f1c;
+      --panel: #26231f;
+      --border: rgba(255,255,255,0.10);
+      --border-strong: rgba(255,255,255,0.18);
+      --text: #f0efea;
+      --text-2: #d8d4cc;
+      --text-dim: #b4b2a9;
+      --text-muted: #888780;
+      --maroon: #e58585;
+      --maroon-bg: #3a1818;
+      --pill-bg: #3a1818;
+      --pill-text: #e58585;
+      --pill-bg-soft: #2d2a25;
+      --pill-text-soft: #b4b2a9;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--text);
+    font-family: var(--display); font-size: 14px; line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 1100px; margin: 0 auto; padding: 32px 28px 80px; }
+
+  header { margin-bottom: 18px; }
+  header h1 { font-size: 28px; font-weight: 700; margin: 0 0 8px; letter-spacing: -0.01em; }
+  header p { font-size: 14px; color: var(--text-dim); margin: 0; max-width: 78ch; line-height: 1.6; }
+
+  .tab-nav {
+    display: flex; gap: 28px; border-bottom: 1px solid var(--border);
+    margin: 22px 0 32px;
+  }
+  .tab-nav button {
+    background: none; border: none; padding: 10px 0; cursor: pointer;
+    font-family: var(--display); font-size: 14px; color: var(--text-dim);
+    border-bottom: 2px solid transparent; margin-bottom: -1px;
+    transition: color .12s, border-color .12s;
+  }
+  .tab-nav button.active { color: var(--maroon); border-bottom-color: var(--maroon); font-weight: 500; }
+  .tab-nav button:not(.active):hover { color: var(--text); }
+
+  .module {
+    display: grid; grid-template-columns: 50px 1fr; gap: 16px;
+    margin-bottom: 56px;
+  }
+  .module-num-wrap { position: relative; padding-top: 4px; }
+  .module-num {
+    width: 32px; height: 32px; border-radius: 50%;
+    background: var(--bg-2); border: 1px solid var(--border-strong);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; color: var(--text-dim); font-weight: 500;
+  }
+  .module-num-wrap::after {
+    content: &#x27;&#x27;; position: absolute; left: 16px; top: 38px; bottom: -40px;
+    border-left: 1px dashed var(--border-strong);
+  }
+  .module:last-child .module-num-wrap::after { display: none; }
+
+  .module-body { min-width: 0; }
+  .module-h {
+    display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap;
+    margin-bottom: 4px;
+  }
+  .module-name { font-size: 22px; font-weight: 700; letter-spacing: -0.01em; }
+  .module-tag { font-size: 14px; font-weight: 500; }
+  .module-desc {
+    color: var(--text-dim); font-size: 14px; margin: 0 0 22px;
+    max-width: 70ch; line-height: 1.55;
+  }
+
+  .category { margin-bottom: 18px; }
+  .cat-h {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em;
+    color: var(--text-dim); font-weight: 600; margin-bottom: 10px;
+  }
+  .cat-letter {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 18px; height: 18px; border-radius: 50%;
+    background: transparent; color: var(--text-dim);
+    border: 1px solid var(--border-strong);
+    font-size: 10px; font-weight: 600; flex-shrink: 0;
+  }
+
+  .cards-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 10px;
+  }
+  .card {
+    background: var(--panel); border: 1px solid var(--border);
+    border-left: 3px solid var(--maroon); border-radius: 8px;
+    padding: 12px 14px; cursor: pointer;
+    transition: border-color .12s, box-shadow .12s, transform .08s;
+    display: grid; grid-template-columns: 22px 1fr auto; gap: 10px; align-items: center;
+    text-align: left;
+  }
+  .card:hover { box-shadow: 0 2px 10px rgba(0,0,0,0.07); }
+  .card:active { transform: translateY(1px); }
+  .card-icon {
+    color: var(--text-muted); font-size: 14px;
+    display: flex; align-items: center; justify-content: center;
+    width: 22px; height: 22px;
+  }
+  .card-icon svg { width: 16px; height: 16px; stroke: currentColor; stroke-width: 1.8; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+  .card-title { min-width: 0; }
+  .card-name { font-weight: 600; font-size: 13.5px; color: var(--text); line-height: 1.3; }
+  .card-subtitle { font-size: 11.5px; color: var(--text-dim); margin-top: 1px; line-height: 1.35; }
+  .card-pill {
+    flex-shrink: 0; padding: 3px 9px; border-radius: 12px;
+    background: var(--pill-bg); color: var(--pill-text);
+    font-family: var(--mono); font-size: 10px; font-weight: 500; letter-spacing: 0.04em;
+    white-space: nowrap;
+  }
+  .card-pill.placeholder { background: var(--pill-bg-soft); color: var(--pill-text-soft); }
+
+  /* Slide-out drawer */
+  .overlay {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.35);
+    display: none; z-index: 50;
+    opacity: 0; transition: opacity .2s ease;
+  }
+  .overlay.open { display: block; opacity: 1; }
+  .drawer {
+    position: fixed; top: 0; right: 0; bottom: 0; width: 480px; max-width: 95vw;
+    background: var(--panel); z-index: 60;
+    transform: translateX(100%); transition: transform .25s ease;
+    overflow-y: auto;
+    box-shadow: -8px 0 32px rgba(0,0,0,0.16);
+  }
+  .drawer.open { transform: translateX(0); }
+  .drawer-inner { padding: 32px 36px 60px; }
+  .drawer-pill {
+    display: inline-block; padding: 4px 11px; border-radius: 12px;
+    background: var(--pill-bg); color: var(--pill-text);
+    font-family: var(--mono); font-size: 10px; font-weight: 500;
+    letter-spacing: 0.06em; margin-bottom: 18px;
+  }
+  .drawer-pill.placeholder { background: var(--pill-bg-soft); color: var(--pill-text-soft); }
+  .drawer-name {
+    font-size: 24px; font-weight: 700; letter-spacing: -0.01em; margin: 0 0 4px;
+  }
+  .drawer-subtitle {
+    color: var(--text-dim); font-size: 14px; margin: 0 0 24px;
+    line-height: 1.4;
+  }
+  .drawer-content { font-size: 14px; line-height: 1.65; color: var(--text-2); }
+  .drawer-content p { margin: 0 0 14px; }
+  .drawer-content h3 {
+    font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em;
+    color: var(--text-dim); font-weight: 600; margin: 24px 0 10px;
+  }
+  .drawer-content ul, .drawer-content ol { margin: 0 0 14px; padding-left: 22px; }
+  .drawer-content li { font-size: 13.5px; line-height: 1.6; margin-bottom: 8px; color: var(--text-2); }
+  .drawer-content li strong { color: var(--text); font-weight: 600; }
+  .drawer-content blockquote {
+    margin: 18px 0; padding: 12px 16px;
+    background: var(--bg-2); border-left: 3px solid var(--maroon);
+    border-radius: 0 6px 6px 0; font-style: italic; color: var(--text-2);
+    font-size: 13.5px; line-height: 1.6;
+  }
+  .drawer-content code {
+    font-family: var(--mono); font-size: 12px;
+    background: var(--bg-2); padding: 1px 5px; border-radius: 3px;
+    color: var(--text);
+  }
+  .drawer-content em { color: var(--text); }
+  .drawer-close {
+    position: absolute; top: 16px; right: 20px; background: none; border: none;
+    cursor: pointer; font-size: 24px; color: var(--text-muted); line-height: 1;
+    padding: 4px 10px; border-radius: 4px;
+  }
+  .drawer-close:hover { background: var(--bg-2); color: var(--text); }
+
+  .empty-tab {
+    padding: 60px 20px; text-align: center;
+    color: var(--text-muted); font-style: italic;
+    border: 1px dashed var(--border-strong); border-radius: 8px;
+  }
+
+  @media (max-width: 700px) {
+    .module { grid-template-columns: 36px 1fr; gap: 12px; }
+    .module-num { width: 26px; height: 26px; font-size: 11px; }
+    .module-num-wrap::after { left: 13px; }
+    .wrap { padding: 20px 16px 60px; }
+    .drawer { width: 100vw; }
+  }
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div class=&quot;wrap&quot;&gt;
+  &lt;header&gt;
+    &lt;h1&gt;Reference&lt;/h1&gt;
+    &lt;p id=&quot;lede&quot;&gt;Loading…&lt;/p&gt;
+  &lt;/header&gt;
+
+  &lt;nav class=&quot;tab-nav&quot;&gt;
+    &lt;button class=&quot;active&quot; data-tab=&quot;reference&quot;&gt;Reference&lt;/button&gt;
+    &lt;button data-tab=&quot;faq&quot;&gt;FAQ&lt;/button&gt;
+    &lt;button data-tab=&quot;slides&quot;&gt;Slides&lt;/button&gt;
+  &lt;/nav&gt;
+
+  &lt;div id=&quot;content&quot;&gt;
+    &lt;div style=&quot;padding:60px 20px;text-align:center;color:var(--text-muted);&quot;&gt;Loading reference content…&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;overlay&quot; id=&quot;overlay&quot;&gt;&lt;/div&gt;
+&lt;aside class=&quot;drawer&quot; id=&quot;drawer&quot; aria-hidden=&quot;true&quot;&gt;
+  &lt;button class=&quot;drawer-close&quot; id=&quot;drawer-close&quot; aria-label=&quot;Close&quot;&gt;×&lt;/button&gt;
+  &lt;div class=&quot;drawer-inner&quot; id=&quot;drawer-inner&quot;&gt;&lt;/div&gt;
+&lt;/aside&gt;
+
+&lt;script&gt;
+// ── Module / category structure (drives layout; card content comes from reference-content.json) ──
+const STRUCTURE = [
+  {
+    num: 1, name: &quot;1st Mile&quot;, tag: &quot;Retail Market Demand&quot;, color: &quot;#639922&quot;,
+    description: &quot;Demand generation, design, and the sale — the layer that hands a signed contract to FBX Core.&quot;,
+    categories: [
+      { letter: &quot;A&quot;, name: &quot;Customer Desires&quot;, cards: [
+        { id: &quot;energy-efficiency&quot;,   icon: &quot;bolt&quot; },
+        { id: &quot;ease-of-design&quot;,      icon: &quot;trending-up&quot; },
+        { id: &quot;speed&quot;,               icon: &quot;clock&quot; },
+        { id: &quot;customization&quot;,       icon: &quot;sparkles&quot; }
+      ]},
+      { letter: &quot;B&quot;, name: &quot;Design Constraints &amp; Product Development&quot;, cards: [
+        { id: &quot;rd&quot;,                  icon: &quot;search&quot; },
+        { id: &quot;engineers&quot;,           icon: &quot;book&quot; },
+        { id: &quot;regulatory-approvals&quot;,icon: &quot;shield&quot; }
+      ]},
+      { letter: &quot;C&quot;, name: &quot;Sales Cycle&quot;, cards: [
+        { id: &quot;home-sales&quot;,          icon: &quot;home&quot; },
+        { id: &quot;franchise-sales&quot;,     icon: &quot;briefcase&quot; },
+        { id: &quot;training&quot;,            icon: &quot;graduation&quot; }
+      ]}
+    ]
+  },
+  {
+    num: 2, name: &quot;FBX Core&quot;, tag: &quot;Aggregation, Warehousing &amp; Distribution&quot;, color: &quot;#BA7517&quot;,
+    description: &quot;The kit-of-parts engine. Standardize the design, aggregate the supply, ship to the Home-Fab.&quot;,
+    categories: [
+      { letter: &quot;A&quot;, name: &quot;Factory Standard Design&quot;, cards: [
+        { id: &quot;factory-standard&quot;,    icon: &quot;grid&quot; }
+      ]},
+      { letter: &quot;B&quot;, name: &quot;Suppliers&quot;, cards: [
+        { id: &quot;sips&quot;,                icon: &quot;panel&quot; },
+        { id: &quot;cold-formed-steel&quot;,   icon: &quot;panel&quot; },
+        { id: &quot;esips&quot;,               icon: &quot;bolt&quot; },
+        { id: &quot;bath-kitchen-pods&quot;,   icon: &quot;bath&quot; },
+        { id: &quot;demand-signals&quot;,      icon: &quot;trending-up&quot; }
+      ]},
+      { letter: &quot;C&quot;, name: &quot;Warehousing&quot;, cards: [
+        { id: &quot;receiving&quot;,           icon: &quot;package&quot; },
+        { id: &quot;sorting&quot;,             icon: &quot;sort&quot; },
+        { id: &quot;ship-to-home-fab&quot;,    icon: &quot;truck&quot; }
+      ]},
+      { letter: &quot;D&quot;, name: &quot;Network Operations&quot;, cards: [
+        { id: &quot;franchisee-establishment&quot;, icon: &quot;users&quot; },
+        { id: &quot;quality-assurance&quot;,        icon: &quot;check&quot; },
+        { id: &quot;regional-expansion&quot;,       icon: &quot;map&quot; }
+      ]}
+    ]
+  },
+  {
+    num: 3, name: &quot;Cost &amp; Economics&quot;, tag: &quot;How the Per-Door Math Works&quot;, color: &quot;#f59e0b&quot;,
+    description: &quot;The unit-economics layer that ties every site, every product, and every market back to a comparable cost-per-door — and makes modular efficiency legible against NAHB national turnkey.&quot;,
+    categories: [
+      { letter: &quot;A&quot;, name: &quot;The Cascade&quot;, cards: [
+        { id: &quot;cost-cascade&quot;,        icon: &quot;layers&quot; },
+        { id: &quot;tier-strip&quot;,          icon: &quot;split&quot; }
+      ]},
+      { letter: &quot;B&quot;, name: &quot;The Stack&quot;, cards: [
+        { id: &quot;entitlement-stack&quot;,   icon: &quot;stack&quot; }
+      ]},
+      { letter: &quot;C&quot;, name: &quot;Blending &amp; Benchmark&quot;, cards: [
+        { id: &quot;demand-weighted-blending&quot;, icon: &quot;weight&quot; },
+        { id: &quot;vs-nahb-benchmark&quot;,        icon: &quot;compare&quot; }
+      ]}
+    ]
+  },
+  {
+    num: 4, name: &quot;Last Mile&quot;, tag: &quot;Site Execution &amp; Workforce&quot;, color: &quot;#A32D2D&quot;,
+    description: &quot;The franchise-led delivery layer — turning a kit-of-parts into a finished home on the ground.&quot;,
+    categories: [
+      { letter: &quot;A&quot;, name: &quot;Site Execution&quot;, cards: [
+        { id: &quot;site-work&quot;,           icon: &quot;tool&quot; },
+        { id: &quot;last-mile-logistics&quot;, icon: &quot;truck&quot; },
+        { id: &quot;inspections&quot;,         icon: &quot;check&quot; }
+      ]},
+      { letter: &quot;B&quot;, name: &quot;Workforce&quot;, cards: [
+        { id: &quot;construction-workforce&quot;, icon: &quot;users&quot; }
+      ]}
+    ]
+  },
+  {
+    num: 5, name: &quot;Modular Industry&quot;, tag: &quot;Why This Will Work&quot;, color: &quot;#185FA5&quot;,
+    description: &quot;What broke for the prior wave of modular companies, and the four moats this network gets that they didn&#x27;t.&quot;,
+    categories: [
+      { letter: &quot;A&quot;, name: &quot;What Went Wrong&quot;, cards: [
+        { id: &quot;what-went-wrong&quot;,     icon: &quot;alert&quot; }
+      ]},
+      { letter: &quot;B&quot;, name: &quot;The Four Moats&quot;, cards: [
+        { id: &quot;network-effect&quot;,      icon: &quot;network&quot; },
+        { id: &quot;economy-of-scale&quot;,    icon: &quot;coin&quot; },
+        { id: &quot;brand&quot;,               icon: &quot;target&quot; },
+        { id: &quot;embedding-tech&quot;,      icon: &quot;chip&quot; }
+      ]},
+      { letter: &quot;C&quot;, name: &quot;Operating Principles&quot;, cards: [
+        { id: &quot;linear-exponential&quot;,  icon: &quot;trending-up&quot; },
+        { id: &quot;momentum&quot;,            icon: &quot;fast-forward&quot; },
+        { id: &quot;adoption&quot;,            icon: &quot;chart&quot; }
+      ]}
+    ]
+  },
+  {
+    num: 6, name: &quot;10-Year Plan&quot;, tag: &quot;The Network at Scale&quot;, color: &quot;#0F6E56&quot;,
+    description: &quot;Year-by-year fab rollout and the unit economics at steady state.&quot;,
+    categories: [
+      { letter: &quot;A&quot;, name: &quot;The Map&quot;, cards: [
+        { id: &quot;expansion-map&quot;,       icon: &quot;map&quot; }
+      ]},
+      { letter: &quot;B&quot;, name: &quot;Year-10 Economics&quot;, cards: [
+        { id: &quot;feasibility&quot;,         icon: &quot;chart&quot; }
+      ]}
+    ]
+  },
+  {
+    num: 7, name: &quot;Hard Truths&quot;, tag: &quot;Operational Reality&quot;, color: &quot;#854F0B&quot;,
+    description: &quot;The four operational hurdles that stood in the way of prior attempts — and our concrete plan for each.&quot;,
+    categories: [
+      { letter: &quot;A&quot;, name: &quot;Operational Reality&quot;, cards: [
+        { id: &quot;truth-stamping&quot;,         icon: &quot;stamp&quot; },
+        { id: &quot;truth-mfr-abstraction&quot;,  icon: &quot;plug&quot; },
+        { id: &quot;truth-transport&quot;,        icon: &quot;truck-fast&quot; },
+        { id: &quot;truth-builder-network&quot;,  icon: &quot;hammer&quot; }
+      ]}
+    ]
+  },
+  {
+    num: 8, name: &quot;Objections&quot;, tag: &quot;Investor Pre-Reads&quot;, color: &quot;#5f5e5a&quot;,
+    description: &quot;The three questions every investor asks first — answered.&quot;,
+    categories: [
+      { letter: &quot;A&quot;, name: &quot;Pre-Reads&quot;, cards: [
+        { id: &quot;obj-scale&quot;,           icon: &quot;question&quot; },
+        { id: &quot;obj-moat&quot;,            icon: &quot;question&quot; },
+        { id: &quot;obj-national&quot;,        icon: &quot;question&quot; }
+      ]}
+    ]
+  }
+];
+
+// ── Inline SVG icon library (lucide-style) ─────────────────────────────────
+const ICONS = {
+  bolt:         &#x27;&lt;polyline points=&quot;13 2 3 14 12 14 11 22 21 10 12 10&quot;/&gt;&#x27;,
+  &#x27;trending-up&#x27;:&#x27;&lt;polyline points=&quot;22 7 13.5 15.5 8.5 10.5 2 17&quot;/&gt;&lt;polyline points=&quot;16 7 22 7 22 13&quot;/&gt;&#x27;,
+  clock:        &#x27;&lt;circle cx=&quot;12&quot; cy=&quot;12&quot; r=&quot;10&quot;/&gt;&lt;polyline points=&quot;12 6 12 12 16 14&quot;/&gt;&#x27;,
+  sparkles:     &#x27;&lt;path d=&quot;M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1&quot;/&gt;&#x27;,
+  search:       &#x27;&lt;circle cx=&quot;11&quot; cy=&quot;11&quot; r=&quot;7&quot;/&gt;&lt;line x1=&quot;21&quot; y1=&quot;21&quot; x2=&quot;16.5&quot; y2=&quot;16.5&quot;/&gt;&#x27;,
+  book:         &#x27;&lt;path d=&quot;M4 19.5A2.5 2.5 0 0 1 6.5 17H20&quot;/&gt;&lt;path d=&quot;M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z&quot;/&gt;&#x27;,
+  shield:       &#x27;&lt;path d=&quot;M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z&quot;/&gt;&lt;polyline points=&quot;9 12 11 14 15 10&quot;/&gt;&#x27;,
+  home:         &#x27;&lt;path d=&quot;M3 12L12 3l9 9&quot;/&gt;&lt;path d=&quot;M5 10v10h14V10&quot;/&gt;&#x27;,
+  briefcase:    &#x27;&lt;rect x=&quot;2&quot; y=&quot;7&quot; width=&quot;20&quot; height=&quot;14&quot; rx=&quot;2&quot;/&gt;&lt;path d=&quot;M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2&quot;/&gt;&#x27;,
+  graduation:   &#x27;&lt;path d=&quot;M22 10L12 4 2 10l10 6 10-6z&quot;/&gt;&lt;path d=&quot;M6 12v5c3 3 9 3 12 0v-5&quot;/&gt;&#x27;,
+  grid:         &#x27;&lt;rect x=&quot;3&quot; y=&quot;3&quot; width=&quot;7&quot; height=&quot;7&quot;/&gt;&lt;rect x=&quot;14&quot; y=&quot;3&quot; width=&quot;7&quot; height=&quot;7&quot;/&gt;&lt;rect x=&quot;14&quot; y=&quot;14&quot; width=&quot;7&quot; height=&quot;7&quot;/&gt;&lt;rect x=&quot;3&quot; y=&quot;14&quot; width=&quot;7&quot; height=&quot;7&quot;/&gt;&#x27;,
+  panel:        &#x27;&lt;rect x=&quot;3&quot; y=&quot;3&quot; width=&quot;18&quot; height=&quot;18&quot; rx=&quot;1&quot;/&gt;&lt;line x1=&quot;3&quot; y1=&quot;9&quot; x2=&quot;21&quot; y2=&quot;9&quot;/&gt;&lt;line x1=&quot;3&quot; y1=&quot;15&quot; x2=&quot;21&quot; y2=&quot;15&quot;/&gt;&#x27;,
+  bath:         &#x27;&lt;path d=&quot;M5 12V6a3 3 0 0 1 5-2.5&quot;/&gt;&lt;path d=&quot;M9 4h2&quot;/&gt;&lt;path d=&quot;M3 12h18&quot;/&gt;&lt;path d=&quot;M5 12v3a3 3 0 0 0 3 3h8a3 3 0 0 0 3-3v-3&quot;/&gt;&lt;path d=&quot;M7 21l-1-2M17 21l1-2&quot;/&gt;&#x27;,
+  package:      &#x27;&lt;path d=&quot;M16.5 9.4l-9-5.2&quot;/&gt;&lt;path d=&quot;M21 16V8a2 2 0 0 0-1-1.7l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.7l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z&quot;/&gt;&lt;polyline points=&quot;3.3 7 12 12 20.7 7&quot;/&gt;&lt;line x1=&quot;12&quot; y1=&quot;22&quot; x2=&quot;12&quot; y2=&quot;12&quot;/&gt;&#x27;,
+  sort:         &#x27;&lt;path d=&quot;M3 6h18&quot;/&gt;&lt;path d=&quot;M7 12h10&quot;/&gt;&lt;path d=&quot;M11 18h2&quot;/&gt;&#x27;,
+  truck:        &#x27;&lt;rect x=&quot;1&quot; y=&quot;6&quot; width=&quot;14&quot; height=&quot;11&quot; rx=&quot;1&quot;/&gt;&lt;path d=&quot;M15 9h4l3 3v5h-7&quot;/&gt;&lt;circle cx=&quot;6&quot; cy=&quot;19&quot; r=&quot;2&quot;/&gt;&lt;circle cx=&quot;18&quot; cy=&quot;19&quot; r=&quot;2&quot;/&gt;&#x27;,
+  users:        &#x27;&lt;path d=&quot;M16 20v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2&quot;/&gt;&lt;circle cx=&quot;9&quot; cy=&quot;7&quot; r=&quot;4&quot;/&gt;&lt;path d=&quot;M22 20v-2a4 4 0 0 0-3-3.9&quot;/&gt;&lt;path d=&quot;M16 3.1a4 4 0 0 1 0 7.8&quot;/&gt;&#x27;,
+  check:        &#x27;&lt;circle cx=&quot;12&quot; cy=&quot;12&quot; r=&quot;10&quot;/&gt;&lt;polyline points=&quot;8 12 11 15 16 9&quot;/&gt;&#x27;,
+  map:          &#x27;&lt;polygon points=&quot;1 6 8 3 16 6 23 3 23 18 16 21 8 18 1 21&quot;/&gt;&lt;line x1=&quot;8&quot; y1=&quot;3&quot; x2=&quot;8&quot; y2=&quot;18&quot;/&gt;&lt;line x1=&quot;16&quot; y1=&quot;6&quot; x2=&quot;16&quot; y2=&quot;21&quot;/&gt;&#x27;,
+  layers:       &#x27;&lt;polygon points=&quot;12 2 2 7 12 12 22 7 12 2&quot;/&gt;&lt;polyline points=&quot;2 17 12 22 22 17&quot;/&gt;&lt;polyline points=&quot;2 12 12 17 22 12&quot;/&gt;&#x27;,
+  split:        &#x27;&lt;polyline points=&quot;16 3 21 3 21 8&quot;/&gt;&lt;line x1=&quot;4&quot; y1=&quot;20&quot; x2=&quot;21&quot; y2=&quot;3&quot;/&gt;&lt;polyline points=&quot;21 16 21 21 16 21&quot;/&gt;&lt;line x1=&quot;15&quot; y1=&quot;15&quot; x2=&quot;21&quot; y2=&quot;21&quot;/&gt;&lt;line x1=&quot;4&quot; y1=&quot;4&quot; x2=&quot;9&quot; y2=&quot;9&quot;/&gt;&#x27;,
+  stack:        &#x27;&lt;path d=&quot;M3 6h18M3 12h18M3 18h18&quot;/&gt;&#x27;,
+  weight:       &#x27;&lt;path d=&quot;M12 2L3 7v10l9 5 9-5V7l-9-5z&quot;/&gt;&lt;path d=&quot;M3 7l9 5 9-5&quot;/&gt;&lt;path d=&quot;M12 22V12&quot;/&gt;&#x27;,
+  compare:      &#x27;&lt;path d=&quot;M3 7h18M3 17h18&quot;/&gt;&lt;polyline points=&quot;7 3 3 7 7 11&quot;/&gt;&lt;polyline points=&quot;17 13 21 17 17 21&quot;/&gt;&#x27;,
+  tool:         &#x27;&lt;path d=&quot;M14.7 6.3a3 3 0 0 0 4 4l4 4a4.2 4.2 0 0 1-6 6l-4-4-4 4-4-4 4-4-4-4a4.2 4.2 0 0 1 6-6z&quot;/&gt;&#x27;,
+  alert:        &#x27;&lt;path d=&quot;M12 9v4M12 17h.01&quot;/&gt;&lt;path d=&quot;M10.3 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z&quot;/&gt;&#x27;,
+  network:      &#x27;&lt;circle cx=&quot;12&quot; cy=&quot;12&quot; r=&quot;3&quot;/&gt;&lt;circle cx=&quot;5&quot; cy=&quot;5&quot; r=&quot;2&quot;/&gt;&lt;circle cx=&quot;19&quot; cy=&quot;5&quot; r=&quot;2&quot;/&gt;&lt;circle cx=&quot;5&quot; cy=&quot;19&quot; r=&quot;2&quot;/&gt;&lt;circle cx=&quot;19&quot; cy=&quot;19&quot; r=&quot;2&quot;/&gt;&lt;line x1=&quot;6.5&quot; y1=&quot;6.5&quot; x2=&quot;9.5&quot; y2=&quot;9.5&quot;/&gt;&lt;line x1=&quot;17.5&quot; y1=&quot;6.5&quot; x2=&quot;14.5&quot; y2=&quot;9.5&quot;/&gt;&lt;line x1=&quot;6.5&quot; y1=&quot;17.5&quot; x2=&quot;9.5&quot; y2=&quot;14.5&quot;/&gt;&lt;line x1=&quot;17.5&quot; y1=&quot;17.5&quot; x2=&quot;14.5&quot; y2=&quot;14.5&quot;/&gt;&#x27;,
+  coin:         &#x27;&lt;circle cx=&quot;12&quot; cy=&quot;12&quot; r=&quot;9&quot;/&gt;&lt;path d=&quot;M9 9h4.5a2.5 2.5 0 0 1 0 5H9&quot;/&gt;&lt;path d=&quot;M9 15h5&quot;/&gt;&lt;line x1=&quot;12&quot; y1=&quot;6&quot; x2=&quot;12&quot; y2=&quot;18&quot;/&gt;&#x27;,
+  target:       &#x27;&lt;circle cx=&quot;12&quot; cy=&quot;12&quot; r=&quot;10&quot;/&gt;&lt;circle cx=&quot;12&quot; cy=&quot;12&quot; r=&quot;6&quot;/&gt;&lt;circle cx=&quot;12&quot; cy=&quot;12&quot; r=&quot;2&quot;/&gt;&#x27;,
+  chip:         &#x27;&lt;rect x=&quot;4&quot; y=&quot;4&quot; width=&quot;16&quot; height=&quot;16&quot; rx=&quot;2&quot;/&gt;&lt;rect x=&quot;9&quot; y=&quot;9&quot; width=&quot;6&quot; height=&quot;6&quot;/&gt;&lt;line x1=&quot;9&quot; y1=&quot;2&quot; x2=&quot;9&quot; y2=&quot;4&quot;/&gt;&lt;line x1=&quot;15&quot; y1=&quot;2&quot; x2=&quot;15&quot; y2=&quot;4&quot;/&gt;&lt;line x1=&quot;9&quot; y1=&quot;20&quot; x2=&quot;9&quot; y2=&quot;22&quot;/&gt;&lt;line x1=&quot;15&quot; y1=&quot;20&quot; x2=&quot;15&quot; y2=&quot;22&quot;/&gt;&lt;line x1=&quot;20&quot; y1=&quot;9&quot; x2=&quot;22&quot; y2=&quot;9&quot;/&gt;&lt;line x1=&quot;20&quot; y1=&quot;14&quot; x2=&quot;22&quot; y2=&quot;14&quot;/&gt;&lt;line x1=&quot;2&quot; y1=&quot;9&quot; x2=&quot;4&quot; y2=&quot;9&quot;/&gt;&lt;line x1=&quot;2&quot; y1=&quot;14&quot; x2=&quot;4&quot; y2=&quot;14&quot;/&gt;&#x27;,
+  &#x27;fast-forward&#x27;:&#x27;&lt;polygon points=&quot;13 19 22 12 13 5 13 19&quot;/&gt;&lt;polygon points=&quot;2 19 11 12 2 5 2 19&quot;/&gt;&#x27;,
+  chart:        &#x27;&lt;path d=&quot;M3 21h18&quot;/&gt;&lt;rect x=&quot;6&quot; y=&quot;14&quot; width=&quot;3&quot; height=&quot;7&quot;/&gt;&lt;rect x=&quot;11&quot; y=&quot;9&quot; width=&quot;3&quot; height=&quot;12&quot;/&gt;&lt;rect x=&quot;16&quot; y=&quot;4&quot; width=&quot;3&quot; height=&quot;17&quot;/&gt;&#x27;,
+  stamp:        &#x27;&lt;path d=&quot;M5 22h14&quot;/&gt;&lt;path d=&quot;M19 14H5l1.7-2.3a3 3 0 0 0 .3-2.7l-.7-2A3 3 0 0 1 9.1 3h5.8a3 3 0 0 1 2.8 4l-.7 2a3 3 0 0 0 .3 2.7L19 14z&quot;/&gt;&#x27;,
+  plug:         &#x27;&lt;path d=&quot;M9 2v6M15 2v6&quot;/&gt;&lt;path d=&quot;M6 8h12v4a6 6 0 0 1-12 0V8z&quot;/&gt;&lt;path d=&quot;M12 18v4&quot;/&gt;&#x27;,
+  &#x27;truck-fast&#x27;: &#x27;&lt;path d=&quot;M2 12h11&quot;/&gt;&lt;rect x=&quot;3&quot; y=&quot;6&quot; width=&quot;13&quot; height=&quot;11&quot; rx=&quot;1&quot;/&gt;&lt;path d=&quot;M16 9h4l3 3v5h-7&quot;/&gt;&lt;circle cx=&quot;7&quot; cy=&quot;19&quot; r=&quot;2&quot;/&gt;&lt;circle cx=&quot;18&quot; cy=&quot;19&quot; r=&quot;2&quot;/&gt;&#x27;,
+  hammer:       &#x27;&lt;path d=&quot;M15 12l-8.5 8.5a2.1 2.1 0 0 1-3-3L12 9&quot;/&gt;&lt;path d=&quot;M17.6 6.6L22 11l-5 5-4.4-4.4 5-5z&quot;/&gt;&lt;path d=&quot;M12 9l4-4&quot;/&gt;&#x27;,
+  question:     &#x27;&lt;circle cx=&quot;12&quot; cy=&quot;12&quot; r=&quot;10&quot;/&gt;&lt;path d=&quot;M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3&quot;/&gt;&lt;line x1=&quot;12&quot; y1=&quot;17&quot; x2=&quot;12.01&quot; y2=&quot;17&quot;/&gt;&#x27;
+};
+
+// ── State / data ───────────────────────────────────────────────────────────
+let CONTENT = null;
+
+function $(s, root) { return (root || document).querySelector(s); }
+function $$(s, root) { return Array.from((root || document).querySelectorAll(s)); }
+function svgIcon(name) {
+  const inner = ICONS[name] || ICONS.question;
+  return `&lt;svg viewBox=&quot;0 0 24 24&quot;&gt;${inner}&lt;/svg&gt;`;
+}
+
+// ── Render the Reference tab ───────────────────────────────────────────────
+function renderReference() {
+  if (!CONTENT) {
+    $(&#x27;#content&#x27;).innerHTML = &#x27;&lt;div class=&quot;empty-tab&quot;&gt;Reference content not loaded.&lt;/div&gt;&#x27;;
+    return;
+  }
+  const cards = CONTENT.cards || {};
+  const html = STRUCTURE.map((mod, mi) =&gt; `
+    &lt;div class=&quot;module&quot; data-mod=&quot;${mod.num}&quot;&gt;
+      &lt;div class=&quot;module-num-wrap&quot;&gt;
+        &lt;div class=&quot;module-num&quot;&gt;${mod.num}&lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;module-body&quot;&gt;
+        &lt;div class=&quot;module-h&quot;&gt;
+          &lt;span class=&quot;module-name&quot;&gt;${escHtml(mod.name)}&lt;/span&gt;
+          &lt;span class=&quot;module-tag&quot; style=&quot;color:${mod.color}&quot;&gt;${escHtml(mod.tag)}&lt;/span&gt;
+        &lt;/div&gt;
+        &lt;p class=&quot;module-desc&quot;&gt;${escHtml(mod.description)}&lt;/p&gt;
+        ${mod.categories.map(cat =&gt; `
+          &lt;div class=&quot;category&quot;&gt;
+            &lt;div class=&quot;cat-h&quot;&gt;
+              &lt;span class=&quot;cat-letter&quot;&gt;${cat.letter}&lt;/span&gt;
+              &lt;span&gt;${escHtml(cat.name).toUpperCase()}&lt;/span&gt;
+            &lt;/div&gt;
+            &lt;div class=&quot;cards-grid&quot;&gt;
+              ${cat.cards.map(c =&gt; renderCardPreview(c, cards[c.id])).join(&#x27;&#x27;)}
+            &lt;/div&gt;
+          &lt;/div&gt;
+        `).join(&#x27;&#x27;)}
+      &lt;/div&gt;
+    &lt;/div&gt;
+  `).join(&#x27;&#x27;);
+  $(&#x27;#content&#x27;).innerHTML = html;
+  $$(&#x27;.card&#x27;).forEach(el =&gt; el.addEventListener(&#x27;click&#x27;, () =&gt; openDrawer(el.dataset.id)));
+}
+
+function renderCardPreview(meta, content) {
+  if (!content) {
+    return `&lt;div class=&quot;card&quot; data-id=&quot;${escAttr(meta.id)}&quot; style=&quot;opacity:0.5&quot;&gt;
+      &lt;div class=&quot;card-icon&quot;&gt;${svgIcon(meta.icon)}&lt;/div&gt;
+      &lt;div class=&quot;card-title&quot;&gt;&lt;div class=&quot;card-name&quot;&gt;${escHtml(meta.id)}&lt;/div&gt;&lt;div class=&quot;card-subtitle&quot;&gt;missing in JSON&lt;/div&gt;&lt;/div&gt;
+      &lt;div class=&quot;card-pill placeholder&quot;&gt;—&lt;/div&gt;
+    &lt;/div&gt;`;
+  }
+  const pill = content.pill || &#x27;___&#x27;;
+  const isPlaceholder = pill === &#x27;___&#x27; || pill === &#x27;&#x27;;
+  return `&lt;div class=&quot;card&quot; data-id=&quot;${escAttr(meta.id)}&quot;&gt;
+    &lt;div class=&quot;card-icon&quot;&gt;${svgIcon(meta.icon)}&lt;/div&gt;
+    &lt;div class=&quot;card-title&quot;&gt;
+      &lt;div class=&quot;card-name&quot;&gt;${escHtml(content.title || meta.id)}&lt;/div&gt;
+      ${content.subtitle ? `&lt;div class=&quot;card-subtitle&quot;&gt;${content.subtitle}&lt;/div&gt;` : &#x27;&#x27;}
+    &lt;/div&gt;
+    &lt;div class=&quot;card-pill${isPlaceholder ? &#x27; placeholder&#x27; : &#x27;&#x27;}&quot;&gt;${escHtml(pill)}&lt;/div&gt;
+  &lt;/div&gt;`;
+}
+
+function openDrawer(cardId) {
+  const card = (CONTENT.cards || {})[cardId];
+  if (!card) return;
+  const pill = card.pill || &#x27;___&#x27;;
+  const isPlaceholder = pill === &#x27;___&#x27; || pill === &#x27;&#x27;;
+  $(&#x27;#drawer-inner&#x27;).innerHTML = `
+    &lt;span class=&quot;drawer-pill${isPlaceholder ? &#x27; placeholder&#x27; : &#x27;&#x27;}&quot;&gt;${escHtml(isPlaceholder ? &#x27;Slide ___&#x27; : &#x27;Slide &#x27; + pill)}&lt;/span&gt;
+    &lt;h2 class=&quot;drawer-name&quot;&gt;${escHtml(card.title || cardId)}&lt;/h2&gt;
+    ${card.subtitle ? `&lt;p class=&quot;drawer-subtitle&quot;&gt;${card.subtitle}&lt;/p&gt;` : &#x27;&#x27;}
+    &lt;div class=&quot;drawer-content&quot;&gt;${card.body_html || &#x27;&#x27;}&lt;/div&gt;
+  `;
+  $(&#x27;#overlay&#x27;).classList.add(&#x27;open&#x27;);
+  $(&#x27;#drawer&#x27;).classList.add(&#x27;open&#x27;);
+  $(&#x27;#drawer&#x27;).setAttribute(&#x27;aria-hidden&#x27;, &#x27;false&#x27;);
+}
+
+function closeDrawer() {
+  $(&#x27;#overlay&#x27;).classList.remove(&#x27;open&#x27;);
+  $(&#x27;#drawer&#x27;).classList.remove(&#x27;open&#x27;);
+  $(&#x27;#drawer&#x27;).setAttribute(&#x27;aria-hidden&#x27;, &#x27;true&#x27;);
+}
+
+function escHtml(s) { return String(s == null ? &#x27;&#x27; : s).replace(/[&amp;&lt;&gt;&quot;]/g, c =&gt; ({&#x27;&amp;&#x27;:&#x27;&amp;amp;&#x27;,&#x27;&lt;&#x27;:&#x27;&amp;lt;&#x27;,&#x27;&gt;&#x27;:&#x27;&amp;gt;&#x27;,&#x27;&quot;&#x27;:&#x27;&amp;quot;&#x27;}[c])); }
+function escAttr(s) { return String(s == null ? &#x27;&#x27; : s).replace(/&quot;/g, &#x27;&amp;quot;&#x27;); }
+
+// ── Tabs (FAQ/Slides are placeholders) ─────────────────────────────────────
+function renderTab(name) {
+  if (name === &#x27;reference&#x27;) return renderReference();
+  if (name === &#x27;faq&#x27;) {
+    $(&#x27;#content&#x27;).innerHTML = &#x27;&lt;div class=&quot;empty-tab&quot;&gt;FAQ content lives on the deck side. Not embedded in this platform yet.&lt;/div&gt;&#x27;;
+    return;
+  }
+  if (name === &#x27;slides&#x27;) {
+    $(&#x27;#content&#x27;).innerHTML = &#x27;&lt;div class=&quot;empty-tab&quot;&gt;Slides browser lives on the deck side. Not embedded in this platform yet.&lt;/div&gt;&#x27;;
+    return;
+  }
+}
+
+// ── Wire ───────────────────────────────────────────────────────────────────
+$(&#x27;#drawer-close&#x27;).addEventListener(&#x27;click&#x27;, closeDrawer);
+$(&#x27;#overlay&#x27;).addEventListener(&#x27;click&#x27;, closeDrawer);
+document.addEventListener(&#x27;keydown&#x27;, e =&gt; { if (e.key === &#x27;Escape&#x27;) closeDrawer(); });
+
+$$(&#x27;.tab-nav button&#x27;).forEach(btn =&gt; {
+  btn.addEventListener(&#x27;click&#x27;, () =&gt; {
+    $$(&#x27;.tab-nav button&#x27;).forEach(b =&gt; b.classList.toggle(&#x27;active&#x27;, b === btn));
+    renderTab(btn.dataset.tab);
+  });
+});
+
+// ── Load ───────────────────────────────────────────────────────────────────
+(async function init() {
+  try {
+    const res = await fetch(&#x27;reference-content.json?t=&#x27; + Date.now(), { cache: &#x27;no-store&#x27; });
+    if (!res.ok) throw new Error(&#x27;HTTP &#x27; + res.status);
+    CONTENT = await res.json();
+    if (CONTENT.lede) $(&#x27;#lede&#x27;).textContent = CONTENT.lede;
+    renderReference();
+  } catch (e) {
+    $(&#x27;#lede&#x27;).textContent = &#x27;Failed to load reference-content.json: &#x27; + e.message;
+    $(&#x27;#content&#x27;).innerHTML = &#x27;&lt;div class=&quot;empty-tab&quot;&gt;Could not load reference data. Check that reference-content.json is at the same path as this page.&lt;/div&gt;&#x27;;
+  }
+})();
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
 "></iframe></div><div id="ver-panel"><div id="ver-panel-head">Version History</div><div id="ver-list"></div></div><div id="save-modal"><div class="svm-box"><h2>Save Version</h2><p class="svm-subtitle">Page: <strong id="svm-page-label"></strong></p><label><span class="svm-required">*</span> Version name (required)</label><input type="text" id="svm-name" placeholder="e.g. Q2 draft" autocomplete="off"><div id="svm-error"></div><div class="svm-hint">Commits <strong id="svm-file-label"></strong> to GitHub via Actions — takes ~15s.</div><div class="svm-actions"><button id="svm-cancel">Cancel</button><button id="svm-commit">Save to GitHub</button></div></div></div><div id="cmdk-modal" role="dialog" aria-modal="true" aria-label="Quick switch"><div class="cmdk-box"><input id="cmdk-input" type="text" placeholder="Jump to a tool…" autocomplete="off" spellcheck="false"><div id="cmdk-list"></div></div></div><div id="nav-toast"></div><script>
 var _PAT='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',_REPO='Doc-Clev/homefab-map',_WF_ID='265885571';
-var _PAGES=['map','editor','cost-calibrator','fishbone','fishbone-editor','sitelist'];
-var _LABELS={'map':'🗺 Expansion Map','editor':'✏️ Map Editor','cost-calibrator':'💰 Cost Calibrator','fishbone':'🐟 Fishbone','fishbone-editor':'✏️ Fishbone Editor','sitelist':'📋 Sites Detail'};
-var _COLORS={'map':'#639922','editor':'#185FA5','cost-calibrator':'#f59e0b','fishbone':'#c9964a','fishbone-editor':'#b85c4a','sitelist':'#7a6e63'};
-var _FILE={'map':'sites.json','editor':'sites.json','cost-calibrator':'sites.json','fishbone':'fishbone.json','fishbone-editor':'fishbone.json','sitelist':''};
+var _PAGES=['map','editor','cost-calibrator','fishbone','fishbone-editor','sitelist','reference'];
+var _LABELS={'map':'🗺 Expansion Map','editor':'✏️ Map Editor','cost-calibrator':'💰 Cost Calibrator','fishbone':'🐟 Fishbone','fishbone-editor':'✏️ Fishbone Editor','sitelist':'📋 Sites Detail','reference':'📚 Reference'};
+var _COLORS={'map':'#639922','editor':'#185FA5','cost-calibrator':'#f59e0b','fishbone':'#c9964a','fishbone-editor':'#b85c4a','sitelist':'#7a6e63','reference':'#A32D2D'};
+var _FILE={'map':'sites.json','editor':'sites.json','cost-calibrator':'sites.json','fishbone':'fishbone.json','fishbone-editor':'fishbone.json','sitelist':'','reference':''};
 // Pages whose iframes need to re-fetch when sites.json changes
 var _SITES_DEPS=['map','editor','cost-calibrator','sitelist'];
 // Group membership for the paired-card nav
-var _GROUP_OF={'map':'map','editor':'map','cost-calibrator':'cost','fishbone':'fishbone','fishbone-editor':'fishbone','sitelist':'sites'};
+var _GROUP_OF={'map':'map','editor':'map','cost-calibrator':'cost','fishbone':'fishbone','fishbone-editor':'fishbone','sitelist':'sites','reference':'reference'};
 var _cur='map';
 var _VK='fbx_v3';
 var _vers={};
@@ -19825,8 +20380,8 @@ document.getElementById('cmdk-input').addEventListener('keydown',_cmdkKey);
 document.addEventListener('keydown',function(e){
   // Cmd-K / Ctrl-K opens quick switcher
   if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='k'){e.preventDefault();_cmdkOpen();return;}
-  // Cmd-1..6 jumps to page N
-  if((e.metaKey||e.ctrlKey)&&/^[1-6]$/.test(e.key)){e.preventDefault();var p=_PAGES[parseInt(e.key)-1];if(p)_switchPage(p);return;}
+  // Cmd-1..7 jumps to page N
+  if((e.metaKey||e.ctrlKey)&&/^[1-7]$/.test(e.key)){e.preventDefault();var p=_PAGES[parseInt(e.key)-1];if(p)_switchPage(p);return;}
   // Cmd-E toggles between view and editor of the current group (if it has an editor)
   if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='e'){
     var pair={'map':'editor','editor':'map','fishbone':'fishbone-editor','fishbone-editor':'fishbone'}[_cur];
@@ -19838,6 +20393,7 @@ document.addEventListener('keydown',function(e){
 document.getElementById('svm-name').addEventListener('keydown',function(e){if(e.key==='Enter')_doSave()});
 document.addEventListener('click',function(e){var p=document.getElementById('ver-panel');if(p.style.display==='block'&&!p.contains(e.target)&&e.target.id!=='nav-ver-btn')p.style.display='none';});
 _switchPage('map');
+
 
 
 

@@ -1,0 +1,263 @@
+{
+  "_meta": {
+    "version": "v0.1",
+    "description": "Content for tools/reference.html. Each entry under `cards` is keyed by a card-id (matching data-card-id in the HTML) and rendered into the side drawer when that card is clicked. The body_html field accepts inline HTML — paragraphs (<p>), headings (<h3>), lists (<ul>/<ol>), <strong>, <em>, <code>, <blockquote>. Edit this file and commit; the deck reads it at runtime."
+  },
+  "brand": "FBX <span>·</span> HOMEFAB",
+  "meta": "Investor Reference · Confidential · 2026",
+  "heading": "Reference",
+  "lede": "The operating system underneath the deck. Five pillars — three miles, the modular industry argument, and the 10-year expansion plan. Click any card to open its readme; pills cross-reference the slide(s) where the topic is presented.",
+  "footer": {
+    "left": "FBX Product Development",
+    "right": "Series A · $4M Core"
+  },
+  "cards": {
+    "energy-efficiency": {
+      "title": "Energy Efficiency by Default",
+      "subtitle": "Net-zero-ready as the floor, not the upgrade",
+      "body_html": "<p>Every FBX home is engineered to outperform local energy code by 20–30% out of the box. Panelization tightens the thermal envelope; the kit includes high-R wall and roof assemblies, low-U glazing, and pre-routed pathways for heat-pump HVAC and balanced ventilation.</p><h3>Why it matters to the buyer</h3><ul><li>Lower utility bills from day one — typical owner saves $1,400–$2,200/yr</li><li>Federal and state tax incentives stack on the purchase</li><li>Documented 5–7% resale premium for code-plus performance</li></ul><h3>Why it matters to the franchise</h3><ul><li>One spec everywhere: no per-region engineering rework</li><li>Energy compliance is a paperwork problem we solve once</li></ul>"
+    },
+    "ease-of-design": {
+      "title": "Ease of Design",
+      "subtitle": "Guided, not gated",
+      "body_html": "<p>The customer configures the home from a kit-of-parts AI-assisted menu — floorplans, finish trims, glazing packages — instead of starting from a blank idea. The constraint set is bounded by what the factory can build, so every choice is automatically buildable, permittable, and quoted.</p><h3>What changes for the customer</h3><ul><li>From <strong>weeks</strong> of architect back-and-forth to <strong>hours</strong> of guided configuration</li><li>Real-time price + timeline updates as choices change</li><li>Confidence that the result is real, not a render</li></ul>",
+      "pill": "07"
+    },
+    "speed": {
+      "title": "Speed",
+      "subtitle": "Fast permits, AI-assisted compliance",
+      "body_html": "<p>We work upstream with permitting offices to land master-permits where possible, and use AI-assisted compliance checks to surface red flags before submission rather than after.</p><h3>Permit-to-pour: target 30–45 days</h3><p>Versus the 90–180 days typical for conventional custom builds in the same markets. Speed compounds at the franchise level — faster permits mean faster revenue recognition mean faster reinvestment.</p>",
+      "pill": "14"
+    },
+    "customization": {
+      "title": "Customization Within Constraints",
+      "subtitle": "Trust the brand · love the iteration",
+      "body_html": "<p>The cars-and-trims analogy: customers want the trust of a known brand AND the uniqueness of personalizing their home. Our kit-of-parts is the platform; the configurator is the trim sheet.Just like cars & trucks the frame underneath is the same, but the lipstick is different every time a new model is built.</p><h3>What's customizable</h3><ul><li>Floorplan (within a curated set per product line)</li><li>Roof profile, cladding, fenestration package</li><li>Interior finishes, fixtures, appliance tier</li><li>Site siting, solar/storage integration</li></ul><h3>What's not</h3><ul><li>Structural envelope (panel sizes, span tables)</li><li>Mechanical pathways (the spine that keeps the kit shippable)</li></ul>",
+      "pill": "07"
+    },
+    "rd": {
+      "title": "Research &amp; Development",
+      "body_html": "<p>R&amp;D pipeline is product-led: we ship what the franchise can sell and the factory can produce. Investment areas:</p><ul><li>Next-generation panel chemistries (eSIPs, hybrid CFS)</li><li>Pod modularization (bath/kitchen wet-modules)</li><li>Configurator UX and rules engine</li><li>Energy systems integration</li></ul><p>R&amp;D output is gated by demonstrated demand from franchise partners — we don't build features without an installer asking for them.</p>"
+    },
+    "engineers": {
+      "title": "Engineers",
+      "subtitle": "Centralized engineering, distributed execution",
+      "body_html": "<p>Structural, mechanical, and energy engineering happen <strong>once</strong>, at FBX Core. Franchisees don't need PE staff on payroll — they get the stamped drawings and compliance docs as part of the kit.</p><h3>Implications</h3><ul><li>One engineering org for the whole network — leverage compounds</li><li>Franchisees scale faster (no PE bottleneck)</li><li>Standards travel with the kit, not with the franchisee</li></ul>"
+    },
+    "regulatory-approvals": {
+      "title": "Regulatory Approvals",
+      "subtitle": "We do this once, not 137 times",
+      "body_html": "<p>Each Home-Fab opens with a regional approvals package already in hand: code path, factory inspection regime, cross-jurisdictional acceptance.</p><p>We work with state housing offices early to land:</p><ul><li>Modular factory certification (per-state, recurring)</li><li>Master plan approvals for the standard product line</li><li>Acceptance of FBX QA in lieu of in-field re-inspection</li></ul><blockquote>The cost of compliance, amortized across the network, is what creates the durable cost advantage.</blockquote>"
+    },
+    "home-sales": {
+      "title": "Home Sales",
+      "body_html": "<p>The franchise owns the customer relationship; FBX Core powers the supply side. Sales channel mix:</p><ul><li><strong>Direct-to-consumer</strong> — configurator, showroom, retained customer</li><li><strong>Builder partnerships</strong> — small/mid builders use us as their factory</li><li><strong>Developer projects</strong> — multi-unit and infill</li></ul>"
+    },
+    "franchise-sales": {
+      "title": "Franchise Sales",
+      "subtitle": "Selling the playbook, not just the kit",
+      "body_html": "<p>Franchise candidates buy a complete operating package: site selection, regional permit approvals, training, supply contracts, marketing, and ongoing technical support.</p><h3>Target franchisee profile</h3><ul><li>Existing GC, builder, or developer with regional reputation</li><li>Capable of $4–8M in working capital plus site investment</li><li>Wants to scale beyond what custom-build can produce</li></ul>"
+    },
+    "training": {
+      "title": "Training",
+      "subtitle": "Kit assembly is the curriculum",
+      "body_html": "<p>The construction workforce needs to know <em>kit assembly</em>, not bespoke build. That's a much shorter learning curve.</p><h3>Two-track program</h3><ul><li><strong>Crew certification</strong> — 4-week program, panel handling, sequence, QC</li><li><strong>Site supervisor</strong> — 8-week program, multi-trade coordination, inspections</li></ul><p>Training is run regionally out of each Home-Fab. Graduates feed the franchise network's labor pool.</p>"
+    },
+    "factory-standard": {
+      "title": "Factory Standard Design",
+      "subtitle": "One spec across the network",
+      "body_html": "<p>Maintains the single architectural and structural specification adopted by every Fab in the network. Primary deliverable is a machine-readable BOM that drives Kit-of-Parts assembly downstream. Engineering team owns the master CAD; product manager triages bids/changes from the field. Every spec revision must be backward-compatible with kits already in the supply chain (typically a 90-day cutover window).</p><h3>Operating Profile</h3><ul><li><strong>First year active:</strong> 1</li><li><strong>Maturity year:</strong> 5</li><li><strong>FTE at launch:</strong> 4</li><li><strong>FTE at maturity:</strong> 15</li><li><strong>Annual opex at maturity:</strong> $2.4M</li><li><strong>Specs under management:</strong> 1 master architectural set + 4 product variants (Townhome, ADU, Duplex, SFR)</li><li><strong>Spec revision cadence:</strong> biannual (Q2 + Q4 cycles to give franchisees retooling lead-time)</li><li><strong>Fabs in compliance target:</strong> 100% by end of Year 3</li></ul>"
+    },
+    "sips": {
+      "title": "SIPs",
+      "subtitle": "Panelization · primary",
+      "body_html": "<p>Structural Insulated Panels are the primary panelization product across the network. Supply-chain risk: SIPs are made by ~12 specialty fabricators in N. America. We dual-source by region to keep redundancy. Volume tier-pricing kicks in at 1,200+ sets/year, hit in Year 4. Track shipping-damage rates monthly — target &lt;2%.</p><h3>Operating Profile</h3><ul><li><strong>First year active:</strong> 1</li><li><strong>Maturity year:</strong> 7</li><li><strong>FTE at launch:</strong> 7</li><li><strong>FTE at maturity:</strong> 15</li><li><strong>Supplier concentration:</strong> 2 primary, 4 backup, regionally split (East / Central / West)</li><li><strong>Annual panel volume at maturity:</strong> 3,594 sets</li><li><strong>Lead time target:</strong> 14 days</li><li><strong>Annual spend at maturity:</strong> $22.5M</li><li><strong>Share of panelized buildings:</strong> 50%</li></ul>"
+    },
+    "cold-formed-steel": {
+      "title": "Cold-Formed Steel",
+      "subtitle": "Panelization · option",
+      "body_html": "<p>Alternative panelization for code-driven markets where SIPs face regulatory friction. Slightly higher psf than SIPs but recovers in faster permit cycles in Tier A jurisdictions. Initial supplier list: ClarkDietrich, MiTek, Sure-Span. Spec maintained by the same engineering team as SIPs to keep BOM unified.</p><h3>Operating Profile</h3><ul><li><strong>First year active:</strong> 4</li><li><strong>Maturity year:</strong> 8</li><li><strong>FTE at launch:</strong> 5</li><li><strong>FTE at maturity:</strong> 15</li><li><strong>Share of buildings at maturity:</strong> 20%</li><li><strong>Annual units at maturity:</strong> 120 units</li><li><strong>Primary use case:</strong> Tier A code-driven markets (CA seismic; NY/NJ fire)</li><li><strong>Annual spend at maturity:</strong> $7.5M</li><li><strong>psf premium vs SIPs:</strong> 8%</li></ul>"
+    },
+    "esips": {
+      "title": "eSIPs",
+      "subtitle": "Panelization · enhanced",
+      "body_html": "<p>Enhanced SIPs with integrated electrical chases, pre-routed plumbing penetrations, and embedded structural connections. Reduces site-work labor by 22-30% which compresses the Tier-A strip% economics meaningfully — every 5 percentage points of strip% reduction in Tier A is roughly $25K of margin per door. Premium product targeting CA/NY/MA markets where labor costs justify the upcharge.</p><h3>Operating Profile</h3><ul><li><strong>First year active:</strong> 5</li><li><strong>Maturity year:</strong> 9</li><li><strong>FTE at launch:</strong> 3</li><li><strong>FTE at maturity:</strong> 15</li><li><strong>Share of buildings at maturity:</strong> 30%</li><li><strong>Annual units at maturity:</strong> 180 units</li><li><strong>Premium over standard SIPs:</strong> 18%</li><li><strong>Site labor reduction vs SIPs:</strong> 26%</li><li><strong>Annual spend at maturity:</strong> $14.0M</li></ul>"
+    },
+    "bath-kitchen-pods": {
+      "title": "Bath / Kitchen Pods",
+      "subtitle": "Plumbing-heavy modules",
+      "body_html": "<p>Pre-fabricated bath and kitchen modules ship as complete plumbing assemblies. Drops 38 hours of site labor per pod — meaningful for Tier A markets with $90+/hr loaded labor rates. ADUs typically take 1 bath pod; townhomes/duplex 3-4. Per-tier impact on $/door is most pronounced in Tier A (~$3.4K/door reduction) and Tier B (~$2.8K).</p><h3>Operating Profile</h3><ul><li><strong>First year active:</strong> 2</li><li><strong>Maturity year:</strong> 6</li><li><strong>FTE at launch:</strong> 4</li><li><strong>FTE at maturity:</strong> 15</li><li><strong>Pods per building:</strong> Townhome: 3 · ADU: 1 · Duplex: 4 · SFR: 2</li><li><strong>Annual pod volume at maturity:</strong> 1,450</li><li><strong>Site labor displaced per pod:</strong> 38 hours</li><li><strong>Annual spend at maturity:</strong> $18.7M</li><li><strong>Sourcing strategy:</strong> 1 US primary fab + 1 Asia-import for cost arbitrage on SFR/ADU run</li></ul>"
+    },
+    "demand-signals": {
+      "title": "Demand Signals",
+      "subtitle": "What suppliers want from us",
+      "body_html": "<p>We bring suppliers a 12-24 month rolling forecast committed at the regional level. Suppliers reciprocate with volume pricing, capacity reservation, and priority production slots. Maintains the demand-side data feed: orders by tier, by Fab, by product type. Owners: supply-chain ops + procurement analyst running quarterly supplier business reviews. The 8.5M/yr savings figure assumes 4-6% volume discount on bulk commits.</p><h3>Operating Profile</h3><ul><li><strong>First year active:</strong> 3</li><li><strong>Maturity year:</strong> 7</li><li><strong>FTE at launch:</strong> 2</li><li><strong>FTE at maturity:</strong> 11</li><li><strong>Rolling forecast horizon:</strong> 24 months</li><li><strong>Rolling forecast accuracy target:</strong> 92%</li><li><strong>Supplier partner count at maturity:</strong> 28</li><li><strong>Annual savings from volume commits:</strong> $8.5M</li><li><strong>Quarterly supplier business reviews:</strong> 28</li></ul>"
+    },
+    "receiving": {
+      "title": "Receiving",
+      "subtitle": "Domestic & foreign · containers",
+      "body_html": "<p>Five FBX Core hubs (Corona CA, Dallas TX, Indianapolis IN, Hartford CT, Denver CO) receive both domestic LTL freight and international containers. Domestic flow handles ~65% of volume (panels, lumber, finishes); imports cover ~35% (specialty hardware, bath pods, finishes). 24/7 unloading dock at peak. Inventory accuracy is the headline KPI — ties directly to kit-build accuracy downstream.</p><h3>Operating Profile</h3><ul><li><strong>First year active:</strong> 1</li><li><strong>Maturity year:</strong> 5</li><li><strong>FTE per hub at launch:</strong> 6</li><li><strong>FTE per hub at maturity:</strong> 16</li><li><strong>Hubs operating by year:</strong> Y1: 1 · Y3: 3 · Y5: 5 · Y10: 5</li><li><strong>Containers per yr per hub at maturity:</strong> 1,100</li><li><strong>Import share of volume:</strong> 35%</li><li><strong>Domestic share of volume:</strong> 65%</li><li><strong>Inventory accuracy target:</strong> 99.4%</li></ul>"
+    },
+    "sorting": {
+      "title": "Sorting",
+      "body_html": "<p>Receives bulk inventory, picks against the master spec, builds a complete Kit-of-Parts (~600 SKUs per kit) per home order. Each kit is a containerized shipment — single-touch from sort floor to outbound truck. Quality gate: every 20th kit gets a full-line audit by QA. Tooling roadmap: barcode-driven pick paths in Year 1-3, then AS/RS automation in Years 4-7 to absorb volume growth without linear FTE growth.</p><h3>Operating Profile</h3><ul><li><strong>First year active:</strong> 1</li><li><strong>Maturity year:</strong> 5</li><li><strong>FTE per hub at launch:</strong> 5</li><li><strong>FTE per hub at maturity:</strong> 16</li><li><strong>Kits per yr per hub at maturity:</strong> 120</li><li><strong>Skus per kit:</strong> 600</li><li><strong>Kit assembly time:</strong> 18 hours</li><li><strong>Kit accuracy target:</strong> 99.8%</li><li><strong>QA audit sample rate:</strong> every 20th kit</li></ul>",
+      "subtitle": "Create the kit of parts"
+    },
+    "ship-to-home-fab": {
+      "title": "Ship to Home-Fab",
+      "subtitle": "Containers to assembly factory",
+      "body_html": "<p>Outbound shipping from Core hub to assembly Fab. Each kit travels in a sealed 53' container, designed to one-touch unload into the Fab's receiving bay. Routing optimized weekly — most Fabs sit within 500 miles of their assigned hub. Stream Logistics holds the fee-based freight contract; we monitor on-time and damage rates monthly.</p><h3>Operating Profile</h3><ul><li><strong>First year active:</strong> 1</li><li><strong>Maturity year:</strong> 5</li><li><strong>FTE per hub at launch:</strong> 4</li><li><strong>FTE per hub at maturity:</strong> 16</li><li><strong>Outbound loads per yr per hub at maturity:</strong> 1,100 loads</li><li><strong>Avg haul distance:</strong> 380 miles</li><li><strong>Max haul distance:</strong> 500 miles</li><li><strong>On time delivery target:</strong> 96%</li><li><strong>Freight partner:</strong> Stream Logistics (per fishbone Last Mile)</li></ul>",
+      "pill": "16"
+    },
+    "franchisee-establishment": {
+      "title": "Franchisee Establishment",
+      "subtitle": "Stand up new Fabs",
+      "body_html": "<p>Recruits, onboards, and stands up new Fab franchisees. Includes site selection assistance (pulls from the Expansion Map's recommended cities), territory licensing, training, opening kit shipment, and first-90-days handholding. Owns the Fab pipeline — 137 sites is the 10-year target. Phasing: 2 Fabs in Year 1 (CA pilot), 30 by Year 5 (Phase 2 high-demand markets), 137 by Year 10 (Phase 3 national fill-in).</p><h3>Operating Profile</h3><ul><li><strong>First year active:</strong> 1</li><li><strong>Maturity year:</strong> 4</li><li><strong>FTE at launch:</strong> 3</li><li><strong>FTE at maturity:</strong> 12</li><li><strong>Fabs per year by phase:</strong> Phase 1: 2 · Phase 2: 8 · Phase 3: 15</li><li><strong>Time to franchisee operational:</strong> 9 months</li><li><strong>Franchisee acquisition cost:</strong> $65K</li><li><strong>Training program:</strong> 6 at HQ + 3 on-site</li><li><strong>First 90 days handholding:</strong> Yes</li></ul>"
+    },
+    "quality-assurance": {
+      "title": "Quality Assurance",
+      "subtitle": "Network-wide QA standards",
+      "body_html": "<p>Owns the Quality Management System across hubs and Fabs. Quarterly audits at each Fab, kit-level QA on a sample basis at sort, root-cause analysis on field-reported defects. Coordinates with ICC/Intertek for third-party building inspections (Last Mile BU per fishbone). Drives the warranty-claim KPI — target is industry-leading at 12 claims per 1,000 homes vs. ~30/1,000 conventional construction.</p><h3>Operating Profile</h3><ul><li><strong>First year active:</strong> 2</li><li><strong>Maturity year:</strong> 6</li><li><strong>FTE at launch:</strong> 3</li><li><strong>FTE at maturity:</strong> 14</li><li><strong>Audit cadence per fab per year:</strong> 4</li><li><strong>Incident response target:</strong> 48 hours</li><li><strong>Warranty claim rate target per 1000 homes:</strong> 12</li><li><strong>Third party inspection partners:</strong> ICC, Intertek</li></ul>"
+    },
+    "regional-expansion": {
+      "title": "Regional Expansion",
+      "subtitle": "Hub & territory growth",
+      "body_html": "<p>Strategic real-estate function — selects new hub locations as the network scales, negotiates leases, manages CAPEX on hub buildout. Hub coverage radius is 500 miles; today (Year 1) only Corona CA is operational. By Year 10 all 5 hubs are running (Corona Y1, Dallas Y2, Indianapolis Y3, Hartford Y4, Denver Y5 per existing rollout plan). Coordinates with the Expansion Map team to time hub openings against Fab demand in the territory.</p><h3>Operating Profile</h3><ul><li><strong>First year active:</strong> 1</li><li><strong>Maturity year:</strong> 7</li><li><strong>FTE at launch:</strong> 2</li><li><strong>FTE at maturity:</strong> 8</li><li><strong>Hubs operating target by year 10:</strong> 5</li><li><strong>States with active fab target:</strong> 50</li><li><strong>Hub coverage radius:</strong> 500 miles</li><li><strong>Hub capex per hub:</strong> $15M</li></ul>"
+    },
+    "cost-cascade": {
+      "title": "Cost Cascade",
+      "subtitle": "City &rarr; state &rarr; tier &rarr; national",
+      "body_html": "<p>Every site computes its $/sf via a four-step cascade. A direct city-level override takes precedence. Failing that, a city's RSMeans CCI multiplier &times; the national baseline. Failing that, the state default. Failing that, the $162/sf national baseline (NAHB SOC 2024). Each city stores <strong>only its overrides</strong> — the inheritance keeps the data file clean and auditable.</p><h3>Why the cascade</h3><ul><li>We start with sensible defaults, then override cities <strong>as real bids come in</strong> — every override is a real datapoint replacing an estimate</li><li>State averages are biased toward primary metros — the cascade lets us be honest about the secondary markets that make up the bulk of the rollout</li><li>Audit trail is built into the data: each city stores a <code>source</code> tag (RSMeans direct, local builder bid, manufacturer quote, estimated)</li></ul>"
+    },
+    "tier-strip": {
+      "title": "Tier Strip",
+      "subtitle": "GC site work vs FBX factory",
+      "body_html": "<p>Markets are classified into four tiers (A / B / C / D) based on regulatory burden and labor cost. The <em>strip</em> is the share of construction cost the GC handles on-site (foundation, utilities, finishing). Tier A = 35% strip, 65% factory. Tier D = 22% strip, 78% factory. <strong>The lower the strip, the more value FBX captures per door.</strong></p><h3>The four tiers</h3><ul><li><strong>Tier A (35% strip)</strong> — CA, HI, AK, NJ, NY, MA — heavy regulation, seismic / coastal, premium labor</li><li><strong>Tier B (32%)</strong> — CT, OR, WA, MD, RI, NH, VT, ME, DE, PA — Northeast / West Coast secondary</li><li><strong>Tier C (28%)</strong> — Sun Belt, Mountain West, Mid-Atlantic — modular-friendly mainstream, the bulk of the rollout</li><li><strong>Tier D (22%)</strong> — South Central, Deep South, Appalachia, cost-efficient Midwest — most favorable for modular economics</li></ul>"
+    },
+    "entitlement-stack": {
+      "title": "Entitlement Stack",
+      "subtitle": "Land + soft + permits",
+      "body_html": "<p>On-top costs that determine the <strong>true total per-door delivery cost</strong>. Per-tier land defaults (Tier A ~$100K, Tier D ~$20K), 12% soft costs as a percentage of construction (architect, engineering, marketing, sales), and $8K flat permits / impact fees. Sums to a true total comparable to NAHB national turnkey ($269K SFD avg).</p><h3>Three buckets</h3><ul><li><strong>Land</strong> — biggest geographic variance; $20K rural to $200K+ in CA primary metros. Per-tier defaults today, per-city override as deal data lands.</li><li><strong>Soft costs</strong> — A&amp;E + planning + marketing + sales, 12% of construction industry-typical, applied uniformly across tiers</li><li><strong>Permits + impact fees</strong> — $8K flat baseline; some CA jurisdictions hit $20K+ on impact alone and need per-city overrides</li></ul>"
+    },
+    "demand-weighted-blending": {
+      "title": "Demand-Weighted Blending",
+      "subtitle": "180 homes/yr per Fab",
+      "body_html": "<p>The blended national average isn't a simple per-site mean — each city is weighted by its annual home-delivery capacity (default 180/yr, the per-Fab planning constant). Higher-volume Fabs pull the blended toward their numbers, which reflects the actual mix of homes built rather than the mix of sites on a map.</p><h3>Why this matters</h3><ul><li>A 50-home/yr Fab in Fresno has <strong>5&times; the impact</strong> on the blended of a 10-home/yr Fab in Bangor — the average follows where the homes actually get built</li><li>Investors care about realized economics, not site-count averages</li><li>Per-city <code>demand_velocity</code> can be overridden as actual ramp data lands, sharpening the blended over time</li></ul>"
+    },
+    "vs-nahb-benchmark": {
+      "title": "vs NAHB Benchmark",
+      "subtitle": "$245K total vs $269K national turnkey",
+      "body_html": "<p>True total per door at the v2 defaults lands ~$245K, vs the $269K NAHB SFD national turnkey average — about <strong>9% under benchmark</strong>. The cost-leadership story sits in two factors: tier-strip reduction (factory captures more of the construction stack than conventional GC builds) and product-mix density (townhomes + duplexes pull the blended down vs an SFR-only model).</p><h3>The 9% gap, broken down</h3><ul><li><strong>Modular efficiency</strong> — factory portion costs less than equivalent GC site-built work; captured by the tier-strip%</li><li><strong>Density mix</strong> — 36% townhome + 27% duplex + 35% ADU vs SFR-only carries shared-wall economics</li><li><strong>Volume tier pricing</strong> — at 599 buildings/yr at maturity, supplier discounts compound across panels, pods, and finishes</li></ul><blockquote>The 9% gap widens as Doc replaces estimated CCIs with real bid data and as eSIPs / pod adoption compress Tier A strip% further. Year-3 target is 12-15% under NAHB.</blockquote>",
+      "pill": "06 &middot; 13"
+    },
+    "site-work": {
+      "title": "Site Work",
+      "subtitle": "Foundation, utilities, prep",
+      "body_html": "<p>The franchise's site team handles everything below the panel: excavation, foundation, utility service, drainage. The factory delivery doesn't happen until site is permit-to-pour ready.</p><p>This is the slowest part of the on-site sequence — and the part where local knowledge wins. Franchisees who already do site work in their region just keep doing it; the kit is what changes.</p>"
+    },
+    "last-mile-logistics": {
+      "title": "Home-Fab to Lot Logistics",
+      "subtitle": "Last 150 miles",
+      "body_html": "<p>From Home-Fab to lot: typically same-day delivery, often direct from Fab loading dock to crane on site. Crane and transport are pre-cleared as part of the franchise's standing logistics agreements.</p><p>No double-handling: the kit arrives in the order it'll be installed.</p>"
+    },
+    "inspections": {
+      "title": "Inspections",
+      "subtitle": "Jurisdictional sign-off",
+      "body_html": "<p>Local jurisdiction inspections still happen — but the FBX QA dossier dramatically reduces the back-and-forth. Most jurisdictions accept factory QA in lieu of partial in-field inspection once the master plan is approved.</p><p>Critical sign-offs: foundation, rough mechanical, final. Pre-scheduled in the construction calendar.</p>",
+      "pill": "09"
+    },
+    "construction-workforce": {
+      "title": "Construction Workforce",
+      "subtitle": "Skilled people · empowered by systems",
+      "body_html": "<p>Behind every structure is a diverse team — engineers, laborers, surveyors, project managers. They want to scale. They demand support. <strong>We empower their rise.</strong></p><h3>Six core roles</h3><ul><li><strong>Engineers</strong> — centralized at Core, distributed via stamped drawings</li><li><strong>Skilled Trades</strong> — kit-assembly certified, network-portable</li><li><strong>Surveyors</strong> — site readiness verification</li><li><strong>Project Managers</strong> — multi-trade coordination at the Home-Fab</li><li><strong>Logistics Operators</strong> — Fab-to-lot transport &amp; crane scheduling</li><li><strong>Permit Specialists</strong> — jurisdictional compliance</li></ul><h3>The training thesis</h3><p>The construction labor problem isn't volume — it's <em>training simplicity</em>. Conventional builds need every trade to be a craftsman. Kit assembly needs them to follow a sequence and use a torque wrench.</p><h3>Workforce funnel</h3><ul><li>Recruit from existing trades + new entrants</li><li>4-week certification program at the Home-Fab</li><li>Continuous-learning track for advancement</li><li>Franchisee-employed, network-portable certification</li></ul><h3>Network at scale</h3><ul><li><strong>150-mile</strong> franchise service radius</li><li><strong>137 fabs</strong> at Year 10 (national)</li><li><strong>50 states</strong> covered (Year 10)</li><li><strong>3 BUs</strong> · One delivered home</li></ul>"
+    },
+    "what-went-wrong": {
+      "title": "What Went Wrong",
+      "subtitle": "Katerra · Connect · Cover · Blokable",
+      "body_html": "<p>Every previous attempt at &quot;factory-built housing at scale&quot; tried to own design, factory, AND construction simultaneously. That requires hundreds of millions of dollars before the system can show whether it works.</p><h3>Common failure modes</h3><ul><li><strong>Vertical integration overreach</strong> — running design, factory, and construction is three companies in a trench coat</li><li><strong>Capital intensity ahead of demand</strong> — built the factories before the orders</li><li><strong>Custom homes in a factory</strong> — kept selling bespoke, lost the platform advantage</li></ul><h3>What FBX does differently</h3><blockquote>FBX is a <strong>software layer on top of the existing SIP/CFS manufacturer network</strong>, distributed to a franchise of trained constructors. We don't own the factories. We coordinate them.</blockquote>"
+    },
+    "network-effect": {
+      "title": "Network Effect",
+      "subtitle": "Franchisees compound",
+      "body_html": "<p>Each new Home-Fab makes the network more valuable to the next franchisee. Why:</p><ul><li>Better supplier pricing (volume tier crosses thresholds)</li><li>Larger labor pool (training transfers between Fabs)</li><li>More R&amp;D leverage (improvements ship to all)</li><li>Marketing efficiency (national brand vs. regional)</li></ul><p>This is the moat the predecessor companies never had — they were single-factory operations.</p>"
+    },
+    "economy-of-scale": {
+      "title": "Economy of Scale",
+      "subtitle": "Aggregated procurement",
+      "body_html": "<p>The 139-fab network buys panels, pods, fasteners, finishes, and equipment at volumes no individual builder can approach. Estimated 18–25% input-cost advantage at steady state vs. comparable custom builders.</p><p>Scale also disciplines the supply side: vendors who can't meet our quality bar lose the network. The aggregation IS the standard.</p>",
+      "pill": "12 · 13"
+    },
+    "brand": {
+      "title": "Brand",
+      "subtitle": "Tesla / Carmax for housing",
+      "body_html": "<p>People want to <strong>trust the brand</strong> but want the <em>uniqueness of iterative design</em>. Automobiles cracked this fifty years ago — standardized platforms, configurable trims. HomeFab is the same idea, applied to housing.</p><p>Brand value compounds with deliveries: every finished home is an ad for the network. The franchise gets the local relationship; FBX gets the national signal.</p>"
+    },
+    "embedding-tech": {
+      "title": "Embedding Technology",
+      "subtitle": "Run on FBX systems",
+      "body_html": "<p>Configurator, supplier ordering, dispatch, QA dossier, customer portal — every operational layer runs on FBX systems. Franchisees benefit from the toolchain; switching cost is the toolchain.</p><p>This is the &quot;embedding&quot; defensibility from the four-moats framework. Once a franchise is running on our stack, replicating elsewhere requires rebuilding the stack.</p>"
+    },
+    "linear-exponential": {
+      "title": "Linear Cost · Exponential Output",
+      "subtitle": "The operating principle",
+      "body_html": "<p>Adding another Home-Fab adds <strong>one franchise's-worth</strong> of cost, but adds <strong>one franchise's-worth of output</strong> to a system that already has demand-side network effects. Output compounds; cost increments.</p><p>This is what the modular incumbents missed: they tried to scale a single factory linearly. We're scaling a network exponentially.</p>"
+    },
+    "momentum": {
+      "title": "Momentum",
+      "subtitle": "Speed before moats",
+      "body_html": "<p>Moats emerge from scale, and scale comes from momentum. The first 12–24 months are about getting <strong>signed contracts and delivered homes</strong> — not about defensibility. Defensibility shows up at volume; volume comes from speed.</p><p>This is why we lead with the floor (599 contracted) and the catalyst ($4M raise) before the moats discussion. The moats are real, but they're a <em>consequence</em> of momentum, not a substitute for it.</p>"
+    },
+    "adoption": {
+      "title": "Adoption",
+      "subtitle": "Repeat behavior · contract velocity",
+      "body_html": "<p>Adoption is measured in two dimensions:</p><ul><li><strong>Repeat behavior</strong> — franchises ordering more units after pilot</li><li><strong>Contract velocity</strong> — month-over-month signed contracts</li></ul><p>Both metrics are tracked at Core and reported quarterly. Targets escalate with regional saturation.</p>"
+    },
+    "expansion-map": {
+      "title": "10-Year Expansion Map",
+      "subtitle": "Year 1 → Year 10 · live tool",
+      "body_html": "<p>The map at <strong>slide 19</strong> shows the year-by-year fab-rollout plan: 139 fabs across 50 states by Year 10. Each fab placement is geographically reasoned (population, regulatory climate, supply proximity).</p><p>The map is interactive — you can scrub through years and see the network grow. Numbers underneath each fab show projected annual unit output.</p>",
+      "pill": "19"
+    },
+    "feasibility": {
+      "title": "Feasibility",
+      "subtitle": "Year-10 economics · $39.8B revenue",
+      "body_html": "<p>At steady-state Year-10:</p><ul><li>139 fabs × 1,090 homes/yr avg = ~149,000 homes/yr</li><li>$86,293 avg revenue per home — <strong>$39.8B network revenue</strong></li><li>$21,607 op profit per home — <strong>$3.2B network EBITDA</strong></li><li>~25% margin at scale</li></ul><p>The model is in the live tool at slide 13 (Year-10 Economics). Numbers update as inputs change.</p>",
+      "pill": "06 · 20"
+    },
+    "truth-stamping": {
+      "title": "Code & Stamping",
+      "subtitle": "Per-jurisdiction PE partnerships",
+      "body_html": "<p>Output has to be stamped by licensed engineers, jurisdiction by jurisdiction. <strong>Not a feature flag</strong> — a real operations layer with PE partnerships in each target state.</p><h3>Approach</h3><p>Start in <strong>3–5 permissive states</strong>. Expand on demand as franchise rollout reaches new regions.</p><blockquote>Not a research problem. A solvable operations problem with a clear sequence.</blockquote>"
+    },
+    "truth-mfr-abstraction": {
+      "title": "Manufacturer Abstraction",
+      "subtitle": "One design file → 2–3 quotes",
+      "body_html": "<p>Each SIP manufacturer has its own panel specs, splines, and tolerances. <strong>One design file → 2–3 manufacturer quotes</strong>. The kit-of-parts standardization the industry never bothered to build.</p><h3>Approach</h3><p>Clean abstraction layer with per-manufacturer config. Suppliers compete on price and lead time without forcing the customer or the design tool to know about it.</p>"
+    },
+    "truth-transport": {
+      "title": "Transport &amp; Crane Planning",
+      "subtitle": "Logistics-aware constraint solver",
+      "body_html": "<p>A design that's perfect on paper but needs a crane the local rental yard doesn't carry is a failed design. <strong>The constraint solver has to know logistics, not just geometry.</strong></p><h3>Approach</h3><p>Site-aware solver with regional equipment lookups. Transport, crane reach, and access road constraints are inputs, not afterthoughts.</p>"
+    },
+    "truth-builder-network": {
+      "title": "Builder Network",
+      "subtitle": "Last Mile franchise as the install layer",
+      "body_html": "<p>Even a perfect kit needs a crew that can erect it. <strong>The Last Mile franchise is exactly this layer</strong> — vetted installers and GCs who learn the system and own the customer relationship.</p><h3>Approach</h3><p>Already in the deck — the franchise model is the operational answer to the &quot;who actually builds it&quot; question.</p><p>See <em>Last Mile</em> section above and the <em>Construction Workforce</em> card for the workforce thesis.</p>"
+    },
+    "obj-scale": {
+      "title": "How big can this get? Homes per year?",
+      "subtitle": "The scale objection",
+      "body_html": "<p>Review the live <strong>Expansion Map</strong> (in this reference, section 5) and the <strong>Year-10 Economics</strong> model.</p><p>The plan is <strong>149,490 homes delivered by Year 10</strong> at a 43,980/yr run-rate. We can dial it more aggressive or more conservative — the model recalcs live as franchise pace, geography, and unit economics change.</p>"
+    },
+    "obj-moat": {
+      "title": "What is your moat? How do you fend off copycats?",
+      "subtitle": "The defensibility objection",
+      "body_html": "<p><strong>Wrong question at this stage.</strong></p><p>See the moat material in <em>Modular Industry → Why This Will Work</em>. Moats emerge from <strong>scale</strong>, and scale comes from <strong>momentum</strong>. We're engineered for all four <em>a16z defensibilities</em> (network effects, scale economics, brand, embedding) once we hit volume.</p><p><strong>First-mover speed is the strategy.</strong> The defensibility is a consequence of running fast enough to compound, not a substitute for it.</p>"
+    },
+    "obj-national": {
+      "title": "Are you national, or competing with Lennar / Champion?",
+      "subtitle": "The competition objection",
+      "body_html": "<p><strong>Adding to the market</strong> — demand is enormous and we're not zero-sum with the incumbents.</p><p>Our edge is <strong>speed</strong> and <strong>cost of capital</strong>, which is why the moat matters more than the head-to-head comparison. Lennar and Champion can keep doing what they do; we're building a different operating system on top of an industry the incumbents have collectively under-served for two decades.</p>"
+    }
+  }
+}
