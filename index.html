@@ -17159,6 +17159,77 @@ function copyJSON() {
   .delta.under { color: var(--green-soft); }
   .delta.on { color: var(--amber-soft); }
 
+  /* hero cost stack — top row of the hero box */
+  .hero-stack {
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 14px;
+    margin-bottom: 14px;
+  }
+  .hs-lbl {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-dim);
+    margin-bottom: 8px;
+  }
+  .hs-lbl .hs-sub {
+    font-family: var(--mono);
+    font-size: 9px;
+    color: var(--text-muted);
+    text-transform: none;
+    letter-spacing: 0;
+    margin-left: 8px;
+  }
+  .hs-row {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+  }
+  .hs-cell {
+    flex: 1;
+    padding: 4px 14px;
+  }
+  .hs-cell:first-child { padding-left: 0; }
+  .hs-cell.hs-total {
+    background: rgba(245, 158, 11, 0.06);
+    border-left: 2px solid var(--amber);
+    border-radius: 0 4px 4px 0;
+    padding-left: 16px;
+  }
+  .hs-cell .hs-name {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-dim);
+    margin-bottom: 3px;
+  }
+  .hs-cell .hs-val {
+    font-family: var(--mono);
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.05;
+  }
+  .hs-cell.hs-total .hs-val { color: var(--amber); font-size: 28px; }
+  .hs-cell .hs-note {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text-muted);
+    margin-top: 3px;
+  }
+  .hs-cell .hs-note.over { color: var(--red-soft); }
+  .hs-cell .hs-note.under { color: var(--green-soft); }
+  .hs-cell .hs-note.on { color: var(--amber-soft); }
+  .hs-op {
+    align-self: center;
+    color: var(--text-muted);
+    font-family: var(--mono);
+    font-size: 16px;
+    font-weight: 300;
+    padding: 0 4px;
+    user-select: none;
+  }
+
   /* layout */
   .grid {
     display: grid;
@@ -17529,6 +17600,158 @@ function copyJSON() {
     color: var(--text-muted);
     font-style: italic;
   }
+
+  /* ─── City Explorer ─── */
+  .panel-h-bar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .panel-h-bar .h-search {
+    flex: 1;
+    max-width: 300px;
+    background: var(--panel-3);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-family: var(--display);
+    text-transform: none;
+    letter-spacing: 0;
+  }
+  .panel-h-bar .h-search:focus {
+    outline: none;
+    border-color: var(--amber);
+  }
+  .panel-h-bar .h-meta {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text-dim);
+    text-transform: none;
+    letter-spacing: 0;
+    margin-left: auto;
+  }
+
+  .city-row {
+    cursor: pointer;
+    transition: background-color 0.1s;
+  }
+  .city-row:hover td { background: var(--panel-2); }
+  .city-row.expanded td { background: var(--panel-3); }
+  .city-row .ovr-dot {
+    color: var(--amber);
+    font-size: 9px;
+    margin-left: 4px;
+    vertical-align: middle;
+  }
+
+  .city-row-expand td {
+    padding: 0;
+    background: var(--panel-3);
+    border-bottom: 2px solid var(--amber);
+  }
+  .city-edit-panel {
+    padding: 14px 18px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 14px 22px;
+    align-items: start;
+  }
+  .city-edit-panel .e-row {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .city-edit-panel .e-row.full { grid-column: 1 / -1; }
+  .city-edit-panel label {
+    font-family: var(--display);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-dim);
+    font-weight: 500;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+  .city-edit-panel label .e-val {
+    font-family: var(--mono);
+    color: var(--amber);
+    font-weight: 600;
+    font-size: 11px;
+    text-transform: none;
+    letter-spacing: 0;
+  }
+  .city-edit-panel input[type=&quot;number&quot;],
+  .city-edit-panel input[type=&quot;text&quot;],
+  .city-edit-panel select,
+  .city-edit-panel textarea {
+    width: 100%;
+    background: var(--panel-2);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 6px 9px;
+    border-radius: 3px;
+    font-family: var(--mono);
+    font-size: 11px;
+  }
+  .city-edit-panel select { font-family: var(--display); }
+  .city-edit-panel textarea {
+    font-family: var(--display);
+    resize: vertical;
+    min-height: 38px;
+    line-height: 1.4;
+  }
+  .city-edit-panel input:focus,
+  .city-edit-panel select:focus,
+  .city-edit-panel textarea:focus {
+    outline: none;
+    border-color: var(--amber);
+  }
+  .city-edit-panel input[type=&quot;range&quot;] {
+    width: 100%;
+    accent-color: var(--amber);
+    height: 4px;
+    margin-top: 2px;
+  }
+  .city-edit-panel .e-actions {
+    grid-column: 1 / -1;
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+    padding-top: 6px;
+    border-top: 1px solid var(--border);
+  }
+  .city-edit-panel .e-source-pill {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text-dim);
+    background: var(--panel);
+    padding: 3px 8px;
+    border-radius: 3px;
+    border: 1px solid var(--border);
+  }
+  .btn-ghost {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    padding: 6px 12px;
+    border-radius: 3px;
+    font-size: 10px;
+    cursor: pointer;
+    font-family: var(--display);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .btn-ghost:hover { border-color: var(--amber); color: var(--amber); }
+
+  /* Collapsible state-rollup section */
+  .collapsible h2 { cursor: pointer; user-select: none; }
+  .collapsible h2 .chev { transition: transform 0.15s; display: inline-block; margin-right: 6px; color: var(--text-dim); }
+  .collapsible.collapsed .chev { transform: rotate(-90deg); }
+  .collapsible.collapsed .panel-body,
+  .collapsible.collapsed .table-wrap { display: none; }
 &lt;/style&gt;
 &lt;/head&gt;
 &lt;body&gt;
@@ -17543,12 +17766,37 @@ function copyJSON() {
 
   &lt;!-- Hero --&gt;
   &lt;div class=&quot;hero&quot;&gt;
-    &lt;div class=&quot;hero-row&quot;&gt;
-      &lt;div class=&quot;hero-stat&quot;&gt;
-        &lt;div class=&quot;lbl&quot;&gt;Site-Weighted National Avg / Door&lt;/div&gt;
-        &lt;div class=&quot;val big&quot; id=&quot;hero-avg&quot;&gt;$—&lt;/div&gt;
-        &lt;div class=&quot;delta on&quot; id=&quot;hero-delta&quot;&gt;vs $165K target&lt;/div&gt;
+    &lt;!-- Cost stack: factory + site work + entitlement = true total turnkey --&gt;
+    &lt;div class=&quot;hero-stack&quot;&gt;
+      &lt;div class=&quot;hs-lbl&quot;&gt;Cost Stack / Door &lt;span class=&quot;hs-sub&quot;&gt;demand-weighted across 137 cities&lt;/span&gt;&lt;/div&gt;
+      &lt;div class=&quot;hs-row&quot;&gt;
+        &lt;div class=&quot;hs-cell&quot;&gt;
+          &lt;div class=&quot;hs-name&quot;&gt;Factory&lt;/div&gt;
+          &lt;div class=&quot;hs-val&quot; id=&quot;hero-factory&quot;&gt;$—&lt;/div&gt;
+          &lt;div class=&quot;hs-note&quot; id=&quot;hero-factory-delta&quot;&gt;vs $165K target&lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;hs-op&quot;&gt;+&lt;/div&gt;
+        &lt;div class=&quot;hs-cell&quot;&gt;
+          &lt;div class=&quot;hs-name&quot;&gt;Site Work&lt;/div&gt;
+          &lt;div class=&quot;hs-val&quot; id=&quot;hero-sitework&quot;&gt;$—&lt;/div&gt;
+          &lt;div class=&quot;hs-note&quot; id=&quot;hero-sitework-note&quot;&gt;strip% × $/sf × mix&lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;hs-op&quot;&gt;+&lt;/div&gt;
+        &lt;div class=&quot;hs-cell&quot;&gt;
+          &lt;div class=&quot;hs-name&quot;&gt;Entitlement&lt;/div&gt;
+          &lt;div class=&quot;hs-val&quot; id=&quot;hero-entitlement&quot;&gt;$—&lt;/div&gt;
+          &lt;div class=&quot;hs-note&quot; id=&quot;hero-entitlement-note&quot;&gt;land + soft + permits&lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;hs-op&quot;&gt;=&lt;/div&gt;
+        &lt;div class=&quot;hs-cell hs-total&quot;&gt;
+          &lt;div class=&quot;hs-name&quot;&gt;True Total / Door&lt;/div&gt;
+          &lt;div class=&quot;hs-val&quot; id=&quot;hero-truetotal&quot;&gt;$—&lt;/div&gt;
+          &lt;div class=&quot;hs-note&quot; id=&quot;hero-truetotal-delta&quot;&gt;vs $269K NAHB SFD avg&lt;/div&gt;
+        &lt;/div&gt;
       &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;!-- Secondary stats: extremes + pipeline volume --&gt;
+    &lt;div class=&quot;hero-row&quot;&gt;
       &lt;div class=&quot;hero-stat&quot;&gt;
         &lt;div class=&quot;lbl&quot;&gt;Cheapest City&lt;/div&gt;
         &lt;div class=&quot;val&quot; id=&quot;hero-min&quot; style=&quot;color: var(--green-soft);&quot;&gt;$—&lt;/div&gt;
@@ -17560,12 +17808,12 @@ function copyJSON() {
         &lt;div class=&quot;delta&quot; id=&quot;hero-max-state&quot;&gt;—&lt;/div&gt;
       &lt;/div&gt;
       &lt;div class=&quot;hero-stat&quot;&gt;
-        &lt;div class=&quot;lbl&quot;&gt;Sites Over $165K&lt;/div&gt;
+        &lt;div class=&quot;lbl&quot;&gt;Sites Over $165K Factory&lt;/div&gt;
         &lt;div class=&quot;val&quot; id=&quot;hero-over&quot; style=&quot;color: var(--amber-soft);&quot;&gt;—&lt;/div&gt;
-        &lt;div class=&quot;delta&quot; id=&quot;hero-over-detail&quot;&gt;— of 132 sites&lt;/div&gt;
+        &lt;div class=&quot;delta&quot; id=&quot;hero-over-detail&quot;&gt;— of 137 sites&lt;/div&gt;
       &lt;/div&gt;
       &lt;div class=&quot;hero-stat&quot;&gt;
-        &lt;div class=&quot;lbl&quot;&gt;Pipeline Build Cost (Total)&lt;/div&gt;
+        &lt;div class=&quot;lbl&quot;&gt;Pipeline Build Cost (Factory)&lt;/div&gt;
         &lt;div class=&quot;val&quot; id=&quot;hero-total&quot; style=&quot;color: var(--text);&quot;&gt;$—&lt;/div&gt;
         &lt;div class=&quot;delta&quot; id=&quot;hero-total-detail&quot;&gt;across 599 buildings&lt;/div&gt;
       &lt;/div&gt;
@@ -17622,12 +17870,33 @@ function copyJSON() {
         &lt;/div&gt;
       &lt;/div&gt;
 
+      &lt;!-- Entitlement --&gt;
+      &lt;div class=&quot;panel&quot;&gt;
+        &lt;h2&gt;Entitlement Assumptions&lt;/h2&gt;
+        &lt;div class=&quot;panel-body&quot;&gt;
+          &lt;p style=&quot;font-size:11px;color:var(--text-dim);margin:0 0 10px 0;&quot;&gt;On-top costs above turnkey construction: &lt;strong style=&quot;color:var(--text)&quot;&gt;land + soft + permits&lt;/strong&gt;. Land varies wildly by tier — start here, override per-city as bids come in.&lt;/p&gt;
+          &lt;div id=&quot;ent-land-rows&quot;&gt;&lt;/div&gt;
+          &lt;div class=&quot;control&quot; style=&quot;margin-top: 12px;&quot;&gt;
+            &lt;label&gt;Soft costs (% of construction) &lt;span class=&quot;v&quot; id=&quot;ent-soft-val&quot;&gt;12%&lt;/span&gt;&lt;/label&gt;
+            &lt;input type=&quot;range&quot; id=&quot;ent-soft&quot; min=&quot;0&quot; max=&quot;30&quot; value=&quot;12&quot; step=&quot;0.5&quot;&gt;
+            &lt;div style=&quot;font-size:10px;color:var(--text-muted);margin-top:2px;&quot;&gt;A&amp;amp;E, planning, marketing, sales&lt;/div&gt;
+          &lt;/div&gt;
+          &lt;div class=&quot;control&quot;&gt;
+            &lt;label&gt;Permits / impact fees ($K/door) &lt;span class=&quot;v&quot; id=&quot;ent-permits-val&quot;&gt;$8K&lt;/span&gt;&lt;/label&gt;
+            &lt;input type=&quot;range&quot; id=&quot;ent-permits&quot; min=&quot;0&quot; max=&quot;40&quot; value=&quot;8&quot; step=&quot;0.5&quot;&gt;
+          &lt;/div&gt;
+          &lt;div class=&quot;assumption-card&quot; style=&quot;margin-top: 12px;&quot;&gt;
+            Total per-door at NAHB benchmark: ~$269K (US single-family detached, NAHB SOC 2024 turnkey construction). Tune entitlement to align our blended total within this range.
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+
       &lt;!-- Target --&gt;
       &lt;div class=&quot;panel&quot;&gt;
         &lt;h2&gt;Target / Benchmark&lt;/h2&gt;
         &lt;div class=&quot;panel-body&quot;&gt;
           &lt;div class=&quot;control&quot;&gt;
-            &lt;label&gt;Target $/door &lt;span class=&quot;v&quot; id=&quot;target-val&quot;&gt;$165,000&lt;/span&gt;&lt;/label&gt;
+            &lt;label&gt;Target $/door (factory) &lt;span class=&quot;v&quot; id=&quot;target-val&quot;&gt;$165,000&lt;/span&gt;&lt;/label&gt;
             &lt;input type=&quot;range&quot; id=&quot;target&quot; min=&quot;100000&quot; max=&quot;350000&quot; value=&quot;165000&quot; step=&quot;5000&quot;&gt;
           &lt;/div&gt;
         &lt;/div&gt;
@@ -17645,9 +17914,41 @@ function copyJSON() {
         &lt;/div&gt;
       &lt;/div&gt;
 
-      &lt;!-- State table --&gt;
+      &lt;!-- City Explorer (primary) --&gt;
       &lt;div class=&quot;panel&quot; style=&quot;margin-top: 16px;&quot;&gt;
-        &lt;h2&gt;State-Level Detail &lt;span style=&quot;font-family:var(--mono);font-size:10px;color:var(--text-dim);text-transform:none;letter-spacing:0;font-weight:400;&quot;&gt;Click any column to sort&lt;/span&gt;&lt;/h2&gt;
+        &lt;h2&gt;
+          &lt;div class=&quot;panel-h-bar&quot;&gt;
+            &lt;span&gt;City Explorer&lt;/span&gt;
+            &lt;input type=&quot;text&quot; id=&quot;city-search&quot; class=&quot;h-search&quot; placeholder=&quot;Search city or state…&quot; autocomplete=&quot;off&quot; spellcheck=&quot;false&quot;&gt;
+            &lt;span class=&quot;h-meta&quot; id=&quot;city-meta&quot;&gt;— · click any row to edit&lt;/span&gt;
+          &lt;/div&gt;
+        &lt;/h2&gt;
+        &lt;div class=&quot;table-wrap&quot; style=&quot;max-height: 540px;&quot;&gt;
+          &lt;table id=&quot;city-table&quot;&gt;
+            &lt;thead&gt;
+              &lt;tr&gt;
+                &lt;th class=&quot;text-l&quot; data-sort=&quot;name&quot;&gt;City&lt;/th&gt;
+                &lt;th data-sort=&quot;state&quot;&gt;St&lt;/th&gt;
+                &lt;th data-sort=&quot;tier&quot;&gt;Tier&lt;/th&gt;
+                &lt;th data-sort=&quot;cci&quot;&gt;CCI&lt;/th&gt;
+                &lt;th data-sort=&quot;psf&quot;&gt;$/sf&lt;/th&gt;
+                &lt;th data-sort=&quot;strip&quot;&gt;Strip%&lt;/th&gt;
+                &lt;th data-sort=&quot;cost&quot; class=&quot;sorted-desc&quot;&gt;$/Door&lt;/th&gt;
+                &lt;th data-sort=&quot;gap&quot;&gt;vs Tgt&lt;/th&gt;
+                &lt;th data-sort=&quot;demand&quot;&gt;Dmnd&lt;/th&gt;
+              &lt;/tr&gt;
+            &lt;/thead&gt;
+            &lt;tbody id=&quot;city-tbody&quot;&gt;&lt;/tbody&gt;
+          &lt;/table&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+
+      &lt;!-- State rollup (secondary, collapsible) --&gt;
+      &lt;div class=&quot;panel collapsible&quot; id=&quot;state-rollup-panel&quot; style=&quot;margin-top: 16px;&quot;&gt;
+        &lt;h2 onclick=&quot;toggleStateRollup()&quot;&gt;
+          &lt;span class=&quot;chev&quot;&gt;▾&lt;/span&gt;State Rollup
+          &lt;span style=&quot;font-family:var(--mono);font-size:10px;color:var(--text-dim);text-transform:none;letter-spacing:0;font-weight:400;margin-left:8px;&quot;&gt;demand-weighted within state · click row&#x27;s state to filter the city table&lt;/span&gt;
+        &lt;/h2&gt;
         &lt;div class=&quot;table-wrap&quot;&gt;
           &lt;table id=&quot;state-table&quot;&gt;
             &lt;thead&gt;
@@ -17725,6 +18026,15 @@ const DEFAULT_PRODUCTS = {
 const DEFAULT_TIER_STRIP = { A: 35, B: 32, C: 28, D: 22 };
 const DEFAULT_DEMAND_PER_FAB = 180;  // homes/yr per fab — Doc&#x27;s planning constant
 
+// Entitlement = on-top costs: land, permits, soft (architect/engineering/marketing).
+// Per-tier land defaults reflect the wild geographic variance; soft costs are a %
+// of construction; permits are a flat $K per door.
+const DEFAULT_ENTITLEMENT = {
+  land_per_door_K_by_tier: { A: 100, B: 60, C: 35, D: 20 },
+  soft_costs_pct_of_construction: 12,
+  permits_per_door_K: 8,
+};
+
 // =============================================================================
 // STATE
 // =============================================================================
@@ -17733,13 +18043,22 @@ const state = {
   products: JSON.parse(JSON.stringify(DEFAULT_PRODUCTS)),
   tierStrip: { ...DEFAULT_TIER_STRIP },
   stateDefaults: JSON.parse(JSON.stringify(DEFAULT_STATE_DEFAULTS)),
+  entitlement: JSON.parse(JSON.stringify(DEFAULT_ENTITLEMENT)),
   target: 165000,
-  sortKey: &#x27;cost&#x27;,
+  sortKey: &#x27;cost&#x27;,           // state-table sort
   sortDir: &#x27;desc&#x27;,
-  sites: [],            // full site objects, each with optional cost{} block
+  citySortKey: &#x27;cost&#x27;,       // city-explorer sort
+  citySortDir: &#x27;desc&#x27;,
+  cityFilter: &#x27;&#x27;,            // city-explorer search
+  expandedSiteKey: null,     // &quot;name|state&quot; for the inline editor
+  sites: [],                 // full site objects, each with optional cost{} block
   fullSitesDoc: null,
   loadedFromSites: false,
 };
+
+// Tiny HTML helpers used by the City Explorer renderer
+function _escAttr(s){ return String(s == null ? &#x27;&#x27; : s).replace(/&quot;/g, &#x27;&amp;quot;&#x27;); }
+function _escHtml(s){ return String(s == null ? &#x27;&#x27; : s).replace(/[&amp;&lt;&gt;&quot;]/g, c =&gt; ({&#x27;&amp;&#x27;:&#x27;&amp;amp;&#x27;,&#x27;&lt;&#x27;:&#x27;&amp;lt;&#x27;,&#x27;&gt;&#x27;:&#x27;&amp;gt;&#x27;,&#x27;&quot;&#x27;:&#x27;&amp;quot;&#x27;}[c])); }
 
 // v2 cost_assumptions written back to sites.json on Save
 function buildCostAssumptions() {
@@ -17753,10 +18072,14 @@ function buildCostAssumptions() {
     national_baseline_psf: state.baselinePsf,
     target_per_door: state.target,
     blended_per_door: Math.round(r.blended),
+    blended_site_work_per_door: Math.round(r.blendedSiteWork || 0),
+    blended_entitlement_per_door: Math.round(r.blendedEntitlement || 0),
+    blended_total_per_door: Math.round(r.blendedTotal || 0),
     tier_avg_per_door: tierAvg,
     products: state.products,
     tier_strip_pct: state.tierStrip,
     state_defaults: state.stateDefaults,
+    entitlement: state.entitlement,
     tier_info: TIER_INFO,
   };
 }
@@ -17781,6 +18104,36 @@ function effectiveStripPct(site) {
 function demandFor(site) {
   const co = site.cost || {};
   return (co.demand_velocity != null &amp;&amp; +co.demand_velocity &gt; 0) ? +co.demand_velocity : DEFAULT_DEMAND_PER_FAB;
+}
+
+// Site work (strip portion) per door — what the GC charges, separate from factory
+function siteWorkPerDoor(site) {
+  const psf = effectivePsf(site);
+  const strip = effectiveStripPct(site) / 100;
+  let totalSf = 0, totalUnits = 0;
+  for (const k in state.products) {
+    const p = state.products[k];
+    if (!p || !p.sf || !p.units || p.sf_mod == null) continue;
+    totalSf += p.sf_mod * p.sf * p.units;
+    totalUnits += p.units;
+  }
+  return totalUnits ? (psf * strip * totalSf) / totalUnits : 0;
+}
+
+// Entitlement per door — land (per tier) + soft costs (% of construction) + permits
+function entitlementPerDoor(site) {
+  const tier = effectiveTier(site);
+  const land = (state.entitlement.land_per_door_K_by_tier[tier] || 0) * 1000;
+  const factory = costPerDoorForSite(site);
+  const sw = siteWorkPerDoor(site);
+  const construction = factory + sw;
+  const soft = construction * (+state.entitlement.soft_costs_pct_of_construction / 100);
+  const permits = +state.entitlement.permits_per_door_K * 1000;
+  return land + soft + permits;
+}
+
+function totalCostPerDoor(site) {
+  return costPerDoorForSite(site) + siteWorkPerDoor(site) + entitlementPerDoor(site);
 }
 
 // =============================================================================
@@ -17830,7 +18183,10 @@ function compute() {
 
   // Per-CITY rows — each row carries its own effective psf, tier, strip, cost
   const cityRows = state.sites.map(site =&gt; {
-    const cost = costPerDoorForSite(site);
+    const factory = costPerDoorForSite(site);
+    const siteWork = siteWorkPerDoor(site);
+    const entitlement = entitlementPerDoor(site);
+    const total = factory + siteWork + entitlement;
     const tier = effectiveTier(site);
     const psf = effectivePsf(site);
     const strip = effectiveStripPct(site);
@@ -17845,8 +18201,11 @@ function compute() {
       tier,
       psf: Math.round(psf),
       strip: Math.round(strip),
-      cost: Math.round(cost),
-      gap: Math.round(cost - state.target),
+      cost: Math.round(factory),         // factory only — primary KPI, kept stable for existing callers
+      siteWork: Math.round(siteWork),
+      entitlement: Math.round(entitlement),
+      total: Math.round(total),
+      gap: Math.round(factory - state.target),
       demand,
       cci: co.cci != null ? +co.cci : null,
       psf_override: co.psf_override,
@@ -17857,9 +18216,18 @@ function compute() {
   });
 
   // Demand-weighted national blended (per spec: weight by homes/yr capacity, not site count)
-  let weightedSum = 0, totalDemand = 0;
-  for (const r of cityRows) { weightedSum += r.cost * r.demand; totalDemand += r.demand; }
-  const blended = totalDemand &gt; 0 ? weightedSum / totalDemand : 0;
+  let wFactory = 0, wSite = 0, wEnt = 0, wTotal = 0, totalDemand = 0;
+  for (const r of cityRows) {
+    wFactory += r.cost * r.demand;
+    wSite    += r.siteWork * r.demand;
+    wEnt     += r.entitlement * r.demand;
+    wTotal   += r.total * r.demand;
+    totalDemand += r.demand;
+  }
+  const blended = totalDemand &gt; 0 ? wFactory / totalDemand : 0;
+  const blendedSiteWork = totalDemand &gt; 0 ? wSite / totalDemand : 0;
+  const blendedEntitlement = totalDemand &gt; 0 ? wEnt / totalDemand : 0;
+  const blendedTotal = totalDemand &gt; 0 ? wTotal / totalDemand : 0;
 
   // Tier averages — also demand-weighted
   const tierAgg = { A: [0,0], B: [0,0], C: [0,0], D: [0,0] };
@@ -17911,6 +18279,9 @@ function compute() {
 
   return {
     blended,
+    blendedSiteWork,
+    blendedEntitlement,
+    blendedTotal,
     tierAvg,
     cityRows,
     stateRows,
@@ -18010,16 +18381,98 @@ function renderTierStrips() {
   });
 }
 
-function renderHero(result) {
-  const { blended, minRow, maxRow, overSites, totalSites, totalPipelineUnits, pipelineTotalCost } = result;
-  document.getElementById(&#x27;hero-avg&#x27;).textContent = fmt$k(blended);
-  const delta = blended - state.target;
-  const pct = (delta / state.target * 100);
-  const deltaEl = document.getElementById(&#x27;hero-delta&#x27;);
-  const sign = delta &gt; 0 ? &#x27;+&#x27; : &#x27;&#x27;;
-  deltaEl.textContent = `${sign}${fmt$k(delta)} (${sign}${pct.toFixed(1)}%) vs ${fmt$k(state.target)} target`;
-  deltaEl.className = &#x27;delta &#x27; + (Math.abs(pct) &lt; 5 ? &#x27;on&#x27; : (delta &gt; 0 ? &#x27;over&#x27; : &#x27;under&#x27;));
+function renderEntitlement() {
+  const land = state.entitlement.land_per_door_K_by_tier;
+  const html = Object.entries(TIER_INFO).map(([t, info]) =&gt; `
+    &lt;div class=&quot;tier-strip tier-${t}&quot;&gt;
+      &lt;div&gt;
+        &lt;div class=&quot;tname&quot;&gt;${info.name} land&lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div&gt;
+        &lt;input type=&quot;range&quot; data-ent-tier=&quot;${t}&quot; min=&quot;0&quot; max=&quot;300&quot; value=&quot;${land[t]||0}&quot; step=&quot;1&quot;&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;tval&quot;&gt;&lt;span data-ent-tier-val=&quot;${t}&quot;&gt;$${land[t]||0}&lt;/span&gt;K&lt;/div&gt;
+    &lt;/div&gt;
+  `).join(&#x27;&#x27;);
+  document.getElementById(&#x27;ent-land-rows&#x27;).innerHTML = html;
+}
 
+function wireEntitlement() {
+  // Per-tier land sliders
+  document.getElementById(&#x27;ent-land-rows&#x27;).addEventListener(&#x27;input&#x27;, e =&gt; {
+    const t = e.target.dataset.entTier;
+    if (!t) return;
+    const v = parseInt(e.target.value);
+    state.entitlement.land_per_door_K_by_tier[t] = v;
+    document.querySelector(`[data-ent-tier-val=&quot;${t}&quot;]`).textContent = &#x27;$&#x27; + v;
+    render();
+  });
+  // Soft costs %
+  const softInput = document.getElementById(&#x27;ent-soft&#x27;);
+  const softVal = document.getElementById(&#x27;ent-soft-val&#x27;);
+  softInput.addEventListener(&#x27;input&#x27;, () =&gt; {
+    state.entitlement.soft_costs_pct_of_construction = parseFloat(softInput.value);
+    softVal.textContent = softInput.value + &#x27;%&#x27;;
+    render();
+  });
+  // Permits $K
+  const permitsInput = document.getElementById(&#x27;ent-permits&#x27;);
+  const permitsVal = document.getElementById(&#x27;ent-permits-val&#x27;);
+  permitsInput.addEventListener(&#x27;input&#x27;, () =&gt; {
+    state.entitlement.permits_per_door_K = parseFloat(permitsInput.value);
+    permitsVal.textContent = &#x27;$&#x27; + permitsInput.value + &#x27;K&#x27;;
+    render();
+  });
+}
+
+function syncEntitlementUI() {
+  // Reflect any state.entitlement changes (e.g., loaded from sites.json) into the controls
+  const ent = state.entitlement;
+  Object.entries(ent.land_per_door_K_by_tier || {}).forEach(([t, v]) =&gt; {
+    const slider = document.querySelector(`[data-ent-tier=&quot;${t}&quot;]`);
+    const valEl = document.querySelector(`[data-ent-tier-val=&quot;${t}&quot;]`);
+    if (slider) slider.value = v;
+    if (valEl) valEl.textContent = &#x27;$&#x27; + v;
+  });
+  const softInput = document.getElementById(&#x27;ent-soft&#x27;);
+  const softVal = document.getElementById(&#x27;ent-soft-val&#x27;);
+  if (softInput) softInput.value = ent.soft_costs_pct_of_construction;
+  if (softVal) softVal.textContent = ent.soft_costs_pct_of_construction + &#x27;%&#x27;;
+  const permitsInput = document.getElementById(&#x27;ent-permits&#x27;);
+  const permitsVal = document.getElementById(&#x27;ent-permits-val&#x27;);
+  if (permitsInput) permitsInput.value = ent.permits_per_door_K;
+  if (permitsVal) permitsVal.textContent = &#x27;$&#x27; + ent.permits_per_door_K + &#x27;K&#x27;;
+}
+
+function renderHero(result) {
+  const {
+    blended, blendedSiteWork, blendedEntitlement, blendedTotal,
+    minRow, maxRow, overSites, totalSites, totalPipelineUnits, pipelineTotalCost,
+  } = result;
+
+  // ── Cost stack (top row) ──────────────────────────────────────────────
+  document.getElementById(&#x27;hero-factory&#x27;).textContent = fmt$k(blended);
+  const fDelta = blended - state.target;
+  const fPct = state.target &gt; 0 ? (fDelta / state.target * 100) : 0;
+  const fSign = fDelta &gt; 0 ? &#x27;+&#x27; : &#x27;&#x27;;
+  const fEl = document.getElementById(&#x27;hero-factory-delta&#x27;);
+  fEl.textContent = `${fSign}${fmt$k(fDelta)} (${fSign}${fPct.toFixed(1)}%) vs ${fmt$k(state.target)} factory target`;
+  fEl.className = &#x27;hs-note &#x27; + (Math.abs(fPct) &lt; 5 ? &#x27;on&#x27; : (fDelta &gt; 0 ? &#x27;over&#x27; : &#x27;under&#x27;));
+
+  document.getElementById(&#x27;hero-sitework&#x27;).textContent = fmt$k(blendedSiteWork);
+  document.getElementById(&#x27;hero-entitlement&#x27;).textContent = fmt$k(blendedEntitlement);
+
+  // True total + NAHB benchmark ($269K national SFD turnkey)
+  const NAHB_BENCH = 269000;
+  document.getElementById(&#x27;hero-truetotal&#x27;).textContent = fmt$k(blendedTotal);
+  const tDelta = blendedTotal - NAHB_BENCH;
+  const tPct = (tDelta / NAHB_BENCH * 100);
+  const tSign = tDelta &gt; 0 ? &#x27;+&#x27; : &#x27;&#x27;;
+  const tEl = document.getElementById(&#x27;hero-truetotal-delta&#x27;);
+  tEl.textContent = `${tSign}${fmt$k(tDelta)} (${tSign}${tPct.toFixed(1)}%) vs $269K NAHB SFD avg`;
+  tEl.className = &#x27;hs-note &#x27; + (Math.abs(tPct) &lt; 5 ? &#x27;on&#x27; : (tDelta &gt; 0 ? &#x27;over&#x27; : &#x27;under&#x27;));
+
+  // ── Secondary stats (bottom row) ──────────────────────────────────────
   if (minRow) {
     document.getElementById(&#x27;hero-min&#x27;).textContent = fmt$k(minRow.cost);
     document.getElementById(&#x27;hero-min-state&#x27;).textContent = `${minRow.name}, ${minRow.state} · Tier ${minRow.tier}`;
@@ -18108,10 +18561,228 @@ function renderTable(result) {
   });
 }
 
+// ─── City Explorer render + interactions ──────────────────────────────────
+function renderCityTable(result) {
+  const tbody = document.getElementById(&#x27;city-tbody&#x27;);
+  if (!tbody) return;
+  const q = (state.cityFilter || &#x27;&#x27;).toLowerCase().trim();
+  let rows = result.cityRows.slice();
+  if (q) {
+    rows = rows.filter(r =&gt;
+      (r.name || &#x27;&#x27;).toLowerCase().includes(q) ||
+      (r.state || &#x27;&#x27;).toLowerCase().includes(q) ||
+      (r.hub || &#x27;&#x27;).toLowerCase().includes(q)
+    );
+  }
+  const k = state.citySortKey, dir = state.citySortDir;
+  rows.sort((a, b) =&gt; {
+    let av = a[k], bv = b[k];
+    if (av == null) av = -Infinity;
+    if (bv == null) bv = -Infinity;
+    if (typeof av === &#x27;string&#x27;) return dir === &#x27;asc&#x27; ? av.localeCompare(bv) : bv.localeCompare(av);
+    return dir === &#x27;asc&#x27; ? av - bv : bv - av;
+  });
+
+  const expandedKey = state.expandedSiteKey;
+  const sources = [&#x27;RSMeans 2025 direct&#x27;,&#x27;Local builder bid&#x27;,&#x27;Mfr quote&#x27;,&#x27;estimated&#x27;,&#x27;manual&#x27;,&#x27;inherited&#x27;];
+
+  const html = rows.map(r =&gt; {
+    const key = r.name + &#x27;|&#x27; + r.state;
+    const isExpanded = key === expandedKey;
+    const gapClass = Math.abs(r.gap) &lt; state.target * 0.05 ? &#x27;gap-neutral&#x27; :
+                     r.gap &gt; 0 ? &#x27;gap-positive&#x27; : &#x27;gap-negative&#x27;;
+    const gapSign = r.gap &gt; 0 ? &#x27;+&#x27; : &#x27;&#x27;;
+    let html = `
+      &lt;tr class=&quot;city-row${isExpanded ? &#x27; expanded&#x27; : &#x27;&#x27;}&quot; data-key=&quot;${_escAttr(key)}&quot;&gt;
+        &lt;td class=&quot;text-l&quot;&gt;&lt;div class=&quot;state-cell&quot;&gt;&lt;span class=&quot;tier-dot ${r.tier}&quot;&gt;&lt;/span&gt;${_escHtml(r.name)}${r.overridden ? &#x27; &lt;span class=&quot;ovr-dot&quot; title=&quot;Has overrides&quot;&gt;●&lt;/span&gt;&#x27; : &#x27;&#x27;}&lt;/div&gt;&lt;/td&gt;
+        &lt;td&gt;${r.state}&lt;/td&gt;
+        &lt;td&gt;${r.tier}&lt;/td&gt;
+        &lt;td&gt;${r.cci != null ? r.cci.toFixed(2) : &#x27;—&#x27;}&lt;/td&gt;
+        &lt;td&gt;$${r.psf}&lt;/td&gt;
+        &lt;td&gt;${r.strip}%&lt;/td&gt;
+        &lt;td&gt;&lt;strong&gt;${fmt$k(r.cost)}&lt;/strong&gt;&lt;/td&gt;
+        &lt;td class=&quot;${gapClass}&quot;&gt;${gapSign}${fmt$k(r.gap)}&lt;/td&gt;
+        &lt;td&gt;${r.demand}&lt;/td&gt;
+      &lt;/tr&gt;
+    `;
+    if (isExpanded) {
+      const siteIdx = state.sites.findIndex(s =&gt; s.name === r.name &amp;&amp; s.state === r.state);
+      const site = state.sites[siteIdx] || { cost: {} };
+      const co = site.cost || {};
+      const sd = state.stateDefaults[r.state] || {};
+      const inheritedPsf = sd.cost_psf != null ? sd.cost_psf : state.baselinePsf;
+      const inheritedTier = sd.tier || &#x27;C&#x27;;
+      const inheritedStrip = state.tierStrip[inheritedTier] != null ? state.tierStrip[inheritedTier] : 28;
+      const cciVal = co.cci != null ? +co.cci : 1.00;
+      const sourceList = sources.includes(co.source) ? sources : (co.source ? [co.source].concat(sources) : sources);
+
+      html += `
+        &lt;tr class=&quot;city-row-expand&quot; data-key=&quot;${_escAttr(key)}&quot;&gt;
+          &lt;td colspan=&quot;9&quot;&gt;
+            &lt;div style=&quot;padding: 12px 18px 0; display:flex; align-items:center; gap:14px; font-family:var(--mono); font-size:11px;&quot;&gt;
+              &lt;span style=&quot;color:var(--text-dim); font-size:10px; text-transform:uppercase; letter-spacing:0.06em;&quot;&gt;Cost Stack:&lt;/span&gt;
+              &lt;span&gt;&lt;span style=&quot;color:var(--text-dim);&quot;&gt;Factory&lt;/span&gt; &lt;strong&gt;${fmt$k(r.cost)}&lt;/strong&gt;&lt;/span&gt;
+              &lt;span style=&quot;color:var(--text-muted);&quot;&gt;+&lt;/span&gt;
+              &lt;span&gt;&lt;span style=&quot;color:var(--text-dim);&quot;&gt;Site Work&lt;/span&gt; &lt;strong&gt;${fmt$k(r.siteWork)}&lt;/strong&gt;&lt;/span&gt;
+              &lt;span style=&quot;color:var(--text-muted);&quot;&gt;+&lt;/span&gt;
+              &lt;span&gt;&lt;span style=&quot;color:var(--text-dim);&quot;&gt;Entitlement&lt;/span&gt; &lt;strong&gt;${fmt$k(r.entitlement)}&lt;/strong&gt;&lt;/span&gt;
+              &lt;span style=&quot;color:var(--text-muted);&quot;&gt;=&lt;/span&gt;
+              &lt;span style=&quot;color:var(--amber); font-weight:600;&quot;&gt;${fmt$k(r.total)} true total&lt;/span&gt;
+            &lt;/div&gt;
+            &lt;div class=&quot;city-edit-panel&quot; data-idx=&quot;${siteIdx}&quot;&gt;
+              &lt;div class=&quot;e-row&quot;&gt;
+                &lt;label&gt;City CCI &lt;span class=&quot;e-val&quot; id=&quot;ev-cci-${siteIdx}&quot;&gt;${co.cci != null ? cciVal.toFixed(2) : &#x27;—&#x27;}&lt;/span&gt;&lt;/label&gt;
+                &lt;input type=&quot;range&quot; min=&quot;0.75&quot; max=&quot;1.50&quot; step=&quot;0.01&quot; value=&quot;${cciVal}&quot; data-field=&quot;cci&quot;&gt;
+              &lt;/div&gt;
+              &lt;div class=&quot;e-row&quot;&gt;
+                &lt;label&gt;$/sf override &lt;span class=&quot;e-val&quot;&gt;${co.psf_override != null ? &#x27;$&#x27; + co.psf_override : &#x27;inherit $&#x27; + Math.round(inheritedPsf)}&lt;/span&gt;&lt;/label&gt;
+                &lt;input type=&quot;number&quot; step=&quot;1&quot; min=&quot;0&quot; placeholder=&quot;inherit ${Math.round(inheritedPsf)}&quot; value=&quot;${co.psf_override != null ? co.psf_override : &#x27;&#x27;}&quot; data-field=&quot;psf_override&quot;&gt;
+              &lt;/div&gt;
+              &lt;div class=&quot;e-row&quot;&gt;
+                &lt;label&gt;Strip% override &lt;span class=&quot;e-val&quot;&gt;${co.strip_pct_override != null ? co.strip_pct_override + &#x27;%&#x27; : &#x27;inherit &#x27; + inheritedStrip + &#x27;%&#x27;}&lt;/span&gt;&lt;/label&gt;
+                &lt;input type=&quot;number&quot; step=&quot;1&quot; min=&quot;0&quot; max=&quot;50&quot; placeholder=&quot;inherit ${inheritedStrip}&quot; value=&quot;${co.strip_pct_override != null ? co.strip_pct_override : &#x27;&#x27;}&quot; data-field=&quot;strip_pct_override&quot;&gt;
+              &lt;/div&gt;
+              &lt;div class=&quot;e-row&quot;&gt;
+                &lt;label&gt;Demand/yr &lt;span class=&quot;e-val&quot;&gt;${co.demand_velocity != null ? co.demand_velocity : 180}&lt;/span&gt;&lt;/label&gt;
+                &lt;input type=&quot;number&quot; step=&quot;1&quot; min=&quot;0&quot; value=&quot;${co.demand_velocity != null ? co.demand_velocity : 180}&quot; data-field=&quot;demand_velocity&quot;&gt;
+              &lt;/div&gt;
+              &lt;div class=&quot;e-row&quot;&gt;
+                &lt;label&gt;Source&lt;/label&gt;
+                &lt;select data-field=&quot;source&quot;&gt;
+                  ${sourceList.map(s =&gt; `&lt;option value=&quot;${_escAttr(s)}&quot;${s === (co.source || &#x27;&#x27;) ? &#x27; selected&#x27; : &#x27;&#x27;}&gt;${_escHtml(s)}&lt;/option&gt;`).join(&#x27;&#x27;)}
+                &lt;/select&gt;
+              &lt;/div&gt;
+              &lt;div class=&quot;e-row&quot;&gt;
+                &lt;label&gt;Last updated&lt;/label&gt;
+                &lt;span class=&quot;e-source-pill&quot;&gt;${_escHtml(co.last_updated || &#x27;—&#x27;)}&lt;/span&gt;
+              &lt;/div&gt;
+              &lt;div class=&quot;e-row full&quot;&gt;
+                &lt;label&gt;Notes&lt;/label&gt;
+                &lt;textarea data-field=&quot;notes&quot; placeholder=&quot;Bid context, partner quote, market signals…&quot;&gt;${_escHtml(co.notes || &#x27;&#x27;)}&lt;/textarea&gt;
+              &lt;/div&gt;
+              &lt;div class=&quot;e-actions&quot;&gt;
+                &lt;button class=&quot;btn-ghost&quot; data-action=&quot;reset&quot; type=&quot;button&quot;&gt;Reset to inherited&lt;/button&gt;
+              &lt;/div&gt;
+            &lt;/div&gt;
+          &lt;/td&gt;
+        &lt;/tr&gt;
+      `;
+    }
+    return html;
+  }).join(&#x27;&#x27;);
+  tbody.innerHTML = html;
+
+  document.getElementById(&#x27;city-meta&#x27;).textContent =
+    `${rows.length} of ${result.cityRows.length} sites${expandedKey ? &#x27; · editing 1&#x27; : &#x27; · click any row to edit&#x27;}`;
+
+  document.querySelectorAll(&#x27;#city-table thead th&#x27;).forEach(th =&gt; {
+    th.classList.remove(&#x27;sorted-asc&#x27;, &#x27;sorted-desc&#x27;);
+    if (th.dataset.sort === state.citySortKey) {
+      th.classList.add(state.citySortDir === &#x27;asc&#x27; ? &#x27;sorted-asc&#x27; : &#x27;sorted-desc&#x27;);
+    }
+  });
+}
+
+function wireCityExplorer() {
+  const tbody = document.getElementById(&#x27;city-tbody&#x27;);
+  const search = document.getElementById(&#x27;city-search&#x27;);
+  if (!tbody || !search) return;
+
+  search.addEventListener(&#x27;input&#x27;, e =&gt; {
+    state.cityFilter = e.target.value;
+    state.expandedSiteKey = null;
+    render();
+  });
+
+  document.querySelectorAll(&#x27;#city-table thead th&#x27;).forEach(th =&gt; {
+    th.addEventListener(&#x27;click&#x27;, () =&gt; {
+      const k = th.dataset.sort;
+      if (state.citySortKey === k) {
+        state.citySortDir = state.citySortDir === &#x27;asc&#x27; ? &#x27;desc&#x27; : &#x27;asc&#x27;;
+      } else {
+        state.citySortKey = k;
+        state.citySortDir = (k === &#x27;name&#x27; || k === &#x27;state&#x27; || k === &#x27;tier&#x27;) ? &#x27;asc&#x27; : &#x27;desc&#x27;;
+      }
+      render();
+    });
+  });
+
+  // Row click toggles expand (but clicks inside the edit panel are ignored)
+  tbody.addEventListener(&#x27;click&#x27;, e =&gt; {
+    if (e.target.closest(&#x27;.city-row-expand&#x27;)) return;
+    if (e.target.dataset &amp;&amp; e.target.dataset.action === &#x27;reset&#x27;) return;
+    const row = e.target.closest(&#x27;.city-row&#x27;);
+    if (!row) return;
+    const key = row.dataset.key;
+    state.expandedSiteKey = (state.expandedSiteKey === key) ? null : key;
+    render();
+  });
+
+  // Field changes commit + re-render
+  tbody.addEventListener(&#x27;change&#x27;, e =&gt; {
+    const field = e.target.dataset.field;
+    if (!field) return;
+    const panel = e.target.closest(&#x27;.city-edit-panel&#x27;);
+    if (!panel) return;
+    const idx = +panel.dataset.idx;
+    const site = state.sites[idx];
+    if (!site) return;
+    site.cost = site.cost || {};
+    let val = e.target.value;
+    if (field === &#x27;cci&#x27;) val = val === &#x27;&#x27; ? null : parseFloat(val);
+    else if (field === &#x27;psf_override&#x27; || field === &#x27;strip_pct_override&#x27; || field === &#x27;demand_velocity&#x27;) {
+      val = val === &#x27;&#x27; ? null : parseFloat(val);
+    }
+    site.cost[field] = val;
+    site.cost.last_updated = new Date().toISOString().slice(0, 10);
+    if (field !== &#x27;source&#x27; &amp;&amp; field !== &#x27;notes&#x27;) {
+      const cur = (site.cost.source || &#x27;&#x27;).toLowerCase();
+      if (!cur || cur === &#x27;inherited&#x27; || cur.startsWith(&#x27;estimated&#x27;)) {
+        site.cost.source = &#x27;manual&#x27;;
+      }
+    }
+    render();
+  });
+
+  // Slider live readout (no full re-render until release)
+  tbody.addEventListener(&#x27;input&#x27;, e =&gt; {
+    if (e.target.dataset &amp;&amp; e.target.dataset.field === &#x27;cci&#x27;) {
+      const panel = e.target.closest(&#x27;.city-edit-panel&#x27;);
+      const idx = panel &amp;&amp; panel.dataset.idx;
+      const el = document.getElementById(&#x27;ev-cci-&#x27; + idx);
+      if (el) el.textContent = (+e.target.value).toFixed(2);
+    }
+  });
+
+  // Reset button — clear overrides on this site
+  tbody.addEventListener(&#x27;click&#x27;, e =&gt; {
+    if (!(e.target.dataset &amp;&amp; e.target.dataset.action === &#x27;reset&#x27;)) return;
+    e.stopPropagation();
+    const panel = e.target.closest(&#x27;.city-edit-panel&#x27;);
+    if (!panel) return;
+    const idx = +panel.dataset.idx;
+    const site = state.sites[idx];
+    if (!site) return;
+    site.cost = site.cost || {};
+    site.cost.cci = null;
+    site.cost.psf_override = null;
+    site.cost.strip_pct_override = null;
+    site.cost.source = &#x27;inherited&#x27;;
+    site.cost.last_updated = new Date().toISOString().slice(0, 10);
+    render();
+  });
+}
+
+function toggleStateRollup() {
+  const p = document.getElementById(&#x27;state-rollup-panel&#x27;);
+  if (p) p.classList.toggle(&#x27;collapsed&#x27;);
+}
+
 function render() {
   const result = compute();
   renderHero(result);
   renderTierCards(result);
+  renderCityTable(result);
   renderTable(result);
 }
 
@@ -18119,7 +18790,8 @@ function render() {
 // EVENT WIRING
 // =============================================================================
 function wireSorting() {
-  document.querySelectorAll(&#x27;thead th&#x27;).forEach(th =&gt; {
+  // Scope to the state-rollup table only — the city-explorer table has its own sort wiring
+  document.querySelectorAll(&#x27;#state-table thead th&#x27;).forEach(th =&gt; {
     th.addEventListener(&#x27;click&#x27;, () =&gt; {
       const k = th.dataset.sort;
       if (state.sortKey === k) {
@@ -18271,6 +18943,14 @@ async function loadSites() {
         }
         state.stateDefaults = merged;
       }
+      // Entitlement (v2-only)
+      if (ca.entitlement &amp;&amp; typeof ca.entitlement === &#x27;object&#x27;) {
+        state.entitlement = {
+          land_per_door_K_by_tier: { ...DEFAULT_ENTITLEMENT.land_per_door_K_by_tier, ...(ca.entitlement.land_per_door_K_by_tier || {}) },
+          soft_costs_pct_of_construction: ca.entitlement.soft_costs_pct_of_construction != null ? +ca.entitlement.soft_costs_pct_of_construction : DEFAULT_ENTITLEMENT.soft_costs_pct_of_construction,
+          permits_per_door_K: ca.entitlement.permits_per_door_K != null ? +ca.entitlement.permits_per_door_K : DEFAULT_ENTITLEMENT.permits_per_door_K,
+        };
+      }
     }
     return;
   } catch (e) {
@@ -18287,7 +18967,11 @@ async function init() {
   renderMixBars();
   renderProductRows();
   renderTierStrips();
+  renderEntitlement();
+  wireEntitlement();
+  syncEntitlementUI();
   wireSorting();
+  wireCityExplorer();
   wirePresets();
   wireTarget();
   wireExports();
@@ -18534,6 +19218,8 @@ document.addEventListener('keydown',function(e){
 document.getElementById('svm-name').addEventListener('keydown',function(e){if(e.key==='Enter')_doSave()});
 document.addEventListener('click',function(e){var p=document.getElementById('ver-panel');if(p.style.display==='block'&&!p.contains(e.target)&&e.target.id!=='nav-ver-btn')p.style.display='none';});
 _switchPage('map');
+
+
 
 
 

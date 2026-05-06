@@ -3003,7 +3003,18 @@
         "desc": "South central, deep south, Appalachia, midwest cost-efficient"
       }
     },
-    "_documentation": "Cost cascade: city.cost.psf_override > city.cost.cci * national_baseline_psf > state_defaults[state].cost_psf > national_baseline_psf. blended_per_door is computed by the calibrator at render time, demand-weighted by city.cost.demand_velocity (homes/yr per fab; default 180).",
+    "entitlement": {
+      "land_per_door_K_by_tier": {
+        "A": 100,
+        "B": 60,
+        "C": 35,
+        "D": 20
+      },
+      "soft_costs_pct_of_construction": 12,
+      "permits_per_door_K": 8,
+      "_doc": "Sits on top of turnkey construction (factory + site work). Total = factory + site_work + land + (construction \u00d7 soft_pct/100) + permits. Tune per-tier land values as you collect real bids."
+    },
+    "_documentation": "Cost cascade: city.cost.psf_override > city.cost.cci * national_baseline_psf > state_defaults[state].cost_psf > national_baseline_psf. Cost stack: factory + site_work (strip%) = turnkey construction; + entitlement (land + soft + permits) = true total cost/door. blended_per_door is computed by the calibrator at render time, demand-weighted by city.cost.demand_velocity (homes/yr per fab; default 180).",
     "blended_per_door": 129623,
     "tier_avg_per_door": {
       "A": 138594,

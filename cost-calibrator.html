@@ -115,6 +115,77 @@
   .delta.under { color: var(--green-soft); }
   .delta.on { color: var(--amber-soft); }
 
+  /* hero cost stack — top row of the hero box */
+  .hero-stack {
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 14px;
+    margin-bottom: 14px;
+  }
+  .hs-lbl {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-dim);
+    margin-bottom: 8px;
+  }
+  .hs-lbl .hs-sub {
+    font-family: var(--mono);
+    font-size: 9px;
+    color: var(--text-muted);
+    text-transform: none;
+    letter-spacing: 0;
+    margin-left: 8px;
+  }
+  .hs-row {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+  }
+  .hs-cell {
+    flex: 1;
+    padding: 4px 14px;
+  }
+  .hs-cell:first-child { padding-left: 0; }
+  .hs-cell.hs-total {
+    background: rgba(245, 158, 11, 0.06);
+    border-left: 2px solid var(--amber);
+    border-radius: 0 4px 4px 0;
+    padding-left: 16px;
+  }
+  .hs-cell .hs-name {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-dim);
+    margin-bottom: 3px;
+  }
+  .hs-cell .hs-val {
+    font-family: var(--mono);
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.05;
+  }
+  .hs-cell.hs-total .hs-val { color: var(--amber); font-size: 28px; }
+  .hs-cell .hs-note {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text-muted);
+    margin-top: 3px;
+  }
+  .hs-cell .hs-note.over { color: var(--red-soft); }
+  .hs-cell .hs-note.under { color: var(--green-soft); }
+  .hs-cell .hs-note.on { color: var(--amber-soft); }
+  .hs-op {
+    align-self: center;
+    color: var(--text-muted);
+    font-family: var(--mono);
+    font-size: 16px;
+    font-weight: 300;
+    padding: 0 4px;
+    user-select: none;
+  }
+
   /* layout */
   .grid {
     display: grid;
@@ -485,6 +556,158 @@
     color: var(--text-muted);
     font-style: italic;
   }
+
+  /* ─── City Explorer ─── */
+  .panel-h-bar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .panel-h-bar .h-search {
+    flex: 1;
+    max-width: 300px;
+    background: var(--panel-3);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-family: var(--display);
+    text-transform: none;
+    letter-spacing: 0;
+  }
+  .panel-h-bar .h-search:focus {
+    outline: none;
+    border-color: var(--amber);
+  }
+  .panel-h-bar .h-meta {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text-dim);
+    text-transform: none;
+    letter-spacing: 0;
+    margin-left: auto;
+  }
+
+  .city-row {
+    cursor: pointer;
+    transition: background-color 0.1s;
+  }
+  .city-row:hover td { background: var(--panel-2); }
+  .city-row.expanded td { background: var(--panel-3); }
+  .city-row .ovr-dot {
+    color: var(--amber);
+    font-size: 9px;
+    margin-left: 4px;
+    vertical-align: middle;
+  }
+
+  .city-row-expand td {
+    padding: 0;
+    background: var(--panel-3);
+    border-bottom: 2px solid var(--amber);
+  }
+  .city-edit-panel {
+    padding: 14px 18px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 14px 22px;
+    align-items: start;
+  }
+  .city-edit-panel .e-row {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .city-edit-panel .e-row.full { grid-column: 1 / -1; }
+  .city-edit-panel label {
+    font-family: var(--display);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-dim);
+    font-weight: 500;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+  .city-edit-panel label .e-val {
+    font-family: var(--mono);
+    color: var(--amber);
+    font-weight: 600;
+    font-size: 11px;
+    text-transform: none;
+    letter-spacing: 0;
+  }
+  .city-edit-panel input[type="number"],
+  .city-edit-panel input[type="text"],
+  .city-edit-panel select,
+  .city-edit-panel textarea {
+    width: 100%;
+    background: var(--panel-2);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 6px 9px;
+    border-radius: 3px;
+    font-family: var(--mono);
+    font-size: 11px;
+  }
+  .city-edit-panel select { font-family: var(--display); }
+  .city-edit-panel textarea {
+    font-family: var(--display);
+    resize: vertical;
+    min-height: 38px;
+    line-height: 1.4;
+  }
+  .city-edit-panel input:focus,
+  .city-edit-panel select:focus,
+  .city-edit-panel textarea:focus {
+    outline: none;
+    border-color: var(--amber);
+  }
+  .city-edit-panel input[type="range"] {
+    width: 100%;
+    accent-color: var(--amber);
+    height: 4px;
+    margin-top: 2px;
+  }
+  .city-edit-panel .e-actions {
+    grid-column: 1 / -1;
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+    padding-top: 6px;
+    border-top: 1px solid var(--border);
+  }
+  .city-edit-panel .e-source-pill {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text-dim);
+    background: var(--panel);
+    padding: 3px 8px;
+    border-radius: 3px;
+    border: 1px solid var(--border);
+  }
+  .btn-ghost {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    padding: 6px 12px;
+    border-radius: 3px;
+    font-size: 10px;
+    cursor: pointer;
+    font-family: var(--display);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .btn-ghost:hover { border-color: var(--amber); color: var(--amber); }
+
+  /* Collapsible state-rollup section */
+  .collapsible h2 { cursor: pointer; user-select: none; }
+  .collapsible h2 .chev { transition: transform 0.15s; display: inline-block; margin-right: 6px; color: var(--text-dim); }
+  .collapsible.collapsed .chev { transform: rotate(-90deg); }
+  .collapsible.collapsed .panel-body,
+  .collapsible.collapsed .table-wrap { display: none; }
 </style>
 </head>
 <body>
@@ -499,12 +722,37 @@
 
   <!-- Hero -->
   <div class="hero">
-    <div class="hero-row">
-      <div class="hero-stat">
-        <div class="lbl">Site-Weighted National Avg / Door</div>
-        <div class="val big" id="hero-avg">$—</div>
-        <div class="delta on" id="hero-delta">vs $165K target</div>
+    <!-- Cost stack: factory + site work + entitlement = true total turnkey -->
+    <div class="hero-stack">
+      <div class="hs-lbl">Cost Stack / Door <span class="hs-sub">demand-weighted across 137 cities</span></div>
+      <div class="hs-row">
+        <div class="hs-cell">
+          <div class="hs-name">Factory</div>
+          <div class="hs-val" id="hero-factory">$—</div>
+          <div class="hs-note" id="hero-factory-delta">vs $165K target</div>
+        </div>
+        <div class="hs-op">+</div>
+        <div class="hs-cell">
+          <div class="hs-name">Site Work</div>
+          <div class="hs-val" id="hero-sitework">$—</div>
+          <div class="hs-note" id="hero-sitework-note">strip% × $/sf × mix</div>
+        </div>
+        <div class="hs-op">+</div>
+        <div class="hs-cell">
+          <div class="hs-name">Entitlement</div>
+          <div class="hs-val" id="hero-entitlement">$—</div>
+          <div class="hs-note" id="hero-entitlement-note">land + soft + permits</div>
+        </div>
+        <div class="hs-op">=</div>
+        <div class="hs-cell hs-total">
+          <div class="hs-name">True Total / Door</div>
+          <div class="hs-val" id="hero-truetotal">$—</div>
+          <div class="hs-note" id="hero-truetotal-delta">vs $269K NAHB SFD avg</div>
+        </div>
       </div>
+    </div>
+    <!-- Secondary stats: extremes + pipeline volume -->
+    <div class="hero-row">
       <div class="hero-stat">
         <div class="lbl">Cheapest City</div>
         <div class="val" id="hero-min" style="color: var(--green-soft);">$—</div>
@@ -516,12 +764,12 @@
         <div class="delta" id="hero-max-state">—</div>
       </div>
       <div class="hero-stat">
-        <div class="lbl">Sites Over $165K</div>
+        <div class="lbl">Sites Over $165K Factory</div>
         <div class="val" id="hero-over" style="color: var(--amber-soft);">—</div>
-        <div class="delta" id="hero-over-detail">— of 132 sites</div>
+        <div class="delta" id="hero-over-detail">— of 137 sites</div>
       </div>
       <div class="hero-stat">
-        <div class="lbl">Pipeline Build Cost (Total)</div>
+        <div class="lbl">Pipeline Build Cost (Factory)</div>
         <div class="val" id="hero-total" style="color: var(--text);">$—</div>
         <div class="delta" id="hero-total-detail">across 599 buildings</div>
       </div>
@@ -578,12 +826,33 @@
         </div>
       </div>
 
+      <!-- Entitlement -->
+      <div class="panel">
+        <h2>Entitlement Assumptions</h2>
+        <div class="panel-body">
+          <p style="font-size:11px;color:var(--text-dim);margin:0 0 10px 0;">On-top costs above turnkey construction: <strong style="color:var(--text)">land + soft + permits</strong>. Land varies wildly by tier — start here, override per-city as bids come in.</p>
+          <div id="ent-land-rows"></div>
+          <div class="control" style="margin-top: 12px;">
+            <label>Soft costs (% of construction) <span class="v" id="ent-soft-val">12%</span></label>
+            <input type="range" id="ent-soft" min="0" max="30" value="12" step="0.5">
+            <div style="font-size:10px;color:var(--text-muted);margin-top:2px;">A&amp;E, planning, marketing, sales</div>
+          </div>
+          <div class="control">
+            <label>Permits / impact fees ($K/door) <span class="v" id="ent-permits-val">$8K</span></label>
+            <input type="range" id="ent-permits" min="0" max="40" value="8" step="0.5">
+          </div>
+          <div class="assumption-card" style="margin-top: 12px;">
+            Total per-door at NAHB benchmark: ~$269K (US single-family detached, NAHB SOC 2024 turnkey construction). Tune entitlement to align our blended total within this range.
+          </div>
+        </div>
+      </div>
+
       <!-- Target -->
       <div class="panel">
         <h2>Target / Benchmark</h2>
         <div class="panel-body">
           <div class="control">
-            <label>Target $/door <span class="v" id="target-val">$165,000</span></label>
+            <label>Target $/door (factory) <span class="v" id="target-val">$165,000</span></label>
             <input type="range" id="target" min="100000" max="350000" value="165000" step="5000">
           </div>
         </div>
@@ -601,9 +870,41 @@
         </div>
       </div>
 
-      <!-- State table -->
+      <!-- City Explorer (primary) -->
       <div class="panel" style="margin-top: 16px;">
-        <h2>State-Level Detail <span style="font-family:var(--mono);font-size:10px;color:var(--text-dim);text-transform:none;letter-spacing:0;font-weight:400;">Click any column to sort</span></h2>
+        <h2>
+          <div class="panel-h-bar">
+            <span>City Explorer</span>
+            <input type="text" id="city-search" class="h-search" placeholder="Search city or state…" autocomplete="off" spellcheck="false">
+            <span class="h-meta" id="city-meta">— · click any row to edit</span>
+          </div>
+        </h2>
+        <div class="table-wrap" style="max-height: 540px;">
+          <table id="city-table">
+            <thead>
+              <tr>
+                <th class="text-l" data-sort="name">City</th>
+                <th data-sort="state">St</th>
+                <th data-sort="tier">Tier</th>
+                <th data-sort="cci">CCI</th>
+                <th data-sort="psf">$/sf</th>
+                <th data-sort="strip">Strip%</th>
+                <th data-sort="cost" class="sorted-desc">$/Door</th>
+                <th data-sort="gap">vs Tgt</th>
+                <th data-sort="demand">Dmnd</th>
+              </tr>
+            </thead>
+            <tbody id="city-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- State rollup (secondary, collapsible) -->
+      <div class="panel collapsible" id="state-rollup-panel" style="margin-top: 16px;">
+        <h2 onclick="toggleStateRollup()">
+          <span class="chev">▾</span>State Rollup
+          <span style="font-family:var(--mono);font-size:10px;color:var(--text-dim);text-transform:none;letter-spacing:0;font-weight:400;margin-left:8px;">demand-weighted within state · click row's state to filter the city table</span>
+        </h2>
         <div class="table-wrap">
           <table id="state-table">
             <thead>
@@ -681,6 +982,15 @@ const DEFAULT_PRODUCTS = {
 const DEFAULT_TIER_STRIP = { A: 35, B: 32, C: 28, D: 22 };
 const DEFAULT_DEMAND_PER_FAB = 180;  // homes/yr per fab — Doc's planning constant
 
+// Entitlement = on-top costs: land, permits, soft (architect/engineering/marketing).
+// Per-tier land defaults reflect the wild geographic variance; soft costs are a %
+// of construction; permits are a flat $K per door.
+const DEFAULT_ENTITLEMENT = {
+  land_per_door_K_by_tier: { A: 100, B: 60, C: 35, D: 20 },
+  soft_costs_pct_of_construction: 12,
+  permits_per_door_K: 8,
+};
+
 // =============================================================================
 // STATE
 // =============================================================================
@@ -689,13 +999,22 @@ const state = {
   products: JSON.parse(JSON.stringify(DEFAULT_PRODUCTS)),
   tierStrip: { ...DEFAULT_TIER_STRIP },
   stateDefaults: JSON.parse(JSON.stringify(DEFAULT_STATE_DEFAULTS)),
+  entitlement: JSON.parse(JSON.stringify(DEFAULT_ENTITLEMENT)),
   target: 165000,
-  sortKey: 'cost',
+  sortKey: 'cost',           // state-table sort
   sortDir: 'desc',
-  sites: [],            // full site objects, each with optional cost{} block
+  citySortKey: 'cost',       // city-explorer sort
+  citySortDir: 'desc',
+  cityFilter: '',            // city-explorer search
+  expandedSiteKey: null,     // "name|state" for the inline editor
+  sites: [],                 // full site objects, each with optional cost{} block
   fullSitesDoc: null,
   loadedFromSites: false,
 };
+
+// Tiny HTML helpers used by the City Explorer renderer
+function _escAttr(s){ return String(s == null ? '' : s).replace(/"/g, '&quot;'); }
+function _escHtml(s){ return String(s == null ? '' : s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
 
 // v2 cost_assumptions written back to sites.json on Save
 function buildCostAssumptions() {
@@ -709,10 +1028,14 @@ function buildCostAssumptions() {
     national_baseline_psf: state.baselinePsf,
     target_per_door: state.target,
     blended_per_door: Math.round(r.blended),
+    blended_site_work_per_door: Math.round(r.blendedSiteWork || 0),
+    blended_entitlement_per_door: Math.round(r.blendedEntitlement || 0),
+    blended_total_per_door: Math.round(r.blendedTotal || 0),
     tier_avg_per_door: tierAvg,
     products: state.products,
     tier_strip_pct: state.tierStrip,
     state_defaults: state.stateDefaults,
+    entitlement: state.entitlement,
     tier_info: TIER_INFO,
   };
 }
@@ -737,6 +1060,36 @@ function effectiveStripPct(site) {
 function demandFor(site) {
   const co = site.cost || {};
   return (co.demand_velocity != null && +co.demand_velocity > 0) ? +co.demand_velocity : DEFAULT_DEMAND_PER_FAB;
+}
+
+// Site work (strip portion) per door — what the GC charges, separate from factory
+function siteWorkPerDoor(site) {
+  const psf = effectivePsf(site);
+  const strip = effectiveStripPct(site) / 100;
+  let totalSf = 0, totalUnits = 0;
+  for (const k in state.products) {
+    const p = state.products[k];
+    if (!p || !p.sf || !p.units || p.sf_mod == null) continue;
+    totalSf += p.sf_mod * p.sf * p.units;
+    totalUnits += p.units;
+  }
+  return totalUnits ? (psf * strip * totalSf) / totalUnits : 0;
+}
+
+// Entitlement per door — land (per tier) + soft costs (% of construction) + permits
+function entitlementPerDoor(site) {
+  const tier = effectiveTier(site);
+  const land = (state.entitlement.land_per_door_K_by_tier[tier] || 0) * 1000;
+  const factory = costPerDoorForSite(site);
+  const sw = siteWorkPerDoor(site);
+  const construction = factory + sw;
+  const soft = construction * (+state.entitlement.soft_costs_pct_of_construction / 100);
+  const permits = +state.entitlement.permits_per_door_K * 1000;
+  return land + soft + permits;
+}
+
+function totalCostPerDoor(site) {
+  return costPerDoorForSite(site) + siteWorkPerDoor(site) + entitlementPerDoor(site);
 }
 
 // =============================================================================
@@ -786,7 +1139,10 @@ function compute() {
 
   // Per-CITY rows — each row carries its own effective psf, tier, strip, cost
   const cityRows = state.sites.map(site => {
-    const cost = costPerDoorForSite(site);
+    const factory = costPerDoorForSite(site);
+    const siteWork = siteWorkPerDoor(site);
+    const entitlement = entitlementPerDoor(site);
+    const total = factory + siteWork + entitlement;
     const tier = effectiveTier(site);
     const psf = effectivePsf(site);
     const strip = effectiveStripPct(site);
@@ -801,8 +1157,11 @@ function compute() {
       tier,
       psf: Math.round(psf),
       strip: Math.round(strip),
-      cost: Math.round(cost),
-      gap: Math.round(cost - state.target),
+      cost: Math.round(factory),         // factory only — primary KPI, kept stable for existing callers
+      siteWork: Math.round(siteWork),
+      entitlement: Math.round(entitlement),
+      total: Math.round(total),
+      gap: Math.round(factory - state.target),
       demand,
       cci: co.cci != null ? +co.cci : null,
       psf_override: co.psf_override,
@@ -813,9 +1172,18 @@ function compute() {
   });
 
   // Demand-weighted national blended (per spec: weight by homes/yr capacity, not site count)
-  let weightedSum = 0, totalDemand = 0;
-  for (const r of cityRows) { weightedSum += r.cost * r.demand; totalDemand += r.demand; }
-  const blended = totalDemand > 0 ? weightedSum / totalDemand : 0;
+  let wFactory = 0, wSite = 0, wEnt = 0, wTotal = 0, totalDemand = 0;
+  for (const r of cityRows) {
+    wFactory += r.cost * r.demand;
+    wSite    += r.siteWork * r.demand;
+    wEnt     += r.entitlement * r.demand;
+    wTotal   += r.total * r.demand;
+    totalDemand += r.demand;
+  }
+  const blended = totalDemand > 0 ? wFactory / totalDemand : 0;
+  const blendedSiteWork = totalDemand > 0 ? wSite / totalDemand : 0;
+  const blendedEntitlement = totalDemand > 0 ? wEnt / totalDemand : 0;
+  const blendedTotal = totalDemand > 0 ? wTotal / totalDemand : 0;
 
   // Tier averages — also demand-weighted
   const tierAgg = { A: [0,0], B: [0,0], C: [0,0], D: [0,0] };
@@ -867,6 +1235,9 @@ function compute() {
 
   return {
     blended,
+    blendedSiteWork,
+    blendedEntitlement,
+    blendedTotal,
     tierAvg,
     cityRows,
     stateRows,
@@ -966,16 +1337,98 @@ function renderTierStrips() {
   });
 }
 
-function renderHero(result) {
-  const { blended, minRow, maxRow, overSites, totalSites, totalPipelineUnits, pipelineTotalCost } = result;
-  document.getElementById('hero-avg').textContent = fmt$k(blended);
-  const delta = blended - state.target;
-  const pct = (delta / state.target * 100);
-  const deltaEl = document.getElementById('hero-delta');
-  const sign = delta > 0 ? '+' : '';
-  deltaEl.textContent = `${sign}${fmt$k(delta)} (${sign}${pct.toFixed(1)}%) vs ${fmt$k(state.target)} target`;
-  deltaEl.className = 'delta ' + (Math.abs(pct) < 5 ? 'on' : (delta > 0 ? 'over' : 'under'));
+function renderEntitlement() {
+  const land = state.entitlement.land_per_door_K_by_tier;
+  const html = Object.entries(TIER_INFO).map(([t, info]) => `
+    <div class="tier-strip tier-${t}">
+      <div>
+        <div class="tname">${info.name} land</div>
+      </div>
+      <div>
+        <input type="range" data-ent-tier="${t}" min="0" max="300" value="${land[t]||0}" step="1">
+      </div>
+      <div class="tval"><span data-ent-tier-val="${t}">$${land[t]||0}</span>K</div>
+    </div>
+  `).join('');
+  document.getElementById('ent-land-rows').innerHTML = html;
+}
 
+function wireEntitlement() {
+  // Per-tier land sliders
+  document.getElementById('ent-land-rows').addEventListener('input', e => {
+    const t = e.target.dataset.entTier;
+    if (!t) return;
+    const v = parseInt(e.target.value);
+    state.entitlement.land_per_door_K_by_tier[t] = v;
+    document.querySelector(`[data-ent-tier-val="${t}"]`).textContent = '$' + v;
+    render();
+  });
+  // Soft costs %
+  const softInput = document.getElementById('ent-soft');
+  const softVal = document.getElementById('ent-soft-val');
+  softInput.addEventListener('input', () => {
+    state.entitlement.soft_costs_pct_of_construction = parseFloat(softInput.value);
+    softVal.textContent = softInput.value + '%';
+    render();
+  });
+  // Permits $K
+  const permitsInput = document.getElementById('ent-permits');
+  const permitsVal = document.getElementById('ent-permits-val');
+  permitsInput.addEventListener('input', () => {
+    state.entitlement.permits_per_door_K = parseFloat(permitsInput.value);
+    permitsVal.textContent = '$' + permitsInput.value + 'K';
+    render();
+  });
+}
+
+function syncEntitlementUI() {
+  // Reflect any state.entitlement changes (e.g., loaded from sites.json) into the controls
+  const ent = state.entitlement;
+  Object.entries(ent.land_per_door_K_by_tier || {}).forEach(([t, v]) => {
+    const slider = document.querySelector(`[data-ent-tier="${t}"]`);
+    const valEl = document.querySelector(`[data-ent-tier-val="${t}"]`);
+    if (slider) slider.value = v;
+    if (valEl) valEl.textContent = '$' + v;
+  });
+  const softInput = document.getElementById('ent-soft');
+  const softVal = document.getElementById('ent-soft-val');
+  if (softInput) softInput.value = ent.soft_costs_pct_of_construction;
+  if (softVal) softVal.textContent = ent.soft_costs_pct_of_construction + '%';
+  const permitsInput = document.getElementById('ent-permits');
+  const permitsVal = document.getElementById('ent-permits-val');
+  if (permitsInput) permitsInput.value = ent.permits_per_door_K;
+  if (permitsVal) permitsVal.textContent = '$' + ent.permits_per_door_K + 'K';
+}
+
+function renderHero(result) {
+  const {
+    blended, blendedSiteWork, blendedEntitlement, blendedTotal,
+    minRow, maxRow, overSites, totalSites, totalPipelineUnits, pipelineTotalCost,
+  } = result;
+
+  // ── Cost stack (top row) ──────────────────────────────────────────────
+  document.getElementById('hero-factory').textContent = fmt$k(blended);
+  const fDelta = blended - state.target;
+  const fPct = state.target > 0 ? (fDelta / state.target * 100) : 0;
+  const fSign = fDelta > 0 ? '+' : '';
+  const fEl = document.getElementById('hero-factory-delta');
+  fEl.textContent = `${fSign}${fmt$k(fDelta)} (${fSign}${fPct.toFixed(1)}%) vs ${fmt$k(state.target)} factory target`;
+  fEl.className = 'hs-note ' + (Math.abs(fPct) < 5 ? 'on' : (fDelta > 0 ? 'over' : 'under'));
+
+  document.getElementById('hero-sitework').textContent = fmt$k(blendedSiteWork);
+  document.getElementById('hero-entitlement').textContent = fmt$k(blendedEntitlement);
+
+  // True total + NAHB benchmark ($269K national SFD turnkey)
+  const NAHB_BENCH = 269000;
+  document.getElementById('hero-truetotal').textContent = fmt$k(blendedTotal);
+  const tDelta = blendedTotal - NAHB_BENCH;
+  const tPct = (tDelta / NAHB_BENCH * 100);
+  const tSign = tDelta > 0 ? '+' : '';
+  const tEl = document.getElementById('hero-truetotal-delta');
+  tEl.textContent = `${tSign}${fmt$k(tDelta)} (${tSign}${tPct.toFixed(1)}%) vs $269K NAHB SFD avg`;
+  tEl.className = 'hs-note ' + (Math.abs(tPct) < 5 ? 'on' : (tDelta > 0 ? 'over' : 'under'));
+
+  // ── Secondary stats (bottom row) ──────────────────────────────────────
   if (minRow) {
     document.getElementById('hero-min').textContent = fmt$k(minRow.cost);
     document.getElementById('hero-min-state').textContent = `${minRow.name}, ${minRow.state} · Tier ${minRow.tier}`;
@@ -1064,10 +1517,228 @@ function renderTable(result) {
   });
 }
 
+// ─── City Explorer render + interactions ──────────────────────────────────
+function renderCityTable(result) {
+  const tbody = document.getElementById('city-tbody');
+  if (!tbody) return;
+  const q = (state.cityFilter || '').toLowerCase().trim();
+  let rows = result.cityRows.slice();
+  if (q) {
+    rows = rows.filter(r =>
+      (r.name || '').toLowerCase().includes(q) ||
+      (r.state || '').toLowerCase().includes(q) ||
+      (r.hub || '').toLowerCase().includes(q)
+    );
+  }
+  const k = state.citySortKey, dir = state.citySortDir;
+  rows.sort((a, b) => {
+    let av = a[k], bv = b[k];
+    if (av == null) av = -Infinity;
+    if (bv == null) bv = -Infinity;
+    if (typeof av === 'string') return dir === 'asc' ? av.localeCompare(bv) : bv.localeCompare(av);
+    return dir === 'asc' ? av - bv : bv - av;
+  });
+
+  const expandedKey = state.expandedSiteKey;
+  const sources = ['RSMeans 2025 direct','Local builder bid','Mfr quote','estimated','manual','inherited'];
+
+  const html = rows.map(r => {
+    const key = r.name + '|' + r.state;
+    const isExpanded = key === expandedKey;
+    const gapClass = Math.abs(r.gap) < state.target * 0.05 ? 'gap-neutral' :
+                     r.gap > 0 ? 'gap-positive' : 'gap-negative';
+    const gapSign = r.gap > 0 ? '+' : '';
+    let html = `
+      <tr class="city-row${isExpanded ? ' expanded' : ''}" data-key="${_escAttr(key)}">
+        <td class="text-l"><div class="state-cell"><span class="tier-dot ${r.tier}"></span>${_escHtml(r.name)}${r.overridden ? ' <span class="ovr-dot" title="Has overrides">●</span>' : ''}</div></td>
+        <td>${r.state}</td>
+        <td>${r.tier}</td>
+        <td>${r.cci != null ? r.cci.toFixed(2) : '—'}</td>
+        <td>$${r.psf}</td>
+        <td>${r.strip}%</td>
+        <td><strong>${fmt$k(r.cost)}</strong></td>
+        <td class="${gapClass}">${gapSign}${fmt$k(r.gap)}</td>
+        <td>${r.demand}</td>
+      </tr>
+    `;
+    if (isExpanded) {
+      const siteIdx = state.sites.findIndex(s => s.name === r.name && s.state === r.state);
+      const site = state.sites[siteIdx] || { cost: {} };
+      const co = site.cost || {};
+      const sd = state.stateDefaults[r.state] || {};
+      const inheritedPsf = sd.cost_psf != null ? sd.cost_psf : state.baselinePsf;
+      const inheritedTier = sd.tier || 'C';
+      const inheritedStrip = state.tierStrip[inheritedTier] != null ? state.tierStrip[inheritedTier] : 28;
+      const cciVal = co.cci != null ? +co.cci : 1.00;
+      const sourceList = sources.includes(co.source) ? sources : (co.source ? [co.source].concat(sources) : sources);
+
+      html += `
+        <tr class="city-row-expand" data-key="${_escAttr(key)}">
+          <td colspan="9">
+            <div style="padding: 12px 18px 0; display:flex; align-items:center; gap:14px; font-family:var(--mono); font-size:11px;">
+              <span style="color:var(--text-dim); font-size:10px; text-transform:uppercase; letter-spacing:0.06em;">Cost Stack:</span>
+              <span><span style="color:var(--text-dim);">Factory</span> <strong>${fmt$k(r.cost)}</strong></span>
+              <span style="color:var(--text-muted);">+</span>
+              <span><span style="color:var(--text-dim);">Site Work</span> <strong>${fmt$k(r.siteWork)}</strong></span>
+              <span style="color:var(--text-muted);">+</span>
+              <span><span style="color:var(--text-dim);">Entitlement</span> <strong>${fmt$k(r.entitlement)}</strong></span>
+              <span style="color:var(--text-muted);">=</span>
+              <span style="color:var(--amber); font-weight:600;">${fmt$k(r.total)} true total</span>
+            </div>
+            <div class="city-edit-panel" data-idx="${siteIdx}">
+              <div class="e-row">
+                <label>City CCI <span class="e-val" id="ev-cci-${siteIdx}">${co.cci != null ? cciVal.toFixed(2) : '—'}</span></label>
+                <input type="range" min="0.75" max="1.50" step="0.01" value="${cciVal}" data-field="cci">
+              </div>
+              <div class="e-row">
+                <label>$/sf override <span class="e-val">${co.psf_override != null ? '$' + co.psf_override : 'inherit $' + Math.round(inheritedPsf)}</span></label>
+                <input type="number" step="1" min="0" placeholder="inherit ${Math.round(inheritedPsf)}" value="${co.psf_override != null ? co.psf_override : ''}" data-field="psf_override">
+              </div>
+              <div class="e-row">
+                <label>Strip% override <span class="e-val">${co.strip_pct_override != null ? co.strip_pct_override + '%' : 'inherit ' + inheritedStrip + '%'}</span></label>
+                <input type="number" step="1" min="0" max="50" placeholder="inherit ${inheritedStrip}" value="${co.strip_pct_override != null ? co.strip_pct_override : ''}" data-field="strip_pct_override">
+              </div>
+              <div class="e-row">
+                <label>Demand/yr <span class="e-val">${co.demand_velocity != null ? co.demand_velocity : 180}</span></label>
+                <input type="number" step="1" min="0" value="${co.demand_velocity != null ? co.demand_velocity : 180}" data-field="demand_velocity">
+              </div>
+              <div class="e-row">
+                <label>Source</label>
+                <select data-field="source">
+                  ${sourceList.map(s => `<option value="${_escAttr(s)}"${s === (co.source || '') ? ' selected' : ''}>${_escHtml(s)}</option>`).join('')}
+                </select>
+              </div>
+              <div class="e-row">
+                <label>Last updated</label>
+                <span class="e-source-pill">${_escHtml(co.last_updated || '—')}</span>
+              </div>
+              <div class="e-row full">
+                <label>Notes</label>
+                <textarea data-field="notes" placeholder="Bid context, partner quote, market signals…">${_escHtml(co.notes || '')}</textarea>
+              </div>
+              <div class="e-actions">
+                <button class="btn-ghost" data-action="reset" type="button">Reset to inherited</button>
+              </div>
+            </div>
+          </td>
+        </tr>
+      `;
+    }
+    return html;
+  }).join('');
+  tbody.innerHTML = html;
+
+  document.getElementById('city-meta').textContent =
+    `${rows.length} of ${result.cityRows.length} sites${expandedKey ? ' · editing 1' : ' · click any row to edit'}`;
+
+  document.querySelectorAll('#city-table thead th').forEach(th => {
+    th.classList.remove('sorted-asc', 'sorted-desc');
+    if (th.dataset.sort === state.citySortKey) {
+      th.classList.add(state.citySortDir === 'asc' ? 'sorted-asc' : 'sorted-desc');
+    }
+  });
+}
+
+function wireCityExplorer() {
+  const tbody = document.getElementById('city-tbody');
+  const search = document.getElementById('city-search');
+  if (!tbody || !search) return;
+
+  search.addEventListener('input', e => {
+    state.cityFilter = e.target.value;
+    state.expandedSiteKey = null;
+    render();
+  });
+
+  document.querySelectorAll('#city-table thead th').forEach(th => {
+    th.addEventListener('click', () => {
+      const k = th.dataset.sort;
+      if (state.citySortKey === k) {
+        state.citySortDir = state.citySortDir === 'asc' ? 'desc' : 'asc';
+      } else {
+        state.citySortKey = k;
+        state.citySortDir = (k === 'name' || k === 'state' || k === 'tier') ? 'asc' : 'desc';
+      }
+      render();
+    });
+  });
+
+  // Row click toggles expand (but clicks inside the edit panel are ignored)
+  tbody.addEventListener('click', e => {
+    if (e.target.closest('.city-row-expand')) return;
+    if (e.target.dataset && e.target.dataset.action === 'reset') return;
+    const row = e.target.closest('.city-row');
+    if (!row) return;
+    const key = row.dataset.key;
+    state.expandedSiteKey = (state.expandedSiteKey === key) ? null : key;
+    render();
+  });
+
+  // Field changes commit + re-render
+  tbody.addEventListener('change', e => {
+    const field = e.target.dataset.field;
+    if (!field) return;
+    const panel = e.target.closest('.city-edit-panel');
+    if (!panel) return;
+    const idx = +panel.dataset.idx;
+    const site = state.sites[idx];
+    if (!site) return;
+    site.cost = site.cost || {};
+    let val = e.target.value;
+    if (field === 'cci') val = val === '' ? null : parseFloat(val);
+    else if (field === 'psf_override' || field === 'strip_pct_override' || field === 'demand_velocity') {
+      val = val === '' ? null : parseFloat(val);
+    }
+    site.cost[field] = val;
+    site.cost.last_updated = new Date().toISOString().slice(0, 10);
+    if (field !== 'source' && field !== 'notes') {
+      const cur = (site.cost.source || '').toLowerCase();
+      if (!cur || cur === 'inherited' || cur.startsWith('estimated')) {
+        site.cost.source = 'manual';
+      }
+    }
+    render();
+  });
+
+  // Slider live readout (no full re-render until release)
+  tbody.addEventListener('input', e => {
+    if (e.target.dataset && e.target.dataset.field === 'cci') {
+      const panel = e.target.closest('.city-edit-panel');
+      const idx = panel && panel.dataset.idx;
+      const el = document.getElementById('ev-cci-' + idx);
+      if (el) el.textContent = (+e.target.value).toFixed(2);
+    }
+  });
+
+  // Reset button — clear overrides on this site
+  tbody.addEventListener('click', e => {
+    if (!(e.target.dataset && e.target.dataset.action === 'reset')) return;
+    e.stopPropagation();
+    const panel = e.target.closest('.city-edit-panel');
+    if (!panel) return;
+    const idx = +panel.dataset.idx;
+    const site = state.sites[idx];
+    if (!site) return;
+    site.cost = site.cost || {};
+    site.cost.cci = null;
+    site.cost.psf_override = null;
+    site.cost.strip_pct_override = null;
+    site.cost.source = 'inherited';
+    site.cost.last_updated = new Date().toISOString().slice(0, 10);
+    render();
+  });
+}
+
+function toggleStateRollup() {
+  const p = document.getElementById('state-rollup-panel');
+  if (p) p.classList.toggle('collapsed');
+}
+
 function render() {
   const result = compute();
   renderHero(result);
   renderTierCards(result);
+  renderCityTable(result);
   renderTable(result);
 }
 
@@ -1075,7 +1746,8 @@ function render() {
 // EVENT WIRING
 // =============================================================================
 function wireSorting() {
-  document.querySelectorAll('thead th').forEach(th => {
+  // Scope to the state-rollup table only — the city-explorer table has its own sort wiring
+  document.querySelectorAll('#state-table thead th').forEach(th => {
     th.addEventListener('click', () => {
       const k = th.dataset.sort;
       if (state.sortKey === k) {
@@ -1227,6 +1899,14 @@ async function loadSites() {
         }
         state.stateDefaults = merged;
       }
+      // Entitlement (v2-only)
+      if (ca.entitlement && typeof ca.entitlement === 'object') {
+        state.entitlement = {
+          land_per_door_K_by_tier: { ...DEFAULT_ENTITLEMENT.land_per_door_K_by_tier, ...(ca.entitlement.land_per_door_K_by_tier || {}) },
+          soft_costs_pct_of_construction: ca.entitlement.soft_costs_pct_of_construction != null ? +ca.entitlement.soft_costs_pct_of_construction : DEFAULT_ENTITLEMENT.soft_costs_pct_of_construction,
+          permits_per_door_K: ca.entitlement.permits_per_door_K != null ? +ca.entitlement.permits_per_door_K : DEFAULT_ENTITLEMENT.permits_per_door_K,
+        };
+      }
     }
     return;
   } catch (e) {
@@ -1243,7 +1923,11 @@ async function init() {
   renderMixBars();
   renderProductRows();
   renderTierStrips();
+  renderEntitlement();
+  wireEntitlement();
+  syncEntitlementUI();
   wireSorting();
+  wireCityExplorer();
   wirePresets();
   wireTarget();
   wireExports();
