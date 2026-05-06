@@ -1,0 +1,1178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FBX HomeFab — Cost-Per-Door Calibrator</title>
+<style>
+  :root {
+    --bg: #0a0e14;
+    --panel: #121821;
+    --panel-2: #1a2230;
+    --panel-3: #232d3e;
+    --border: #243042;
+    --border-strong: #344256;
+    --text: #e8edf5;
+    --text-dim: #8a96aa;
+    --text-muted: #5d6878;
+    --teal: #2dd4bf;
+    --amber: #f59e0b;
+    --amber-soft: #fbbf24;
+    --red: #ef4444;
+    --red-soft: #fca5a5;
+    --green: #10b981;
+    --green-soft: #6ee7b7;
+    --blue: #60a5fa;
+
+    /* product colors aligned to the pipeline mix chart */
+    --townhome: #d97a3c;
+    --adu: #e74c5c;
+    --duplex: #1a2c4d;
+    --sfr: #94a3b8;
+
+    --mono: 'JetBrains Mono', 'SF Mono', ui-monospace, Menlo, monospace;
+    --display: 'Inter', system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--display);
+    font-size: 13px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 1700px; margin: 0 auto; padding: 24px; }
+
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 14px;
+    margin-bottom: 18px;
+  }
+  h1 {
+    font-size: 22px;
+    font-weight: 700;
+    margin: 0 0 4px 0;
+    letter-spacing: -0.02em;
+  }
+  .subtitle {
+    color: var(--text-dim);
+    font-size: 13px;
+    margin: 0;
+  }
+  .badge {
+    font-family: var(--mono);
+    font-size: 10px;
+    background: var(--panel-2);
+    border: 1px solid var(--border);
+    color: var(--amber);
+    padding: 4px 8px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  /* hero */
+  .hero {
+    background: linear-gradient(135deg, var(--panel-2) 0%, var(--panel) 100%);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 18px 22px;
+    margin-bottom: 18px;
+  }
+  .hero-row {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr 1fr 1fr;
+    gap: 24px;
+    align-items: center;
+  }
+  .hero-stat .lbl {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-dim);
+    margin-bottom: 4px;
+  }
+  .hero-stat .val {
+    font-family: var(--mono);
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+  }
+  .hero-stat .val.big { font-size: 34px; color: var(--amber); }
+  .hero-stat .delta {
+    font-family: var(--mono);
+    font-size: 11px;
+    margin-top: 4px;
+    color: var(--text-dim);
+  }
+  .delta.over { color: var(--red-soft); }
+  .delta.under { color: var(--green-soft); }
+  .delta.on { color: var(--amber-soft); }
+
+  /* layout */
+  .grid {
+    display: grid;
+    grid-template-columns: 360px 1fr;
+    gap: 18px;
+  }
+
+  .panel {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .panel + .panel { margin-top: 14px; }
+  .panel h2 {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-dim);
+    margin: 0;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+    background: var(--panel-2);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .panel-body { padding: 14px 16px; }
+
+  /* product mix bars (echoes Doc's chart) */
+  .mix-bar {
+    display: grid;
+    grid-template-columns: 64px 1fr 78px;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+    font-size: 12px;
+  }
+  .mix-bar:last-child { margin-bottom: 0; }
+  .mix-bar .pname {
+    font-family: var(--mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-dim);
+  }
+  .mix-bar .ptrack {
+    background: var(--panel-3);
+    border-radius: 3px;
+    height: 14px;
+    position: relative;
+    overflow: hidden;
+  }
+  .mix-bar .pfill {
+    height: 100%;
+    border-radius: 3px;
+    transition: width 0.3s ease;
+  }
+  .mix-bar .pfill.townhome { background: var(--townhome); }
+  .mix-bar .pfill.adu { background: var(--adu); }
+  .mix-bar .pfill.duplex { background: var(--duplex); }
+  .mix-bar .pfill.sfr { background: var(--sfr); }
+  .mix-bar .pcount {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text);
+    text-align: right;
+  }
+  .mix-bar .pcount .pct { color: var(--text-dim); margin-left: 4px; }
+
+  /* product editor row */
+  .prod-row {
+    display: grid;
+    grid-template-columns: 18px 60px 1fr 70px 70px;
+    gap: 8px;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 11px;
+  }
+  .prod-row:last-child { border-bottom: none; }
+  .prod-row .swatch {
+    width: 12px;
+    height: 12px;
+    border-radius: 2px;
+  }
+  .prod-row .swatch.townhome { background: var(--townhome); }
+  .prod-row .swatch.adu { background: var(--adu); }
+  .prod-row .swatch.duplex { background: var(--duplex); }
+  .prod-row .swatch.sfr { background: var(--sfr); }
+  .prod-row .pname {
+    font-family: var(--mono);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text);
+    font-size: 10px;
+  }
+  .prod-row input[type="number"] {
+    width: 100%;
+    background: var(--panel-2);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 5px 6px;
+    border-radius: 3px;
+    font-family: var(--mono);
+    font-size: 11px;
+    text-align: right;
+  }
+  .prod-row input[type="number"]:focus {
+    outline: none; border-color: var(--amber);
+  }
+  .prod-row .units-input { color: var(--amber-soft); font-weight: 600; }
+  .prod-row .lbl-row {
+    display: grid;
+    grid-template-columns: 18px 60px 1fr 70px 70px;
+    gap: 8px;
+    font-size: 9px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding-bottom: 4px;
+  }
+
+  .control { margin-bottom: 14px; }
+  .control:last-child { margin-bottom: 0; }
+  .control label {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-size: 12px;
+    color: var(--text-dim);
+    margin-bottom: 6px;
+  }
+  .control label .v {
+    font-family: var(--mono);
+    color: var(--amber);
+    font-weight: 600;
+  }
+  .control input[type="range"] {
+    width: 100%;
+    accent-color: var(--amber);
+    height: 4px;
+  }
+  .control input[type="number"] {
+    width: 100%;
+    background: var(--panel-2);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 7px 9px;
+    border-radius: 4px;
+    font-family: var(--mono);
+    font-size: 12px;
+  }
+
+  /* tier strip */
+  .tier-strip {
+    display: grid;
+    grid-template-columns: 68px 1fr 56px;
+    gap: 10px;
+    align-items: center;
+    padding: 6px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .tier-strip:last-child { border-bottom: none; }
+  .tier-strip .tname {
+    font-family: var(--mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text);
+    font-weight: 600;
+  }
+  .tier-strip .tdesc {
+    font-size: 10px;
+    color: var(--text-muted);
+    line-height: 1.3;
+  }
+  .tier-strip .tval {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--amber);
+    font-weight: 600;
+    text-align: right;
+  }
+  .tier-A .tname { color: var(--red-soft); }
+  .tier-B .tname { color: var(--amber-soft); }
+  .tier-C .tname { color: #fde68a; }
+  .tier-D .tname { color: var(--green-soft); }
+  .tier-strip input[type="range"] {
+    width: 100%;
+    accent-color: var(--amber);
+    height: 3px;
+  }
+
+  /* assumption summary card */
+  .assumption-card {
+    background: var(--panel-2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 10px 12px;
+    font-size: 11px;
+    color: var(--text-dim);
+    line-height: 1.6;
+  }
+  .assumption-card strong {
+    color: var(--amber);
+    font-family: var(--mono);
+  }
+
+  /* state table */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: var(--mono);
+    font-size: 11px;
+  }
+  thead th {
+    text-align: right;
+    font-family: var(--display);
+    font-size: 9px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-dim);
+    padding: 10px 10px;
+    border-bottom: 1px solid var(--border-strong);
+    background: var(--panel-2);
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    cursor: pointer;
+    user-select: none;
+    white-space: nowrap;
+  }
+  thead th.text-l { text-align: left; }
+  thead th.sorted-asc::after { content: ' ▲'; color: var(--amber); }
+  thead th.sorted-desc::after { content: ' ▼'; color: var(--amber); }
+  thead th:hover { color: var(--text); }
+  td {
+    padding: 7px 10px;
+    border-bottom: 1px solid var(--border);
+    text-align: right;
+    white-space: nowrap;
+  }
+  td.text-l { text-align: left; font-family: var(--display); }
+  tbody tr:hover td { background: var(--panel-2); }
+  td .state-cell {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  td .tier-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .tier-dot.A { background: var(--red); }
+  .tier-dot.B { background: var(--amber); }
+  .tier-dot.C { background: #fbbf24; }
+  .tier-dot.D { background: var(--green); }
+  td.gap-positive { color: var(--red-soft); }
+  td.gap-negative { color: var(--green-soft); }
+  td.gap-neutral { color: var(--amber-soft); }
+
+  .table-wrap {
+    max-height: 540px;
+    overflow-y: auto;
+  }
+
+  /* tier card grid */
+  .tier-cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+  .tier-card-big {
+    background: var(--panel-2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 12px 14px;
+    border-left: 3px solid;
+  }
+  .tier-card-big.A { border-left-color: var(--red); }
+  .tier-card-big.B { border-left-color: var(--amber); }
+  .tier-card-big.C { border-left-color: #fbbf24; }
+  .tier-card-big.D { border-left-color: var(--green); }
+  .tier-card-big .tname {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-dim);
+    margin-bottom: 4px;
+  }
+  .tier-card-big .tval {
+    font-family: var(--mono);
+    font-size: 19px;
+    font-weight: 700;
+    margin-bottom: 2px;
+  }
+  .tier-card-big .tsub {
+    font-size: 10px;
+    color: var(--text-muted);
+    font-family: var(--mono);
+  }
+
+  .preset-row {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+  }
+  .preset-row button {
+    flex: 1;
+    background: var(--panel-2);
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    padding: 6px 8px;
+    border-radius: 4px;
+    font-size: 10px;
+    font-family: var(--display);
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    transition: all 0.15s;
+    min-width: 0;
+  }
+  .preset-row button:hover { color: var(--text); }
+  .preset-row button.active {
+    background: var(--amber);
+    color: var(--bg);
+    border-color: var(--amber);
+    font-weight: 600;
+  }
+
+  .btn {
+    background: var(--panel-2);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 8px 14px;
+    border-radius: 4px;
+    font-size: 11px;
+    cursor: pointer;
+    font-family: var(--display);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .btn:hover { border-color: var(--amber); color: var(--amber); }
+  .btn-primary {
+    background: var(--amber);
+    color: var(--bg);
+    border-color: var(--amber);
+    font-weight: 600;
+  }
+  .btn-primary:hover { background: var(--amber-soft); color: var(--bg); }
+  .btn-row {
+    display: flex;
+    gap: 8px;
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid var(--border);
+  }
+
+  /* loading */
+  .skeleton {
+    color: var(--text-muted);
+    font-style: italic;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <h1>Cost-Per-Door Calibrator</h1>
+      <p class="subtitle">Pressure-test your blended door cost across the FBX rollout. Adjust unit mix, sizes, and regional site-work tiers.</p>
+    </div>
+    <div class="badge"><span id="site-count">132</span> sites · 4 products · 4 tiers</div>
+  </header>
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="hero-row">
+      <div class="hero-stat">
+        <div class="lbl">Site-Weighted National Avg / Door</div>
+        <div class="val big" id="hero-avg">$—</div>
+        <div class="delta on" id="hero-delta">vs $165K target</div>
+      </div>
+      <div class="hero-stat">
+        <div class="lbl">Cheapest State</div>
+        <div class="val" id="hero-min" style="color: var(--green-soft);">$—</div>
+        <div class="delta" id="hero-min-state">—</div>
+      </div>
+      <div class="hero-stat">
+        <div class="lbl">Most Expensive State</div>
+        <div class="val" id="hero-max" style="color: var(--red-soft);">$—</div>
+        <div class="delta" id="hero-max-state">—</div>
+      </div>
+      <div class="hero-stat">
+        <div class="lbl">Sites Over $165K</div>
+        <div class="val" id="hero-over" style="color: var(--amber-soft);">—</div>
+        <div class="delta" id="hero-over-detail">— of 132 sites</div>
+      </div>
+      <div class="hero-stat">
+        <div class="lbl">Pipeline Build Cost (Total)</div>
+        <div class="val" id="hero-total" style="color: var(--text);">$—</div>
+        <div class="delta" id="hero-total-detail">across 599 buildings</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <!-- LEFT: controls -->
+    <div>
+      <!-- Pipeline mix display -->
+      <div class="panel">
+        <h2>Pipeline Mix <span style="font-family:var(--mono);font-size:10px;color:var(--text-dim);text-transform:none;letter-spacing:0;font-weight:400;" id="mix-total-units">599 buildings</span></h2>
+        <div class="panel-body">
+          <div id="mix-bars"></div>
+          <div class="preset-row" style="margin-top: 12px;">
+            <button data-preset="actual" class="active">Actual Pipeline</button>
+            <button data-preset="adu-heavy">ADU-Heavy</button>
+            <button data-preset="density">Density Push</button>
+            <button data-preset="custom">Custom</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Product editor -->
+      <div class="panel">
+        <h2>Per-Product Assumptions</h2>
+        <div class="panel-body">
+          <div class="lbl-row prod-row" style="border-bottom: 1px solid var(--border-strong); padding-bottom: 6px;">
+            <div></div>
+            <div>Product</div>
+            <div></div>
+            <div>Size (sf)</div>
+            <div>Units</div>
+          </div>
+          <div id="product-rows"></div>
+          <div class="assumption-card" style="margin-top: 10px;">
+            Townhomes & duplexes use shared-wall economics (~<strong>$145/sf</strong> stick-built nat'l avg, vs SFR <strong>$162/sf</strong> NAHB). ADUs run small-job premium per-sf but tiny absolute $.
+          </div>
+        </div>
+      </div>
+
+      <!-- Site work strip tiers -->
+      <div class="panel">
+        <h2>Site-Work Strip by Tier</h2>
+        <div class="panel-body">
+          <p style="font-size:11px;color:var(--text-dim);margin:0 0 10px 0;">Factory portion = <strong style="color:var(--text)">100% − strip%</strong>. Strip = excavation, foundation, utilities, permits, site prep, finish work outside the home shell.</p>
+          <div id="tier-strips"></div>
+          <div class="assumption-card" style="margin-top: 12px;">
+            Tier A: heavy regulation, seismic/coastal, high labor cost.<br>
+            Tier B: northeast/west coast secondary.<br>
+            Tier C: sun belt, mountain west, mid-Atlantic.<br>
+            Tier D: south central, deep south, Appalachia.
+          </div>
+        </div>
+      </div>
+
+      <!-- Target -->
+      <div class="panel">
+        <h2>Target / Benchmark</h2>
+        <div class="panel-body">
+          <div class="control">
+            <label>Target $/door <span class="v" id="target-val">$165,000</span></label>
+            <input type="range" id="target" min="100000" max="350000" value="165000" step="5000">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: results -->
+    <div>
+      <!-- Tier summary cards -->
+      <div class="panel">
+        <h2>Average Per-Door Cost by Regional Tier</h2>
+        <div class="panel-body">
+          <div class="tier-cards" id="tier-cards"></div>
+          <div id="tier-explainer" style="font-size:11px;color:var(--text-dim);">—</div>
+        </div>
+      </div>
+
+      <!-- State table -->
+      <div class="panel" style="margin-top: 16px;">
+        <h2>State-Level Detail <span style="font-family:var(--mono);font-size:10px;color:var(--text-dim);text-transform:none;letter-spacing:0;font-weight:400;">Click any column to sort</span></h2>
+        <div class="table-wrap">
+          <table id="state-table">
+            <thead>
+              <tr>
+                <th class="text-l" data-sort="state">State</th>
+                <th data-sort="tier">Tier</th>
+                <th data-sort="psf">$/sf</th>
+                <th data-sort="strip">Strip%</th>
+                <th data-sort="sites">Sites</th>
+                <th data-sort="units">Units</th>
+                <th data-sort="cost" class="sorted-desc">$/Door</th>
+                <th data-sort="gap">vs Target</th>
+                <th data-sort="total">Total $</th>
+              </tr>
+            </thead>
+            <tbody id="state-tbody"></tbody>
+          </table>
+        </div>
+        <div class="btn-row" style="padding-left:16px;padding-right:16px;padding-bottom:12px;border-top:none;padding-top:0;margin-top:0;">
+          <button class="btn" id="export-csv">Export CSV</button>
+          <button class="btn" id="export-json">Export JSON Assumptions</button>
+          <button class="btn-primary btn" id="apply-to-map" style="margin-left:auto;" title="Save & propagate to Expansion Map">Save & sync to Expansion Map</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// =============================================================================
+// FBX HOMEFAB — COST-PER-DOOR CALIBRATOR
+// =============================================================================
+
+// State-level new-construction $/sf — blended from NAHB SOC 2024, home-cost.com,
+// bhumicalculator 2026, NAHB regional medians. Conservative midpoints, "all-in
+// turnkey including GC overhead" basis.
+const STATE_COST_PSF = {
+  CA: 225, HI: 230, AK: 228, OR: 200, WA: 200, NV: 175, AZ: 165, ID: 170,
+  UT: 175, MT: 185, WY: 165, CO: 175, NM: 160,
+  ND: 165, SD: 160, NE: 160, KS: 155, MN: 175, IA: 165, MO: 155, WI: 170,
+  IL: 175, IN: 155, MI: 160, OH: 155,
+  TX: 162, OK: 158, AR: 156, LA: 160, MS: 154, AL: 155, TN: 160, KY: 158,
+  WV: 150, FL: 175, GA: 160, SC: 165, NC: 165, VA: 175, MD: 195, DE: 185,
+  PA: 180, NY: 211, NJ: 225, CT: 200, RI: 195, MA: 210, NH: 195, VT: 195, ME: 185,
+};
+
+// Regional tier assignment — drives the site-work strip %
+const STATE_TIER = {
+  // Tier A: heavy regulation, seismic/coastal, high labor cost
+  CA: 'A', HI: 'A', AK: 'A', NJ: 'A', NY: 'A', MA: 'A',
+  // Tier B: northeast/west coast secondary
+  CT: 'B', OR: 'B', WA: 'B', RI: 'B', NH: 'B', VT: 'B', MD: 'B', DE: 'B', ME: 'B', PA: 'B',
+  // Tier C: sun belt, mountain west, mid-Atlantic
+  CO: 'C', NV: 'C', UT: 'C', AZ: 'C', ID: 'C', MT: 'C', WY: 'C', NM: 'C',
+  FL: 'C', VA: 'C', NC: 'C', SC: 'C', GA: 'C', TX: 'C', IL: 'C', MN: 'C', WI: 'C', MI: 'C',
+  // Tier D: south central, deep south, Appalachia, midwest cost-efficient
+  OK: 'D', AR: 'D', LA: 'D', MS: 'D', AL: 'D', TN: 'D', KY: 'D', WV: 'D',
+  IN: 'D', OH: 'D', MO: 'D', IA: 'D', KS: 'D', NE: 'D', ND: 'D', SD: 'D',
+};
+
+const TIER_INFO = {
+  A: { name: 'Tier A', desc: 'CA · HI · AK · NJ · NY · MA' },
+  B: { name: 'Tier B', desc: 'CT · OR · WA · MD · RI · NH · VT · ME · DE · PA' },
+  C: { name: 'Tier C', desc: 'CO · NV · UT · AZ · FL · TX · VA · NC · IL · MN · WI · MI · GA · SC · MT · WY · ID · NM' },
+  D: { name: 'Tier D', desc: 'OK · AR · LA · MS · AL · TN · KY · WV · IN · OH · MO · IA · KS · NE · ND · SD' },
+};
+
+// PRODUCT TYPES — reflect Doc's actual pipeline mix
+// $/sf adjustments vs single-family detached baseline from NAHB SOC 2024 ($162 nat'l avg)
+// - Townhome: shared walls cut framing/siding/roofing materials by ~20-25%, but
+//   smaller size eliminates economy-of-scale. Net: ~90% of SFD $/sf.
+// - Duplex: same sharing logic as townhome but typically larger units. ~88% of SFD $/sf.
+// - ADU: small-project premium offsets simpler design. ~115% of SFD $/sf.
+// - SFR: full SFD baseline = 100%.
+const PRODUCTS = {
+  townhome: { name: 'Townhome', sf: 1450, units: 214, sf_mod: 0.90, color: 'townhome' },
+  adu:      { name: 'ADU',      sf: 750,  units: 211, sf_mod: 1.15, color: 'adu' },
+  duplex:   { name: 'Duplex',   sf: 1850, units: 160, sf_mod: 0.88, color: 'duplex' },
+  sfr:      { name: 'SFR',      sf: 1800, units: 14,  sf_mod: 1.00, color: 'sfr' },
+};
+
+// Default tier strip %
+const DEFAULT_TIER_STRIP = { A: 35, B: 32, C: 28, D: 22 };
+
+// =============================================================================
+// STATE
+// =============================================================================
+const state = {
+  products: JSON.parse(JSON.stringify(PRODUCTS)),
+  tierStrip: { ...DEFAULT_TIER_STRIP },
+  target: 165000,
+  sortKey: 'cost',
+  sortDir: 'desc',
+  sites: [],
+  sitesByState: {},
+  fullSitesDoc: null,
+  loadedFromSites: false,
+};
+
+function buildCostAssumptions() {
+  const r = compute();
+  return {
+    version: 1,
+    last_updated: new Date().toISOString(),
+    target_per_door: state.target,
+    blended_per_door: Math.round(r.blended),
+    tier_avg_per_door: Object.fromEntries(
+      Object.entries(r.tierAvg).map(([t, v]) => [t, Math.round(v)])
+    ),
+    product_mix: state.products,
+    tier_strip_pct: state.tierStrip,
+    state_cost_psf: STATE_COST_PSF,
+    state_tier: STATE_TIER,
+  };
+}
+
+// =============================================================================
+// EMBEDDED SITES DATA (fallback if sites.json fetch fails — e.g., file:// or sandbox)
+// =============================================================================
+const EMBEDDED_SITES = [
+  // Counted from Doc's full sites.json (132 sites total)
+  ['CA',7],['HI',2],['AZ',3],['CT',3],['CO',4],['NV',2],['TX',9],['MA',2],
+  ['OR',3],['WA',4],['UT',2],['ID',3],['NC',2],['RI',1],['NJ',3],['MN',2],
+  ['GA',4],['NY',4],['NH',2],['ME',2],['TN',5],['VA',4],['NE',2],['OK',2],
+  ['NM',1],['LA',3],['FL',8],['IL',1],['IN',2],['MD',2],['OH',4],['PA',4],
+  ['KY',2],['MO',3],['AL',4],['DE',1],['MI',2],['SC',2],['WI',3],['AR',1],
+  ['IA',1],['MT',3],['ND',2],['SD',2],['VT',1],['WY',2],['MS',1],['WV',2],
+  ['AK',2],['KS',1]
+];
+
+// =============================================================================
+// CORE COMPUTATION
+// =============================================================================
+function computeCostPerDoor(stateCode) {
+  const psf = STATE_COST_PSF[stateCode];
+  const tier = STATE_TIER[stateCode];
+  const strip = state.tierStrip[tier] / 100;
+
+  let totalCost = 0;
+  let totalUnits = 0;
+
+  for (const key in state.products) {
+    const p = state.products[key];
+    const turnkey = psf * p.sf_mod * p.sf;
+    const factoryPortion = turnkey * (1 - strip);
+    totalCost += factoryPortion * p.units;
+    totalUnits += p.units;
+  }
+
+  return totalUnits > 0 ? totalCost / totalUnits : 0;
+}
+
+function compute() {
+  const sitesByState = state.sitesByState;
+  const totalSites = Object.values(sitesByState).reduce((a,b)=>a+b, 0);
+  const totalPipelineUnits = Object.values(state.products).reduce((a,p)=>a+p.units, 0);
+
+  // Per-state cost
+  const stateRows = [];
+  let weightedSum = 0;
+  let weightedSites = 0;
+  let pipelineTotalCost = 0;
+
+  for (const sc in sitesByState) {
+    if (!STATE_COST_PSF[sc]) continue;
+    const sites = sitesByState[sc];
+    const cost = computeCostPerDoor(sc);
+    const tier = STATE_TIER[sc];
+    const strip = state.tierStrip[tier];
+    const psf = STATE_COST_PSF[sc];
+    const units = sites * (totalPipelineUnits / totalSites);  // proportional unit allocation
+    const total = cost * units;
+
+    stateRows.push({
+      state: sc, tier, psf, strip, sites,
+      units: Math.round(units),
+      cost: Math.round(cost),
+      gap: Math.round(cost - state.target),
+      total: Math.round(total),
+    });
+
+    weightedSum += cost * sites;
+    weightedSites += sites;
+    pipelineTotalCost += cost * units;
+  }
+
+  const blended = weightedSites > 0 ? weightedSum / weightedSites : 0;
+
+  // Tier averages
+  const tierAgg = { A: [0,0], B: [0,0], C: [0,0], D: [0,0] };
+  for (const r of stateRows) {
+    tierAgg[r.tier][0] += r.cost * r.sites;
+    tierAgg[r.tier][1] += r.sites;
+  }
+  const tierAvg = {};
+  for (const t in tierAgg) {
+    tierAvg[t] = tierAgg[t][1] > 0 ? tierAgg[t][0] / tierAgg[t][1] : 0;
+  }
+
+  // Min / max / over count
+  const sortedByCost = [...stateRows].sort((a,b)=>a.cost-b.cost);
+  const minRow = sortedByCost[0];
+  const maxRow = sortedByCost[sortedByCost.length - 1];
+  const overSites = stateRows.filter(r => r.cost > state.target).reduce((a,r)=>a+r.sites, 0);
+
+  return {
+    blended,
+    tierAvg,
+    stateRows,
+    minRow, maxRow,
+    overSites,
+    totalSites,
+    totalPipelineUnits,
+    pipelineTotalCost,
+  };
+}
+
+// =============================================================================
+// FORMATTERS
+// =============================================================================
+const fmt$ = n => '$' + Math.round(n).toLocaleString();
+const fmt$k = n => '$' + (Math.round(n / 1000)).toLocaleString() + 'K';
+const fmt$M = n => '$' + (n/1e6).toFixed(1) + 'M';
+const fmt$B = n => '$' + (n/1e9).toFixed(2) + 'B';
+const fmtSmart$ = n => {
+  if (n >= 1e9) return fmt$B(n);
+  if (n >= 1e6) return fmt$M(n);
+  if (n >= 1e3) return fmt$k(n);
+  return fmt$(n);
+};
+
+// =============================================================================
+// RENDERING
+// =============================================================================
+function renderMixBars() {
+  const total = Object.values(state.products).reduce((a,p)=>a+p.units, 0);
+  const order = ['townhome', 'adu', 'duplex', 'sfr'];
+  const html = order.map(k => {
+    const p = state.products[k];
+    const pct = total > 0 ? (p.units / total) * 100 : 0;
+    return `
+      <div class="mix-bar">
+        <div class="pname">${p.name}</div>
+        <div class="ptrack"><div class="pfill ${p.color}" style="width:${pct}%"></div></div>
+        <div class="pcount">${p.units}<span class="pct">${pct.toFixed(0)}%</span></div>
+      </div>
+    `;
+  }).join('');
+  document.getElementById('mix-bars').innerHTML = html;
+  document.getElementById('mix-total-units').textContent = `${total} buildings`;
+}
+
+function renderProductRows() {
+  const order = ['townhome', 'adu', 'duplex', 'sfr'];
+  const html = order.map(k => {
+    const p = state.products[k];
+    return `
+      <div class="prod-row">
+        <div class="swatch ${p.color}"></div>
+        <div class="pname">${p.name}</div>
+        <div></div>
+        <input type="number" data-prod="${k}" data-field="sf" value="${p.sf}" min="200" max="4000" step="50">
+        <input type="number" class="units-input" data-prod="${k}" data-field="units" value="${p.units}" min="0" step="1">
+      </div>
+    `;
+  }).join('');
+  document.getElementById('product-rows').innerHTML = html;
+
+  document.querySelectorAll('#product-rows input').forEach(input => {
+    input.addEventListener('input', e => {
+      const prod = e.target.dataset.prod;
+      const field = e.target.dataset.field;
+      const val = parseInt(e.target.value) || 0;
+      state.products[prod][field] = val;
+      renderMixBars();
+      render();
+    });
+  });
+}
+
+function renderTierStrips() {
+  const html = Object.entries(TIER_INFO).map(([t, info]) => `
+    <div class="tier-strip tier-${t}">
+      <div>
+        <div class="tname">${info.name}</div>
+      </div>
+      <div>
+        <div class="tdesc">${info.desc}</div>
+        <input type="range" data-tier="${t}" min="15" max="50" value="${state.tierStrip[t]}" step="1" style="margin-top:4px;">
+      </div>
+      <div class="tval"><span data-tier-val="${t}">${state.tierStrip[t]}</span>%</div>
+    </div>
+  `).join('');
+  document.getElementById('tier-strips').innerHTML = html;
+  document.querySelectorAll('#tier-strips input').forEach(input => {
+    input.addEventListener('input', e => {
+      const t = e.target.dataset.tier;
+      const v = parseInt(e.target.value);
+      state.tierStrip[t] = v;
+      document.querySelector(`[data-tier-val="${t}"]`).textContent = v;
+      render();
+    });
+  });
+}
+
+function renderHero(result) {
+  const { blended, minRow, maxRow, overSites, totalSites, totalPipelineUnits, pipelineTotalCost } = result;
+  document.getElementById('hero-avg').textContent = fmt$k(blended);
+  const delta = blended - state.target;
+  const pct = (delta / state.target * 100);
+  const deltaEl = document.getElementById('hero-delta');
+  const sign = delta > 0 ? '+' : '';
+  deltaEl.textContent = `${sign}${fmt$k(delta)} (${sign}${pct.toFixed(1)}%) vs ${fmt$k(state.target)} target`;
+  deltaEl.className = 'delta ' + (Math.abs(pct) < 5 ? 'on' : (delta > 0 ? 'over' : 'under'));
+
+  document.getElementById('hero-min').textContent = fmt$k(minRow.cost);
+  document.getElementById('hero-min-state').textContent = `${minRow.state} · Tier ${minRow.tier}`;
+  document.getElementById('hero-max').textContent = fmt$k(maxRow.cost);
+  document.getElementById('hero-max-state').textContent = `${maxRow.state} · Tier ${maxRow.tier}`;
+
+  document.getElementById('hero-over').textContent = `${Math.round(overSites/totalSites*100)}%`;
+  document.getElementById('hero-over-detail').textContent = `${overSites} of ${totalSites} sites`;
+
+  document.getElementById('hero-total').textContent = fmtSmart$(pipelineTotalCost);
+  document.getElementById('hero-total-detail').textContent = `across ${totalPipelineUnits} buildings`;
+  document.getElementById('site-count').textContent = totalSites;
+}
+
+function renderTierCards(result) {
+  const order = ['A','B','C','D'];
+  const html = order.map(t => {
+    const c = result.tierAvg[t] || 0;
+    const tierStateRows = result.stateRows.filter(r => r.tier === t);
+    const sites = tierStateRows.reduce((a,r)=>a+r.sites, 0);
+    return `
+      <div class="tier-card-big ${t}">
+        <div class="tname">${TIER_INFO[t].name}</div>
+        <div class="tval">${fmt$k(c)}</div>
+        <div class="tsub">${sites} sites · strip ${state.tierStrip[t]}%</div>
+      </div>
+    `;
+  }).join('');
+  document.getElementById('tier-cards').innerHTML = html;
+
+  // explainer text
+  const aGap = result.tierAvg.A - result.tierAvg.D;
+  const aPct = result.tierAvg.D > 0 ? (aGap / result.tierAvg.D * 100) : 0;
+  document.getElementById('tier-explainer').innerHTML =
+    `Tier A markets cost <strong style="color:var(--amber);">${aPct.toFixed(0)}% more per door</strong> than Tier D. Use these tier averages — not a single national number — when sizing market-by-market unit economics.`;
+}
+
+function renderTable(result) {
+  const tbody = document.getElementById('state-tbody');
+  let rows = [...result.stateRows];
+  rows.sort((a,b) => {
+    const aV = a[state.sortKey], bV = b[state.sortKey];
+    if (typeof aV === 'string') return state.sortDir === 'asc' ? aV.localeCompare(bV) : bV.localeCompare(aV);
+    return state.sortDir === 'asc' ? aV - bV : bV - aV;
+  });
+
+  tbody.innerHTML = rows.map(r => {
+    const gapClass = Math.abs(r.gap) < state.target * 0.05 ? 'gap-neutral' :
+                     r.gap > 0 ? 'gap-positive' : 'gap-negative';
+    const gapSign = r.gap > 0 ? '+' : '';
+    return `
+      <tr>
+        <td class="text-l"><div class="state-cell"><span class="tier-dot ${r.tier}"></span>${r.state}</div></td>
+        <td>${r.tier}</td>
+        <td>$${r.psf}</td>
+        <td>${r.strip}%</td>
+        <td>${r.sites}</td>
+        <td>${r.units}</td>
+        <td><strong>${fmt$k(r.cost)}</strong></td>
+        <td class="${gapClass}">${gapSign}${fmt$k(r.gap)}</td>
+        <td>${fmtSmart$(r.total)}</td>
+      </tr>
+    `;
+  }).join('');
+
+  // header sort indicators
+  document.querySelectorAll('thead th').forEach(th => {
+    th.classList.remove('sorted-asc', 'sorted-desc');
+    if (th.dataset.sort === state.sortKey) {
+      th.classList.add(state.sortDir === 'asc' ? 'sorted-asc' : 'sorted-desc');
+    }
+  });
+}
+
+function render() {
+  const result = compute();
+  renderHero(result);
+  renderTierCards(result);
+  renderTable(result);
+}
+
+// =============================================================================
+// EVENT WIRING
+// =============================================================================
+function wireSorting() {
+  document.querySelectorAll('thead th').forEach(th => {
+    th.addEventListener('click', () => {
+      const k = th.dataset.sort;
+      if (state.sortKey === k) {
+        state.sortDir = state.sortDir === 'asc' ? 'desc' : 'asc';
+      } else {
+        state.sortKey = k;
+        state.sortDir = (k === 'state' || k === 'tier') ? 'asc' : 'desc';
+      }
+      render();
+    });
+  });
+}
+
+function wirePresets() {
+  document.querySelectorAll('.preset-row button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.preset-row button').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const preset = btn.dataset.preset;
+      if (preset === 'actual') {
+        state.products.townhome.units = 214;
+        state.products.adu.units = 211;
+        state.products.duplex.units = 160;
+        state.products.sfr.units = 14;
+      } else if (preset === 'adu-heavy') {
+        state.products.townhome.units = 100;
+        state.products.adu.units = 400;
+        state.products.duplex.units = 80;
+        state.products.sfr.units = 19;
+      } else if (preset === 'density') {
+        state.products.townhome.units = 350;
+        state.products.adu.units = 100;
+        state.products.duplex.units = 240;
+        state.products.sfr.units = 9;
+      }
+      // 'custom' = no change
+      renderMixBars();
+      renderProductRows();
+      render();
+    });
+  });
+}
+
+function wireTarget() {
+  const t = document.getElementById('target');
+  const v = document.getElementById('target-val');
+  t.addEventListener('input', () => {
+    state.target = parseInt(t.value);
+    v.textContent = fmt$(state.target);
+    render();
+  });
+}
+
+function wireExports() {
+  document.getElementById('export-csv').addEventListener('click', () => {
+    const result = compute();
+    let csv = 'State,Tier,PSF,Strip%,Sites,Units,CostPerDoor,GapVsTarget,TotalCost\n';
+    csv += result.stateRows.map(r =>
+      [r.state, r.tier, r.psf, r.strip, r.sites, r.units, r.cost, r.gap, r.total].join(',')
+    ).join('\n');
+    const blob = new Blob([csv], { type: 'text/csv' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'fbx-cost-by-state.csv';
+    a.click();
+  });
+
+  document.getElementById('export-json').addEventListener('click', () => {
+    const out = {
+      version: 1,
+      target_per_door: state.target,
+      product_mix: state.products,
+      tier_strip_pct: state.tierStrip,
+      state_cost_psf: STATE_COST_PSF,
+      state_tier: STATE_TIER,
+      results: compute(),
+    };
+    const blob = new Blob([JSON.stringify(out, null, 2)], { type: 'application/json' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'fbx-cost-assumptions.json';
+    a.click();
+  });
+
+  document.getElementById('apply-to-map').addEventListener('click', () => {
+    if (window.parent && window.parent !== window) {
+      // In the master shell — open the existing Save Version modal so this
+      // commits sites.json (with refreshed cost_assumptions) via Actions and
+      // the map/editor iframes auto-reload.
+      try { window.parent.postMessage({ type: 'fbx-trigger-save' }, '*'); } catch (e) {}
+      return;
+    }
+    // Standalone fallback — copy JSON for manual paste.
+    const ca = buildCostAssumptions();
+    navigator.clipboard.writeText(JSON.stringify(ca, null, 2));
+    alert(`Standalone mode — cost_assumptions JSON copied to clipboard.\n\nBlended: ${fmt$(ca.blended_per_door)} / door`);
+  });
+}
+
+// =============================================================================
+// MASTER-SHELL BRIDGE — postMessage round-trip for Save Version
+// =============================================================================
+window.addEventListener('message', e => {
+  if (!e.data) return;
+  if (e.data.type === 'fbx-get-state') {
+    const doc = state.fullSitesDoc || { version: 1, sites: [] };
+    doc.cost_assumptions = buildCostAssumptions();
+    const content = JSON.stringify(doc, null, 2);
+    try {
+      window.parent.postMessage({ type: 'fbx-state', content: content, filename: 'sites.json' }, '*');
+    } catch (err) { /* best-effort */ }
+  }
+});
+
+// =============================================================================
+// LOAD SITES
+// =============================================================================
+async function loadSites() {
+  try {
+    const res = await fetch('sites.json?t=' + Date.now(), { cache: 'no-store' });
+    if (!res.ok) throw new Error('not ok');
+    const data = await res.json();
+    state.fullSitesDoc = data;
+    state.loadedFromSites = true;
+
+    const sites = data.sites || data;
+    state.sites = sites;
+    state.sitesByState = {};
+    for (const s of sites) {
+      const sc = s.state;
+      state.sitesByState[sc] = (state.sitesByState[sc] || 0) + 1;
+    }
+
+    // Persisted overrides — keep calibrator and expansion map in lock-step
+    const ca = data.cost_assumptions;
+    if (ca) {
+      if (typeof ca.target_per_door === 'number') state.target = ca.target_per_door;
+      if (ca.product_mix && typeof ca.product_mix === 'object') {
+        state.products = JSON.parse(JSON.stringify(ca.product_mix));
+      }
+      if (ca.tier_strip_pct && typeof ca.tier_strip_pct === 'object') {
+        state.tierStrip = { ...DEFAULT_TIER_STRIP, ...ca.tier_strip_pct };
+      }
+      if (ca.state_cost_psf) Object.assign(STATE_COST_PSF, ca.state_cost_psf);
+      if (ca.state_tier) Object.assign(STATE_TIER, ca.state_tier);
+    }
+    return;
+  } catch (e) {
+    state.sitesByState = Object.fromEntries(EMBEDDED_SITES);
+    state.fullSitesDoc = { version: 0, sites: [] };
+  }
+}
+
+// =============================================================================
+// INIT
+// =============================================================================
+async function init() {
+  await loadSites();
+  renderMixBars();
+  renderProductRows();
+  renderTierStrips();
+  wireSorting();
+  wirePresets();
+  wireTarget();
+  wireExports();
+  render();
+}
+
+init();
+</script>
+</body>
+</html>

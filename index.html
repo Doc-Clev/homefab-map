@@ -3,15 +3,25 @@
 html,body{height:100%;overflow:hidden}
 body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;display:flex;flex-direction:column;background:#f5f4ef}
 @media(prefers-color-scheme:dark){body{background:#1a1916}}
-#nav{display:flex;align-items:center;height:44px;min-height:44px;flex-shrink:0;background:#fff;border-bottom:1px solid rgba(0,0,0,0.12);box-shadow:0 1px 4px rgba(0,0,0,0.06);padding:0 14px;position:relative;z-index:10}
-@media(prefers-color-scheme:dark){#nav{background:#1a1916;border-bottom-color:rgba(255,255,255,0.1)}}
-.nav-brand{font-size:13px;font-weight:600;letter-spacing:-0.01em;color:#1a1a1a;margin-right:12px;white-space:nowrap}
+#nav{display:flex;align-items:center;height:48px;min-height:48px;flex-shrink:0;background:#e8e5dc;border-bottom:1px solid rgba(0,0,0,0.22);box-shadow:0 1px 3px rgba(0,0,0,0.10),inset 0 1px 0 rgba(255,255,255,0.5);padding:0 14px;position:relative;z-index:10;gap:6px}
+@media(prefers-color-scheme:dark){#nav{background:#0f0e0b;border-bottom-color:rgba(0,0,0,0.6);box-shadow:0 1px 3px rgba(0,0,0,0.4),inset 0 1px 0 rgba(255,255,255,0.04)}}
+.nav-brand{font-size:13px;font-weight:600;letter-spacing:-0.01em;color:#1a1a1a;margin-right:6px;white-space:nowrap}
 @media(prefers-color-scheme:dark){.nav-brand{color:#f0efea}}
-.nav-sep{width:1px;height:20px;background:rgba(0,0,0,0.13);margin:0 4px;flex-shrink:0}
-@media(prefers-color-scheme:dark){.nav-sep{background:rgba(255,255,255,0.13)}}
-.nav-tab{display:flex;align-items:center;padding:0 10px;height:44px;border:none;border-bottom:2.5px solid transparent;background:none;cursor:pointer;font-size:12.5px;font-weight:500;color:#5f5e5a;white-space:nowrap;font-family:inherit;transition:color .12s,border-color .12s}
-.nav-tab:hover{color:#1a1a1a}
-@media(prefers-color-scheme:dark){.nav-tab{color:#b4b2a9}.nav-tab:hover{color:#f0efea}}
+.nav-sep{width:1px;height:22px;background:rgba(0,0,0,0.18);margin:0 2px;flex-shrink:0}
+@media(prefers-color-scheme:dark){.nav-sep{background:rgba(255,255,255,0.10)}}
+.nav-group{display:inline-flex;align-items:stretch;border-radius:7px;background:transparent;transition:background-color .15s;overflow:hidden}
+.nav-group.active{background:var(--ng-bg,rgba(99,153,34,0.14));box-shadow:inset 0 0 0 1px var(--ng-color,rgba(99,153,34,0.35))}
+.nav-tab{display:flex;align-items:center;padding:0 12px;height:36px;border:none;background:transparent;cursor:pointer;font-size:12.5px;font-weight:500;color:#3a3935;white-space:nowrap;font-family:inherit;transition:color .12s,background-color .12s;border-radius:7px}
+.nav-tab:hover{color:#1a1a1a;background:rgba(0,0,0,0.06)}
+.nav-group.active .nav-tab{color:var(--ng-color,#639922)}
+.nav-group.active .nav-tab.active{font-weight:600}
+.nav-group.active .nav-tab:hover{background:rgba(0,0,0,0.04)}
+@media(prefers-color-scheme:dark){.nav-tab{color:#b4b2a9}.nav-tab:hover{color:#f0efea;background:rgba(255,255,255,0.06)}}
+.nav-edit{padding:0 8px;font-size:13px;opacity:.40;border-left:1px solid rgba(0,0,0,0.06);min-width:30px;justify-content:center;color:#888780}
+.nav-edit:hover{opacity:1;color:var(--ng-color,#185FA5)}
+.nav-group.active .nav-edit{opacity:.55;border-left-color:rgba(0,0,0,0.10)}
+.nav-group.active .nav-edit.active{opacity:1;color:var(--ng-color,#185FA5);font-weight:600}
+@media(prefers-color-scheme:dark){.nav-edit{border-left-color:rgba(255,255,255,0.08);color:#888780}}
 .nav-spacer{flex:1}
 .nav-actions{display:flex;align-items:center;gap:8px}
 #save-status{display:none;align-items:center;gap:6px;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:500;background:#f0f9f0;color:#285A22;border:1px solid #c3e0c3}
@@ -21,6 +31,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-seri
 .status-dot{width:7px;height:7px;border-radius:50%;background:currentColor;flex-shrink:0}
 #save-status.saving .status-dot{animation:sdpulse .8s ease-in-out infinite alternate}
 @keyframes sdpulse{from{opacity:.3}to{opacity:1}}
+#nav-cmdk-btn{padding:5px 9px;border-radius:6px;border:1px solid rgba(0,0,0,0.12);background:transparent;color:#888780;font-size:11px;cursor:pointer;font-family:ui-monospace,'SF Mono',Menlo,monospace;letter-spacing:.04em}
+#nav-cmdk-btn:hover{color:#1a1a1a;border-color:rgba(0,0,0,0.25)}
+@media(prefers-color-scheme:dark){#nav-cmdk-btn{border-color:rgba(255,255,255,0.15);color:#888780}#nav-cmdk-btn:hover{color:#f0efea;border-color:rgba(255,255,255,0.3)}}
 #nav-save-btn{display:flex;align-items:center;gap:5px;padding:5px 13px;border-radius:6px;background:#185FA5;color:#fff;border:none;font-size:12px;font-weight:500;cursor:pointer;font-family:inherit}
 #nav-save-btn:hover{opacity:.88}
 #nav-save-btn:disabled{opacity:.5;cursor:not-allowed}
@@ -28,7 +41,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-seri
 @media(prefers-color-scheme:dark){#nav-ver-btn{border-color:rgba(255,255,255,0.15);color:#b4b2a9}}
 #frame-container{flex:1;position:relative;overflow:hidden}
 .page-frame{position:absolute;inset:0;width:100%;height:100%;border:none;display:none}
-#ver-panel{display:none;position:absolute;top:44px;right:12px;width:300px;max-height:400px;background:#fff;border:1px solid rgba(0,0,0,0.12);border-radius:8px;box-shadow:0 4px 20px rgba(0,0,0,0.12);z-index:20;overflow:hidden}
+#ver-panel{display:none;position:absolute;top:48px;right:12px;width:300px;max-height:400px;background:#fff;border:1px solid rgba(0,0,0,0.12);border-radius:8px;box-shadow:0 4px 20px rgba(0,0,0,0.12);z-index:20;overflow:hidden}
 @media(prefers-color-scheme:dark){#ver-panel{background:#26231f;border-color:rgba(255,255,255,0.1)}}
 #ver-panel-head{padding:10px 14px 8px;border-bottom:1px solid rgba(0,0,0,0.08);font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:#888780;font-weight:600}
 #ver-list{overflow-y:auto;max-height:340px;padding:4px 0}
@@ -63,7 +76,21 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-seri
 #svm-commit:disabled{opacity:.5;cursor:not-allowed}
 #nav-toast{position:fixed;bottom:20px;right:20px;z-index:200;background:#fff;border-left:3px solid #639922;border-radius:6px;padding:10px 16px;font-size:13px;box-shadow:0 2px 12px rgba(0,0,0,0.12);opacity:0;transform:translateY(8px);transition:opacity .2s,transform .2s;pointer-events:none;max-width:340px}
 @media(prefers-color-scheme:dark){#nav-toast{background:#26231f;color:#e8e4db}}
-</style></head><body><nav id="nav"><span class="nav-brand">BX HomeFab</span><div class="nav-sep"></div><button class="nav-tab" data-page="map">🗺 Expansion Map</button><button class="nav-tab" data-page="editor">✏️ Map Editor</button><div class="nav-sep"></div><button class="nav-tab" data-page="fishbone">🐟 Fishbone</button><button class="nav-tab" data-page="fishbone-editor">✏️ Fishbone Editor</button><div class="nav-sep"></div><button class="nav-tab" data-page="sitelist">📋 Sites Detail</button><div class="nav-spacer"></div><div class="nav-actions"><div id="save-status"><div class="status-dot"></div><span id="save-status-text"></span></div><button id="nav-ver-btn" onclick="_toggleVers()">Versions ▾</button><button id="nav-save-btn"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M10.5 3.5L9 2H2C1.72 2 1.5 2.22 1.5 2.5V10.5C1.5 10.78 1.72 11 2 11H11C11.28 11 11.5 10.78 11.5 10.5V3.5H10.5Z" stroke="white" stroke-width="1.1"/><path d="M4.5 2V5H8.5V2" stroke="white" stroke-width="1.1"/><path d="M3.5 7.5H9.5V11H3.5V7.5Z" stroke="white" stroke-width="1.1"/></svg> Save Version</button></div></nav><div id="frame-container"><iframe class="page-frame" data-page="map" sandbox="allow-scripts allow-same-origin allow-downloads allow-forms allow-modals allow-popups" srcdoc="<!DOCTYPE html><html lang=&quot;en&quot;><head><meta charset=&quot;UTF-8&quot;><meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1.0&quot;><script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js&quot;></script>
+#cmdk-modal{display:none;position:fixed;inset:0;z-index:150;background:rgba(0,0,0,0.45);align-items:flex-start;justify-content:center;padding-top:14vh}
+#cmdk-modal.show{display:flex}
+.cmdk-box{background:#fff;border-radius:10px;width:90%;max-width:520px;box-shadow:0 12px 40px rgba(0,0,0,0.25);overflow:hidden;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif}
+@media(prefers-color-scheme:dark){.cmdk-box{background:#26231f;color:#e8e4db}}
+#cmdk-input{width:100%;border:none;outline:none;padding:16px 20px;font-size:15px;background:transparent;color:inherit;font-family:inherit;border-bottom:1px solid rgba(0,0,0,0.08)}
+@media(prefers-color-scheme:dark){#cmdk-input{border-bottom-color:rgba(255,255,255,0.08)}}
+#cmdk-list{max-height:340px;overflow-y:auto;padding:6px 0}
+.cmdk-item{display:flex;align-items:center;justify-content:space-between;padding:10px 18px;cursor:pointer;font-size:13px;color:#1a1a1a}
+@media(prefers-color-scheme:dark){.cmdk-item{color:#e8e4db}}
+.cmdk-item.sel{background:rgba(24,95,165,0.10)}
+@media(prefers-color-scheme:dark){.cmdk-item.sel{background:rgba(96,165,250,0.15)}}
+.cmdk-item .cmdk-shortcut{font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:11px;color:#888780;background:rgba(0,0,0,0.05);padding:2px 7px;border-radius:4px}
+@media(prefers-color-scheme:dark){.cmdk-item .cmdk-shortcut{background:rgba(255,255,255,0.08)}}
+.cmdk-empty{padding:20px;text-align:center;color:#888780;font-style:italic;font-size:12px}
+</style></head><body><nav id="nav"><span class="nav-brand">FBX HomeFab</span><div class="nav-sep"></div><div class="nav-group" data-group="map"><button class="nav-tab nav-view" data-page="map">🗺 Expansion Map</button><button class="nav-tab nav-edit" data-page="editor" title="Edit map data (Ctrl+E)" aria-label="Edit map data">✏</button></div><div class="nav-group" data-group="cost"><button class="nav-tab nav-view" data-page="cost-calibrator">💰 Cost Calibrator</button></div><div class="nav-group" data-group="fishbone"><button class="nav-tab nav-view" data-page="fishbone">🐟 Fishbone</button><button class="nav-tab nav-edit" data-page="fishbone-editor" title="Edit fishbone (Ctrl+E)" aria-label="Edit fishbone">✏</button></div><div class="nav-group" data-group="sites"><button class="nav-tab nav-view" data-page="sitelist">📋 Sites Detail</button></div><div class="nav-spacer"></div><div class="nav-actions"><div id="save-status"><div class="status-dot"></div><span id="save-status-text"></span></div><button id="nav-cmdk-btn" title="Quick switch (Ctrl+K)">⌘K</button><button id="nav-ver-btn" onclick="_toggleVers()">Versions ▾</button><button id="nav-save-btn"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M10.5 3.5L9 2H2C1.72 2 1.5 2.22 1.5 2.5V10.5C1.5 10.78 1.72 11 2 11H11C11.28 11 11.5 10.78 11.5 10.5V3.5H10.5Z" stroke="white" stroke-width="1.1"/><path d="M4.5 2V5H8.5V2" stroke="white" stroke-width="1.1"/><path d="M3.5 7.5H9.5V11H3.5V7.5Z" stroke="white" stroke-width="1.1"/></svg> Save Version</button></div></nav><div id="frame-container"><iframe class="page-frame" data-page="map" sandbox="allow-scripts allow-same-origin allow-downloads allow-forms allow-modals allow-popups" srcdoc="<!DOCTYPE html><html lang=&quot;en&quot;><head><meta charset=&quot;UTF-8&quot;><meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1.0&quot;><script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js&quot;></script>
 <script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js&quot;></script><style>*{box-sizing:border-box}body{margin:0}
   :root {
     --bg-primary: #ffffff;
@@ -435,7 +462,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-seri
       <div class=&quot;asm-group&quot;>
         <div class=&quot;asm-group-title&quot;>FBX Fab-Home defaults</div>
         <div class=&quot;asm-row&quot;><label>Fab CAPEX ($M)</label><input type=&quot;number&quot; step=&quot;0.1&quot; id=&quot;asm-fab-capex&quot; value=&quot;3.0&quot; onchange=&quot;updateAssumptions()&quot;></div>
-        <div class=&quot;asm-row&quot;><label>Home revenue ($K)</label><input type=&quot;number&quot; step=&quot;1&quot; id=&quot;asm-rev&quot; value=&quot;180&quot; onchange=&quot;updateAssumptions()&quot;></div>
+        <div class=&quot;asm-row&quot; title=&quot;Set in the 💰 Cost Calibrator tab&quot;><label>Home revenue ($K) <em style=&quot;font-weight:400;font-size:10px;color:var(--text-tertiary);font-style:normal;margin-left:4px;&quot;>· from 💰 Calibrator</em></label><input type=&quot;number&quot; step=&quot;1&quot; id=&quot;asm-rev&quot; value=&quot;180&quot; readonly disabled style=&quot;opacity:0.55;cursor:not-allowed;background:transparent;&quot;></div>
         <div class=&quot;asm-row&quot;><label>Fab net margin (%)</label><input type=&quot;number&quot; step=&quot;0.1&quot; id=&quot;asm-margin&quot; value=&quot;22&quot; onchange=&quot;updateAssumptions()&quot;></div>
       </div>
       <div class=&quot;asm-group&quot;>
@@ -856,7 +883,30 @@ function assignHub(site, activeHubs) {
 
 /* ============== Per-site effective values (override or default) ============== */
 function fabCapex(s)    { return (s.capex != null &amp;&amp; s.capex !== '') ? +s.capex : assumptions.fab_capex_M; }
-function fabRevPer(s)   { return (s.rev_per_home != null &amp;&amp; s.rev_per_home !== '') ? +s.rev_per_home : assumptions.rev_per_home_K; }
+// Per-state cost mirrors the calibrator's compute: psf × sf_mod × sf × (1-strip) × units, weighted across the product mix
+function costPerDoorForState(stateCode) {
+  const ca = window._COST_ASSUMPTIONS;
+  if (!ca || !ca.state_cost_psf || !ca.state_tier || !ca.tier_strip_pct || !ca.product_mix) return null;
+  const psf = ca.state_cost_psf[stateCode];
+  const tier = ca.state_tier[stateCode];
+  if (psf == null || tier == null) return null;
+  const stripPct = ca.tier_strip_pct[tier];
+  if (stripPct == null) return null;
+  const strip = stripPct / 100;
+  let totalCost = 0, totalUnits = 0;
+  for (const k in ca.product_mix) {
+    const p = ca.product_mix[k];
+    if (!p || !p.sf || !p.units || p.sf_mod == null) continue;
+    totalCost += psf * p.sf_mod * p.sf * (1 - strip) * p.units;
+    totalUnits += p.units;
+  }
+  return totalUnits ? totalCost / totalUnits : null;
+}
+function defaultRevPerK(s) {
+  const v = costPerDoorForState(s.state);
+  return (v != null) ? Math.round(v / 1000) : assumptions.rev_per_home_K;
+}
+function fabRevPer(s)   { return (s.rev_per_home != null &amp;&amp; s.rev_per_home !== '') ? +s.rev_per_home : defaultRevPerK(s); }
 function fabMarginPct(s){ return (s.margin_pct != null &amp;&amp; s.margin_pct !== '') ? +s.margin_pct : assumptions.fab_margin_pct; }
 function hubCapex(h)    { return (h.capex != null &amp;&amp; h.capex !== '') ? +h.capex : assumptions.hub_capex_M; }
 
@@ -1068,6 +1118,14 @@ async function fetchCanonical() {
         const asmRaw = localStorage.getItem(ASM_STORAGE_KEY);
         if (!asmRaw) {
           assumptions = { ...DEFAULT_ASSUMPTIONS, ...data.assumptions };
+          applyAssumptionsToUI();
+          saveAssumptions();
+        }
+      }
+      if (data.cost_assumptions &amp;&amp; typeof data.cost_assumptions === 'object') {
+        window._COST_ASSUMPTIONS = data.cost_assumptions;
+        if (typeof data.cost_assumptions.blended_per_door === 'number') {
+          assumptions.rev_per_home_K = Math.round(data.cost_assumptions.blended_per_door / 1000);
           applyAssumptionsToUI();
           saveAssumptions();
         }
@@ -1562,7 +1620,7 @@ function renderTable() {
       <td><input type=&quot;text&quot; maxlength=&quot;2&quot; value=&quot;${escapeHtml(s.state)}&quot; style=&quot;text-transform:uppercase&quot; onchange=&quot;updateField('${s._id}','state',this.value)&quot;></td>
       <td style=&quot;text-align:center&quot;><span class=&quot;loc-pin ${locStatus}&quot; title=&quot;${escapeHtml(locTitle)}&quot; onclick=&quot;openCoordPopover(event, '${s._id}', 'site')&quot;>${locStatus === 'ok' ? '📍' : '⚠'}</span></td>
       <td><input type=&quot;number&quot; step=&quot;0.1&quot; class=&quot;override&quot; data-dirty=&quot;${capexVal!==''?1:0}&quot; placeholder=&quot;${assumptions.fab_capex_M}&quot; value=&quot;${capexVal}&quot; onchange=&quot;updateField('${s._id}','capex',this.value)&quot; title=&quot;CAPEX in $M — blank = default&quot;></td>
-      <td><input type=&quot;number&quot; step=&quot;1&quot; class=&quot;override&quot; data-dirty=&quot;${revVal!==''?1:0}&quot; placeholder=&quot;${assumptions.rev_per_home_K}&quot; value=&quot;${revVal}&quot; onchange=&quot;updateField('${s._id}','rev_per_home',this.value)&quot; title=&quot;Home revenue in $K&quot;></td>
+      <td><input type=&quot;number&quot; step=&quot;1&quot; class=&quot;override&quot; data-dirty=&quot;${revVal!==''?1:0}&quot; placeholder=&quot;${defaultRevPerK(s)}&quot; value=&quot;${revVal}&quot; onchange=&quot;updateField('${s._id}','rev_per_home',this.value)&quot; title=&quot;Home revenue in $K&quot;></td>
       <td><input type=&quot;number&quot; step=&quot;0.1&quot; class=&quot;override&quot; data-dirty=&quot;${margVal!==''?1:0}&quot; placeholder=&quot;${assumptions.fab_margin_pct}&quot; value=&quot;${margVal}&quot; onchange=&quot;updateField('${s._id}','margin_pct',this.value)&quot; title=&quot;Fab margin %&quot;></td>
       <td style=&quot;font-size:11px; color:var(--text-secondary); text-align:center&quot; title=&quot;${assign ? `Assigned to ${assign.hub.name}, ${Math.round(assign.dist_mi)} mi` : 'No active hub'}&quot;>${hubShort}</td>
       <td class=&quot;row-actions&quot;>
@@ -2487,8 +2545,19 @@ async function ghLoadFromDropdown(sha) {
    spends ~2 requests (list commits + fetch one file). */
 
 async function viewerFetchLatest() {
-  // Tries GitHub API first so we get the authoritative latest. Falls back
-  // to the adjacent sites.json (served by GitHub Pages) if API fails.
+  // On localhost/127.0.0.1, prefer the adjacent sites.json so local edits
+  // are visible without pushing to GitHub. Otherwise, GitHub API first for
+  // authoritative latest, with adjacent sites.json as fallback.
+  // srcdoc iframes have hostname '' so check parent's hostname too
+  let parentHost = '';
+  try { parentHost = (window.parent &amp;&amp; window.parent.location) ? window.parent.location.hostname : ''; } catch(e) {}
+  const onLocal = /^(localhost|127\.0\.0\.1|0\.0\.0\.0)$/.test(location.hostname) || /^(localhost|127\.0\.0\.1|0\.0\.0\.0)$/.test(parentHost);
+  if (onLocal) {
+    try {
+      const r = await fetch('sites.json?t=' + Date.now(), { cache: 'no-store' });
+      if (r.ok) return await r.json();
+    } catch(e) {}
+  }
   try {
     const url = `https://api.github.com/repos/${VIEWER_REPO.owner}/${VIEWER_REPO.repo}/contents/${encodeURIComponent(VIEWER_REPO.path)}?ref=${encodeURIComponent(VIEWER_REPO.branch)}`;
     const r = await fetch(url, { headers: { 'Accept': 'application/vnd.github+json' } });
@@ -2498,7 +2567,6 @@ async function viewerFetchLatest() {
       return JSON.parse(raw);
     }
   } catch(e) { /* fall through */ }
-  // Fallback: adjacent sites.json
   try {
     const r = await fetch('sites.json?t=' + Date.now(), { cache: 'no-store' });
     if (r.ok) return await r.json();
@@ -2578,6 +2646,13 @@ function viewerApplyPayload(payload) {
   if (payload.assumptions &amp;&amp; typeof payload.assumptions === 'object') {
     assumptions = { ...DEFAULT_ASSUMPTIONS, ...payload.assumptions };
     applyAssumptionsToUI();
+  }
+  if (payload.cost_assumptions &amp;&amp; typeof payload.cost_assumptions === 'object') {
+    window._COST_ASSUMPTIONS = payload.cost_assumptions;
+    if (typeof payload.cost_assumptions.blended_per_door === 'number') {
+      assumptions.rev_per_home_K = Math.round(payload.cost_assumptions.blended_per_door / 1000);
+      applyAssumptionsToUI();
+    }
   }
   dataSource = 'synced';
   updateSourceIndicator();
@@ -2758,7 +2833,30 @@ function assignHub(site, activeHubs) {
 
 /* ============== Per-site effective values (override or default) ============== */
 function fabCapex(s)    { return (s.capex != null &amp;&amp; s.capex !== '') ? +s.capex : assumptions.fab_capex_M; }
-function fabRevPer(s)   { return (s.rev_per_home != null &amp;&amp; s.rev_per_home !== '') ? +s.rev_per_home : assumptions.rev_per_home_K; }
+// Per-state cost mirrors the calibrator's compute: psf × sf_mod × sf × (1-strip) × units, weighted across the product mix
+function costPerDoorForState(stateCode) {
+  const ca = window._COST_ASSUMPTIONS;
+  if (!ca || !ca.state_cost_psf || !ca.state_tier || !ca.tier_strip_pct || !ca.product_mix) return null;
+  const psf = ca.state_cost_psf[stateCode];
+  const tier = ca.state_tier[stateCode];
+  if (psf == null || tier == null) return null;
+  const stripPct = ca.tier_strip_pct[tier];
+  if (stripPct == null) return null;
+  const strip = stripPct / 100;
+  let totalCost = 0, totalUnits = 0;
+  for (const k in ca.product_mix) {
+    const p = ca.product_mix[k];
+    if (!p || !p.sf || !p.units || p.sf_mod == null) continue;
+    totalCost += psf * p.sf_mod * p.sf * (1 - strip) * p.units;
+    totalUnits += p.units;
+  }
+  return totalUnits ? totalCost / totalUnits : null;
+}
+function defaultRevPerK(s) {
+  const v = costPerDoorForState(s.state);
+  return (v != null) ? Math.round(v / 1000) : assumptions.rev_per_home_K;
+}
+function fabRevPer(s)   { return (s.rev_per_home != null &amp;&amp; s.rev_per_home !== '') ? +s.rev_per_home : defaultRevPerK(s); }
 function fabMarginPct(s){ return (s.margin_pct != null &amp;&amp; s.margin_pct !== '') ? +s.margin_pct : assumptions.fab_margin_pct; }
 function hubCapex(h)    { return (h.capex != null &amp;&amp; h.capex !== '') ? +h.capex : assumptions.hub_capex_M; }
 
@@ -2970,6 +3068,14 @@ async function fetchCanonical() {
         const asmRaw = localStorage.getItem(ASM_STORAGE_KEY);
         if (!asmRaw) {
           assumptions = { ...DEFAULT_ASSUMPTIONS, ...data.assumptions };
+          applyAssumptionsToUI();
+          saveAssumptions();
+        }
+      }
+      if (data.cost_assumptions &amp;&amp; typeof data.cost_assumptions === 'object') {
+        window._COST_ASSUMPTIONS = data.cost_assumptions;
+        if (typeof data.cost_assumptions.blended_per_door === 'number') {
+          assumptions.rev_per_home_K = Math.round(data.cost_assumptions.blended_per_door / 1000);
           applyAssumptionsToUI();
           saveAssumptions();
         }
@@ -3464,7 +3570,7 @@ function renderTable() {
       <td><input type=&quot;text&quot; maxlength=&quot;2&quot; value=&quot;${escapeHtml(s.state)}&quot; style=&quot;text-transform:uppercase&quot; onchange=&quot;updateField('${s._id}','state',this.value)&quot;></td>
       <td style=&quot;text-align:center&quot;><span class=&quot;loc-pin ${locStatus}&quot; title=&quot;${escapeHtml(locTitle)}&quot; onclick=&quot;openCoordPopover(event, '${s._id}', 'site')&quot;>${locStatus === 'ok' ? '📍' : '⚠'}</span></td>
       <td><input type=&quot;number&quot; step=&quot;0.1&quot; class=&quot;override&quot; data-dirty=&quot;${capexVal!==''?1:0}&quot; placeholder=&quot;${assumptions.fab_capex_M}&quot; value=&quot;${capexVal}&quot; onchange=&quot;updateField('${s._id}','capex',this.value)&quot; title=&quot;CAPEX in $M — blank = default&quot;></td>
-      <td><input type=&quot;number&quot; step=&quot;1&quot; class=&quot;override&quot; data-dirty=&quot;${revVal!==''?1:0}&quot; placeholder=&quot;${assumptions.rev_per_home_K}&quot; value=&quot;${revVal}&quot; onchange=&quot;updateField('${s._id}','rev_per_home',this.value)&quot; title=&quot;Home revenue in $K&quot;></td>
+      <td><input type=&quot;number&quot; step=&quot;1&quot; class=&quot;override&quot; data-dirty=&quot;${revVal!==''?1:0}&quot; placeholder=&quot;${defaultRevPerK(s)}&quot; value=&quot;${revVal}&quot; onchange=&quot;updateField('${s._id}','rev_per_home',this.value)&quot; title=&quot;Home revenue in $K&quot;></td>
       <td><input type=&quot;number&quot; step=&quot;0.1&quot; class=&quot;override&quot; data-dirty=&quot;${margVal!==''?1:0}&quot; placeholder=&quot;${assumptions.fab_margin_pct}&quot; value=&quot;${margVal}&quot; onchange=&quot;updateField('${s._id}','margin_pct',this.value)&quot; title=&quot;Fab margin %&quot;></td>
       <td style=&quot;font-size:11px; color:var(--text-secondary); text-align:center&quot; title=&quot;${assign ? `Assigned to ${assign.hub.name}, ${Math.round(assign.dist_mi)} mi` : 'No active hub'}&quot;>${hubShort}</td>
       <td class=&quot;row-actions&quot;>
@@ -4389,8 +4495,19 @@ async function ghLoadFromDropdown(sha) {
    spends ~2 requests (list commits + fetch one file). */
 
 async function viewerFetchLatest() {
-  // Tries GitHub API first so we get the authoritative latest. Falls back
-  // to the adjacent sites.json (served by GitHub Pages) if API fails.
+  // On localhost/127.0.0.1, prefer the adjacent sites.json so local edits
+  // are visible without pushing to GitHub. Otherwise, GitHub API first for
+  // authoritative latest, with adjacent sites.json as fallback.
+  // srcdoc iframes have hostname '' so check parent's hostname too
+  let parentHost = '';
+  try { parentHost = (window.parent &amp;&amp; window.parent.location) ? window.parent.location.hostname : ''; } catch(e) {}
+  const onLocal = /^(localhost|127\.0\.0\.1|0\.0\.0\.0)$/.test(location.hostname) || /^(localhost|127\.0\.0\.1|0\.0\.0\.0)$/.test(parentHost);
+  if (onLocal) {
+    try {
+      const r = await fetch('sites.json?t=' + Date.now(), { cache: 'no-store' });
+      if (r.ok) return await r.json();
+    } catch(e) {}
+  }
   try {
     const url = `https://api.github.com/repos/${VIEWER_REPO.owner}/${VIEWER_REPO.repo}/contents/${encodeURIComponent(VIEWER_REPO.path)}?ref=${encodeURIComponent(VIEWER_REPO.branch)}`;
     const r = await fetch(url, { headers: { 'Accept': 'application/vnd.github+json' } });
@@ -4400,7 +4517,6 @@ async function viewerFetchLatest() {
       return JSON.parse(raw);
     }
   } catch(e) { /* fall through */ }
-  // Fallback: adjacent sites.json
   try {
     const r = await fetch('sites.json?t=' + Date.now(), { cache: 'no-store' });
     if (r.ok) return await r.json();
@@ -4480,6 +4596,13 @@ function viewerApplyPayload(payload) {
   if (payload.assumptions &amp;&amp; typeof payload.assumptions === 'object') {
     assumptions = { ...DEFAULT_ASSUMPTIONS, ...payload.assumptions };
     applyAssumptionsToUI();
+  }
+  if (payload.cost_assumptions &amp;&amp; typeof payload.cost_assumptions === 'object') {
+    window._COST_ASSUMPTIONS = payload.cost_assumptions;
+    if (typeof payload.cost_assumptions.blended_per_door === 'number') {
+      assumptions.rev_per_home_K = Math.round(payload.cost_assumptions.blended_per_door / 1000);
+      applyAssumptionsToUI();
+    }
   }
   dataSource = 'synced';
   updateSourceIndicator();
@@ -4974,7 +5097,7 @@ window.addEventListener('message', function(e) {
       <div class=&quot;asm-group&quot;>
         <div class=&quot;asm-group-title&quot;>FBX Fab-Home defaults</div>
         <div class=&quot;asm-row&quot;><label>Fab CAPEX ($M)</label><input type=&quot;number&quot; step=&quot;0.1&quot; id=&quot;asm-fab-capex&quot; value=&quot;3.0&quot; onchange=&quot;updateAssumptions()&quot;></div>
-        <div class=&quot;asm-row&quot;><label>Home revenue ($K)</label><input type=&quot;number&quot; step=&quot;1&quot; id=&quot;asm-rev&quot; value=&quot;180&quot; onchange=&quot;updateAssumptions()&quot;></div>
+        <div class=&quot;asm-row&quot; title=&quot;Set in the 💰 Cost Calibrator tab&quot;><label>Home revenue ($K) <em style=&quot;font-weight:400;font-size:10px;color:var(--text-tertiary);font-style:normal;margin-left:4px;&quot;>· from 💰 Calibrator</em></label><input type=&quot;number&quot; step=&quot;1&quot; id=&quot;asm-rev&quot; value=&quot;180&quot; readonly disabled style=&quot;opacity:0.55;cursor:not-allowed;background:transparent;&quot;></div>
         <div class=&quot;asm-row&quot;><label>Fab net margin (%)</label><input type=&quot;number&quot; step=&quot;0.1&quot; id=&quot;asm-margin&quot; value=&quot;22&quot; onchange=&quot;updateAssumptions()&quot;></div>
       </div>
       <div class=&quot;asm-group&quot;>
@@ -5384,7 +5507,30 @@ function assignHub(site, activeHubs) {
 
 /* ============== Per-site effective values (override or default) ============== */
 function fabCapex(s)    { return (s.capex != null &amp;&amp; s.capex !== '') ? +s.capex : assumptions.fab_capex_M; }
-function fabRevPer(s)   { return (s.rev_per_home != null &amp;&amp; s.rev_per_home !== '') ? +s.rev_per_home : assumptions.rev_per_home_K; }
+// Per-state cost mirrors the calibrator's compute: psf × sf_mod × sf × (1-strip) × units, weighted across the product mix
+function costPerDoorForState(stateCode) {
+  const ca = window._COST_ASSUMPTIONS;
+  if (!ca || !ca.state_cost_psf || !ca.state_tier || !ca.tier_strip_pct || !ca.product_mix) return null;
+  const psf = ca.state_cost_psf[stateCode];
+  const tier = ca.state_tier[stateCode];
+  if (psf == null || tier == null) return null;
+  const stripPct = ca.tier_strip_pct[tier];
+  if (stripPct == null) return null;
+  const strip = stripPct / 100;
+  let totalCost = 0, totalUnits = 0;
+  for (const k in ca.product_mix) {
+    const p = ca.product_mix[k];
+    if (!p || !p.sf || !p.units || p.sf_mod == null) continue;
+    totalCost += psf * p.sf_mod * p.sf * (1 - strip) * p.units;
+    totalUnits += p.units;
+  }
+  return totalUnits ? totalCost / totalUnits : null;
+}
+function defaultRevPerK(s) {
+  const v = costPerDoorForState(s.state);
+  return (v != null) ? Math.round(v / 1000) : assumptions.rev_per_home_K;
+}
+function fabRevPer(s)   { return (s.rev_per_home != null &amp;&amp; s.rev_per_home !== '') ? +s.rev_per_home : defaultRevPerK(s); }
 function fabMarginPct(s){ return (s.margin_pct != null &amp;&amp; s.margin_pct !== '') ? +s.margin_pct : assumptions.fab_margin_pct; }
 function hubCapex(h)    { return (h.capex != null &amp;&amp; h.capex !== '') ? +h.capex : assumptions.hub_capex_M; }
 
@@ -5589,6 +5735,14 @@ async function fetchCanonical() {
         const asmRaw = localStorage.getItem(ASM_STORAGE_KEY);
         if (!asmRaw) {
           assumptions = { ...DEFAULT_ASSUMPTIONS, ...data.assumptions };
+          applyAssumptionsToUI();
+          saveAssumptions();
+        }
+      }
+      if (data.cost_assumptions &amp;&amp; typeof data.cost_assumptions === 'object') {
+        window._COST_ASSUMPTIONS = data.cost_assumptions;
+        if (typeof data.cost_assumptions.blended_per_door === 'number') {
+          assumptions.rev_per_home_K = Math.round(data.cost_assumptions.blended_per_door / 1000);
           applyAssumptionsToUI();
           saveAssumptions();
         }
@@ -6085,7 +6239,7 @@ function renderTable() {
       <td><input type=&quot;text&quot; maxlength=&quot;2&quot; value=&quot;${escapeHtml(s.state)}&quot; style=&quot;text-transform:uppercase&quot; onchange=&quot;updateField('${s._id}','state',this.value)&quot;></td>
       <td style=&quot;text-align:center&quot;><span class=&quot;loc-pin ${locStatus}&quot; title=&quot;${escapeHtml(locTitle)}&quot; onclick=&quot;openCoordPopover(event, '${s._id}', 'site')&quot;>${locStatus === 'ok' ? '📍' : '⚠'}</span></td>
       <td><input type=&quot;number&quot; step=&quot;0.1&quot; class=&quot;override&quot; data-dirty=&quot;${capexVal!==''?1:0}&quot; placeholder=&quot;${assumptions.fab_capex_M}&quot; value=&quot;${capexVal}&quot; onchange=&quot;updateField('${s._id}','capex',this.value)&quot; title=&quot;CAPEX in $M — blank = default&quot;></td>
-      <td><input type=&quot;number&quot; step=&quot;1&quot; class=&quot;override&quot; data-dirty=&quot;${revVal!==''?1:0}&quot; placeholder=&quot;${assumptions.rev_per_home_K}&quot; value=&quot;${revVal}&quot; onchange=&quot;updateField('${s._id}','rev_per_home',this.value)&quot; title=&quot;Home revenue in $K&quot;></td>
+      <td><input type=&quot;number&quot; step=&quot;1&quot; class=&quot;override&quot; data-dirty=&quot;${revVal!==''?1:0}&quot; placeholder=&quot;${defaultRevPerK(s)}&quot; value=&quot;${revVal}&quot; onchange=&quot;updateField('${s._id}','rev_per_home',this.value)&quot; title=&quot;Home revenue in $K&quot;></td>
       <td><input type=&quot;number&quot; step=&quot;0.1&quot; class=&quot;override&quot; data-dirty=&quot;${margVal!==''?1:0}&quot; placeholder=&quot;${assumptions.fab_margin_pct}&quot; value=&quot;${margVal}&quot; onchange=&quot;updateField('${s._id}','margin_pct',this.value)&quot; title=&quot;Fab margin %&quot;></td>
       <td style=&quot;font-size:11px; color:var(--text-secondary); text-align:center&quot; title=&quot;${assign ? `Assigned to ${assign.hub.name}, ${Math.round(assign.dist_mi)} mi` : 'No active hub'}&quot;>${hubShort}</td>
       <td class=&quot;row-actions&quot;>
@@ -7154,7 +7308,30 @@ function assignHub(site, activeHubs) {
 
 /* ============== Per-site effective values (override or default) ============== */
 function fabCapex(s)    { return (s.capex != null &amp;&amp; s.capex !== '') ? +s.capex : assumptions.fab_capex_M; }
-function fabRevPer(s)   { return (s.rev_per_home != null &amp;&amp; s.rev_per_home !== '') ? +s.rev_per_home : assumptions.rev_per_home_K; }
+// Per-state cost mirrors the calibrator's compute: psf × sf_mod × sf × (1-strip) × units, weighted across the product mix
+function costPerDoorForState(stateCode) {
+  const ca = window._COST_ASSUMPTIONS;
+  if (!ca || !ca.state_cost_psf || !ca.state_tier || !ca.tier_strip_pct || !ca.product_mix) return null;
+  const psf = ca.state_cost_psf[stateCode];
+  const tier = ca.state_tier[stateCode];
+  if (psf == null || tier == null) return null;
+  const stripPct = ca.tier_strip_pct[tier];
+  if (stripPct == null) return null;
+  const strip = stripPct / 100;
+  let totalCost = 0, totalUnits = 0;
+  for (const k in ca.product_mix) {
+    const p = ca.product_mix[k];
+    if (!p || !p.sf || !p.units || p.sf_mod == null) continue;
+    totalCost += psf * p.sf_mod * p.sf * (1 - strip) * p.units;
+    totalUnits += p.units;
+  }
+  return totalUnits ? totalCost / totalUnits : null;
+}
+function defaultRevPerK(s) {
+  const v = costPerDoorForState(s.state);
+  return (v != null) ? Math.round(v / 1000) : assumptions.rev_per_home_K;
+}
+function fabRevPer(s)   { return (s.rev_per_home != null &amp;&amp; s.rev_per_home !== '') ? +s.rev_per_home : defaultRevPerK(s); }
 function fabMarginPct(s){ return (s.margin_pct != null &amp;&amp; s.margin_pct !== '') ? +s.margin_pct : assumptions.fab_margin_pct; }
 function hubCapex(h)    { return (h.capex != null &amp;&amp; h.capex !== '') ? +h.capex : assumptions.hub_capex_M; }
 
@@ -7359,6 +7536,14 @@ async function fetchCanonical() {
         const asmRaw = localStorage.getItem(ASM_STORAGE_KEY);
         if (!asmRaw) {
           assumptions = { ...DEFAULT_ASSUMPTIONS, ...data.assumptions };
+          applyAssumptionsToUI();
+          saveAssumptions();
+        }
+      }
+      if (data.cost_assumptions &amp;&amp; typeof data.cost_assumptions === 'object') {
+        window._COST_ASSUMPTIONS = data.cost_assumptions;
+        if (typeof data.cost_assumptions.blended_per_door === 'number') {
+          assumptions.rev_per_home_K = Math.round(data.cost_assumptions.blended_per_door / 1000);
           applyAssumptionsToUI();
           saveAssumptions();
         }
@@ -7855,7 +8040,7 @@ function renderTable() {
       <td><input type=&quot;text&quot; maxlength=&quot;2&quot; value=&quot;${escapeHtml(s.state)}&quot; style=&quot;text-transform:uppercase&quot; onchange=&quot;updateField('${s._id}','state',this.value)&quot;></td>
       <td style=&quot;text-align:center&quot;><span class=&quot;loc-pin ${locStatus}&quot; title=&quot;${escapeHtml(locTitle)}&quot; onclick=&quot;openCoordPopover(event, '${s._id}', 'site')&quot;>${locStatus === 'ok' ? '📍' : '⚠'}</span></td>
       <td><input type=&quot;number&quot; step=&quot;0.1&quot; class=&quot;override&quot; data-dirty=&quot;${capexVal!==''?1:0}&quot; placeholder=&quot;${assumptions.fab_capex_M}&quot; value=&quot;${capexVal}&quot; onchange=&quot;updateField('${s._id}','capex',this.value)&quot; title=&quot;CAPEX in $M — blank = default&quot;></td>
-      <td><input type=&quot;number&quot; step=&quot;1&quot; class=&quot;override&quot; data-dirty=&quot;${revVal!==''?1:0}&quot; placeholder=&quot;${assumptions.rev_per_home_K}&quot; value=&quot;${revVal}&quot; onchange=&quot;updateField('${s._id}','rev_per_home',this.value)&quot; title=&quot;Home revenue in $K&quot;></td>
+      <td><input type=&quot;number&quot; step=&quot;1&quot; class=&quot;override&quot; data-dirty=&quot;${revVal!==''?1:0}&quot; placeholder=&quot;${defaultRevPerK(s)}&quot; value=&quot;${revVal}&quot; onchange=&quot;updateField('${s._id}','rev_per_home',this.value)&quot; title=&quot;Home revenue in $K&quot;></td>
       <td><input type=&quot;number&quot; step=&quot;0.1&quot; class=&quot;override&quot; data-dirty=&quot;${margVal!==''?1:0}&quot; placeholder=&quot;${assumptions.fab_margin_pct}&quot; value=&quot;${margVal}&quot; onchange=&quot;updateField('${s._id}','margin_pct',this.value)&quot; title=&quot;Fab margin %&quot;></td>
       <td style=&quot;font-size:11px; color:var(--text-secondary); text-align:center&quot; title=&quot;${assign ? `Assigned to ${assign.hub.name}, ${Math.round(assign.dist_mi)} mi` : 'No active hub'}&quot;>${hubShort}</td>
       <td class=&quot;row-actions&quot;>
@@ -16749,12 +16934,1194 @@ function copyJSON() {
 }
 </script>
 </body>
-</html>"></iframe></div><div id="ver-panel"><div id="ver-panel-head">Version History</div><div id="ver-list"></div></div><div id="save-modal"><div class="svm-box"><h2>Save Version</h2><p class="svm-subtitle">Page: <strong id="svm-page-label"></strong></p><label><span class="svm-required">*</span> Version name (required)</label><input type="text" id="svm-name" placeholder="e.g. Q2 draft" autocomplete="off"><div id="svm-error"></div><div class="svm-hint">Commits <strong id="svm-file-label"></strong> to GitHub via Actions — takes ~15s.</div><div class="svm-actions"><button id="svm-cancel">Cancel</button><button id="svm-commit">Save to GitHub</button></div></div></div><div id="nav-toast"></div><script>
+</html>"></iframe><iframe class="page-frame" data-page="cost-calibrator" sandbox="allow-scripts allow-same-origin allow-downloads allow-forms allow-modals allow-popups" srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;UTF-8&quot;&gt;
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+&lt;title&gt;FBX HomeFab — Cost-Per-Door Calibrator&lt;/title&gt;
+&lt;style&gt;
+  :root {
+    --bg: #0a0e14;
+    --panel: #121821;
+    --panel-2: #1a2230;
+    --panel-3: #232d3e;
+    --border: #243042;
+    --border-strong: #344256;
+    --text: #e8edf5;
+    --text-dim: #8a96aa;
+    --text-muted: #5d6878;
+    --teal: #2dd4bf;
+    --amber: #f59e0b;
+    --amber-soft: #fbbf24;
+    --red: #ef4444;
+    --red-soft: #fca5a5;
+    --green: #10b981;
+    --green-soft: #6ee7b7;
+    --blue: #60a5fa;
+
+    /* product colors aligned to the pipeline mix chart */
+    --townhome: #d97a3c;
+    --adu: #e74c5c;
+    --duplex: #1a2c4d;
+    --sfr: #94a3b8;
+
+    --mono: &#x27;JetBrains Mono&#x27;, &#x27;SF Mono&#x27;, ui-monospace, Menlo, monospace;
+    --display: &#x27;Inter&#x27;, system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--display);
+    font-size: 13px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 1700px; margin: 0 auto; padding: 24px; }
+
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 14px;
+    margin-bottom: 18px;
+  }
+  h1 {
+    font-size: 22px;
+    font-weight: 700;
+    margin: 0 0 4px 0;
+    letter-spacing: -0.02em;
+  }
+  .subtitle {
+    color: var(--text-dim);
+    font-size: 13px;
+    margin: 0;
+  }
+  .badge {
+    font-family: var(--mono);
+    font-size: 10px;
+    background: var(--panel-2);
+    border: 1px solid var(--border);
+    color: var(--amber);
+    padding: 4px 8px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  /* hero */
+  .hero {
+    background: linear-gradient(135deg, var(--panel-2) 0%, var(--panel) 100%);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 18px 22px;
+    margin-bottom: 18px;
+  }
+  .hero-row {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr 1fr 1fr;
+    gap: 24px;
+    align-items: center;
+  }
+  .hero-stat .lbl {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-dim);
+    margin-bottom: 4px;
+  }
+  .hero-stat .val {
+    font-family: var(--mono);
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+  }
+  .hero-stat .val.big { font-size: 34px; color: var(--amber); }
+  .hero-stat .delta {
+    font-family: var(--mono);
+    font-size: 11px;
+    margin-top: 4px;
+    color: var(--text-dim);
+  }
+  .delta.over { color: var(--red-soft); }
+  .delta.under { color: var(--green-soft); }
+  .delta.on { color: var(--amber-soft); }
+
+  /* layout */
+  .grid {
+    display: grid;
+    grid-template-columns: 360px 1fr;
+    gap: 18px;
+  }
+
+  .panel {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .panel + .panel { margin-top: 14px; }
+  .panel h2 {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-dim);
+    margin: 0;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+    background: var(--panel-2);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .panel-body { padding: 14px 16px; }
+
+  /* product mix bars (echoes Doc&#x27;s chart) */
+  .mix-bar {
+    display: grid;
+    grid-template-columns: 64px 1fr 78px;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+    font-size: 12px;
+  }
+  .mix-bar:last-child { margin-bottom: 0; }
+  .mix-bar .pname {
+    font-family: var(--mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-dim);
+  }
+  .mix-bar .ptrack {
+    background: var(--panel-3);
+    border-radius: 3px;
+    height: 14px;
+    position: relative;
+    overflow: hidden;
+  }
+  .mix-bar .pfill {
+    height: 100%;
+    border-radius: 3px;
+    transition: width 0.3s ease;
+  }
+  .mix-bar .pfill.townhome { background: var(--townhome); }
+  .mix-bar .pfill.adu { background: var(--adu); }
+  .mix-bar .pfill.duplex { background: var(--duplex); }
+  .mix-bar .pfill.sfr { background: var(--sfr); }
+  .mix-bar .pcount {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text);
+    text-align: right;
+  }
+  .mix-bar .pcount .pct { color: var(--text-dim); margin-left: 4px; }
+
+  /* product editor row */
+  .prod-row {
+    display: grid;
+    grid-template-columns: 18px 60px 1fr 70px 70px;
+    gap: 8px;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 11px;
+  }
+  .prod-row:last-child { border-bottom: none; }
+  .prod-row .swatch {
+    width: 12px;
+    height: 12px;
+    border-radius: 2px;
+  }
+  .prod-row .swatch.townhome { background: var(--townhome); }
+  .prod-row .swatch.adu { background: var(--adu); }
+  .prod-row .swatch.duplex { background: var(--duplex); }
+  .prod-row .swatch.sfr { background: var(--sfr); }
+  .prod-row .pname {
+    font-family: var(--mono);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text);
+    font-size: 10px;
+  }
+  .prod-row input[type=&quot;number&quot;] {
+    width: 100%;
+    background: var(--panel-2);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 5px 6px;
+    border-radius: 3px;
+    font-family: var(--mono);
+    font-size: 11px;
+    text-align: right;
+  }
+  .prod-row input[type=&quot;number&quot;]:focus {
+    outline: none; border-color: var(--amber);
+  }
+  .prod-row .units-input { color: var(--amber-soft); font-weight: 600; }
+  .prod-row .lbl-row {
+    display: grid;
+    grid-template-columns: 18px 60px 1fr 70px 70px;
+    gap: 8px;
+    font-size: 9px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding-bottom: 4px;
+  }
+
+  .control { margin-bottom: 14px; }
+  .control:last-child { margin-bottom: 0; }
+  .control label {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-size: 12px;
+    color: var(--text-dim);
+    margin-bottom: 6px;
+  }
+  .control label .v {
+    font-family: var(--mono);
+    color: var(--amber);
+    font-weight: 600;
+  }
+  .control input[type=&quot;range&quot;] {
+    width: 100%;
+    accent-color: var(--amber);
+    height: 4px;
+  }
+  .control input[type=&quot;number&quot;] {
+    width: 100%;
+    background: var(--panel-2);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 7px 9px;
+    border-radius: 4px;
+    font-family: var(--mono);
+    font-size: 12px;
+  }
+
+  /* tier strip */
+  .tier-strip {
+    display: grid;
+    grid-template-columns: 68px 1fr 56px;
+    gap: 10px;
+    align-items: center;
+    padding: 6px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .tier-strip:last-child { border-bottom: none; }
+  .tier-strip .tname {
+    font-family: var(--mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text);
+    font-weight: 600;
+  }
+  .tier-strip .tdesc {
+    font-size: 10px;
+    color: var(--text-muted);
+    line-height: 1.3;
+  }
+  .tier-strip .tval {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--amber);
+    font-weight: 600;
+    text-align: right;
+  }
+  .tier-A .tname { color: var(--red-soft); }
+  .tier-B .tname { color: var(--amber-soft); }
+  .tier-C .tname { color: #fde68a; }
+  .tier-D .tname { color: var(--green-soft); }
+  .tier-strip input[type=&quot;range&quot;] {
+    width: 100%;
+    accent-color: var(--amber);
+    height: 3px;
+  }
+
+  /* assumption summary card */
+  .assumption-card {
+    background: var(--panel-2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 10px 12px;
+    font-size: 11px;
+    color: var(--text-dim);
+    line-height: 1.6;
+  }
+  .assumption-card strong {
+    color: var(--amber);
+    font-family: var(--mono);
+  }
+
+  /* state table */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: var(--mono);
+    font-size: 11px;
+  }
+  thead th {
+    text-align: right;
+    font-family: var(--display);
+    font-size: 9px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-dim);
+    padding: 10px 10px;
+    border-bottom: 1px solid var(--border-strong);
+    background: var(--panel-2);
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    cursor: pointer;
+    user-select: none;
+    white-space: nowrap;
+  }
+  thead th.text-l { text-align: left; }
+  thead th.sorted-asc::after { content: &#x27; ▲&#x27;; color: var(--amber); }
+  thead th.sorted-desc::after { content: &#x27; ▼&#x27;; color: var(--amber); }
+  thead th:hover { color: var(--text); }
+  td {
+    padding: 7px 10px;
+    border-bottom: 1px solid var(--border);
+    text-align: right;
+    white-space: nowrap;
+  }
+  td.text-l { text-align: left; font-family: var(--display); }
+  tbody tr:hover td { background: var(--panel-2); }
+  td .state-cell {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  td .tier-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .tier-dot.A { background: var(--red); }
+  .tier-dot.B { background: var(--amber); }
+  .tier-dot.C { background: #fbbf24; }
+  .tier-dot.D { background: var(--green); }
+  td.gap-positive { color: var(--red-soft); }
+  td.gap-negative { color: var(--green-soft); }
+  td.gap-neutral { color: var(--amber-soft); }
+
+  .table-wrap {
+    max-height: 540px;
+    overflow-y: auto;
+  }
+
+  /* tier card grid */
+  .tier-cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+  .tier-card-big {
+    background: var(--panel-2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 12px 14px;
+    border-left: 3px solid;
+  }
+  .tier-card-big.A { border-left-color: var(--red); }
+  .tier-card-big.B { border-left-color: var(--amber); }
+  .tier-card-big.C { border-left-color: #fbbf24; }
+  .tier-card-big.D { border-left-color: var(--green); }
+  .tier-card-big .tname {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-dim);
+    margin-bottom: 4px;
+  }
+  .tier-card-big .tval {
+    font-family: var(--mono);
+    font-size: 19px;
+    font-weight: 700;
+    margin-bottom: 2px;
+  }
+  .tier-card-big .tsub {
+    font-size: 10px;
+    color: var(--text-muted);
+    font-family: var(--mono);
+  }
+
+  .preset-row {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+  }
+  .preset-row button {
+    flex: 1;
+    background: var(--panel-2);
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    padding: 6px 8px;
+    border-radius: 4px;
+    font-size: 10px;
+    font-family: var(--display);
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    transition: all 0.15s;
+    min-width: 0;
+  }
+  .preset-row button:hover { color: var(--text); }
+  .preset-row button.active {
+    background: var(--amber);
+    color: var(--bg);
+    border-color: var(--amber);
+    font-weight: 600;
+  }
+
+  .btn {
+    background: var(--panel-2);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 8px 14px;
+    border-radius: 4px;
+    font-size: 11px;
+    cursor: pointer;
+    font-family: var(--display);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .btn:hover { border-color: var(--amber); color: var(--amber); }
+  .btn-primary {
+    background: var(--amber);
+    color: var(--bg);
+    border-color: var(--amber);
+    font-weight: 600;
+  }
+  .btn-primary:hover { background: var(--amber-soft); color: var(--bg); }
+  .btn-row {
+    display: flex;
+    gap: 8px;
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid var(--border);
+  }
+
+  /* loading */
+  .skeleton {
+    color: var(--text-muted);
+    font-style: italic;
+  }
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div class=&quot;wrap&quot;&gt;
+  &lt;header&gt;
+    &lt;div&gt;
+      &lt;h1&gt;Cost-Per-Door Calibrator&lt;/h1&gt;
+      &lt;p class=&quot;subtitle&quot;&gt;Pressure-test your blended door cost across the FBX rollout. Adjust unit mix, sizes, and regional site-work tiers.&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;badge&quot;&gt;&lt;span id=&quot;site-count&quot;&gt;132&lt;/span&gt; sites · 4 products · 4 tiers&lt;/div&gt;
+  &lt;/header&gt;
+
+  &lt;!-- Hero --&gt;
+  &lt;div class=&quot;hero&quot;&gt;
+    &lt;div class=&quot;hero-row&quot;&gt;
+      &lt;div class=&quot;hero-stat&quot;&gt;
+        &lt;div class=&quot;lbl&quot;&gt;Site-Weighted National Avg / Door&lt;/div&gt;
+        &lt;div class=&quot;val big&quot; id=&quot;hero-avg&quot;&gt;$—&lt;/div&gt;
+        &lt;div class=&quot;delta on&quot; id=&quot;hero-delta&quot;&gt;vs $165K target&lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;hero-stat&quot;&gt;
+        &lt;div class=&quot;lbl&quot;&gt;Cheapest State&lt;/div&gt;
+        &lt;div class=&quot;val&quot; id=&quot;hero-min&quot; style=&quot;color: var(--green-soft);&quot;&gt;$—&lt;/div&gt;
+        &lt;div class=&quot;delta&quot; id=&quot;hero-min-state&quot;&gt;—&lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;hero-stat&quot;&gt;
+        &lt;div class=&quot;lbl&quot;&gt;Most Expensive State&lt;/div&gt;
+        &lt;div class=&quot;val&quot; id=&quot;hero-max&quot; style=&quot;color: var(--red-soft);&quot;&gt;$—&lt;/div&gt;
+        &lt;div class=&quot;delta&quot; id=&quot;hero-max-state&quot;&gt;—&lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;hero-stat&quot;&gt;
+        &lt;div class=&quot;lbl&quot;&gt;Sites Over $165K&lt;/div&gt;
+        &lt;div class=&quot;val&quot; id=&quot;hero-over&quot; style=&quot;color: var(--amber-soft);&quot;&gt;—&lt;/div&gt;
+        &lt;div class=&quot;delta&quot; id=&quot;hero-over-detail&quot;&gt;— of 132 sites&lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;hero-stat&quot;&gt;
+        &lt;div class=&quot;lbl&quot;&gt;Pipeline Build Cost (Total)&lt;/div&gt;
+        &lt;div class=&quot;val&quot; id=&quot;hero-total&quot; style=&quot;color: var(--text);&quot;&gt;$—&lt;/div&gt;
+        &lt;div class=&quot;delta&quot; id=&quot;hero-total-detail&quot;&gt;across 599 buildings&lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;div class=&quot;grid&quot;&gt;
+    &lt;!-- LEFT: controls --&gt;
+    &lt;div&gt;
+      &lt;!-- Pipeline mix display --&gt;
+      &lt;div class=&quot;panel&quot;&gt;
+        &lt;h2&gt;Pipeline Mix &lt;span style=&quot;font-family:var(--mono);font-size:10px;color:var(--text-dim);text-transform:none;letter-spacing:0;font-weight:400;&quot; id=&quot;mix-total-units&quot;&gt;599 buildings&lt;/span&gt;&lt;/h2&gt;
+        &lt;div class=&quot;panel-body&quot;&gt;
+          &lt;div id=&quot;mix-bars&quot;&gt;&lt;/div&gt;
+          &lt;div class=&quot;preset-row&quot; style=&quot;margin-top: 12px;&quot;&gt;
+            &lt;button data-preset=&quot;actual&quot; class=&quot;active&quot;&gt;Actual Pipeline&lt;/button&gt;
+            &lt;button data-preset=&quot;adu-heavy&quot;&gt;ADU-Heavy&lt;/button&gt;
+            &lt;button data-preset=&quot;density&quot;&gt;Density Push&lt;/button&gt;
+            &lt;button data-preset=&quot;custom&quot;&gt;Custom&lt;/button&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+
+      &lt;!-- Product editor --&gt;
+      &lt;div class=&quot;panel&quot;&gt;
+        &lt;h2&gt;Per-Product Assumptions&lt;/h2&gt;
+        &lt;div class=&quot;panel-body&quot;&gt;
+          &lt;div class=&quot;lbl-row prod-row&quot; style=&quot;border-bottom: 1px solid var(--border-strong); padding-bottom: 6px;&quot;&gt;
+            &lt;div&gt;&lt;/div&gt;
+            &lt;div&gt;Product&lt;/div&gt;
+            &lt;div&gt;&lt;/div&gt;
+            &lt;div&gt;Size (sf)&lt;/div&gt;
+            &lt;div&gt;Units&lt;/div&gt;
+          &lt;/div&gt;
+          &lt;div id=&quot;product-rows&quot;&gt;&lt;/div&gt;
+          &lt;div class=&quot;assumption-card&quot; style=&quot;margin-top: 10px;&quot;&gt;
+            Townhomes &amp; duplexes use shared-wall economics (~&lt;strong&gt;$145/sf&lt;/strong&gt; stick-built nat&#x27;l avg, vs SFR &lt;strong&gt;$162/sf&lt;/strong&gt; NAHB). ADUs run small-job premium per-sf but tiny absolute $.
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+
+      &lt;!-- Site work strip tiers --&gt;
+      &lt;div class=&quot;panel&quot;&gt;
+        &lt;h2&gt;Site-Work Strip by Tier&lt;/h2&gt;
+        &lt;div class=&quot;panel-body&quot;&gt;
+          &lt;p style=&quot;font-size:11px;color:var(--text-dim);margin:0 0 10px 0;&quot;&gt;Factory portion = &lt;strong style=&quot;color:var(--text)&quot;&gt;100% − strip%&lt;/strong&gt;. Strip = excavation, foundation, utilities, permits, site prep, finish work outside the home shell.&lt;/p&gt;
+          &lt;div id=&quot;tier-strips&quot;&gt;&lt;/div&gt;
+          &lt;div class=&quot;assumption-card&quot; style=&quot;margin-top: 12px;&quot;&gt;
+            Tier A: heavy regulation, seismic/coastal, high labor cost.&lt;br&gt;
+            Tier B: northeast/west coast secondary.&lt;br&gt;
+            Tier C: sun belt, mountain west, mid-Atlantic.&lt;br&gt;
+            Tier D: south central, deep south, Appalachia.
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+
+      &lt;!-- Target --&gt;
+      &lt;div class=&quot;panel&quot;&gt;
+        &lt;h2&gt;Target / Benchmark&lt;/h2&gt;
+        &lt;div class=&quot;panel-body&quot;&gt;
+          &lt;div class=&quot;control&quot;&gt;
+            &lt;label&gt;Target $/door &lt;span class=&quot;v&quot; id=&quot;target-val&quot;&gt;$165,000&lt;/span&gt;&lt;/label&gt;
+            &lt;input type=&quot;range&quot; id=&quot;target&quot; min=&quot;100000&quot; max=&quot;350000&quot; value=&quot;165000&quot; step=&quot;5000&quot;&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;!-- RIGHT: results --&gt;
+    &lt;div&gt;
+      &lt;!-- Tier summary cards --&gt;
+      &lt;div class=&quot;panel&quot;&gt;
+        &lt;h2&gt;Average Per-Door Cost by Regional Tier&lt;/h2&gt;
+        &lt;div class=&quot;panel-body&quot;&gt;
+          &lt;div class=&quot;tier-cards&quot; id=&quot;tier-cards&quot;&gt;&lt;/div&gt;
+          &lt;div id=&quot;tier-explainer&quot; style=&quot;font-size:11px;color:var(--text-dim);&quot;&gt;—&lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+
+      &lt;!-- State table --&gt;
+      &lt;div class=&quot;panel&quot; style=&quot;margin-top: 16px;&quot;&gt;
+        &lt;h2&gt;State-Level Detail &lt;span style=&quot;font-family:var(--mono);font-size:10px;color:var(--text-dim);text-transform:none;letter-spacing:0;font-weight:400;&quot;&gt;Click any column to sort&lt;/span&gt;&lt;/h2&gt;
+        &lt;div class=&quot;table-wrap&quot;&gt;
+          &lt;table id=&quot;state-table&quot;&gt;
+            &lt;thead&gt;
+              &lt;tr&gt;
+                &lt;th class=&quot;text-l&quot; data-sort=&quot;state&quot;&gt;State&lt;/th&gt;
+                &lt;th data-sort=&quot;tier&quot;&gt;Tier&lt;/th&gt;
+                &lt;th data-sort=&quot;psf&quot;&gt;$/sf&lt;/th&gt;
+                &lt;th data-sort=&quot;strip&quot;&gt;Strip%&lt;/th&gt;
+                &lt;th data-sort=&quot;sites&quot;&gt;Sites&lt;/th&gt;
+                &lt;th data-sort=&quot;units&quot;&gt;Units&lt;/th&gt;
+                &lt;th data-sort=&quot;cost&quot; class=&quot;sorted-desc&quot;&gt;$/Door&lt;/th&gt;
+                &lt;th data-sort=&quot;gap&quot;&gt;vs Target&lt;/th&gt;
+                &lt;th data-sort=&quot;total&quot;&gt;Total $&lt;/th&gt;
+              &lt;/tr&gt;
+            &lt;/thead&gt;
+            &lt;tbody id=&quot;state-tbody&quot;&gt;&lt;/tbody&gt;
+          &lt;/table&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;btn-row&quot; style=&quot;padding-left:16px;padding-right:16px;padding-bottom:12px;border-top:none;padding-top:0;margin-top:0;&quot;&gt;
+          &lt;button class=&quot;btn&quot; id=&quot;export-csv&quot;&gt;Export CSV&lt;/button&gt;
+          &lt;button class=&quot;btn&quot; id=&quot;export-json&quot;&gt;Export JSON Assumptions&lt;/button&gt;
+          &lt;button class=&quot;btn-primary btn&quot; id=&quot;apply-to-map&quot; style=&quot;margin-left:auto;&quot; title=&quot;Save &amp; propagate to Expansion Map&quot;&gt;Save &amp; sync to Expansion Map&lt;/button&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+// =============================================================================
+// FBX HOMEFAB — COST-PER-DOOR CALIBRATOR
+// =============================================================================
+
+// State-level new-construction $/sf — blended from NAHB SOC 2024, home-cost.com,
+// bhumicalculator 2026, NAHB regional medians. Conservative midpoints, &quot;all-in
+// turnkey including GC overhead&quot; basis.
+const STATE_COST_PSF = {
+  CA: 225, HI: 230, AK: 228, OR: 200, WA: 200, NV: 175, AZ: 165, ID: 170,
+  UT: 175, MT: 185, WY: 165, CO: 175, NM: 160,
+  ND: 165, SD: 160, NE: 160, KS: 155, MN: 175, IA: 165, MO: 155, WI: 170,
+  IL: 175, IN: 155, MI: 160, OH: 155,
+  TX: 162, OK: 158, AR: 156, LA: 160, MS: 154, AL: 155, TN: 160, KY: 158,
+  WV: 150, FL: 175, GA: 160, SC: 165, NC: 165, VA: 175, MD: 195, DE: 185,
+  PA: 180, NY: 211, NJ: 225, CT: 200, RI: 195, MA: 210, NH: 195, VT: 195, ME: 185,
+};
+
+// Regional tier assignment — drives the site-work strip %
+const STATE_TIER = {
+  // Tier A: heavy regulation, seismic/coastal, high labor cost
+  CA: &#x27;A&#x27;, HI: &#x27;A&#x27;, AK: &#x27;A&#x27;, NJ: &#x27;A&#x27;, NY: &#x27;A&#x27;, MA: &#x27;A&#x27;,
+  // Tier B: northeast/west coast secondary
+  CT: &#x27;B&#x27;, OR: &#x27;B&#x27;, WA: &#x27;B&#x27;, RI: &#x27;B&#x27;, NH: &#x27;B&#x27;, VT: &#x27;B&#x27;, MD: &#x27;B&#x27;, DE: &#x27;B&#x27;, ME: &#x27;B&#x27;, PA: &#x27;B&#x27;,
+  // Tier C: sun belt, mountain west, mid-Atlantic
+  CO: &#x27;C&#x27;, NV: &#x27;C&#x27;, UT: &#x27;C&#x27;, AZ: &#x27;C&#x27;, ID: &#x27;C&#x27;, MT: &#x27;C&#x27;, WY: &#x27;C&#x27;, NM: &#x27;C&#x27;,
+  FL: &#x27;C&#x27;, VA: &#x27;C&#x27;, NC: &#x27;C&#x27;, SC: &#x27;C&#x27;, GA: &#x27;C&#x27;, TX: &#x27;C&#x27;, IL: &#x27;C&#x27;, MN: &#x27;C&#x27;, WI: &#x27;C&#x27;, MI: &#x27;C&#x27;,
+  // Tier D: south central, deep south, Appalachia, midwest cost-efficient
+  OK: &#x27;D&#x27;, AR: &#x27;D&#x27;, LA: &#x27;D&#x27;, MS: &#x27;D&#x27;, AL: &#x27;D&#x27;, TN: &#x27;D&#x27;, KY: &#x27;D&#x27;, WV: &#x27;D&#x27;,
+  IN: &#x27;D&#x27;, OH: &#x27;D&#x27;, MO: &#x27;D&#x27;, IA: &#x27;D&#x27;, KS: &#x27;D&#x27;, NE: &#x27;D&#x27;, ND: &#x27;D&#x27;, SD: &#x27;D&#x27;,
+};
+
+const TIER_INFO = {
+  A: { name: &#x27;Tier A&#x27;, desc: &#x27;CA · HI · AK · NJ · NY · MA&#x27; },
+  B: { name: &#x27;Tier B&#x27;, desc: &#x27;CT · OR · WA · MD · RI · NH · VT · ME · DE · PA&#x27; },
+  C: { name: &#x27;Tier C&#x27;, desc: &#x27;CO · NV · UT · AZ · FL · TX · VA · NC · IL · MN · WI · MI · GA · SC · MT · WY · ID · NM&#x27; },
+  D: { name: &#x27;Tier D&#x27;, desc: &#x27;OK · AR · LA · MS · AL · TN · KY · WV · IN · OH · MO · IA · KS · NE · ND · SD&#x27; },
+};
+
+// PRODUCT TYPES — reflect Doc&#x27;s actual pipeline mix
+// $/sf adjustments vs single-family detached baseline from NAHB SOC 2024 ($162 nat&#x27;l avg)
+// - Townhome: shared walls cut framing/siding/roofing materials by ~20-25%, but
+//   smaller size eliminates economy-of-scale. Net: ~90% of SFD $/sf.
+// - Duplex: same sharing logic as townhome but typically larger units. ~88% of SFD $/sf.
+// - ADU: small-project premium offsets simpler design. ~115% of SFD $/sf.
+// - SFR: full SFD baseline = 100%.
+const PRODUCTS = {
+  townhome: { name: &#x27;Townhome&#x27;, sf: 1450, units: 214, sf_mod: 0.90, color: &#x27;townhome&#x27; },
+  adu:      { name: &#x27;ADU&#x27;,      sf: 750,  units: 211, sf_mod: 1.15, color: &#x27;adu&#x27; },
+  duplex:   { name: &#x27;Duplex&#x27;,   sf: 1850, units: 160, sf_mod: 0.88, color: &#x27;duplex&#x27; },
+  sfr:      { name: &#x27;SFR&#x27;,      sf: 1800, units: 14,  sf_mod: 1.00, color: &#x27;sfr&#x27; },
+};
+
+// Default tier strip %
+const DEFAULT_TIER_STRIP = { A: 35, B: 32, C: 28, D: 22 };
+
+// =============================================================================
+// STATE
+// =============================================================================
+const state = {
+  products: JSON.parse(JSON.stringify(PRODUCTS)),
+  tierStrip: { ...DEFAULT_TIER_STRIP },
+  target: 165000,
+  sortKey: &#x27;cost&#x27;,
+  sortDir: &#x27;desc&#x27;,
+  sites: [],
+  sitesByState: {},
+  fullSitesDoc: null,
+  loadedFromSites: false,
+};
+
+function buildCostAssumptions() {
+  const r = compute();
+  return {
+    version: 1,
+    last_updated: new Date().toISOString(),
+    target_per_door: state.target,
+    blended_per_door: Math.round(r.blended),
+    tier_avg_per_door: Object.fromEntries(
+      Object.entries(r.tierAvg).map(([t, v]) =&gt; [t, Math.round(v)])
+    ),
+    product_mix: state.products,
+    tier_strip_pct: state.tierStrip,
+    state_cost_psf: STATE_COST_PSF,
+    state_tier: STATE_TIER,
+  };
+}
+
+// =============================================================================
+// EMBEDDED SITES DATA (fallback if sites.json fetch fails — e.g., file:// or sandbox)
+// =============================================================================
+const EMBEDDED_SITES = [
+  // Counted from Doc&#x27;s full sites.json (132 sites total)
+  [&#x27;CA&#x27;,7],[&#x27;HI&#x27;,2],[&#x27;AZ&#x27;,3],[&#x27;CT&#x27;,3],[&#x27;CO&#x27;,4],[&#x27;NV&#x27;,2],[&#x27;TX&#x27;,9],[&#x27;MA&#x27;,2],
+  [&#x27;OR&#x27;,3],[&#x27;WA&#x27;,4],[&#x27;UT&#x27;,2],[&#x27;ID&#x27;,3],[&#x27;NC&#x27;,2],[&#x27;RI&#x27;,1],[&#x27;NJ&#x27;,3],[&#x27;MN&#x27;,2],
+  [&#x27;GA&#x27;,4],[&#x27;NY&#x27;,4],[&#x27;NH&#x27;,2],[&#x27;ME&#x27;,2],[&#x27;TN&#x27;,5],[&#x27;VA&#x27;,4],[&#x27;NE&#x27;,2],[&#x27;OK&#x27;,2],
+  [&#x27;NM&#x27;,1],[&#x27;LA&#x27;,3],[&#x27;FL&#x27;,8],[&#x27;IL&#x27;,1],[&#x27;IN&#x27;,2],[&#x27;MD&#x27;,2],[&#x27;OH&#x27;,4],[&#x27;PA&#x27;,4],
+  [&#x27;KY&#x27;,2],[&#x27;MO&#x27;,3],[&#x27;AL&#x27;,4],[&#x27;DE&#x27;,1],[&#x27;MI&#x27;,2],[&#x27;SC&#x27;,2],[&#x27;WI&#x27;,3],[&#x27;AR&#x27;,1],
+  [&#x27;IA&#x27;,1],[&#x27;MT&#x27;,3],[&#x27;ND&#x27;,2],[&#x27;SD&#x27;,2],[&#x27;VT&#x27;,1],[&#x27;WY&#x27;,2],[&#x27;MS&#x27;,1],[&#x27;WV&#x27;,2],
+  [&#x27;AK&#x27;,2],[&#x27;KS&#x27;,1]
+];
+
+// =============================================================================
+// CORE COMPUTATION
+// =============================================================================
+function computeCostPerDoor(stateCode) {
+  const psf = STATE_COST_PSF[stateCode];
+  const tier = STATE_TIER[stateCode];
+  const strip = state.tierStrip[tier] / 100;
+
+  let totalCost = 0;
+  let totalUnits = 0;
+
+  for (const key in state.products) {
+    const p = state.products[key];
+    const turnkey = psf * p.sf_mod * p.sf;
+    const factoryPortion = turnkey * (1 - strip);
+    totalCost += factoryPortion * p.units;
+    totalUnits += p.units;
+  }
+
+  return totalUnits &gt; 0 ? totalCost / totalUnits : 0;
+}
+
+function compute() {
+  const sitesByState = state.sitesByState;
+  const totalSites = Object.values(sitesByState).reduce((a,b)=&gt;a+b, 0);
+  const totalPipelineUnits = Object.values(state.products).reduce((a,p)=&gt;a+p.units, 0);
+
+  // Per-state cost
+  const stateRows = [];
+  let weightedSum = 0;
+  let weightedSites = 0;
+  let pipelineTotalCost = 0;
+
+  for (const sc in sitesByState) {
+    if (!STATE_COST_PSF[sc]) continue;
+    const sites = sitesByState[sc];
+    const cost = computeCostPerDoor(sc);
+    const tier = STATE_TIER[sc];
+    const strip = state.tierStrip[tier];
+    const psf = STATE_COST_PSF[sc];
+    const units = sites * (totalPipelineUnits / totalSites);  // proportional unit allocation
+    const total = cost * units;
+
+    stateRows.push({
+      state: sc, tier, psf, strip, sites,
+      units: Math.round(units),
+      cost: Math.round(cost),
+      gap: Math.round(cost - state.target),
+      total: Math.round(total),
+    });
+
+    weightedSum += cost * sites;
+    weightedSites += sites;
+    pipelineTotalCost += cost * units;
+  }
+
+  const blended = weightedSites &gt; 0 ? weightedSum / weightedSites : 0;
+
+  // Tier averages
+  const tierAgg = { A: [0,0], B: [0,0], C: [0,0], D: [0,0] };
+  for (const r of stateRows) {
+    tierAgg[r.tier][0] += r.cost * r.sites;
+    tierAgg[r.tier][1] += r.sites;
+  }
+  const tierAvg = {};
+  for (const t in tierAgg) {
+    tierAvg[t] = tierAgg[t][1] &gt; 0 ? tierAgg[t][0] / tierAgg[t][1] : 0;
+  }
+
+  // Min / max / over count
+  const sortedByCost = [...stateRows].sort((a,b)=&gt;a.cost-b.cost);
+  const minRow = sortedByCost[0];
+  const maxRow = sortedByCost[sortedByCost.length - 1];
+  const overSites = stateRows.filter(r =&gt; r.cost &gt; state.target).reduce((a,r)=&gt;a+r.sites, 0);
+
+  return {
+    blended,
+    tierAvg,
+    stateRows,
+    minRow, maxRow,
+    overSites,
+    totalSites,
+    totalPipelineUnits,
+    pipelineTotalCost,
+  };
+}
+
+// =============================================================================
+// FORMATTERS
+// =============================================================================
+const fmt$ = n =&gt; &#x27;$&#x27; + Math.round(n).toLocaleString();
+const fmt$k = n =&gt; &#x27;$&#x27; + (Math.round(n / 1000)).toLocaleString() + &#x27;K&#x27;;
+const fmt$M = n =&gt; &#x27;$&#x27; + (n/1e6).toFixed(1) + &#x27;M&#x27;;
+const fmt$B = n =&gt; &#x27;$&#x27; + (n/1e9).toFixed(2) + &#x27;B&#x27;;
+const fmtSmart$ = n =&gt; {
+  if (n &gt;= 1e9) return fmt$B(n);
+  if (n &gt;= 1e6) return fmt$M(n);
+  if (n &gt;= 1e3) return fmt$k(n);
+  return fmt$(n);
+};
+
+// =============================================================================
+// RENDERING
+// =============================================================================
+function renderMixBars() {
+  const total = Object.values(state.products).reduce((a,p)=&gt;a+p.units, 0);
+  const order = [&#x27;townhome&#x27;, &#x27;adu&#x27;, &#x27;duplex&#x27;, &#x27;sfr&#x27;];
+  const html = order.map(k =&gt; {
+    const p = state.products[k];
+    const pct = total &gt; 0 ? (p.units / total) * 100 : 0;
+    return `
+      &lt;div class=&quot;mix-bar&quot;&gt;
+        &lt;div class=&quot;pname&quot;&gt;${p.name}&lt;/div&gt;
+        &lt;div class=&quot;ptrack&quot;&gt;&lt;div class=&quot;pfill ${p.color}&quot; style=&quot;width:${pct}%&quot;&gt;&lt;/div&gt;&lt;/div&gt;
+        &lt;div class=&quot;pcount&quot;&gt;${p.units}&lt;span class=&quot;pct&quot;&gt;${pct.toFixed(0)}%&lt;/span&gt;&lt;/div&gt;
+      &lt;/div&gt;
+    `;
+  }).join(&#x27;&#x27;);
+  document.getElementById(&#x27;mix-bars&#x27;).innerHTML = html;
+  document.getElementById(&#x27;mix-total-units&#x27;).textContent = `${total} buildings`;
+}
+
+function renderProductRows() {
+  const order = [&#x27;townhome&#x27;, &#x27;adu&#x27;, &#x27;duplex&#x27;, &#x27;sfr&#x27;];
+  const html = order.map(k =&gt; {
+    const p = state.products[k];
+    return `
+      &lt;div class=&quot;prod-row&quot;&gt;
+        &lt;div class=&quot;swatch ${p.color}&quot;&gt;&lt;/div&gt;
+        &lt;div class=&quot;pname&quot;&gt;${p.name}&lt;/div&gt;
+        &lt;div&gt;&lt;/div&gt;
+        &lt;input type=&quot;number&quot; data-prod=&quot;${k}&quot; data-field=&quot;sf&quot; value=&quot;${p.sf}&quot; min=&quot;200&quot; max=&quot;4000&quot; step=&quot;50&quot;&gt;
+        &lt;input type=&quot;number&quot; class=&quot;units-input&quot; data-prod=&quot;${k}&quot; data-field=&quot;units&quot; value=&quot;${p.units}&quot; min=&quot;0&quot; step=&quot;1&quot;&gt;
+      &lt;/div&gt;
+    `;
+  }).join(&#x27;&#x27;);
+  document.getElementById(&#x27;product-rows&#x27;).innerHTML = html;
+
+  document.querySelectorAll(&#x27;#product-rows input&#x27;).forEach(input =&gt; {
+    input.addEventListener(&#x27;input&#x27;, e =&gt; {
+      const prod = e.target.dataset.prod;
+      const field = e.target.dataset.field;
+      const val = parseInt(e.target.value) || 0;
+      state.products[prod][field] = val;
+      renderMixBars();
+      render();
+    });
+  });
+}
+
+function renderTierStrips() {
+  const html = Object.entries(TIER_INFO).map(([t, info]) =&gt; `
+    &lt;div class=&quot;tier-strip tier-${t}&quot;&gt;
+      &lt;div&gt;
+        &lt;div class=&quot;tname&quot;&gt;${info.name}&lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div&gt;
+        &lt;div class=&quot;tdesc&quot;&gt;${info.desc}&lt;/div&gt;
+        &lt;input type=&quot;range&quot; data-tier=&quot;${t}&quot; min=&quot;15&quot; max=&quot;50&quot; value=&quot;${state.tierStrip[t]}&quot; step=&quot;1&quot; style=&quot;margin-top:4px;&quot;&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;tval&quot;&gt;&lt;span data-tier-val=&quot;${t}&quot;&gt;${state.tierStrip[t]}&lt;/span&gt;%&lt;/div&gt;
+    &lt;/div&gt;
+  `).join(&#x27;&#x27;);
+  document.getElementById(&#x27;tier-strips&#x27;).innerHTML = html;
+  document.querySelectorAll(&#x27;#tier-strips input&#x27;).forEach(input =&gt; {
+    input.addEventListener(&#x27;input&#x27;, e =&gt; {
+      const t = e.target.dataset.tier;
+      const v = parseInt(e.target.value);
+      state.tierStrip[t] = v;
+      document.querySelector(`[data-tier-val=&quot;${t}&quot;]`).textContent = v;
+      render();
+    });
+  });
+}
+
+function renderHero(result) {
+  const { blended, minRow, maxRow, overSites, totalSites, totalPipelineUnits, pipelineTotalCost } = result;
+  document.getElementById(&#x27;hero-avg&#x27;).textContent = fmt$k(blended);
+  const delta = blended - state.target;
+  const pct = (delta / state.target * 100);
+  const deltaEl = document.getElementById(&#x27;hero-delta&#x27;);
+  const sign = delta &gt; 0 ? &#x27;+&#x27; : &#x27;&#x27;;
+  deltaEl.textContent = `${sign}${fmt$k(delta)} (${sign}${pct.toFixed(1)}%) vs ${fmt$k(state.target)} target`;
+  deltaEl.className = &#x27;delta &#x27; + (Math.abs(pct) &lt; 5 ? &#x27;on&#x27; : (delta &gt; 0 ? &#x27;over&#x27; : &#x27;under&#x27;));
+
+  document.getElementById(&#x27;hero-min&#x27;).textContent = fmt$k(minRow.cost);
+  document.getElementById(&#x27;hero-min-state&#x27;).textContent = `${minRow.state} · Tier ${minRow.tier}`;
+  document.getElementById(&#x27;hero-max&#x27;).textContent = fmt$k(maxRow.cost);
+  document.getElementById(&#x27;hero-max-state&#x27;).textContent = `${maxRow.state} · Tier ${maxRow.tier}`;
+
+  document.getElementById(&#x27;hero-over&#x27;).textContent = `${Math.round(overSites/totalSites*100)}%`;
+  document.getElementById(&#x27;hero-over-detail&#x27;).textContent = `${overSites} of ${totalSites} sites`;
+
+  document.getElementById(&#x27;hero-total&#x27;).textContent = fmtSmart$(pipelineTotalCost);
+  document.getElementById(&#x27;hero-total-detail&#x27;).textContent = `across ${totalPipelineUnits} buildings`;
+  document.getElementById(&#x27;site-count&#x27;).textContent = totalSites;
+}
+
+function renderTierCards(result) {
+  const order = [&#x27;A&#x27;,&#x27;B&#x27;,&#x27;C&#x27;,&#x27;D&#x27;];
+  const html = order.map(t =&gt; {
+    const c = result.tierAvg[t] || 0;
+    const tierStateRows = result.stateRows.filter(r =&gt; r.tier === t);
+    const sites = tierStateRows.reduce((a,r)=&gt;a+r.sites, 0);
+    return `
+      &lt;div class=&quot;tier-card-big ${t}&quot;&gt;
+        &lt;div class=&quot;tname&quot;&gt;${TIER_INFO[t].name}&lt;/div&gt;
+        &lt;div class=&quot;tval&quot;&gt;${fmt$k(c)}&lt;/div&gt;
+        &lt;div class=&quot;tsub&quot;&gt;${sites} sites · strip ${state.tierStrip[t]}%&lt;/div&gt;
+      &lt;/div&gt;
+    `;
+  }).join(&#x27;&#x27;);
+  document.getElementById(&#x27;tier-cards&#x27;).innerHTML = html;
+
+  // explainer text
+  const aGap = result.tierAvg.A - result.tierAvg.D;
+  const aPct = result.tierAvg.D &gt; 0 ? (aGap / result.tierAvg.D * 100) : 0;
+  document.getElementById(&#x27;tier-explainer&#x27;).innerHTML =
+    `Tier A markets cost &lt;strong style=&quot;color:var(--amber);&quot;&gt;${aPct.toFixed(0)}% more per door&lt;/strong&gt; than Tier D. Use these tier averages — not a single national number — when sizing market-by-market unit economics.`;
+}
+
+function renderTable(result) {
+  const tbody = document.getElementById(&#x27;state-tbody&#x27;);
+  let rows = [...result.stateRows];
+  rows.sort((a,b) =&gt; {
+    const aV = a[state.sortKey], bV = b[state.sortKey];
+    if (typeof aV === &#x27;string&#x27;) return state.sortDir === &#x27;asc&#x27; ? aV.localeCompare(bV) : bV.localeCompare(aV);
+    return state.sortDir === &#x27;asc&#x27; ? aV - bV : bV - aV;
+  });
+
+  tbody.innerHTML = rows.map(r =&gt; {
+    const gapClass = Math.abs(r.gap) &lt; state.target * 0.05 ? &#x27;gap-neutral&#x27; :
+                     r.gap &gt; 0 ? &#x27;gap-positive&#x27; : &#x27;gap-negative&#x27;;
+    const gapSign = r.gap &gt; 0 ? &#x27;+&#x27; : &#x27;&#x27;;
+    return `
+      &lt;tr&gt;
+        &lt;td class=&quot;text-l&quot;&gt;&lt;div class=&quot;state-cell&quot;&gt;&lt;span class=&quot;tier-dot ${r.tier}&quot;&gt;&lt;/span&gt;${r.state}&lt;/div&gt;&lt;/td&gt;
+        &lt;td&gt;${r.tier}&lt;/td&gt;
+        &lt;td&gt;$${r.psf}&lt;/td&gt;
+        &lt;td&gt;${r.strip}%&lt;/td&gt;
+        &lt;td&gt;${r.sites}&lt;/td&gt;
+        &lt;td&gt;${r.units}&lt;/td&gt;
+        &lt;td&gt;&lt;strong&gt;${fmt$k(r.cost)}&lt;/strong&gt;&lt;/td&gt;
+        &lt;td class=&quot;${gapClass}&quot;&gt;${gapSign}${fmt$k(r.gap)}&lt;/td&gt;
+        &lt;td&gt;${fmtSmart$(r.total)}&lt;/td&gt;
+      &lt;/tr&gt;
+    `;
+  }).join(&#x27;&#x27;);
+
+  // header sort indicators
+  document.querySelectorAll(&#x27;thead th&#x27;).forEach(th =&gt; {
+    th.classList.remove(&#x27;sorted-asc&#x27;, &#x27;sorted-desc&#x27;);
+    if (th.dataset.sort === state.sortKey) {
+      th.classList.add(state.sortDir === &#x27;asc&#x27; ? &#x27;sorted-asc&#x27; : &#x27;sorted-desc&#x27;);
+    }
+  });
+}
+
+function render() {
+  const result = compute();
+  renderHero(result);
+  renderTierCards(result);
+  renderTable(result);
+}
+
+// =============================================================================
+// EVENT WIRING
+// =============================================================================
+function wireSorting() {
+  document.querySelectorAll(&#x27;thead th&#x27;).forEach(th =&gt; {
+    th.addEventListener(&#x27;click&#x27;, () =&gt; {
+      const k = th.dataset.sort;
+      if (state.sortKey === k) {
+        state.sortDir = state.sortDir === &#x27;asc&#x27; ? &#x27;desc&#x27; : &#x27;asc&#x27;;
+      } else {
+        state.sortKey = k;
+        state.sortDir = (k === &#x27;state&#x27; || k === &#x27;tier&#x27;) ? &#x27;asc&#x27; : &#x27;desc&#x27;;
+      }
+      render();
+    });
+  });
+}
+
+function wirePresets() {
+  document.querySelectorAll(&#x27;.preset-row button&#x27;).forEach(btn =&gt; {
+    btn.addEventListener(&#x27;click&#x27;, () =&gt; {
+      document.querySelectorAll(&#x27;.preset-row button&#x27;).forEach(b =&gt; b.classList.remove(&#x27;active&#x27;));
+      btn.classList.add(&#x27;active&#x27;);
+      const preset = btn.dataset.preset;
+      if (preset === &#x27;actual&#x27;) {
+        state.products.townhome.units = 214;
+        state.products.adu.units = 211;
+        state.products.duplex.units = 160;
+        state.products.sfr.units = 14;
+      } else if (preset === &#x27;adu-heavy&#x27;) {
+        state.products.townhome.units = 100;
+        state.products.adu.units = 400;
+        state.products.duplex.units = 80;
+        state.products.sfr.units = 19;
+      } else if (preset === &#x27;density&#x27;) {
+        state.products.townhome.units = 350;
+        state.products.adu.units = 100;
+        state.products.duplex.units = 240;
+        state.products.sfr.units = 9;
+      }
+      // &#x27;custom&#x27; = no change
+      renderMixBars();
+      renderProductRows();
+      render();
+    });
+  });
+}
+
+function wireTarget() {
+  const t = document.getElementById(&#x27;target&#x27;);
+  const v = document.getElementById(&#x27;target-val&#x27;);
+  t.addEventListener(&#x27;input&#x27;, () =&gt; {
+    state.target = parseInt(t.value);
+    v.textContent = fmt$(state.target);
+    render();
+  });
+}
+
+function wireExports() {
+  document.getElementById(&#x27;export-csv&#x27;).addEventListener(&#x27;click&#x27;, () =&gt; {
+    const result = compute();
+    let csv = &#x27;State,Tier,PSF,Strip%,Sites,Units,CostPerDoor,GapVsTarget,TotalCost\n&#x27;;
+    csv += result.stateRows.map(r =&gt;
+      [r.state, r.tier, r.psf, r.strip, r.sites, r.units, r.cost, r.gap, r.total].join(&#x27;,&#x27;)
+    ).join(&#x27;\n&#x27;);
+    const blob = new Blob([csv], { type: &#x27;text/csv&#x27; });
+    const a = document.createElement(&#x27;a&#x27;);
+    a.href = URL.createObjectURL(blob);
+    a.download = &#x27;fbx-cost-by-state.csv&#x27;;
+    a.click();
+  });
+
+  document.getElementById(&#x27;export-json&#x27;).addEventListener(&#x27;click&#x27;, () =&gt; {
+    const out = {
+      version: 1,
+      target_per_door: state.target,
+      product_mix: state.products,
+      tier_strip_pct: state.tierStrip,
+      state_cost_psf: STATE_COST_PSF,
+      state_tier: STATE_TIER,
+      results: compute(),
+    };
+    const blob = new Blob([JSON.stringify(out, null, 2)], { type: &#x27;application/json&#x27; });
+    const a = document.createElement(&#x27;a&#x27;);
+    a.href = URL.createObjectURL(blob);
+    a.download = &#x27;fbx-cost-assumptions.json&#x27;;
+    a.click();
+  });
+
+  document.getElementById(&#x27;apply-to-map&#x27;).addEventListener(&#x27;click&#x27;, () =&gt; {
+    if (window.parent &amp;&amp; window.parent !== window) {
+      // In the master shell — open the existing Save Version modal so this
+      // commits sites.json (with refreshed cost_assumptions) via Actions and
+      // the map/editor iframes auto-reload.
+      try { window.parent.postMessage({ type: &#x27;fbx-trigger-save&#x27; }, &#x27;*&#x27;); } catch (e) {}
+      return;
+    }
+    // Standalone fallback — copy JSON for manual paste.
+    const ca = buildCostAssumptions();
+    navigator.clipboard.writeText(JSON.stringify(ca, null, 2));
+    alert(`Standalone mode — cost_assumptions JSON copied to clipboard.\n\nBlended: ${fmt$(ca.blended_per_door)} / door`);
+  });
+}
+
+// =============================================================================
+// MASTER-SHELL BRIDGE — postMessage round-trip for Save Version
+// =============================================================================
+window.addEventListener(&#x27;message&#x27;, e =&gt; {
+  if (!e.data) return;
+  if (e.data.type === &#x27;fbx-get-state&#x27;) {
+    const doc = state.fullSitesDoc || { version: 1, sites: [] };
+    doc.cost_assumptions = buildCostAssumptions();
+    const content = JSON.stringify(doc, null, 2);
+    try {
+      window.parent.postMessage({ type: &#x27;fbx-state&#x27;, content: content, filename: &#x27;sites.json&#x27; }, &#x27;*&#x27;);
+    } catch (err) { /* best-effort */ }
+  }
+});
+
+// =============================================================================
+// LOAD SITES
+// =============================================================================
+async function loadSites() {
+  try {
+    const res = await fetch(&#x27;sites.json?t=&#x27; + Date.now(), { cache: &#x27;no-store&#x27; });
+    if (!res.ok) throw new Error(&#x27;not ok&#x27;);
+    const data = await res.json();
+    state.fullSitesDoc = data;
+    state.loadedFromSites = true;
+
+    const sites = data.sites || data;
+    state.sites = sites;
+    state.sitesByState = {};
+    for (const s of sites) {
+      const sc = s.state;
+      state.sitesByState[sc] = (state.sitesByState[sc] || 0) + 1;
+    }
+
+    // Persisted overrides — keep calibrator and expansion map in lock-step
+    const ca = data.cost_assumptions;
+    if (ca) {
+      if (typeof ca.target_per_door === &#x27;number&#x27;) state.target = ca.target_per_door;
+      if (ca.product_mix &amp;&amp; typeof ca.product_mix === &#x27;object&#x27;) {
+        state.products = JSON.parse(JSON.stringify(ca.product_mix));
+      }
+      if (ca.tier_strip_pct &amp;&amp; typeof ca.tier_strip_pct === &#x27;object&#x27;) {
+        state.tierStrip = { ...DEFAULT_TIER_STRIP, ...ca.tier_strip_pct };
+      }
+      if (ca.state_cost_psf) Object.assign(STATE_COST_PSF, ca.state_cost_psf);
+      if (ca.state_tier) Object.assign(STATE_TIER, ca.state_tier);
+    }
+    return;
+  } catch (e) {
+    state.sitesByState = Object.fromEntries(EMBEDDED_SITES);
+    state.fullSitesDoc = { version: 0, sites: [] };
+  }
+}
+
+// =============================================================================
+// INIT
+// =============================================================================
+async function init() {
+  await loadSites();
+  renderMixBars();
+  renderProductRows();
+  renderTierStrips();
+  wireSorting();
+  wirePresets();
+  wireTarget();
+  wireExports();
+  render();
+}
+
+init();
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+"></iframe></div><div id="ver-panel"><div id="ver-panel-head">Version History</div><div id="ver-list"></div></div><div id="save-modal"><div class="svm-box"><h2>Save Version</h2><p class="svm-subtitle">Page: <strong id="svm-page-label"></strong></p><label><span class="svm-required">*</span> Version name (required)</label><input type="text" id="svm-name" placeholder="e.g. Q2 draft" autocomplete="off"><div id="svm-error"></div><div class="svm-hint">Commits <strong id="svm-file-label"></strong> to GitHub via Actions — takes ~15s.</div><div class="svm-actions"><button id="svm-cancel">Cancel</button><button id="svm-commit">Save to GitHub</button></div></div></div><div id="cmdk-modal" role="dialog" aria-modal="true" aria-label="Quick switch"><div class="cmdk-box"><input id="cmdk-input" type="text" placeholder="Jump to a tool…" autocomplete="off" spellcheck="false"><div id="cmdk-list"></div></div></div><div id="nav-toast"></div><script>
 var _PAT='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',_REPO='Doc-Clev/homefab-map',_WF_ID='265885571';
-var _PAGES=['map','editor','fishbone','fishbone-editor','sitelist'];
-var _LABELS={'map':'🗺 Expansion Map','editor':'✏️ Map Editor','fishbone':'🐟 Fishbone','fishbone-editor':'✏️ Fishbone Editor','sitelist':'📋 Sites Detail'};
-var _COLORS={'map':'#639922','editor':'#185FA5','fishbone':'#c9964a','fishbone-editor':'#b85c4a','sitelist':'#7a6e63'};
-var _FILE={'map':'sites.json','editor':'sites.json','fishbone':'fishbone.json','fishbone-editor':'fishbone.json','sitelist':''};
+var _PAGES=['map','editor','cost-calibrator','fishbone','fishbone-editor','sitelist'];
+var _LABELS={'map':'🗺 Expansion Map','editor':'✏️ Map Editor','cost-calibrator':'💰 Cost Calibrator','fishbone':'🐟 Fishbone','fishbone-editor':'✏️ Fishbone Editor','sitelist':'📋 Sites Detail'};
+var _COLORS={'map':'#639922','editor':'#185FA5','cost-calibrator':'#f59e0b','fishbone':'#c9964a','fishbone-editor':'#b85c4a','sitelist':'#7a6e63'};
+var _FILE={'map':'sites.json','editor':'sites.json','cost-calibrator':'sites.json','fishbone':'fishbone.json','fishbone-editor':'fishbone.json','sitelist':''};
+// Pages whose iframes need to re-fetch when sites.json changes
+var _SITES_DEPS=['map','editor','cost-calibrator','sitelist'];
+// Group membership for the paired-card nav
+var _GROUP_OF={'map':'map','editor':'map','cost-calibrator':'cost','fishbone':'fishbone','fishbone-editor':'fishbone','sitelist':'sites'};
 var _cur='map';
 var _VK='fbx_v3';
 var _vers={};
@@ -16762,13 +18129,28 @@ try{_vers=JSON.parse(localStorage.getItem(_VK)||'{}')}catch(e){}
 _PAGES.forEach(function(p){if(!_vers[p])_vers[p]=[]});
 function _saveLS(){try{localStorage.setItem(_VK,JSON.stringify(_vers))}catch(e){}}
 
+function _hexA(hex,a){
+  hex=hex.replace('#','');
+  var r=parseInt(hex.slice(0,2),16),g=parseInt(hex.slice(2,4),16),b=parseInt(hex.slice(4,6),16);
+  return 'rgba('+r+','+g+','+b+','+a+')';
+}
+
 function _switchPage(p){
   _cur=p;
+  var grp=_GROUP_OF[p];
+  document.querySelectorAll('.nav-group').forEach(function(g){
+    var on=g.dataset.group===grp;
+    g.classList.toggle('active',on);
+    if(on){
+      g.style.setProperty('--ng-color',_COLORS[p]);
+      g.style.setProperty('--ng-bg',_hexA(_COLORS[p],0.10));
+    }else{
+      g.style.removeProperty('--ng-color');
+      g.style.removeProperty('--ng-bg');
+    }
+  });
   document.querySelectorAll('.nav-tab').forEach(function(b){
-    var a=b.dataset.page===p;
-    b.classList.toggle('active',a);
-    b.style.borderBottomColor=a?_COLORS[p]:'transparent';
-    b.style.color=a?_COLORS[p]:'';
+    b.classList.toggle('active',b.dataset.page===p);
   });
   document.querySelectorAll('.page-frame').forEach(function(f){
     var s=f.dataset.page===p;
@@ -16776,7 +18158,9 @@ function _switchPage(p){
     if(s){try{f.contentWindow.dispatchEvent(new Event('resize'))}catch(e){}}
   });
   _refreshVers();
-  var ro=p==='sitelist';document.getElementById('nav-save-btn').disabled=ro;document.getElementById('nav-ver-btn').disabled=ro;
+  var ro=p==='sitelist';
+  document.getElementById('nav-save-btn').disabled=ro;
+  document.getElementById('nav-ver-btn').disabled=ro;
 }
 
 function _openModal(){
@@ -16802,6 +18186,7 @@ window.addEventListener('message',function(e){
     resolve(e.data.content);
   }
   if(e.data.type==='fbx-toast')_toast(e.data.msg,e.data.err);
+  if(e.data.type==='fbx-trigger-save')_openModal();
 });
 
 function _getFrameState(){
@@ -16811,6 +18196,20 @@ function _getFrameState(){
     _pendingSave=resolve;
     try{frame.contentWindow.postMessage({type:'fbx-get-state'},'*')}catch(e){resolve(null);}
     setTimeout(function(){if(_pendingSave){_pendingSave=null;resolve(null);}},8000);
+  });
+}
+
+// Reload all iframes that depend on a given file. srcdoc-reassign re-mounts
+// the iframe so a fresh fetch('sites.json?t=…') runs at boot.
+function _reloadDeps(file){
+  if(file!=='sites.json')return;
+  _SITES_DEPS.forEach(function(p){
+    if(p===_cur)return; // current iframe will re-render via its own save callback
+    var f=document.querySelector('.page-frame[data-page="'+p+'"]');
+    if(!f)return;
+    var sd=f.getAttribute('srcdoc');
+    f.removeAttribute('srcdoc');
+    setTimeout(function(){f.setAttribute('srcdoc',sd);},30);
   });
 }
 
@@ -16866,10 +18265,11 @@ async function _doSave(){
     _vers[_cur].unshift({name:name,ts:ts.toISOString(),tsDisplay:ts.toLocaleString('en-US',{year:'numeric',month:'short',day:'numeric',hour:'2-digit',minute:'2-digit',hour12:true}),page:_cur});
     _saveLS();_refreshVers();
     _setStatus('done','Saved ✓');
-    _toast('Version "'+name+'" committed to GitHub');
+    _toast('Version "'+name+'" committed — refreshing dependent tabs…');
     setTimeout(_hideStatus,4000);
     var f=document.querySelector('.page-frame[data-page="'+_cur+'"]');
     if(f){try{f.contentWindow.postMessage({type:'fbx-save-github',name:name},'*')}catch(err){}}
+    _reloadDeps(_FILE[_cur]);
   }catch(err){
     _setStatus('error','Save failed');
     _toast('Save failed: '+err.message,true);
@@ -16890,13 +18290,64 @@ function _sleep(ms){return new Promise(function(r){setTimeout(r,ms)})}
 function _toast(msg,err){var t=document.getElementById('nav-toast');t.textContent=msg;t.style.borderLeftColor=err?'#C00000':'#639922';t.style.opacity='1';t.style.transform='translateY(0)';clearTimeout(t._t);t._t=setTimeout(function(){t.style.opacity='0';t.style.transform='translateY(8px)'},4000);}
 function _esc(s){return String(s||'').replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
 
+// ── Cmd-K quick switcher ────────────────────────────────────────────────────
+var _cmdkSel=0,_cmdkRows=[];
+function _cmdkOpen(){
+  document.getElementById('cmdk-modal').classList.add('show');
+  document.getElementById('cmdk-input').value='';
+  _cmdkSel=0;
+  _cmdkRender('');
+  setTimeout(function(){document.getElementById('cmdk-input').focus();},30);
+}
+function _cmdkClose(){document.getElementById('cmdk-modal').classList.remove('show');}
+function _cmdkRender(q){
+  q=(q||'').toLowerCase().trim();
+  _cmdkRows=_PAGES.filter(function(p){
+    return !q || _LABELS[p].toLowerCase().indexOf(q)>=0 || p.indexOf(q)>=0;
+  });
+  if(_cmdkSel>=_cmdkRows.length)_cmdkSel=Math.max(0,_cmdkRows.length-1);
+  var list=document.getElementById('cmdk-list');
+  if(!_cmdkRows.length){list.innerHTML='<div class="cmdk-empty">No matches</div>';return;}
+  list.innerHTML=_cmdkRows.map(function(p,i){
+    var n=_PAGES.indexOf(p)+1;
+    return '<div class="cmdk-item'+(i===_cmdkSel?' sel':'')+'" data-page="'+p+'"><span>'+_esc(_LABELS[p])+'</span><span class="cmdk-shortcut">'+(n<=9?'⌘'+n:'')+'</span></div>';
+  }).join('');
+  list.querySelectorAll('.cmdk-item').forEach(function(el){
+    el.addEventListener('click',function(){_switchPage(el.dataset.page);_cmdkClose();});
+  });
+}
+function _cmdkKey(e){
+  if(e.key==='ArrowDown'){e.preventDefault();_cmdkSel=Math.min(_cmdkRows.length-1,_cmdkSel+1);_cmdkRender(document.getElementById('cmdk-input').value);}
+  else if(e.key==='ArrowUp'){e.preventDefault();_cmdkSel=Math.max(0,_cmdkSel-1);_cmdkRender(document.getElementById('cmdk-input').value);}
+  else if(e.key==='Enter'){e.preventDefault();var p=_cmdkRows[_cmdkSel];if(p){_switchPage(p);_cmdkClose();}}
+  else if(e.key==='Escape'){e.preventDefault();_cmdkClose();}
+}
+
 document.querySelectorAll('.nav-tab').forEach(function(b){b.addEventListener('click',function(){_switchPage(b.dataset.page)});});
 document.getElementById('nav-save-btn').addEventListener('click',_openModal);
+document.getElementById('nav-cmdk-btn').addEventListener('click',_cmdkOpen);
 document.getElementById('svm-cancel').addEventListener('click',_closeModal);
 document.getElementById('svm-commit').addEventListener('click',_doSave);
 document.getElementById('save-modal').addEventListener('click',function(e){if(e.target===this)_closeModal()});
-document.addEventListener('keydown',function(e){if(e.key==='Escape')_closeModal()});
+document.getElementById('cmdk-modal').addEventListener('click',function(e){if(e.target===this)_cmdkClose()});
+document.getElementById('cmdk-input').addEventListener('input',function(e){_cmdkSel=0;_cmdkRender(e.target.value)});
+document.getElementById('cmdk-input').addEventListener('keydown',_cmdkKey);
+document.addEventListener('keydown',function(e){
+  // Cmd-K / Ctrl-K opens quick switcher
+  if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='k'){e.preventDefault();_cmdkOpen();return;}
+  // Cmd-1..6 jumps to page N
+  if((e.metaKey||e.ctrlKey)&&/^[1-6]$/.test(e.key)){e.preventDefault();var p=_PAGES[parseInt(e.key)-1];if(p)_switchPage(p);return;}
+  // Cmd-E toggles between view and editor of the current group (if it has an editor)
+  if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='e'){
+    var pair={'map':'editor','editor':'map','fishbone':'fishbone-editor','fishbone-editor':'fishbone'}[_cur];
+    if(pair){e.preventDefault();_switchPage(pair);}
+    return;
+  }
+  if(e.key==='Escape')_closeModal();
+});
 document.getElementById('svm-name').addEventListener('keydown',function(e){if(e.key==='Enter')_doSave()});
 document.addEventListener('click',function(e){var p=document.getElementById('ver-panel');if(p.style.display==='block'&&!p.contains(e.target)&&e.target.id!=='nav-ver-btn')p.style.display='none';});
 _switchPage('map');
+
+
 </script></body></html>
