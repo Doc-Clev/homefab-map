@@ -1,222 +1,202 @@
-# HomeFab Expansion Map & Fishbone — Integrated Strategic Model
+# FBX HomeFab Platform — v2.0
 
-Two interactive, editable strategic artifacts for HomeFab's 10-year US expansion and operating model, sharing a single repo and deployment target.
+**Live:** https://Doc-Clev.github.io/homefab-map/
 
-**Expansion Map** — a geographic + financial dashboard of US Fab rollout across both business units: FBX Core (warehousing & distribution) and FBX Fab-Home (franchise factories).
+A single-page strategic planning platform for FBX HomeFab's 10-year US rollout. Master shell with six embedded tools, all sharing one canonical data file (`sites.json`) and one GitHub-Actions-backed save flow.
 
-**Fishbone** — a value-chain Ishikawa diagram of the three business units (First Mile, FBX Core, Last Mile) showing their constituent functions, inter-BU flows, and consolidated economics.
+## What's new in v2
 
----
-
-## Files
-
-### Expansion Map
-- `index.html` — editor: map, financial dashboard, cities table, hubs table, assumption controls
-- `sites.json` — canonical data file: sites + hubs + financial assumptions
-
-### Fishbone
-- `fishbone.html` — public read-only viewer (unauthenticated GitHub reads, version dropdown, hover explainers with optional financial breakdown)
-- `fishbone-editor.html` — private editor (PAT-gated, full editing of BUs, functions, financials, and prose descriptions)
-- `fishbone.json` — canonical fishbone data: BUs, functions, financial inputs, volume assumptions, inter-BU elimination rules, products list
-
-### Shared
-- `README.md` — this file
+- **💰 Cost Calibrator** — sixth tab, the primary cost-modeling tool
+- **City-level cost cascade** — every site has its own `cost.cci` (RSMeans construction-cost index); cost rolls up city → state default → national baseline
+- **Entitlement model** — land + soft costs + permits broken out per-tier so the platform can show a "true total / door" comparable to NAHB national turnkey ($269K SFD avg)
+- **Demand-weighted blending** — pipeline blended is weighted by `cost.demand_velocity` (homes/yr per fab), not site count
+- **Cmd-K nav** — quick-switcher across the six tools, with `Cmd-1..6` direct jumps and `Cmd-E` view↔editor toggle within a tool group
+- **Per-site map tooltip** — hover any city dot to see its full cost stack
+- **Tier-segmented dashboard widget** — cost stack by Tier A/B/C/D, demand-weighted, year-filtered
+- **Color-by-cost map overlay** — toggle dot coloring from phase to cost band (green = under target, amber = within 10%, red = 10%+ over)
 
 ---
 
-## Publishing to GitHub Pages
+## The platform
 
-1. Create a public GitHub repo (e.g. `homefab-map`)
-2. Upload all files to the root
-3. Settings → Pages → Deploy from branch `main`, folder `/` (root) → Save
-4. Your URLs:
-   - Expansion map: `https://Doc-Clev.github.io/homefab-map/index.html`
-   - Fishbone (public): `https://Doc-Clev.github.io/homefab-map/fishbone.html`
-   - Fishbone (editor): `https://Doc-Clev.github.io/homefab-map/fishbone-editor.html`
+`index.html` is the master shell. It hosts six tools as `srcdoc` iframes:
 
-## Embedding in Canva
+| # | Tab | What it does | File |
+|---|---|---|---|
+| 1 | 🗺 Expansion Map | 137-site map, year slider, financial dashboard, tier-segmented cost widget | inlined in `index.html` |
+| 2 | ✏ Map Editor | PAT-gated editor for sites + hubs + assumptions | inlined |
+| 3 | 💰 Cost Calibrator | Cost cascade tool: per-state defaults + per-city CCI overrides + entitlement assumptions | inlined; standalone `cost-calibrator.html` |
+| 4 | 🐟 Fishbone | Three-BU value-chain Ishikawa | inlined; standalone `fishbone.html` |
+| 5 | ✏ Fishbone Editor | PAT-gated editor for the fishbone | inlined; standalone `fishbone-editor.html` |
+| 6 | 📋 Sites Detail | Read-only narrative table of all 137 sites | inlined |
 
-Elements → Embed → paste any of the GitHub Pages URLs above. The interactive artifact renders live.
+**Save Version** (top-right) commits the relevant JSON file (`sites.json` or `fishbone.json`) through the `save-version.yml` GitHub Actions workflow. Auto-reloads dependent tabs after the commit lands.
 
----
-
-## What's on the Expansion Map page
-
-### Financial dashboard (top)
-Two bold side-by-side panels that update as you drag the year slider:
-
-- **FBX Core (teal)** — warehousing & distribution. Cumulative revenue, operating profit, kit sales, royalty income, CAPEX committed, hubs operating, homes shipped, ROI
-- **FBX Fab-Home (amber)** — franchise factory network. Cumulative revenue, net income, annual run-rate, Fab count, CAPEX committed, states covered, homes delivered, ROI
-
-### Global assumptions panel
-Click the ⚙ button to expose flex controls:
-
-- Fab-Home defaults: Fab CAPEX ($M), home revenue ($K), Fab margin (%)
-- Core defaults: hub CAPEX, kit price to Fabs, Core margin on kits, royalty %, Core opex %
-
-Change any number and the whole dashboard + tables recalculate instantly.
-
-### Map
-- Fab dots colored by phase (green / amber / red)
-- 4 FBX Core hub diamonds in teal
-- Toggle "Show hub→Fab routes" for nearest-hub visualization
-- Hover any marker for details
-
-### Fab sites table
-Every row is inline-editable. Columns: Year, Phase, City, State, Lat, Lon, CAPEX override ($M), Rev override ($K), Mgn override (%), Hub (auto-assigned). Blank overrides use global defaults; filled overrides show in bold amber.
-
-### Hubs table
-Edit each of the 4 strategic hubs: name, city, state, lat/lon, CAPEX override, opening year. "Fabs" column shows how many sites route to each hub.
+**Cmd-K** opens a quick switcher; `Cmd-1..6` jumps directly; `Cmd-E` toggles view↔editor when on Map or Fishbone.
 
 ---
 
-## What's on the Fishbone page
+## Data model — `sites.json` v2
 
-### Diagram
-Classic Ishikawa (fishbone) layout, left-to-right:
-
-- **Products box** (left end of spine) — ADUs, High Density Multi-Family, Bathroom Pods, SIPs
-- **Horizontal spine** running through the middle
-- **Three BU zones** separated by dashed vertical dividers, each with a colored pill label at top:
-  - First Mile (green) — entitlement, finance, design, home sales, franchise sales, licensing fees, building contracts
-  - FBX Core (amber) — import, warehousing, KoP creation, component sales, training, R&D, distribution
-  - Last Mile (red) — assembly, delivery logistics, installation, inspections
-- **Oblique function bones** fanning off the spine (top and bottom), tilted 22° away from the effect in classic Ishikawa orientation
-- **Customer ownership band** along the top showing who owns the buyer at each stage: Sales through First Mile + Core, GC at Last Mile
-- **Effect arrow + box** (right end) — "Delivered Home on Bare Land"
-- **Handoff labels** below the dividers marking the two commercial transitions: "contract signed → kit ordered" and "kit shipped → site work begins"
-
-### Hover explainer
-Hover any BU label or function stub for a detail panel with markdown description. Click to pin. Toggle the "Show financials" button to reveal per-unit numbers, annualized revenue/cost, margin, headcount, and time-in-phase.
-
-### Roll-up sidebar (right)
-Three BU P&Ls + a consolidated view showing:
-- Gross revenue (sum of all three BUs standalone)
-- Eliminations (inter-BU flows: KoP revenue, licensing royalties)
-- Consolidated revenue (real external money flowing into FBX)
-- Consolidated cost and margin
-
-### Editor-only features
-- Left sidebar: editable diagram head, product list, volume assumptions (homes/yr, contracts/yr, franchises/yr with optional map-sync), per-BU function list with reordering
-- Right pane: detail editor for the selected BU or function (name, basis, revenue, cost, external %, headcount, time, markdown description)
-- Inline **"+ add input"** prompt at the end of each BU's function column — click to add a new function with smart defaults
-- Import / Export JSON, GitHub save with named versions, version dropdown, `?v=<sha>` deep-link, PAT settings
-
----
-
-## Editing workflows
-
-### Quick edits — modify JSON directly on GitHub
-
-Both `sites.json` and `fishbone.json` are human-readable:
-
-**sites.json:**
-```json
+```jsonc
 {
-  "version": 2,
+  "version": 3,
   "sites": [
-    { "yr":1, "phase":1, "name":"Los Angeles", "state":"CA",
-      "lat":34.05, "lon":-118.24,
-      "capex": 3.5,
-      "rev_per_home": 200,
-      "margin_pct": 20
+    {
+      "yr": 1, "phase": 1, "name": "Fresno", "state": "CA",
+      "lat": 36.74, "lon": -119.77, "hub": "Corona",
+      "adu": "Base", "note": "Operational HQ. Central Valley hub…",
+      "cost": {
+        "cci": 1.08,                    // RSMeans CCI multiplier (1.00 = nat'l avg)
+        "psf_override": null,           // direct $/sf override; null = use cci × baseline
+        "strip_pct_override": null,     // null = inherit from state's tier
+        "demand_velocity": 180,         // homes/yr per fab — Doc's planning constant
+        "notes": "",
+        "source": "RSMeans 2025 direct",
+        "last_updated": "2026-05-06"
+      }
     }
+    // ... 136 more sites
   ],
-  "hubs": [
-    { "name":"West Coast Core", "city":"Stockton", "state":"CA",
-      "lat":37.96, "lon":-121.29, "capex":15, "opens_yr":1 }
-  ],
-  "assumptions": {
-    "fab_capex_M":3, "rev_per_home_K":180, "fab_margin_pct":22,
-    "hub_capex_M":15, "kit_price_K":72, "core_margin_pct":28,
-    "royalty_pct":8, "core_opex_pct":15
+  "cost_assumptions": {
+    "version": 2,
+    "national_baseline_psf": 162,        // NAHB SOC 2024 national avg ($/sf)
+    "target_per_door": 165000,           // Factory $/door target
+    "blended_per_door": 129623,          // Demand-weighted national blended (computed at save)
+    "blended_site_work_per_door": ...,
+    "blended_entitlement_per_door": ...,
+    "blended_total_per_door": ...,       // True total = factory + site work + entitlement
+    "products": {
+      "townhome": { "name": "Townhome", "sf": 1450, "units": 214, "sf_mod": 0.90 },
+      "adu":      { "name": "ADU",      "sf": 750,  "units": 211, "sf_mod": 1.15 },
+      "duplex":   { "name": "Duplex",   "sf": 1850, "units": 160, "sf_mod": 0.88 },
+      "sfr":      { "name": "SFR",      "sf": 1800, "units": 14,  "sf_mod": 1.00 }
+    },
+    "tier_strip_pct": { "A": 35, "B": 32, "C": 28, "D": 22 },  // GC site-work portion
+    "state_defaults": {
+      "CA": { "cost_psf": 225, "tier": "A" },
+      // ... 49 more states
+    },
+    "entitlement": {
+      "land_per_door_K_by_tier": { "A": 100, "B": 60, "C": 35, "D": 20 },
+      "soft_costs_pct_of_construction": 12,   // A&E, marketing, sales
+      "permits_per_door_K": 8                 // Impact fees + permits
+    }
   }
 }
 ```
 
-**fishbone.json:**
-```json
-{
-  "head": "Delivered Home on Bare Land",
-  "products": ["ADUs", "High Density Multi-Family", "Bathroom Pods", "SIPs"],
-  "volume": {
-    "homes_per_year": 100,
-    "contracts_per_year": 100,
-    "franchises_per_year": 4,
-    "franchises_from_map": true
-  },
-  "bus": [
-    {
-      "id": "first_mile", "name": "First Mile", "color_var": "--p1",
-      "description": "markdown...",
-      "functions": [
-        { "id":"licensing_fees", "name":"Licensing / Royalties",
-          "basis":"per_year", "revenue_K":1500, "cost_K":0,
-          "headcount":2, "time_days":0,
-          "external_rev_pct":0,
-          "description":"markdown..." }
-      ]
-    }
-  ],
-  "handoffs": [...],
-  "customer_ownership": { "sales_owns_through": "fbx_core" }
-}
+### Cost cascade
+
+Every per-site $/door reading walks this cascade, top to bottom:
+
+```
+city.cost.psf_override          ← user-set absolute $/sf (rare; from a real bid)
+  ↓ falls back to
+city.cost.cci × baseline_psf    ← typical case (RSMeans CCI × $162)
+  ↓ falls back to
+state_defaults[state].cost_psf  ← state typical (averages all metros)
+  ↓ falls back to
+national_baseline_psf           ← $162/sf, NAHB SOC 2024
 ```
 
-Commit to GitHub, wait 1–2 minutes for Pages to update.
+Same cascade for `strip_pct` (city override → tier default).
 
-### Visual editing
+### Cost stack
 
-**Expansion Map** (`index.html`): open the URL, edit any row/assumption/hub, changes save to browser localStorage, click Export JSON to download, replace `sites.json` in the repo.
+```
+factory       = effective_psf × (1 − strip%) × Σ(p.sf_mod × p.sf × p.units) / Σ(p.units)
+site_work     = effective_psf × strip% × Σ(p.sf_mod × p.sf × p.units) / Σ(p.units)
+construction  = factory + site_work
+entitlement   = land[tier] + (construction × soft_pct/100) + permits
+true_total    = construction + entitlement
+```
 
-**Fishbone** (`fishbone-editor.html`): open the editor URL, set your GitHub PAT once (stored in localStorage under a key separate from the map), edit anything, click Save Version with a named commit. The PAT needs Contents: Read & Write scoped to this repo. Commit messages use `[version-name] description` format so the version dropdown can parse names back out.
+### Demand-weighted blending
 
----
+```
+blended_total = Σ(site.true_total × site.cost.demand_velocity) / Σ(site.cost.demand_velocity)
+```
 
-## Economics model
-
-### Expansion Map
-
-**Per-Fab output ramp:**
-- Phase 1: 180 homes/yr mature
-- Phase 2: 240 homes/yr mature
-- Phase 3: 320 → 400 homes/yr (scales by opening year)
-- Opening year contributes half mature output (mid-year average)
-
-**Per-home revenue split (defaults):**
-- $180K home sale → Fab revenue
-- $72K kit COGS → paid to Core
-- $14.4K royalty (8%) → paid to Core
-- Remainder → Fab labor, overhead, margin (22%)
-
-**Core economics:** Revenue = kit sales + royalty. Gross profit on kits = kit sales × 28%. Opex = revenue × 15%. Operating profit = kit GP + royalty − opex.
-
-**Fab-Home economics:** Revenue = homes × $180K. Net income = revenue × 22%. CAPEX = $3M per Fab.
-
-**Hub assignment:** each Fab is assigned to its nearest active Core hub by haversine distance. A hub is active when `opens_yr ≤ current year`.
-
-### Fishbone
-
-**Basis normalization:** each function has a billing basis (per_home, per_contract, per_franchise, per_month, per_year). The roll-up multiplies per-basis values against the relevant volume assumption to produce annual $K.
-
-**External vs inter-BU revenue:** each function has an `external_rev_pct` (0–100). 100 = real external revenue (home buyers, new franchisees, third-party component sales). 0 = inter-BU flow (Core sells KoP to Last Mile, First Mile collects licensing royalty from Last Mile). The consolidated view eliminates all internal flows so consolidated revenue reflects only real money entering FBX.
-
-**Inter-BU flows as modeled:**
-- Core → Last Mile: Kit of Parts at transfer price (Core `kop` revenue = Last Mile COGS line)
-- First Mile → Last Mile: ongoing 4–8% licensing royalty on franchisee sales volume (First Mile `licensing_fees` revenue = Last Mile COGS line)
-- External: franchise sales ($650–$950K per franchise to new franchisees), home sales (end buyers), component sales (SIP panels, pods to non-franchisee builders), Last Mile install revenue (end buyers)
-
-**Map sync:** when the "sync from map" checkbox is on, the fishbone's `franchises_per_year` volume auto-pulls from `sites.json` Fab count on every refresh. Other map values (rev/home, homes/fab/year) appear as read-only reference in the editor sidebar but do not auto-apply — they're there for scenario modeling against the map's assumptions.
+Default `demand_velocity = 180 homes/yr`. Sites with higher fab capacity pull the blended toward their numbers.
 
 ---
 
-## Data source indicators
+## Cost Calibrator workflow
 
-**Expansion Map** — badge next to the title:
-- *Synced with sites.json* — view matches published file
-- *Local edits (not saved to source)* — unsaved changes in this browser
-- *Using built-in defaults* — `sites.json` not found (e.g. opened as `file://`)
+1. **Open the calibrator tab.** Hero shows the current cost stack: Factory + Site Work + Entitlement = True Total, with deltas vs the $165K factory target and the $269K NAHB SFD benchmark.
 
-Click ↻ Reload from source to discard local edits and re-fetch `sites.json`.
+2. **Tune assumptions** in the left panels:
+   - Pipeline mix presets (Actual / ADU-Heavy / Density Push / Custom)
+   - Per-product size + units + sf_mod
+   - Tier-strip% sliders (A/B/C/D)
+   - **Entitlement** — per-tier land sliders, soft costs %, permits $K
+   - Target $/door
 
-**Fishbone** — header shows the active version's short SHA, or "latest" for the default load. The version dropdown lists the last 30 commits to `fishbone.json`. Selecting any version loads it and updates the URL to `?v=<sha>` for deep-linking.
+3. **City Explorer** (right panel) — searchable, sortable table of all 137 sites. Click any row to expand an inline editor:
+   - CCI slider (0.75–1.50)
+   - $/sf override (overrides CCI × baseline if set)
+   - Strip% override (overrides tier default if set)
+   - Demand/yr
+   - Source dropdown (RSMeans direct / Local builder bid / Mfr quote / Estimated / Manual / Inherited)
+   - Notes
+   - **Reset to inherited** clears all overrides on that city
+
+4. **Save & sync to Expansion Map** — commits the updated `sites.json` through GitHub Actions. The map and editor tabs auto-reload after the commit lands; their per-site REV numbers and tier-breakdown widget reflect the new values.
+
+### CCI seeding
+
+Of the 137 sites, **17 have RSMeans 2025 direct CCIs** from the v2 spec (Fresno, San Diego, Phoenix, Denver, Hartford, Indianapolis, Honolulu, Anchorage, Boston, Seattle, Chicago, Portland, Dallas, Houston, Atlanta, Miami, Minneapolis). The remaining 120 are seeded by tier-typical CCI (`A: 1.05, B: 0.98, C: 0.92, D: 0.86`) with a phase-based downward nudge for later-rollout markets. Source is tagged `"estimated (Tier X typical)"` so Doc can audit and override per-city as real bids come in.
+
+---
+
+## Publishing & embedding
+
+GitHub Pages serves from `main` branch, root folder. URLs:
+
+- **Platform:** `https://Doc-Clev.github.io/homefab-map/` (master shell, all 6 tabs)
+- **Standalone tools** (for Canva embeds):
+  - Cost Calibrator: `https://Doc-Clev.github.io/homefab-map/cost-calibrator.html`
+  - Fishbone: `https://Doc-Clev.github.io/homefab-map/fishbone.html`
+  - Fishbone Editor: `https://Doc-Clev.github.io/homefab-map/fishbone-editor.html`
+
+For Canva: Elements → Embed → paste a URL. The interactive artifact renders live.
+
+---
+
+## Save flow architecture
+
+The master shell talks to each iframe via `postMessage`:
+
+1. User clicks **Save Version** → modal asks for a name
+2. Shell sends `fbx-get-state` to the active iframe
+3. Iframe responds with `fbx-state` containing the full updated JSON for that file
+4. Shell base64-encodes and POSTs to the GitHub Actions `workflow_dispatch` endpoint
+5. The workflow (`.github/workflows/save-version.yml`) decodes, validates JSON, and commits with a message like `[Q2 draft] saved from cost-calibrator`
+6. Shell polls until the workflow completes (~15-30s), then auto-reloads dependent iframes (`map`, `editor`, `sitelist`, `cost-calibrator` for sites.json saves)
+
+The PAT is hardcoded in the master shell (with `contents:write` scope on this repo only). The workflow only writes `sites.json` or `fishbone.json` — HTML changes are uploaded separately.
+
+---
+
+## Repository files
+
+| File | Role |
+|---|---|
+| `index.html` | Master shell (1MB; 6 srcdoc iframes + nav + Cmd-K + save flow) |
+| `sites.json` | Canonical data: 137 sites + cost_assumptions block (v2 schema) |
+| `fishbone.json` | Canonical fishbone data |
+| `cost-calibrator.html` | Standalone calibrator (also inlined in index.html) |
+| `fishbone.html` | Standalone fishbone viewer |
+| `fishbone-editor.html` | Standalone fishbone editor |
+| `editor.html` | Standalone map editor (legacy; primary editor is now the inlined Map Editor tab) |
+| `_scripts/` | Build helpers: `migrate_v2.py` (sites.json schema migration), `add_cost_assumptions.py` (v1 seeder, deprecated), `rebuild_shell.py` (re-inlines `cost-calibrator.html` into `index.html`) — gitignored |
+| `.github/workflows/save-version.yml` | Save-Version GitHub Actions workflow |
+
+---
+
+## Version history
+
+- **v2.0** (2026-05-06) — Cost Calibrator added as 6th tab. City-level cost cascade (CCI > state default > national baseline). Entitlement model (land + soft + permits). Per-site map tooltip with cost stack. Tier-segmented dashboard widget. Color-by-cost map overlay. Cmd-K quick switcher. Demand-weighted blending.
+- **v1.5** — Master shell consolidated 5 standalone tools into srcdoc iframes; Save Version flow via GitHub Actions.
+- **v1.0** — Initial Expansion Map + Fishbone, separate files.
