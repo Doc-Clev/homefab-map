@@ -936,6 +936,71 @@ function defaultRevPerK(s) {
   const v = costPerDoorForSite(s);
   return (v != null) ? Math.round(v / 1000) : assumptions.rev_per_home_K;
 }
+// Full per-site cost stack — factory + site work + entitlement = true total per door.
+// Mirrors the calibrator's cascade math; returns null if cost_assumptions isn't loaded.
+function costStackForSite(site) {
+  const ca = window._COST_ASSUMPTIONS;
+  if (!ca) return null;
+  const products = ca.products || ca.product_mix;
+  if (!products || !ca.tier_strip_pct) return null;
+
+  const sd = ca.state_defaults || {};
+  const baselinePsf = ca.national_baseline_psf || 162;
+  const co = (site &amp;&amp; site.cost) || {};
+  const sc = site &amp;&amp; site.state;
+
+  let psf, psfSource;
+  if (co.psf_override != null) {
+    psf = +co.psf_override;
+    psfSource = 'override $' + Math.round(psf);
+  } else if (co.cci != null) {
+    psf = baselinePsf * +co.cci;
+    psfSource = 'CCI ' + (+co.cci).toFixed(2) + ' × $' + baselinePsf;
+  } else if (sd[sc] &amp;&amp; sd[sc].cost_psf != null) {
+    psf = sd[sc].cost_psf;
+    psfSource = 'state default';
+  } else if (ca.state_cost_psf &amp;&amp; ca.state_cost_psf[sc] != null) {
+    psf = ca.state_cost_psf[sc];
+    psfSource = 'state default';
+  } else {
+    psf = baselinePsf;
+    psfSource = 'baseline';
+  }
+
+  const tier = (sd[sc] &amp;&amp; sd[sc].tier) || (ca.state_tier &amp;&amp; ca.state_tier[sc]) || 'C';
+  const stripPct = (co.strip_pct_override != null) ? +co.strip_pct_override : ca.tier_strip_pct[tier];
+  const strip = (stripPct == null ? 28 : stripPct) / 100;
+
+  let factorySf = 0, totalSf = 0, totalUnits = 0;
+  for (const k in products) {
+    const p = products[k];
+    if (!p || !p.sf || !p.units || p.sf_mod == null) continue;
+    factorySf += p.sf_mod * p.sf * (1 - strip) * p.units;
+    totalSf   += p.sf_mod * p.sf * p.units;
+    totalUnits += p.units;
+  }
+  const factory = totalUnits ? (psf * factorySf) / totalUnits : 0;
+  const siteWork = totalUnits ? (psf * strip * totalSf) / totalUnits : 0;
+
+  const ent = ca.entitlement || {};
+  const land = ((ent.land_per_door_K_by_tier || {})[tier] || 0) * 1000;
+  const soft = (factory + siteWork) * ((+ent.soft_costs_pct_of_construction || 0) / 100);
+  const permits = (+ent.permits_per_door_K || 0) * 1000;
+  const entitlement = land + soft + permits;
+
+  const co2 = co || {};
+  return {
+    psf: Math.round(psf),
+    psfSource,
+    tier,
+    stripPct: stripPct == null ? 28 : Math.round(stripPct),
+    factory: Math.round(factory),
+    siteWork: Math.round(siteWork),
+    entitlement: Math.round(entitlement),
+    total: Math.round(factory + siteWork + entitlement),
+    demand: (co2.demand_velocity != null &amp;&amp; +co2.demand_velocity > 0) ? +co2.demand_velocity : 180,
+  };
+}
 function fabRevPer(s)   { return (s.rev_per_home != null &amp;&amp; s.rev_per_home !== '') ? +s.rev_per_home : defaultRevPerK(s); }
 function fabMarginPct(s){ return (s.margin_pct != null &amp;&amp; s.margin_pct !== '') ? +s.margin_pct : assumptions.fab_margin_pct; }
 function hubCapex(h)    { return (h.capex != null &amp;&amp; h.capex !== '') ? +h.capex : assumptions.hub_capex_M; }
@@ -1992,7 +2057,10 @@ function updateMap() {
       const assignInfo = assignHub(d, activeH);
       const hubTxt = assignInfo ? ` · ${assignInfo.hub.name} (${Math.round(assignInfo.dist_mi)} mi)` : '';
       const capTxt = (d.capex != null &amp;&amp; d.capex !== '') ? ` · $${(+d.capex).toFixed(1)}M capex` : '';
-      tip.innerHTML = `<strong>${escapeHtml(d.name)}, ${escapeHtml(d.state)}</strong><div class=&quot;meta&quot;>Year ${d.yr} · Phase ${d.phase}${hubTxt}${capTxt}</div>`;
+      const _cs = (typeof costStackForSite === 'function') ? costStackForSite(d) : null;
+      const _tierTxt = _cs ? ` · Tier ${_cs.tier}` : '';
+      const _stackTxt = _cs ? `<div class=&quot;meta&quot; style=&quot;margin-top:5px;border-top:1px solid rgba(255,255,255,0.18);padding-top:5px;font-family:ui-monospace,monospace;line-height:1.45;&quot;><span style=&quot;opacity:0.65;&quot;>$/sf</span> $${_cs.psf} <span style=&quot;opacity:0.45;&quot;>(${_cs.psfSource})</span> · <span style=&quot;opacity:0.65;&quot;>strip</span> ${_cs.stripPct}% · <span style=&quot;opacity:0.65;&quot;>dmd</span> ${_cs.demand}/yr<br>Factory <strong>$${Math.round(_cs.factory/1000)}K</strong> + SW <strong>$${Math.round(_cs.siteWork/1000)}K</strong> + Ent <strong>$${Math.round(_cs.entitlement/1000)}K</strong> = <strong style=&quot;color:#f59e0b;&quot;>$${Math.round(_cs.total/1000)}K total</strong></div>` : '';
+      tip.innerHTML = `<strong>${escapeHtml(d.name)}, ${escapeHtml(d.state)}${_tierTxt}</strong><div class=&quot;meta&quot;>Year ${d.yr} · Phase ${d.phase}${hubTxt}${capTxt}</div>${_stackTxt}`;
       tip.style.opacity = '1';
     })
     .on('mousemove', function(e) {
@@ -2928,6 +2996,71 @@ function defaultRevPerK(s) {
   const v = costPerDoorForSite(s);
   return (v != null) ? Math.round(v / 1000) : assumptions.rev_per_home_K;
 }
+// Full per-site cost stack — factory + site work + entitlement = true total per door.
+// Mirrors the calibrator's cascade math; returns null if cost_assumptions isn't loaded.
+function costStackForSite(site) {
+  const ca = window._COST_ASSUMPTIONS;
+  if (!ca) return null;
+  const products = ca.products || ca.product_mix;
+  if (!products || !ca.tier_strip_pct) return null;
+
+  const sd = ca.state_defaults || {};
+  const baselinePsf = ca.national_baseline_psf || 162;
+  const co = (site &amp;&amp; site.cost) || {};
+  const sc = site &amp;&amp; site.state;
+
+  let psf, psfSource;
+  if (co.psf_override != null) {
+    psf = +co.psf_override;
+    psfSource = 'override $' + Math.round(psf);
+  } else if (co.cci != null) {
+    psf = baselinePsf * +co.cci;
+    psfSource = 'CCI ' + (+co.cci).toFixed(2) + ' × $' + baselinePsf;
+  } else if (sd[sc] &amp;&amp; sd[sc].cost_psf != null) {
+    psf = sd[sc].cost_psf;
+    psfSource = 'state default';
+  } else if (ca.state_cost_psf &amp;&amp; ca.state_cost_psf[sc] != null) {
+    psf = ca.state_cost_psf[sc];
+    psfSource = 'state default';
+  } else {
+    psf = baselinePsf;
+    psfSource = 'baseline';
+  }
+
+  const tier = (sd[sc] &amp;&amp; sd[sc].tier) || (ca.state_tier &amp;&amp; ca.state_tier[sc]) || 'C';
+  const stripPct = (co.strip_pct_override != null) ? +co.strip_pct_override : ca.tier_strip_pct[tier];
+  const strip = (stripPct == null ? 28 : stripPct) / 100;
+
+  let factorySf = 0, totalSf = 0, totalUnits = 0;
+  for (const k in products) {
+    const p = products[k];
+    if (!p || !p.sf || !p.units || p.sf_mod == null) continue;
+    factorySf += p.sf_mod * p.sf * (1 - strip) * p.units;
+    totalSf   += p.sf_mod * p.sf * p.units;
+    totalUnits += p.units;
+  }
+  const factory = totalUnits ? (psf * factorySf) / totalUnits : 0;
+  const siteWork = totalUnits ? (psf * strip * totalSf) / totalUnits : 0;
+
+  const ent = ca.entitlement || {};
+  const land = ((ent.land_per_door_K_by_tier || {})[tier] || 0) * 1000;
+  const soft = (factory + siteWork) * ((+ent.soft_costs_pct_of_construction || 0) / 100);
+  const permits = (+ent.permits_per_door_K || 0) * 1000;
+  const entitlement = land + soft + permits;
+
+  const co2 = co || {};
+  return {
+    psf: Math.round(psf),
+    psfSource,
+    tier,
+    stripPct: stripPct == null ? 28 : Math.round(stripPct),
+    factory: Math.round(factory),
+    siteWork: Math.round(siteWork),
+    entitlement: Math.round(entitlement),
+    total: Math.round(factory + siteWork + entitlement),
+    demand: (co2.demand_velocity != null &amp;&amp; +co2.demand_velocity > 0) ? +co2.demand_velocity : 180,
+  };
+}
 function fabRevPer(s)   { return (s.rev_per_home != null &amp;&amp; s.rev_per_home !== '') ? +s.rev_per_home : defaultRevPerK(s); }
 function fabMarginPct(s){ return (s.margin_pct != null &amp;&amp; s.margin_pct !== '') ? +s.margin_pct : assumptions.fab_margin_pct; }
 function hubCapex(h)    { return (h.capex != null &amp;&amp; h.capex !== '') ? +h.capex : assumptions.hub_capex_M; }
@@ -3984,7 +4117,10 @@ function updateMap() {
       const assignInfo = assignHub(d, activeH);
       const hubTxt = assignInfo ? ` · ${assignInfo.hub.name} (${Math.round(assignInfo.dist_mi)} mi)` : '';
       const capTxt = (d.capex != null &amp;&amp; d.capex !== '') ? ` · $${(+d.capex).toFixed(1)}M capex` : '';
-      tip.innerHTML = `<strong>${escapeHtml(d.name)}, ${escapeHtml(d.state)}</strong><div class=&quot;meta&quot;>Year ${d.yr} · Phase ${d.phase}${hubTxt}${capTxt}</div>`;
+      const _cs = (typeof costStackForSite === 'function') ? costStackForSite(d) : null;
+      const _tierTxt = _cs ? ` · Tier ${_cs.tier}` : '';
+      const _stackTxt = _cs ? `<div class=&quot;meta&quot; style=&quot;margin-top:5px;border-top:1px solid rgba(255,255,255,0.18);padding-top:5px;font-family:ui-monospace,monospace;line-height:1.45;&quot;><span style=&quot;opacity:0.65;&quot;>$/sf</span> $${_cs.psf} <span style=&quot;opacity:0.45;&quot;>(${_cs.psfSource})</span> · <span style=&quot;opacity:0.65;&quot;>strip</span> ${_cs.stripPct}% · <span style=&quot;opacity:0.65;&quot;>dmd</span> ${_cs.demand}/yr<br>Factory <strong>$${Math.round(_cs.factory/1000)}K</strong> + SW <strong>$${Math.round(_cs.siteWork/1000)}K</strong> + Ent <strong>$${Math.round(_cs.entitlement/1000)}K</strong> = <strong style=&quot;color:#f59e0b;&quot;>$${Math.round(_cs.total/1000)}K total</strong></div>` : '';
+      tip.innerHTML = `<strong>${escapeHtml(d.name)}, ${escapeHtml(d.state)}${_tierTxt}</strong><div class=&quot;meta&quot;>Year ${d.yr} · Phase ${d.phase}${hubTxt}${capTxt}</div>${_stackTxt}`;
       tip.style.opacity = '1';
     })
     .on('mousemove', function(e) {
@@ -5647,6 +5783,71 @@ function defaultRevPerK(s) {
   const v = costPerDoorForSite(s);
   return (v != null) ? Math.round(v / 1000) : assumptions.rev_per_home_K;
 }
+// Full per-site cost stack — factory + site work + entitlement = true total per door.
+// Mirrors the calibrator's cascade math; returns null if cost_assumptions isn't loaded.
+function costStackForSite(site) {
+  const ca = window._COST_ASSUMPTIONS;
+  if (!ca) return null;
+  const products = ca.products || ca.product_mix;
+  if (!products || !ca.tier_strip_pct) return null;
+
+  const sd = ca.state_defaults || {};
+  const baselinePsf = ca.national_baseline_psf || 162;
+  const co = (site &amp;&amp; site.cost) || {};
+  const sc = site &amp;&amp; site.state;
+
+  let psf, psfSource;
+  if (co.psf_override != null) {
+    psf = +co.psf_override;
+    psfSource = 'override $' + Math.round(psf);
+  } else if (co.cci != null) {
+    psf = baselinePsf * +co.cci;
+    psfSource = 'CCI ' + (+co.cci).toFixed(2) + ' × $' + baselinePsf;
+  } else if (sd[sc] &amp;&amp; sd[sc].cost_psf != null) {
+    psf = sd[sc].cost_psf;
+    psfSource = 'state default';
+  } else if (ca.state_cost_psf &amp;&amp; ca.state_cost_psf[sc] != null) {
+    psf = ca.state_cost_psf[sc];
+    psfSource = 'state default';
+  } else {
+    psf = baselinePsf;
+    psfSource = 'baseline';
+  }
+
+  const tier = (sd[sc] &amp;&amp; sd[sc].tier) || (ca.state_tier &amp;&amp; ca.state_tier[sc]) || 'C';
+  const stripPct = (co.strip_pct_override != null) ? +co.strip_pct_override : ca.tier_strip_pct[tier];
+  const strip = (stripPct == null ? 28 : stripPct) / 100;
+
+  let factorySf = 0, totalSf = 0, totalUnits = 0;
+  for (const k in products) {
+    const p = products[k];
+    if (!p || !p.sf || !p.units || p.sf_mod == null) continue;
+    factorySf += p.sf_mod * p.sf * (1 - strip) * p.units;
+    totalSf   += p.sf_mod * p.sf * p.units;
+    totalUnits += p.units;
+  }
+  const factory = totalUnits ? (psf * factorySf) / totalUnits : 0;
+  const siteWork = totalUnits ? (psf * strip * totalSf) / totalUnits : 0;
+
+  const ent = ca.entitlement || {};
+  const land = ((ent.land_per_door_K_by_tier || {})[tier] || 0) * 1000;
+  const soft = (factory + siteWork) * ((+ent.soft_costs_pct_of_construction || 0) / 100);
+  const permits = (+ent.permits_per_door_K || 0) * 1000;
+  const entitlement = land + soft + permits;
+
+  const co2 = co || {};
+  return {
+    psf: Math.round(psf),
+    psfSource,
+    tier,
+    stripPct: stripPct == null ? 28 : Math.round(stripPct),
+    factory: Math.round(factory),
+    siteWork: Math.round(siteWork),
+    entitlement: Math.round(entitlement),
+    total: Math.round(factory + siteWork + entitlement),
+    demand: (co2.demand_velocity != null &amp;&amp; +co2.demand_velocity > 0) ? +co2.demand_velocity : 180,
+  };
+}
 function fabRevPer(s)   { return (s.rev_per_home != null &amp;&amp; s.rev_per_home !== '') ? +s.rev_per_home : defaultRevPerK(s); }
 function fabMarginPct(s){ return (s.margin_pct != null &amp;&amp; s.margin_pct !== '') ? +s.margin_pct : assumptions.fab_margin_pct; }
 function hubCapex(h)    { return (h.capex != null &amp;&amp; h.capex !== '') ? +h.capex : assumptions.hub_capex_M; }
@@ -6698,7 +6899,10 @@ function updateMap() {
       const assignInfo = assignHub(d, activeH);
       const hubTxt = assignInfo ? ` · ${assignInfo.hub.name} (${Math.round(assignInfo.dist_mi)} mi)` : '';
       const capTxt = (d.capex != null &amp;&amp; d.capex !== '') ? ` · $${(+d.capex).toFixed(1)}M capex` : '';
-      tip.innerHTML = `<strong>${escapeHtml(d.name)}, ${escapeHtml(d.state)}</strong><div class=&quot;meta&quot;>Year ${d.yr} · Phase ${d.phase}${hubTxt}${capTxt}</div>`;
+      const _cs = (typeof costStackForSite === 'function') ? costStackForSite(d) : null;
+      const _tierTxt = _cs ? ` · Tier ${_cs.tier}` : '';
+      const _stackTxt = _cs ? `<div class=&quot;meta&quot; style=&quot;margin-top:5px;border-top:1px solid rgba(255,255,255,0.18);padding-top:5px;font-family:ui-monospace,monospace;line-height:1.45;&quot;><span style=&quot;opacity:0.65;&quot;>$/sf</span> $${_cs.psf} <span style=&quot;opacity:0.45;&quot;>(${_cs.psfSource})</span> · <span style=&quot;opacity:0.65;&quot;>strip</span> ${_cs.stripPct}% · <span style=&quot;opacity:0.65;&quot;>dmd</span> ${_cs.demand}/yr<br>Factory <strong>$${Math.round(_cs.factory/1000)}K</strong> + SW <strong>$${Math.round(_cs.siteWork/1000)}K</strong> + Ent <strong>$${Math.round(_cs.entitlement/1000)}K</strong> = <strong style=&quot;color:#f59e0b;&quot;>$${Math.round(_cs.total/1000)}K total</strong></div>` : '';
+      tip.innerHTML = `<strong>${escapeHtml(d.name)}, ${escapeHtml(d.state)}${_tierTxt}</strong><div class=&quot;meta&quot;>Year ${d.yr} · Phase ${d.phase}${hubTxt}${capTxt}</div>${_stackTxt}`;
       tip.style.opacity = '1';
     })
     .on('mousemove', function(e) {
@@ -7482,6 +7686,71 @@ function defaultRevPerK(s) {
   const v = costPerDoorForSite(s);
   return (v != null) ? Math.round(v / 1000) : assumptions.rev_per_home_K;
 }
+// Full per-site cost stack — factory + site work + entitlement = true total per door.
+// Mirrors the calibrator's cascade math; returns null if cost_assumptions isn't loaded.
+function costStackForSite(site) {
+  const ca = window._COST_ASSUMPTIONS;
+  if (!ca) return null;
+  const products = ca.products || ca.product_mix;
+  if (!products || !ca.tier_strip_pct) return null;
+
+  const sd = ca.state_defaults || {};
+  const baselinePsf = ca.national_baseline_psf || 162;
+  const co = (site &amp;&amp; site.cost) || {};
+  const sc = site &amp;&amp; site.state;
+
+  let psf, psfSource;
+  if (co.psf_override != null) {
+    psf = +co.psf_override;
+    psfSource = 'override $' + Math.round(psf);
+  } else if (co.cci != null) {
+    psf = baselinePsf * +co.cci;
+    psfSource = 'CCI ' + (+co.cci).toFixed(2) + ' × $' + baselinePsf;
+  } else if (sd[sc] &amp;&amp; sd[sc].cost_psf != null) {
+    psf = sd[sc].cost_psf;
+    psfSource = 'state default';
+  } else if (ca.state_cost_psf &amp;&amp; ca.state_cost_psf[sc] != null) {
+    psf = ca.state_cost_psf[sc];
+    psfSource = 'state default';
+  } else {
+    psf = baselinePsf;
+    psfSource = 'baseline';
+  }
+
+  const tier = (sd[sc] &amp;&amp; sd[sc].tier) || (ca.state_tier &amp;&amp; ca.state_tier[sc]) || 'C';
+  const stripPct = (co.strip_pct_override != null) ? +co.strip_pct_override : ca.tier_strip_pct[tier];
+  const strip = (stripPct == null ? 28 : stripPct) / 100;
+
+  let factorySf = 0, totalSf = 0, totalUnits = 0;
+  for (const k in products) {
+    const p = products[k];
+    if (!p || !p.sf || !p.units || p.sf_mod == null) continue;
+    factorySf += p.sf_mod * p.sf * (1 - strip) * p.units;
+    totalSf   += p.sf_mod * p.sf * p.units;
+    totalUnits += p.units;
+  }
+  const factory = totalUnits ? (psf * factorySf) / totalUnits : 0;
+  const siteWork = totalUnits ? (psf * strip * totalSf) / totalUnits : 0;
+
+  const ent = ca.entitlement || {};
+  const land = ((ent.land_per_door_K_by_tier || {})[tier] || 0) * 1000;
+  const soft = (factory + siteWork) * ((+ent.soft_costs_pct_of_construction || 0) / 100);
+  const permits = (+ent.permits_per_door_K || 0) * 1000;
+  const entitlement = land + soft + permits;
+
+  const co2 = co || {};
+  return {
+    psf: Math.round(psf),
+    psfSource,
+    tier,
+    stripPct: stripPct == null ? 28 : Math.round(stripPct),
+    factory: Math.round(factory),
+    siteWork: Math.round(siteWork),
+    entitlement: Math.round(entitlement),
+    total: Math.round(factory + siteWork + entitlement),
+    demand: (co2.demand_velocity != null &amp;&amp; +co2.demand_velocity > 0) ? +co2.demand_velocity : 180,
+  };
+}
 function fabRevPer(s)   { return (s.rev_per_home != null &amp;&amp; s.rev_per_home !== '') ? +s.rev_per_home : defaultRevPerK(s); }
 function fabMarginPct(s){ return (s.margin_pct != null &amp;&amp; s.margin_pct !== '') ? +s.margin_pct : assumptions.fab_margin_pct; }
 function hubCapex(h)    { return (h.capex != null &amp;&amp; h.capex !== '') ? +h.capex : assumptions.hub_capex_M; }
@@ -8533,7 +8802,10 @@ function updateMap() {
       const assignInfo = assignHub(d, activeH);
       const hubTxt = assignInfo ? ` · ${assignInfo.hub.name} (${Math.round(assignInfo.dist_mi)} mi)` : '';
       const capTxt = (d.capex != null &amp;&amp; d.capex !== '') ? ` · $${(+d.capex).toFixed(1)}M capex` : '';
-      tip.innerHTML = `<strong>${escapeHtml(d.name)}, ${escapeHtml(d.state)}</strong><div class=&quot;meta&quot;>Year ${d.yr} · Phase ${d.phase}${hubTxt}${capTxt}</div>`;
+      const _cs = (typeof costStackForSite === 'function') ? costStackForSite(d) : null;
+      const _tierTxt = _cs ? ` · Tier ${_cs.tier}` : '';
+      const _stackTxt = _cs ? `<div class=&quot;meta&quot; style=&quot;margin-top:5px;border-top:1px solid rgba(255,255,255,0.18);padding-top:5px;font-family:ui-monospace,monospace;line-height:1.45;&quot;><span style=&quot;opacity:0.65;&quot;>$/sf</span> $${_cs.psf} <span style=&quot;opacity:0.45;&quot;>(${_cs.psfSource})</span> · <span style=&quot;opacity:0.65;&quot;>strip</span> ${_cs.stripPct}% · <span style=&quot;opacity:0.65;&quot;>dmd</span> ${_cs.demand}/yr<br>Factory <strong>$${Math.round(_cs.factory/1000)}K</strong> + SW <strong>$${Math.round(_cs.siteWork/1000)}K</strong> + Ent <strong>$${Math.round(_cs.entitlement/1000)}K</strong> = <strong style=&quot;color:#f59e0b;&quot;>$${Math.round(_cs.total/1000)}K total</strong></div>` : '';
+      tip.innerHTML = `<strong>${escapeHtml(d.name)}, ${escapeHtml(d.state)}${_tierTxt}</strong><div class=&quot;meta&quot;>Year ${d.yr} · Phase ${d.phase}${hubTxt}${capTxt}</div>${_stackTxt}`;
       tip.style.opacity = '1';
     })
     .on('mousemove', function(e) {
