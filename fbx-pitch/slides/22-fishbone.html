@@ -199,101 +199,117 @@
         <line x1="200" y1="435" x2="1370" y2="435" stroke="#1a1a1a" stroke-width="2.5" />
         <polygon points="1370,425 1380,435 1370,445" fill="#1a1a1a" />
 
-        <!-- ============ FIRST MILE spines (green) ============ -->
+        <!-- ============================================================
+             All spines are at exactly 60° from horizontal: dy / dx = tan(60°) ≈ 1.732
+             Spine length L varies to position labels at different distances; angle does not.
+             For each spine: x_end = x_start - L·cos(60°), y_end = y_axis ∓ L·sin(60°)
+             cos(60°) = 0.5,  sin(60°) ≈ 0.866
+             ============================================================ -->
+
+        <!-- ============ FIRST MILE spines (green) — angle 60° ============ -->
         <g stroke-width="1.5" fill="none">
-          <!-- Home Sales (top, leftmost) -->
-          <line class="spine-fm" x1="370" y1="435" x2="285" y2="195" />
-          <circle class="dot-fm" cx="285" cy="195" r="5" stroke="none" />
-          <text x="285" y="180" text-anchor="middle" class="fb-text">Home Sales</text>
+          <!-- Home Sales (TOP) — L=270 → dx=135, dy=234 → end (280, 201) -->
+          <line class="spine-fm" x1="415" y1="435" x2="280" y2="201" />
+          <circle class="dot-fm" cx="280" cy="201" r="5" stroke="none" />
+          <text x="280" y="187" text-anchor="middle" class="fb-text">Home Sales</text>
 
-          <!-- Building Contracts (top, right of Home Sales) -->
-          <line class="spine-fm" x1="540" y1="435" x2="455" y2="270" />
-          <circle class="dot-fm" cx="455" cy="270" r="5" stroke="none" />
-          <text x="455" y="258" text-anchor="middle" class="fb-text">Building</text>
-          <text x="455" y="244" text-anchor="middle" class="fb-text">Contracts</text>
+          <!-- Building Contracts (TOP) — L=170 → dx=85, dy=147 → end (455, 288) -->
+          <line class="spine-fm" x1="540" y1="435" x2="455" y2="288" />
+          <circle class="dot-fm" cx="455" cy="288" r="5" stroke="none" />
+          <text x="455" y="276" text-anchor="middle" class="fb-text">Building</text>
+          <text x="455" y="262" text-anchor="middle" class="fb-text">Contracts</text>
 
-          <!-- Component Sales (bottom, leftmost) -->
-          <line class="spine-fm" x1="370" y1="435" x2="285" y2="640" />
-          <circle class="dot-fm" cx="285" cy="640" r="5" stroke="none" />
-          <text x="285" y="660" text-anchor="middle" class="fb-text">Component Sales</text>
-          <text x="285" y="676" text-anchor="middle" class="fb-text">(SIP / Pods)</text>
+          <!-- Component Sales (BOTTOM) — L=240 → dx=120, dy=208 → end (285, 643) -->
+          <line class="spine-fm" x1="405" y1="435" x2="285" y2="643" />
+          <circle class="dot-fm" cx="285" cy="643" r="5" stroke="none" />
+          <text x="285" y="662" text-anchor="middle" class="fb-text">Component Sales</text>
+          <text x="285" y="678" text-anchor="middle" class="fb-text">(SIP / Pods)</text>
 
-          <!-- Entitlement / Permit (bottom, right of Component) -->
-          <line class="spine-fm" x1="540" y1="435" x2="455" y2="565" />
-          <circle class="dot-fm" cx="455" cy="565" r="5" stroke="none" />
-          <text x="455" y="585" text-anchor="middle" class="fb-text">Entitlement /</text>
-          <text x="455" y="600" text-anchor="middle" class="fb-text">Permit</text>
+          <!-- Entitlement / Permit (BOTTOM) — L=140 → dx=70, dy=121 → end (470, 556) -->
+          <line class="spine-fm" x1="540" y1="435" x2="470" y2="556" />
+          <circle class="dot-fm" cx="470" cy="556" r="5" stroke="none" />
+          <text x="470" y="575" text-anchor="middle" class="fb-text">Entitlement /</text>
+          <text x="470" y="590" text-anchor="middle" class="fb-text">Permit</text>
         </g>
 
-        <!-- ============ FBX CORE spines (gold) ============ -->
+        <!-- ============ FBX CORE spines (gold) — angle 60° ============ -->
         <g stroke-width="1.5" fill="none">
-          <!-- TOP: Design, Franchise Sales, Import, Licensing/Royalties -->
-          <line class="spine-co" x1="720" y1="435" x2="650" y2="200" />
-          <circle class="dot-co" cx="650" cy="200" r="5" stroke="none" />
-          <text x="650" y="186" text-anchor="middle" class="fb-text">Design</text>
+          <!-- Design (TOP) — L=230 → dx=115, dy=199 → end (605, 236) -->
+          <line class="spine-co" x1="720" y1="435" x2="605" y2="236" />
+          <circle class="dot-co" cx="605" cy="236" r="5" stroke="none" />
+          <text x="605" y="222" text-anchor="middle" class="fb-text">Design</text>
 
-          <line class="spine-co" x1="800" y1="435" x2="730" y2="265" />
-          <circle class="dot-co" cx="730" cy="265" r="5" stroke="none" />
-          <text x="730" y="252" text-anchor="middle" class="fb-text">Franchise Sales</text>
+          <!-- Franchise Sales (TOP) — L=160 → dx=80, dy=139 → end (720, 296) -->
+          <line class="spine-co" x1="800" y1="435" x2="720" y2="296" />
+          <circle class="dot-co" cx="720" cy="296" r="5" stroke="none" />
+          <text x="720" y="284" text-anchor="middle" class="fb-text">Franchise Sales</text>
 
-          <line class="spine-co" x1="900" y1="435" x2="820" y2="220" />
-          <circle class="dot-co" cx="820" cy="220" r="5" stroke="none" />
-          <text x="820" y="206" text-anchor="middle" class="fb-text">Import (Foreign</text>
-          <text x="820" y="192" text-anchor="middle" class="fb-text">&amp; Domestic)</text>
+          <!-- Import (Foreign & Domestic) (TOP) — L=230 → dx=115, dy=199 → end (785, 236) -->
+          <line class="spine-co" x1="900" y1="435" x2="785" y2="236" />
+          <circle class="dot-co" cx="785" cy="236" r="5" stroke="none" />
+          <text x="785" y="222" text-anchor="middle" class="fb-text">Import (Foreign</text>
+          <text x="785" y="208" text-anchor="middle" class="fb-text">&amp; Domestic)</text>
 
-          <line class="spine-co" x1="1000" y1="435" x2="910" y2="295" />
-          <circle class="dot-co" cx="910" cy="295" r="5" stroke="none" />
-          <text x="910" y="282" text-anchor="middle" class="fb-text">Licensing /</text>
-          <text x="910" y="268" text-anchor="middle" class="fb-text">Royalties</text>
+          <!-- Licensing / Royalties (TOP) — L=150 → dx=75, dy=130 → end (925, 305) -->
+          <line class="spine-co" x1="1000" y1="435" x2="925" y2="305" />
+          <circle class="dot-co" cx="925" cy="305" r="5" stroke="none" />
+          <text x="925" y="293" text-anchor="middle" class="fb-text">Licensing /</text>
+          <text x="925" y="279" text-anchor="middle" class="fb-text">Royalties</text>
 
-          <!-- BOTTOM: Research & Development, Warehousing, Kit of Parts, Training -->
-          <line class="spine-co" x1="720" y1="435" x2="650" y2="595" />
-          <circle class="dot-co" cx="650" cy="595" r="5" stroke="none" />
-          <text x="650" y="615" text-anchor="middle" class="fb-text">Research &amp;</text>
-          <text x="650" y="630" text-anchor="middle" class="fb-text">Development</text>
+          <!-- Research & Development (BOTTOM) — L=180 → dx=90, dy=156 → end (630, 591) -->
+          <line class="spine-co" x1="720" y1="435" x2="630" y2="591" />
+          <circle class="dot-co" cx="630" cy="591" r="5" stroke="none" />
+          <text x="630" y="610" text-anchor="middle" class="fb-text">Research &amp;</text>
+          <text x="630" y="625" text-anchor="middle" class="fb-text">Development</text>
 
-          <line class="spine-co" x1="800" y1="435" x2="730" y2="630" />
-          <circle class="dot-co" cx="730" cy="630" r="5" stroke="none" />
-          <text x="730" y="650" text-anchor="middle" class="fb-text">Warehousing</text>
+          <!-- Warehousing (BOTTOM) — L=210 → dx=105, dy=182 → end (705, 617) -->
+          <line class="spine-co" x1="810" y1="435" x2="705" y2="617" />
+          <circle class="dot-co" cx="705" cy="617" r="5" stroke="none" />
+          <text x="705" y="636" text-anchor="middle" class="fb-text">Warehousing</text>
 
-          <line class="spine-co" x1="900" y1="435" x2="820" y2="610" />
-          <circle class="dot-co" cx="820" cy="610" r="5" stroke="none" />
-          <text x="820" y="630" text-anchor="middle" class="fb-text">Kit of Parts</text>
-          <text x="820" y="645" text-anchor="middle" class="fb-text">Creation</text>
+          <!-- Kit of Parts Creation (BOTTOM) — L=200 → dx=100, dy=173 → end (810, 608) -->
+          <line class="spine-co" x1="910" y1="435" x2="810" y2="608" />
+          <circle class="dot-co" cx="810" cy="608" r="5" stroke="none" />
+          <text x="810" y="627" text-anchor="middle" class="fb-text">Kit of Parts</text>
+          <text x="810" y="642" text-anchor="middle" class="fb-text">Creation</text>
 
-          <line class="spine-co" x1="1000" y1="435" x2="910" y2="555" />
-          <circle class="dot-co" cx="910" cy="555" r="5" stroke="none" />
-          <text x="910" y="575" text-anchor="middle" class="fb-text">Training</text>
+          <!-- Training (BOTTOM) — L=130 → dx=65, dy=113 → end (935, 548) -->
+          <line class="spine-co" x1="1000" y1="435" x2="935" y2="548" />
+          <circle class="dot-co" cx="935" cy="548" r="5" stroke="none" />
+          <text x="935" y="567" text-anchor="middle" class="fb-text">Training</text>
         </g>
 
-        <!-- ============ LAST MILE spines (clay red) ============ -->
+        <!-- ============ LAST MILE spines (clay red) — angle 60° ============ -->
         <g stroke-width="1.5" fill="none">
-          <!-- TOP: Distribution to Assembly, Building Inspections & Quality, Installation Site Work -->
-          <line class="spine-lm" x1="1140" y1="435" x2="1075" y2="195" />
-          <circle class="dot-lm" cx="1075" cy="195" r="5" stroke="none" />
-          <text x="1075" y="180" text-anchor="middle" class="fb-text">Distribution to</text>
-          <text x="1075" y="166" text-anchor="middle" class="fb-text">Assembly</text>
+          <!-- Distribution to Assembly (TOP) — L=260 → dx=130, dy=225 → end (1020, 210) -->
+          <line class="spine-lm" x1="1150" y1="435" x2="1020" y2="210" />
+          <circle class="dot-lm" cx="1020" cy="210" r="5" stroke="none" />
+          <text x="1020" y="196" text-anchor="middle" class="fb-text">Distribution to</text>
+          <text x="1020" y="182" text-anchor="middle" class="fb-text">Assembly</text>
 
-          <line class="spine-lm" x1="1220" y1="435" x2="1160" y2="250" />
-          <circle class="dot-lm" cx="1160" cy="250" r="5" stroke="none" />
-          <text x="1160" y="236" text-anchor="middle" class="fb-text">Building</text>
-          <text x="1160" y="222" text-anchor="middle" class="fb-text">Inspections &amp;</text>
-          <text x="1160" y="208" text-anchor="middle" class="fb-text">Quality</text>
+          <!-- Building Inspections & Quality (TOP) — L=190 → dx=95, dy=164 → end (1135, 271) -->
+          <line class="spine-lm" x1="1230" y1="435" x2="1135" y2="271" />
+          <circle class="dot-lm" cx="1135" cy="271" r="5" stroke="none" />
+          <text x="1135" y="259" text-anchor="middle" class="fb-text">Building</text>
+          <text x="1135" y="245" text-anchor="middle" class="fb-text">Inspections &amp;</text>
+          <text x="1135" y="231" text-anchor="middle" class="fb-text">Quality</text>
 
-          <line class="spine-lm" x1="1320" y1="435" x2="1280" y2="220" />
-          <circle class="dot-lm" cx="1280" cy="220" r="5" stroke="none" />
-          <text x="1280" y="206" text-anchor="middle" class="fb-text">Installation</text>
-          <text x="1280" y="192" text-anchor="middle" class="fb-text">Site Work</text>
+          <!-- Installation Site Work (TOP) — L=230 → dx=115, dy=199 → end (1215, 236) -->
+          <line class="spine-lm" x1="1330" y1="435" x2="1215" y2="236" />
+          <circle class="dot-lm" cx="1215" cy="236" r="5" stroke="none" />
+          <text x="1215" y="222" text-anchor="middle" class="fb-text">Installation</text>
+          <text x="1215" y="208" text-anchor="middle" class="fb-text">Site Work</text>
 
-          <!-- BOTTOM: Assembly, Delivery Logistics -->
-          <line class="spine-lm" x1="1140" y1="435" x2="1075" y2="635" />
-          <circle class="dot-lm" cx="1075" cy="635" r="5" stroke="none" />
-          <text x="1075" y="655" text-anchor="middle" class="fb-text">Assembly</text>
+          <!-- Assembly (BOTTOM) — L=220 → dx=110, dy=190 → end (1030, 625) -->
+          <line class="spine-lm" x1="1140" y1="435" x2="1030" y2="625" />
+          <circle class="dot-lm" cx="1030" cy="625" r="5" stroke="none" />
+          <text x="1030" y="644" text-anchor="middle" class="fb-text">Assembly</text>
 
-          <line class="spine-lm" x1="1280" y1="435" x2="1230" y2="600" />
-          <circle class="dot-lm" cx="1230" cy="600" r="5" stroke="none" />
-          <text x="1230" y="620" text-anchor="middle" class="fb-text">Delivery</text>
-          <text x="1230" y="635" text-anchor="middle" class="fb-text">Logistics</text>
+          <!-- Delivery Logistics (BOTTOM) — L=180 → dx=90, dy=156 → end (1190, 591) -->
+          <line class="spine-lm" x1="1280" y1="435" x2="1190" y2="591" />
+          <circle class="dot-lm" cx="1190" cy="591" r="5" stroke="none" />
+          <text x="1190" y="610" text-anchor="middle" class="fb-text">Delivery</text>
+          <text x="1190" y="625" text-anchor="middle" class="fb-text">Logistics</text>
         </g>
 
         <!-- Footnotes -->
