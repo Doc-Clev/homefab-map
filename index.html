@@ -564,6 +564,14 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-seri
         </div>
       </div>
     </div>
+    <!-- Tier-segmented cost stack -->
+    <div id=&quot;tier-breakdown&quot; style=&quot;background:var(--bg-tertiary);border-radius:var(--border-radius-md);padding:12px 14px;margin-top:14px;border:1px solid var(--border-tertiary);&quot;>
+      <div style=&quot;display:flex;align-items:baseline;justify-content:space-between;margin-bottom:10px;&quot;>
+        <div style=&quot;font-size:11px;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:0.06em;font-weight:600;&quot;>Cost Stack by Tier · demand-weighted · sites active by Year <span id=&quot;tb-year&quot;>10</span></div>
+        <div style=&quot;font-size:10px;color:var(--text-tertiary);font-family:ui-monospace,'SF Mono',Menlo,monospace;&quot;>F = factory · SW = site work · Ent = land+soft+permits</div>
+      </div>
+      <div id=&quot;tb-grid&quot; style=&quot;display:grid;grid-template-columns:repeat(4,1fr);gap:10px;&quot;></div>
+    </div>
   </div>
 
   <div class=&quot;layout&quot;>
@@ -1975,6 +1983,56 @@ function updateDashboard() {
   document.getElementById('fab-states').textContent    = e.fab_states;
   document.getElementById('fab-homes').textContent     = fmtNum(e.homes_cum);
   document.getElementById('fab-roi').textContent       = e.fab_count === 0 ? '—' : fmtPct(e.fab_roi);
+
+  renderTierBreakdown(currentYear);
+}
+
+// Tier-segmented cost stack widget — sits below the Fab-Home card.
+// Demand-weighted across sites active by the current year.
+function renderTierBreakdown(year) {
+  const grid = document.getElementById('tb-grid');
+  if (!grid) return;
+  const yearEl = document.getElementById('tb-year');
+  if (yearEl) yearEl.textContent = year;
+  if (typeof costStackForSite !== 'function' || !window._COST_ASSUMPTIONS) {
+    grid.innerHTML = '<div style=&quot;color:var(--text-tertiary);font-size:11px;padding:8px 0;&quot;>Cost Calibrator data not yet loaded — switch to the Calibrator tab once and come back.</div>';
+    return;
+  }
+  const opened = sites.filter(s => s.yr <= year);
+  const buckets = { A: [], B: [], C: [], D: [] };
+  for (const s of opened) {
+    const cs = costStackForSite(s);
+    if (!cs || !buckets[cs.tier]) continue;
+    buckets[cs.tier].push({ s, cs });
+  }
+  const tierColors = { A: '#A32D2D', B: '#BA7517', C: '#fbbf24', D: '#639922' };
+  const order = ['A','B','C','D'];
+  grid.innerHTML = order.map(t => {
+    const items = buckets[t];
+    const color = tierColors[t];
+    if (!items.length) {
+      return `<div style=&quot;background:var(--bg-primary);border-radius:6px;padding:10px 12px;border-left:3px solid ${color};opacity:0.45;&quot;><div style=&quot;font-size:11px;font-weight:600;color:var(--text-primary);&quot;>Tier ${t}</div><div style=&quot;font-size:10px;color:var(--text-tertiary);font-family:ui-monospace,monospace;margin-top:4px;&quot;>no sites active yet</div></div>`;
+    }
+    const totalDmd = items.reduce((a, x) => a + x.cs.demand, 0);
+    const wF = items.reduce((a, x) => a + x.cs.factory * x.cs.demand, 0) / totalDmd;
+    const wSW = items.reduce((a, x) => a + x.cs.siteWork * x.cs.demand, 0) / totalDmd;
+    const wEnt = items.reduce((a, x) => a + x.cs.entitlement * x.cs.demand, 0) / totalDmd;
+    const wTot = wF + wSW + wEnt;
+    let homesTotal = 0, revTotal = 0;
+    for (const { s, cs } of items) {
+      for (let y = s.yr; y <= year; y++) {
+        const h = homesFromSiteByYear(s, y);
+        homesTotal += h;
+        revTotal += h * cs.factory;
+      }
+    }
+    return `<div style=&quot;background:var(--bg-primary);border-radius:6px;padding:10px 12px;border-left:3px solid ${color};&quot;>
+      <div style=&quot;font-size:11px;font-weight:600;color:var(--text-primary);&quot;>Tier ${t} · ${items.length} site${items.length !== 1 ? 's' : ''}</div>
+      <div style=&quot;font-size:10px;color:var(--text-tertiary);font-family:ui-monospace,monospace;margin:3px 0 6px;&quot;>${fmtNum(homesTotal)} homes · ${fmtNum(totalDmd)}/yr capacity</div>
+      <div style=&quot;font-size:11px;font-family:ui-monospace,monospace;color:var(--text-secondary);margin-bottom:4px;&quot;>F$${Math.round(wF/1000)}K + SW$${Math.round(wSW/1000)}K + Ent$${Math.round(wEnt/1000)}K = <strong style=&quot;color:${color};font-size:13px;&quot;>$${Math.round(wTot/1000)}K</strong></div>
+      <div style=&quot;font-size:10px;color:var(--text-tertiary);font-family:ui-monospace,monospace;&quot;>Cum factory rev: ${fmtMoney(revTotal)}</div>
+    </div>`;
+  }).join('');
 }
 
 // ---- Map ----
@@ -4035,6 +4093,56 @@ function updateDashboard() {
   document.getElementById('fab-states').textContent    = e.fab_states;
   document.getElementById('fab-homes').textContent     = fmtNum(e.homes_cum);
   document.getElementById('fab-roi').textContent       = e.fab_count === 0 ? '—' : fmtPct(e.fab_roi);
+
+  renderTierBreakdown(currentYear);
+}
+
+// Tier-segmented cost stack widget — sits below the Fab-Home card.
+// Demand-weighted across sites active by the current year.
+function renderTierBreakdown(year) {
+  const grid = document.getElementById('tb-grid');
+  if (!grid) return;
+  const yearEl = document.getElementById('tb-year');
+  if (yearEl) yearEl.textContent = year;
+  if (typeof costStackForSite !== 'function' || !window._COST_ASSUMPTIONS) {
+    grid.innerHTML = '<div style=&quot;color:var(--text-tertiary);font-size:11px;padding:8px 0;&quot;>Cost Calibrator data not yet loaded — switch to the Calibrator tab once and come back.</div>';
+    return;
+  }
+  const opened = sites.filter(s => s.yr <= year);
+  const buckets = { A: [], B: [], C: [], D: [] };
+  for (const s of opened) {
+    const cs = costStackForSite(s);
+    if (!cs || !buckets[cs.tier]) continue;
+    buckets[cs.tier].push({ s, cs });
+  }
+  const tierColors = { A: '#A32D2D', B: '#BA7517', C: '#fbbf24', D: '#639922' };
+  const order = ['A','B','C','D'];
+  grid.innerHTML = order.map(t => {
+    const items = buckets[t];
+    const color = tierColors[t];
+    if (!items.length) {
+      return `<div style=&quot;background:var(--bg-primary);border-radius:6px;padding:10px 12px;border-left:3px solid ${color};opacity:0.45;&quot;><div style=&quot;font-size:11px;font-weight:600;color:var(--text-primary);&quot;>Tier ${t}</div><div style=&quot;font-size:10px;color:var(--text-tertiary);font-family:ui-monospace,monospace;margin-top:4px;&quot;>no sites active yet</div></div>`;
+    }
+    const totalDmd = items.reduce((a, x) => a + x.cs.demand, 0);
+    const wF = items.reduce((a, x) => a + x.cs.factory * x.cs.demand, 0) / totalDmd;
+    const wSW = items.reduce((a, x) => a + x.cs.siteWork * x.cs.demand, 0) / totalDmd;
+    const wEnt = items.reduce((a, x) => a + x.cs.entitlement * x.cs.demand, 0) / totalDmd;
+    const wTot = wF + wSW + wEnt;
+    let homesTotal = 0, revTotal = 0;
+    for (const { s, cs } of items) {
+      for (let y = s.yr; y <= year; y++) {
+        const h = homesFromSiteByYear(s, y);
+        homesTotal += h;
+        revTotal += h * cs.factory;
+      }
+    }
+    return `<div style=&quot;background:var(--bg-primary);border-radius:6px;padding:10px 12px;border-left:3px solid ${color};&quot;>
+      <div style=&quot;font-size:11px;font-weight:600;color:var(--text-primary);&quot;>Tier ${t} · ${items.length} site${items.length !== 1 ? 's' : ''}</div>
+      <div style=&quot;font-size:10px;color:var(--text-tertiary);font-family:ui-monospace,monospace;margin:3px 0 6px;&quot;>${fmtNum(homesTotal)} homes · ${fmtNum(totalDmd)}/yr capacity</div>
+      <div style=&quot;font-size:11px;font-family:ui-monospace,monospace;color:var(--text-secondary);margin-bottom:4px;&quot;>F$${Math.round(wF/1000)}K + SW$${Math.round(wSW/1000)}K + Ent$${Math.round(wEnt/1000)}K = <strong style=&quot;color:${color};font-size:13px;&quot;>$${Math.round(wTot/1000)}K</strong></div>
+      <div style=&quot;font-size:10px;color:var(--text-tertiary);font-family:ui-monospace,monospace;&quot;>Cum factory rev: ${fmtMoney(revTotal)}</div>
+    </div>`;
+  }).join('');
 }
 
 // ---- Map ----
@@ -5421,6 +5529,14 @@ window.addEventListener('message', function(e) {
           </div>
         </div>
       </div>
+    </div>
+    <!-- Tier-segmented cost stack -->
+    <div id=&quot;tier-breakdown&quot; style=&quot;background:var(--bg-tertiary);border-radius:var(--border-radius-md);padding:12px 14px;margin-top:14px;border:1px solid var(--border-tertiary);&quot;>
+      <div style=&quot;display:flex;align-items:baseline;justify-content:space-between;margin-bottom:10px;&quot;>
+        <div style=&quot;font-size:11px;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:0.06em;font-weight:600;&quot;>Cost Stack by Tier · demand-weighted · sites active by Year <span id=&quot;tb-year&quot;>10</span></div>
+        <div style=&quot;font-size:10px;color:var(--text-tertiary);font-family:ui-monospace,'SF Mono',Menlo,monospace;&quot;>F = factory · SW = site work · Ent = land+soft+permits</div>
+      </div>
+      <div id=&quot;tb-grid&quot; style=&quot;display:grid;grid-template-columns:repeat(4,1fr);gap:10px;&quot;></div>
     </div>
   </div>
 
@@ -6817,6 +6933,56 @@ function updateDashboard() {
   document.getElementById('fab-states').textContent    = e.fab_states;
   document.getElementById('fab-homes').textContent     = fmtNum(e.homes_cum);
   document.getElementById('fab-roi').textContent       = e.fab_count === 0 ? '—' : fmtPct(e.fab_roi);
+
+  renderTierBreakdown(currentYear);
+}
+
+// Tier-segmented cost stack widget — sits below the Fab-Home card.
+// Demand-weighted across sites active by the current year.
+function renderTierBreakdown(year) {
+  const grid = document.getElementById('tb-grid');
+  if (!grid) return;
+  const yearEl = document.getElementById('tb-year');
+  if (yearEl) yearEl.textContent = year;
+  if (typeof costStackForSite !== 'function' || !window._COST_ASSUMPTIONS) {
+    grid.innerHTML = '<div style=&quot;color:var(--text-tertiary);font-size:11px;padding:8px 0;&quot;>Cost Calibrator data not yet loaded — switch to the Calibrator tab once and come back.</div>';
+    return;
+  }
+  const opened = sites.filter(s => s.yr <= year);
+  const buckets = { A: [], B: [], C: [], D: [] };
+  for (const s of opened) {
+    const cs = costStackForSite(s);
+    if (!cs || !buckets[cs.tier]) continue;
+    buckets[cs.tier].push({ s, cs });
+  }
+  const tierColors = { A: '#A32D2D', B: '#BA7517', C: '#fbbf24', D: '#639922' };
+  const order = ['A','B','C','D'];
+  grid.innerHTML = order.map(t => {
+    const items = buckets[t];
+    const color = tierColors[t];
+    if (!items.length) {
+      return `<div style=&quot;background:var(--bg-primary);border-radius:6px;padding:10px 12px;border-left:3px solid ${color};opacity:0.45;&quot;><div style=&quot;font-size:11px;font-weight:600;color:var(--text-primary);&quot;>Tier ${t}</div><div style=&quot;font-size:10px;color:var(--text-tertiary);font-family:ui-monospace,monospace;margin-top:4px;&quot;>no sites active yet</div></div>`;
+    }
+    const totalDmd = items.reduce((a, x) => a + x.cs.demand, 0);
+    const wF = items.reduce((a, x) => a + x.cs.factory * x.cs.demand, 0) / totalDmd;
+    const wSW = items.reduce((a, x) => a + x.cs.siteWork * x.cs.demand, 0) / totalDmd;
+    const wEnt = items.reduce((a, x) => a + x.cs.entitlement * x.cs.demand, 0) / totalDmd;
+    const wTot = wF + wSW + wEnt;
+    let homesTotal = 0, revTotal = 0;
+    for (const { s, cs } of items) {
+      for (let y = s.yr; y <= year; y++) {
+        const h = homesFromSiteByYear(s, y);
+        homesTotal += h;
+        revTotal += h * cs.factory;
+      }
+    }
+    return `<div style=&quot;background:var(--bg-primary);border-radius:6px;padding:10px 12px;border-left:3px solid ${color};&quot;>
+      <div style=&quot;font-size:11px;font-weight:600;color:var(--text-primary);&quot;>Tier ${t} · ${items.length} site${items.length !== 1 ? 's' : ''}</div>
+      <div style=&quot;font-size:10px;color:var(--text-tertiary);font-family:ui-monospace,monospace;margin:3px 0 6px;&quot;>${fmtNum(homesTotal)} homes · ${fmtNum(totalDmd)}/yr capacity</div>
+      <div style=&quot;font-size:11px;font-family:ui-monospace,monospace;color:var(--text-secondary);margin-bottom:4px;&quot;>F$${Math.round(wF/1000)}K + SW$${Math.round(wSW/1000)}K + Ent$${Math.round(wEnt/1000)}K = <strong style=&quot;color:${color};font-size:13px;&quot;>$${Math.round(wTot/1000)}K</strong></div>
+      <div style=&quot;font-size:10px;color:var(--text-tertiary);font-family:ui-monospace,monospace;&quot;>Cum factory rev: ${fmtMoney(revTotal)}</div>
+    </div>`;
+  }).join('');
 }
 
 // ---- Map ----
@@ -8720,6 +8886,56 @@ function updateDashboard() {
   document.getElementById('fab-states').textContent    = e.fab_states;
   document.getElementById('fab-homes').textContent     = fmtNum(e.homes_cum);
   document.getElementById('fab-roi').textContent       = e.fab_count === 0 ? '—' : fmtPct(e.fab_roi);
+
+  renderTierBreakdown(currentYear);
+}
+
+// Tier-segmented cost stack widget — sits below the Fab-Home card.
+// Demand-weighted across sites active by the current year.
+function renderTierBreakdown(year) {
+  const grid = document.getElementById('tb-grid');
+  if (!grid) return;
+  const yearEl = document.getElementById('tb-year');
+  if (yearEl) yearEl.textContent = year;
+  if (typeof costStackForSite !== 'function' || !window._COST_ASSUMPTIONS) {
+    grid.innerHTML = '<div style=&quot;color:var(--text-tertiary);font-size:11px;padding:8px 0;&quot;>Cost Calibrator data not yet loaded — switch to the Calibrator tab once and come back.</div>';
+    return;
+  }
+  const opened = sites.filter(s => s.yr <= year);
+  const buckets = { A: [], B: [], C: [], D: [] };
+  for (const s of opened) {
+    const cs = costStackForSite(s);
+    if (!cs || !buckets[cs.tier]) continue;
+    buckets[cs.tier].push({ s, cs });
+  }
+  const tierColors = { A: '#A32D2D', B: '#BA7517', C: '#fbbf24', D: '#639922' };
+  const order = ['A','B','C','D'];
+  grid.innerHTML = order.map(t => {
+    const items = buckets[t];
+    const color = tierColors[t];
+    if (!items.length) {
+      return `<div style=&quot;background:var(--bg-primary);border-radius:6px;padding:10px 12px;border-left:3px solid ${color};opacity:0.45;&quot;><div style=&quot;font-size:11px;font-weight:600;color:var(--text-primary);&quot;>Tier ${t}</div><div style=&quot;font-size:10px;color:var(--text-tertiary);font-family:ui-monospace,monospace;margin-top:4px;&quot;>no sites active yet</div></div>`;
+    }
+    const totalDmd = items.reduce((a, x) => a + x.cs.demand, 0);
+    const wF = items.reduce((a, x) => a + x.cs.factory * x.cs.demand, 0) / totalDmd;
+    const wSW = items.reduce((a, x) => a + x.cs.siteWork * x.cs.demand, 0) / totalDmd;
+    const wEnt = items.reduce((a, x) => a + x.cs.entitlement * x.cs.demand, 0) / totalDmd;
+    const wTot = wF + wSW + wEnt;
+    let homesTotal = 0, revTotal = 0;
+    for (const { s, cs } of items) {
+      for (let y = s.yr; y <= year; y++) {
+        const h = homesFromSiteByYear(s, y);
+        homesTotal += h;
+        revTotal += h * cs.factory;
+      }
+    }
+    return `<div style=&quot;background:var(--bg-primary);border-radius:6px;padding:10px 12px;border-left:3px solid ${color};&quot;>
+      <div style=&quot;font-size:11px;font-weight:600;color:var(--text-primary);&quot;>Tier ${t} · ${items.length} site${items.length !== 1 ? 's' : ''}</div>
+      <div style=&quot;font-size:10px;color:var(--text-tertiary);font-family:ui-monospace,monospace;margin:3px 0 6px;&quot;>${fmtNum(homesTotal)} homes · ${fmtNum(totalDmd)}/yr capacity</div>
+      <div style=&quot;font-size:11px;font-family:ui-monospace,monospace;color:var(--text-secondary);margin-bottom:4px;&quot;>F$${Math.round(wF/1000)}K + SW$${Math.round(wSW/1000)}K + Ent$${Math.round(wEnt/1000)}K = <strong style=&quot;color:${color};font-size:13px;&quot;>$${Math.round(wTot/1000)}K</strong></div>
+      <div style=&quot;font-size:10px;color:var(--text-tertiary);font-family:ui-monospace,monospace;&quot;>Cum factory rev: ${fmtMoney(revTotal)}</div>
+    </div>`;
+  }).join('');
 }
 
 // ---- Map ----
