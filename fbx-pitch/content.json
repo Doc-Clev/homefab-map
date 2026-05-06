@@ -560,12 +560,13 @@
   "22-fishbone": {
     "eyebrow.left": "FBX · HOMEFAB",
     "eyebrow.right": "22 · Live Tool · Operating Model",
-    "kicker": "Live Diagram",
+    "kicker": "Operating Model",
     "headline.a": "FBX Operating Model ·",
     "headline.b": "Fishbone",
-    "status.line1": "<strong>LIVE</strong> — synced with model",
+    "status.line1": "Value chain · 3 Business Units",
     "status.line2": "Three BUs · One delivered home",
-    "live.cta": "See the full published version"
+    "live.cta": "See the interactive version",
+    "footer.left": "Static rendering · interactive version online"
   },
   "23-expansion-map": {
     "eyebrow.left": "FBX · HOMEFAB",

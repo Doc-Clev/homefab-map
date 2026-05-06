@@ -47,22 +47,7 @@
       color: rgba(245,241,232,0.6);
       line-height: 1.7;
     }
-    .live-head .right strong {
-      color: var(--paper);
-      font-weight: 600;
-    }
-    .live-head .right .live-dot {
-      display: inline-block;
-      width: 8px; height: 8px;
-      background: var(--signal);
-      border-radius: 50%;
-      margin-right: 8px;
-      animation: pulse 1.6s ease-in-out infinite;
-    }
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.3; }
-    }
+    .live-head .right strong { color: var(--paper); font-weight: 600; }
 
     .embed {
       position: absolute;
@@ -72,49 +57,51 @@
       bottom: 100px;
       background: var(--paper-pure);
       border: 1px solid rgba(245,241,232,0.2);
+      overflow: hidden;
     }
-    .embed iframe {
-      width: 100%; height: 100%;
-      border: 0;
+    .embed svg {
+      width: 100%;
+      height: 100%;
       display: block;
     }
 
     .foot { color: rgba(245,241,232,0.5); }
     .foot .page-no { color: var(--paper); font-size: 14px; opacity: 0.6; }
+
     .live-link {
-  position: absolute;
-  bottom: 50px;
-  left: var(--gutter);
-  right: var(--gutter);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  z-index: 5;
-}
-.live-link a {
-  font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--signal);
-  text-decoration: none;
-  border-bottom: 1px solid var(--signal);
-  padding: 4px 0;
-  transition: opacity 150ms;
-}
-.live-link a:hover { opacity: 0.7; }
-.live-link a::after {
-  content: " ↗";
-  font-size: 13px;
-  letter-spacing: 0;
-}
-.live-link .src {
-  font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: rgba(245,241,232,0.4);
-}
+      position: absolute;
+      bottom: 50px;
+      left: var(--gutter);
+      right: var(--gutter);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 5;
+    }
+    .live-link a {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--signal);
+      text-decoration: none;
+      border-bottom: 1px solid var(--signal);
+      padding: 4px 0;
+      transition: opacity 150ms;
+    }
+    .live-link a:hover { opacity: 0.7; }
+    .live-link a::after {
+      content: " ↗";
+      font-size: 13px;
+      letter-spacing: 0;
+    }
+    .live-link .src {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(245,241,232,0.4);
+    }
   </style>
 </head>
 <body>
@@ -123,68 +110,212 @@
 
     <div class="eyebrow">
       <div class="brand"><div class="brand-mark">F</div><span data-content="22-fishbone.eyebrow.left">FBX · HOMEFAB</span></div>
-      <span data-content="22-fishbone.eyebrow.right">22 · Live Tool · Operating Model</span>
+      <span data-content="22-fishbone.eyebrow.right">22 · Backup · Operating Model</span>
     </div>
 
     <div class="live-head">
       <div class="left">
-        <div class="lab" data-content="22-fishbone.kicker">Live Diagram</div>
+        <div class="lab" data-content="22-fishbone.kicker">Operating Model</div>
         <h2><span data-content="22-fishbone.headline.a">FBX Operating Model ·</span> <em data-content="22-fishbone.headline.b">Fishbone</em></h2>
       </div>
       <div class="right">
-        <div><span class="live-dot"></span><span data-content="22-fishbone.status.line1"><strong>LIVE</strong> — synced with model</span></div>
+        <div data-content="22-fishbone.status.line1">Value chain · 3 Business Units</div>
         <div data-content="22-fishbone.status.line2">Three BUs · One delivered home</div>
       </div>
     </div>
 
     <div class="embed">
-      <!-- INTEGRATION POINT
-           Drop your fishbone HTML at: tools/fishbone.html
-           Or change the src below to point to your hosted version
-           (e.g. https://homefab-map.onrender.com/fishbone). -->
-      <iframe id="fishbone-frame"
-              src="https://homefab-map.onrender.com/fishbone"
-              title="FBX Fishbone"
-              loading="lazy"></iframe>
+      <!-- Static rendering of the FBX Operating Model fishbone.
+           To edit labels: change the <text> elements below.
+           For the live, interactive version see homefab-map.onrender.com/fishbone. -->
+      <svg viewBox="0 0 1500 720" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" aria-label="FBX Operating Model fishbone diagram">
+        <style>
+          .fb-text       { font-family: -apple-system, "Segoe UI", "Inter", system-ui, sans-serif; font-size: 13px; fill: #1a1a1a; }
+          .fb-text-sm    { font-family: -apple-system, "Segoe UI", "Inter", system-ui, sans-serif; font-size: 11px; fill: #5a5a5a; }
+          .fb-text-mute  { font-family: -apple-system, "Segoe UI", "Inter", system-ui, sans-serif; font-size: 11px; fill: #888; font-style: italic; }
+          .fb-bar-label  { font-family: -apple-system, "Segoe UI", "Inter", system-ui, sans-serif; font-size: 16px; font-weight: 600; fill: #fff; }
+          .fb-corner     { font-family: -apple-system, "Segoe UI", "Inter", system-ui, sans-serif; font-size: 12px; fill: #1a1a1a; }
+          .fb-title-sm   { font-family: -apple-system, "Segoe UI", "Inter", system-ui, sans-serif; font-size: 13px; font-weight: 700; fill: #1a1a1a; }
+          .fb-prod-title { font-family: -apple-system, "Segoe UI", "Inter", system-ui, sans-serif; font-size: 14px; font-weight: 700; fill: #fff; }
+          .fb-prod-item  { font-family: -apple-system, "Segoe UI", "Inter", system-ui, sans-serif; font-size: 11px; fill: #fff; }
+
+          .spine-fm { stroke: #6E8B6F; }   /* First Mile sage */
+          .spine-co { stroke: #B58F3E; }   /* FBX Core gold */
+          .spine-lm { stroke: #B26851; }   /* Last Mile clay */
+          .dot-fm   { fill: #6E8B6F; }
+          .dot-co   { fill: #B58F3E; }
+          .dot-lm   { fill: #B26851; }
+        </style>
+
+        <!-- Title bar (top-left corner) -->
+        <text x="20" y="22" class="fb-title-sm">FBX Operating Model</text>
+        <text x="195" y="22" class="fb-text-mute">Value chain · 3 BUs</text>
+
+        <!-- Vertical dashed separators between columns -->
+        <line x1="640" y1="60" x2="640" y2="700" stroke="#d4d0c5" stroke-width="1" stroke-dasharray="4,4" />
+        <line x1="1080" y1="60" x2="1080" y2="700" stroke="#d4d0c5" stroke-width="1" stroke-dasharray="4,4" />
+
+        <!-- BU header bars -->
+        <g>
+          <rect x="240" y="50" width="380" height="36" rx="3" fill="#7A9A6E" />
+          <text x="430" y="74" text-anchor="middle" class="fb-bar-label">First Mile</text>
+          <text x="430" y="105" text-anchor="middle" class="fb-text-mute">FBX Sales, Inc.</text>
+
+          <rect x="660" y="50" width="400" height="36" rx="3" fill="#C09B47" />
+          <text x="860" y="74" text-anchor="middle" class="fb-bar-label">FBX Core</text>
+          <text x="860" y="105" text-anchor="middle" class="fb-text-mute">FBX Expansion, Inc / FBX Product Dev, Inc</text>
+
+          <rect x="1100" y="50" width="280" height="36" rx="3" fill="#BC6855" />
+          <text x="1240" y="74" text-anchor="middle" class="fb-bar-label">Last Mile</text>
+          <text x="1240" y="105" text-anchor="middle" class="fb-text-mute">Franchisees / External Partners</text>
+        </g>
+
+        <!-- Customer relationship row -->
+        <g>
+          <rect x="240" y="120" width="820" height="22" fill="#E5DCC8" />
+          <text x="650" y="135" text-anchor="middle" class="fb-text-sm">Customer relationship: Sales →</text>
+          <rect x="1080" y="120" width="300" height="22" fill="#F0E5D5" />
+          <text x="1230" y="135" text-anchor="middle" class="fb-text-sm">→ GC</text>
+        </g>
+
+        <!-- Products box (left) -->
+        <g>
+          <rect x="20" y="370" width="180" height="120" fill="#1a1a1a" />
+          <text x="110" y="395" text-anchor="middle" class="fb-prod-title">Products</text>
+          <text x="110" y="420" text-anchor="middle" class="fb-prod-item">ADUs</text>
+          <text x="110" y="438" text-anchor="middle" class="fb-prod-item">High Density Multi-Family</text>
+          <text x="110" y="456" text-anchor="middle" class="fb-prod-item">Bathroom Pods</text>
+          <text x="110" y="474" text-anchor="middle" class="fb-prod-item">SIPs</text>
+        </g>
+
+        <!-- Delivered Home box (right) -->
+        <g>
+          <rect x="1380" y="395" width="110" height="80" fill="white" stroke="#1a1a1a" stroke-width="1.5" />
+          <text x="1435" y="425" text-anchor="middle" class="fb-title-sm">Delivered Home</text>
+          <text x="1435" y="445" text-anchor="middle" class="fb-text-sm">Bare Land</text>
+        </g>
+
+        <!-- Main horizontal axis (with arrow into Delivered Home) -->
+        <line x1="200" y1="435" x2="1370" y2="435" stroke="#1a1a1a" stroke-width="2.5" />
+        <polygon points="1370,425 1380,435 1370,445" fill="#1a1a1a" />
+
+        <!-- ============ FIRST MILE spines (green) ============ -->
+        <g stroke-width="1.5" fill="none">
+          <!-- Home Sales (top, leftmost) -->
+          <line class="spine-fm" x1="370" y1="435" x2="285" y2="195" />
+          <circle class="dot-fm" cx="285" cy="195" r="5" stroke="none" />
+          <text x="285" y="180" text-anchor="middle" class="fb-text">Home Sales</text>
+
+          <!-- Building Contracts (top, right of Home Sales) -->
+          <line class="spine-fm" x1="540" y1="435" x2="455" y2="270" />
+          <circle class="dot-fm" cx="455" cy="270" r="5" stroke="none" />
+          <text x="455" y="258" text-anchor="middle" class="fb-text">Building</text>
+          <text x="455" y="244" text-anchor="middle" class="fb-text">Contracts</text>
+
+          <!-- Component Sales (bottom, leftmost) -->
+          <line class="spine-fm" x1="370" y1="435" x2="285" y2="640" />
+          <circle class="dot-fm" cx="285" cy="640" r="5" stroke="none" />
+          <text x="285" y="660" text-anchor="middle" class="fb-text">Component Sales</text>
+          <text x="285" y="676" text-anchor="middle" class="fb-text">(SIP / Pods)</text>
+
+          <!-- Entitlement / Permit (bottom, right of Component) -->
+          <line class="spine-fm" x1="540" y1="435" x2="455" y2="565" />
+          <circle class="dot-fm" cx="455" cy="565" r="5" stroke="none" />
+          <text x="455" y="585" text-anchor="middle" class="fb-text">Entitlement /</text>
+          <text x="455" y="600" text-anchor="middle" class="fb-text">Permit</text>
+        </g>
+
+        <!-- ============ FBX CORE spines (gold) ============ -->
+        <g stroke-width="1.5" fill="none">
+          <!-- TOP: Design, Franchise Sales, Import, Licensing/Royalties -->
+          <line class="spine-co" x1="720" y1="435" x2="650" y2="200" />
+          <circle class="dot-co" cx="650" cy="200" r="5" stroke="none" />
+          <text x="650" y="186" text-anchor="middle" class="fb-text">Design</text>
+
+          <line class="spine-co" x1="800" y1="435" x2="730" y2="265" />
+          <circle class="dot-co" cx="730" cy="265" r="5" stroke="none" />
+          <text x="730" y="252" text-anchor="middle" class="fb-text">Franchise Sales</text>
+
+          <line class="spine-co" x1="900" y1="435" x2="820" y2="220" />
+          <circle class="dot-co" cx="820" cy="220" r="5" stroke="none" />
+          <text x="820" y="206" text-anchor="middle" class="fb-text">Import (Foreign</text>
+          <text x="820" y="192" text-anchor="middle" class="fb-text">&amp; Domestic)</text>
+
+          <line class="spine-co" x1="1000" y1="435" x2="910" y2="295" />
+          <circle class="dot-co" cx="910" cy="295" r="5" stroke="none" />
+          <text x="910" y="282" text-anchor="middle" class="fb-text">Licensing /</text>
+          <text x="910" y="268" text-anchor="middle" class="fb-text">Royalties</text>
+
+          <!-- BOTTOM: Research & Development, Warehousing, Kit of Parts, Training -->
+          <line class="spine-co" x1="720" y1="435" x2="650" y2="595" />
+          <circle class="dot-co" cx="650" cy="595" r="5" stroke="none" />
+          <text x="650" y="615" text-anchor="middle" class="fb-text">Research &amp;</text>
+          <text x="650" y="630" text-anchor="middle" class="fb-text">Development</text>
+
+          <line class="spine-co" x1="800" y1="435" x2="730" y2="630" />
+          <circle class="dot-co" cx="730" cy="630" r="5" stroke="none" />
+          <text x="730" y="650" text-anchor="middle" class="fb-text">Warehousing</text>
+
+          <line class="spine-co" x1="900" y1="435" x2="820" y2="610" />
+          <circle class="dot-co" cx="820" cy="610" r="5" stroke="none" />
+          <text x="820" y="630" text-anchor="middle" class="fb-text">Kit of Parts</text>
+          <text x="820" y="645" text-anchor="middle" class="fb-text">Creation</text>
+
+          <line class="spine-co" x1="1000" y1="435" x2="910" y2="555" />
+          <circle class="dot-co" cx="910" cy="555" r="5" stroke="none" />
+          <text x="910" y="575" text-anchor="middle" class="fb-text">Training</text>
+        </g>
+
+        <!-- ============ LAST MILE spines (clay red) ============ -->
+        <g stroke-width="1.5" fill="none">
+          <!-- TOP: Distribution to Assembly, Building Inspections & Quality, Installation Site Work -->
+          <line class="spine-lm" x1="1140" y1="435" x2="1075" y2="195" />
+          <circle class="dot-lm" cx="1075" cy="195" r="5" stroke="none" />
+          <text x="1075" y="180" text-anchor="middle" class="fb-text">Distribution to</text>
+          <text x="1075" y="166" text-anchor="middle" class="fb-text">Assembly</text>
+
+          <line class="spine-lm" x1="1220" y1="435" x2="1160" y2="250" />
+          <circle class="dot-lm" cx="1160" cy="250" r="5" stroke="none" />
+          <text x="1160" y="236" text-anchor="middle" class="fb-text">Building</text>
+          <text x="1160" y="222" text-anchor="middle" class="fb-text">Inspections &amp;</text>
+          <text x="1160" y="208" text-anchor="middle" class="fb-text">Quality</text>
+
+          <line class="spine-lm" x1="1320" y1="435" x2="1280" y2="220" />
+          <circle class="dot-lm" cx="1280" cy="220" r="5" stroke="none" />
+          <text x="1280" y="206" text-anchor="middle" class="fb-text">Installation</text>
+          <text x="1280" y="192" text-anchor="middle" class="fb-text">Site Work</text>
+
+          <!-- BOTTOM: Assembly, Delivery Logistics -->
+          <line class="spine-lm" x1="1140" y1="435" x2="1075" y2="635" />
+          <circle class="dot-lm" cx="1075" cy="635" r="5" stroke="none" />
+          <text x="1075" y="655" text-anchor="middle" class="fb-text">Assembly</text>
+
+          <line class="spine-lm" x1="1280" y1="435" x2="1230" y2="600" />
+          <circle class="dot-lm" cx="1230" cy="600" r="5" stroke="none" />
+          <text x="1230" y="620" text-anchor="middle" class="fb-text">Delivery</text>
+          <text x="1230" y="635" text-anchor="middle" class="fb-text">Logistics</text>
+        </g>
+
+        <!-- Footnotes -->
+        <text x="800" y="700" text-anchor="middle" class="fb-text-mute">↓ contract signed → kit ordered</text>
+        <text x="1230" y="700" text-anchor="middle" class="fb-text-mute">↓ kit shipped → site work begins</text>
+      </svg>
     </div>
-<div class="live-link">
-  <a href="https://homefab-map.onrender.com/fishbone" target="_blank" rel="noopener" data-content="22-fishbone.live.cta">
-    See the full published version
-  </a>
-  <span class="src">homefab-map.onrender.com</span>
-</div>
-    
-    <div class="foot" style="bottom: 40px;">
-      <span>Source: <code style="font-family: var(--mono); font-size: 11px;">/tools/fishbone.html</code></span>
+
+    <div class="live-link">
+      <a href="https://homefab-map.onrender.com/fishbone" target="_blank" rel="noopener" data-content="22-fishbone.live.cta">
+        See the interactive version
+      </a>
+      <span class="src">homefab-map.onrender.com/fishbone</span>
+    </div>
+
+    <div class="foot" style="bottom: 24px;">
+      <span data-content="22-fishbone.footer.left">Static rendering · interactive version online</span>
       <span class="page-no">22</span>
     </div>
   </section>
 </div>
 <script src="../js/slide.js"></script>
 <script src="../js/content-loader.js"></script>
-<script>
-  // Graceful fallback if the embed file isn't there yet
-  const f = document.getElementById('fishbone-frame');
-  f.addEventListener('error', showFallback);
-  // Some browsers don't fire 'error' for 404s on iframes; do a fetch probe.
-  fetch(f.src, { method: 'HEAD' }).catch(showFallback)
-    .then(r => { if (r && !r.ok) showFallback(); });
-
-  function showFallback() {
-    const e = f.parentElement;
-    e.innerHTML = `
-      <div class="embed-missing" style="position:relative;height:100%;">
-        <div>
-          <div class="label">Fishbone tool not yet linked</div>
-          <div class="path">tools/fishbone.html</div>
-          <p style="margin-top: 24px; max-width: 480px; font-size: 14px; line-height: 1.5; color: var(--g-600);">
-            Drop your existing fishbone HTML into <strong>/tools/fishbone.html</strong>,
-            or update the iframe <code>src</code> in <strong>slides/10-fishbone.html</strong>
-            to point to your hosted version (e.g. homefab-map.onrender.com/fishbone).
-          </p>
-        </div>
-      </div>`;
-  }
-</script>
 </body>
 </html>
