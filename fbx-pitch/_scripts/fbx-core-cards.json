@@ -1,0 +1,276 @@
+{
+  "_meta": {
+    "purpose": "Card data for the FBX Core module widget — projections + instructions per function",
+    "grounded_in": {
+      "fab_count": 137,
+      "buildings_per_year_at_maturity": 599,
+      "product_mix": {"Townhome": 214, "ADU": 211, "Duplex": 160, "SFR": 14},
+      "blended_factory_per_door_K": 130,
+      "blended_true_total_per_door_K_at_v2_defaults": 245,
+      "core_hubs": ["Corona CA", "Dallas TX", "Indianapolis IN", "Hartford CT", "Denver CO"],
+      "rollout_years": 10,
+      "demand_velocity_per_fab_homes_per_year": 180,
+      "tiers": {"A": "CA HI AK NJ NY MA", "B": "CT OR WA RI NH VT MD DE ME PA", "C": "Sun Belt + mountain west + mid-Atlantic", "D": "South central + deep south + Appalachia + midwest"}
+    },
+    "schema_note": "Each card has badge_value (the small pill in the screenshot — assumed FTE at maturity), projections (numeric + structured), instructions (operating narrative). Adjust schema to your widget."
+  },
+  "module": {
+    "id": "fbx_core",
+    "name": "FBX Core",
+    "subtitle": "Aggregation, Warehousing & Distribution",
+    "description": "The kit-of-parts engine. Standardize the design, aggregate the supply, ship to the Home-Fab.",
+    "color": "#BA7517"
+  },
+  "categories": [
+    {
+      "id": "A",
+      "name": "Factory Standard Design",
+      "cards": [
+        {
+          "id": "factory_standard_design",
+          "name": "Factory Standard Design",
+          "subtitle": "One spec across the network",
+          "icon": "grid",
+          "badge_value": 15,
+          "projections": {
+            "first_year_active": 1,
+            "maturity_year": 5,
+            "fte_at_launch": 4,
+            "fte_at_maturity": 15,
+            "annual_opex_M_at_maturity": 2.4,
+            "specs_under_management": "1 master architectural set + 4 product variants (Townhome, ADU, Duplex, SFR)",
+            "spec_revision_cadence": "biannual (Q2 + Q4 cycles to give franchisees retooling lead-time)",
+            "fabs_in_compliance_target": "100% by end of Year 3"
+          },
+          "instructions": "Maintains the single architectural and structural specification adopted by every Fab in the network. Primary deliverable is a machine-readable BOM that drives Kit-of-Parts assembly downstream. Engineering team owns the master CAD; product manager triages bids/changes from the field. Every spec revision must be backward-compatible with kits already in the supply chain (typically a 90-day cutover window)."
+        }
+      ]
+    },
+    {
+      "id": "B",
+      "name": "Suppliers",
+      "cards": [
+        {
+          "id": "sips",
+          "name": "SIPs",
+          "subtitle": "Panelization · primary",
+          "icon": "grid",
+          "badge_value": "07-15",
+          "projections": {
+            "first_year_active": 1,
+            "maturity_year": 7,
+            "fte_at_launch": 7,
+            "fte_at_maturity": 15,
+            "supplier_concentration": "2 primary, 4 backup, regionally split (East / Central / West)",
+            "annual_panel_volume_at_maturity_sets": 3594,
+            "lead_time_target_days": 14,
+            "annual_spend_M_at_maturity": 22.5,
+            "share_of_panelized_buildings_pct": 50
+          },
+          "instructions": "Structural Insulated Panels are the primary panelization product across the network. Supply-chain risk: SIPs are made by ~12 specialty fabricators in N. America. We dual-source by region to keep redundancy. Volume tier-pricing kicks in at 1,200+ sets/year, hit in Year 4. Track shipping-damage rates monthly — target <2%."
+        },
+        {
+          "id": "cold_formed_steel",
+          "name": "Cold-Formed Steel",
+          "subtitle": "Panelization · option",
+          "icon": "panel",
+          "badge_value": 15,
+          "projections": {
+            "first_year_active": 4,
+            "maturity_year": 8,
+            "fte_at_launch": 5,
+            "fte_at_maturity": 15,
+            "share_of_buildings_at_maturity_pct": 20,
+            "annual_units_at_maturity": 120,
+            "primary_use_case": "Tier A code-driven markets (CA seismic; NY/NJ fire)",
+            "annual_spend_M_at_maturity": 7.5,
+            "psf_premium_vs_sips_pct": 8
+          },
+          "instructions": "Alternative panelization for code-driven markets where SIPs face regulatory friction. Slightly higher psf than SIPs but recovers in faster permit cycles in Tier A jurisdictions. Initial supplier list: ClarkDietrich, MiTek, Sure-Span. Spec maintained by the same engineering team as SIPs to keep BOM unified."
+        },
+        {
+          "id": "esips",
+          "name": "eSIPs",
+          "subtitle": "Panelization · enhanced",
+          "icon": "bolt",
+          "badge_value": 15,
+          "projections": {
+            "first_year_active": 5,
+            "maturity_year": 9,
+            "fte_at_launch": 3,
+            "fte_at_maturity": 15,
+            "share_of_buildings_at_maturity_pct": 30,
+            "annual_units_at_maturity": 180,
+            "premium_over_standard_sips_pct": 18,
+            "site_labor_reduction_vs_sips_pct": 26,
+            "annual_spend_M_at_maturity": 14.0
+          },
+          "instructions": "Enhanced SIPs with integrated electrical chases, pre-routed plumbing penetrations, and embedded structural connections. Reduces site-work labor by 22-30% which compresses the Tier-A strip% economics meaningfully — every 5 percentage points of strip% reduction in Tier A is roughly $25K of margin per door. Premium product targeting CA/NY/MA markets where labor costs justify the upcharge."
+        },
+        {
+          "id": "bath_kitchen_pods",
+          "name": "Bath / Kitchen Pods",
+          "subtitle": "Plumbing-heavy modules",
+          "icon": "bath",
+          "badge_value": 15,
+          "projections": {
+            "first_year_active": 2,
+            "maturity_year": 6,
+            "fte_at_launch": 4,
+            "fte_at_maturity": 15,
+            "pods_per_building": {"Townhome": 3, "ADU": 1, "Duplex": 4, "SFR": 2},
+            "annual_pod_volume_at_maturity": 1450,
+            "site_labor_displaced_per_pod_hours": 38,
+            "annual_spend_M_at_maturity": 18.7,
+            "sourcing_strategy": "1 US primary fab + 1 Asia-import for cost arbitrage on SFR/ADU run"
+          },
+          "instructions": "Pre-fabricated bath and kitchen modules ship as complete plumbing assemblies. Drops 38 hours of site labor per pod — meaningful for Tier A markets with $90+/hr loaded labor rates. ADUs typically take 1 bath pod; townhomes/duplex 3-4. Per-tier impact on $/door is most pronounced in Tier A (~$3.4K/door reduction) and Tier B (~$2.8K)."
+        },
+        {
+          "id": "demand_signals",
+          "name": "Demand Signals",
+          "subtitle": "What suppliers want from us",
+          "icon": "trending-up",
+          "badge_value": 11,
+          "projections": {
+            "first_year_active": 3,
+            "maturity_year": 7,
+            "fte_at_launch": 2,
+            "fte_at_maturity": 11,
+            "rolling_forecast_horizon_months": 24,
+            "rolling_forecast_accuracy_target_pct": 92,
+            "supplier_partner_count_at_maturity": 28,
+            "annual_savings_from_volume_commits_M": 8.5,
+            "quarterly_supplier_business_reviews": 28
+          },
+          "instructions": "We bring suppliers a 12-24 month rolling forecast committed at the regional level. Suppliers reciprocate with volume pricing, capacity reservation, and priority production slots. Maintains the demand-side data feed: orders by tier, by Fab, by product type. Owners: supply-chain ops + procurement analyst running quarterly supplier business reviews. The 8.5M/yr savings figure assumes 4-6% volume discount on bulk commits."
+        }
+      ]
+    },
+    {
+      "id": "C",
+      "name": "Warehousing",
+      "cards": [
+        {
+          "id": "receiving",
+          "name": "Receiving",
+          "subtitle": "Domestic & foreign · containers",
+          "icon": "warehouse",
+          "badge_value": 16,
+          "projections": {
+            "first_year_active": 1,
+            "maturity_year": 5,
+            "fte_per_hub_at_launch": 6,
+            "fte_per_hub_at_maturity": 16,
+            "hubs_operating_by_year": {"Y1": 1, "Y3": 3, "Y5": 5, "Y10": 5},
+            "containers_per_yr_per_hub_at_maturity": 1100,
+            "import_share_of_volume_pct": 35,
+            "domestic_share_of_volume_pct": 65,
+            "inventory_accuracy_target_pct": 99.4
+          },
+          "instructions": "Five FBX Core hubs (Corona CA, Dallas TX, Indianapolis IN, Hartford CT, Denver CO) receive both domestic LTL freight and international containers. Domestic flow handles ~65% of volume (panels, lumber, finishes); imports cover ~35% (specialty hardware, bath pods, finishes). 24/7 unloading dock at peak. Inventory accuracy is the headline KPI — ties directly to kit-build accuracy downstream."
+        },
+        {
+          "id": "sorting",
+          "name": "Sorting",
+          "subtitle": "Create the kit of parts",
+          "icon": "sort",
+          "badge_value": "15-16",
+          "projections": {
+            "first_year_active": 1,
+            "maturity_year": 5,
+            "fte_per_hub_at_launch": 5,
+            "fte_per_hub_at_maturity": 16,
+            "kits_per_yr_per_hub_at_maturity": 120,
+            "skus_per_kit": 600,
+            "kit_assembly_time_hours": 18,
+            "kit_accuracy_target_pct": 99.8,
+            "qa_audit_sample_rate": "every 20th kit"
+          },
+          "instructions": "Receives bulk inventory, picks against the master spec, builds a complete Kit-of-Parts (~600 SKUs per kit) per home order. Each kit is a containerized shipment — single-touch from sort floor to outbound truck. Quality gate: every 20th kit gets a full-line audit by QA. Tooling roadmap: barcode-driven pick paths in Year 1-3, then AS/RS automation in Years 4-7 to absorb volume growth without linear FTE growth."
+        },
+        {
+          "id": "ship_to_home_fab",
+          "name": "Ship to Home-Fab",
+          "subtitle": "Containers to assembly factory",
+          "icon": "truck",
+          "badge_value": 16,
+          "projections": {
+            "first_year_active": 1,
+            "maturity_year": 5,
+            "fte_per_hub_at_launch": 4,
+            "fte_per_hub_at_maturity": 16,
+            "outbound_loads_per_yr_per_hub_at_maturity": 1100,
+            "avg_haul_distance_miles": 380,
+            "max_haul_distance_miles": 500,
+            "on_time_delivery_target_pct": 96,
+            "freight_partner": "Stream Logistics (per fishbone Last Mile)"
+          },
+          "instructions": "Outbound shipping from Core hub to assembly Fab. Each kit travels in a sealed 53' container, designed to one-touch unload into the Fab's receiving bay. Routing optimized weekly — most Fabs sit within 500 miles of their assigned hub. Stream Logistics holds the fee-based freight contract; we monitor on-time and damage rates monthly."
+        }
+      ]
+    },
+    {
+      "id": "D",
+      "name": "Network Operations",
+      "_inferred_note": "These three cards were partially visible in the cropped screenshot — adjust the category name and the cards as needed",
+      "cards": [
+        {
+          "id": "franchisee_establishment",
+          "name": "Franchisee Establishment",
+          "subtitle": "Stand up new Fabs",
+          "icon": "users",
+          "badge_value": 12,
+          "projections": {
+            "first_year_active": 1,
+            "maturity_year": 4,
+            "fte_at_launch": 3,
+            "fte_at_maturity": 12,
+            "fabs_per_year_by_phase": {"Phase_1": 2, "Phase_2": 8, "Phase_3": 15},
+            "time_to_franchisee_operational_months": 9,
+            "franchisee_acquisition_cost_K": 65,
+            "training_program_weeks": "6 at HQ + 3 on-site",
+            "first_90_days_handholding": true
+          },
+          "instructions": "Recruits, onboards, and stands up new Fab franchisees. Includes site selection assistance (pulls from the Expansion Map's recommended cities), territory licensing, training, opening kit shipment, and first-90-days handholding. Owns the Fab pipeline — 137 sites is the 10-year target. Phasing: 2 Fabs in Year 1 (CA pilot), 30 by Year 5 (Phase 2 high-demand markets), 137 by Year 10 (Phase 3 national fill-in)."
+        },
+        {
+          "id": "quality_assurance",
+          "name": "Quality Assurance",
+          "subtitle": "Network-wide QA standards",
+          "icon": "check",
+          "badge_value": 14,
+          "projections": {
+            "first_year_active": 2,
+            "maturity_year": 6,
+            "fte_at_launch": 3,
+            "fte_at_maturity": 14,
+            "audit_cadence_per_fab_per_year": 4,
+            "incident_response_target_hours": 48,
+            "warranty_claim_rate_target_per_1000_homes": 12,
+            "third_party_inspection_partners": ["ICC", "Intertek"]
+          },
+          "instructions": "Owns the Quality Management System across hubs and Fabs. Quarterly audits at each Fab, kit-level QA on a sample basis at sort, root-cause analysis on field-reported defects. Coordinates with ICC/Intertek for third-party building inspections (Last Mile BU per fishbone). Drives the warranty-claim KPI — target is industry-leading at 12 claims per 1,000 homes vs. ~30/1,000 conventional construction."
+        },
+        {
+          "id": "regional_expansion",
+          "name": "Regional Expansion",
+          "subtitle": "Hub & territory growth",
+          "icon": "map",
+          "badge_value": 8,
+          "projections": {
+            "first_year_active": 1,
+            "maturity_year": 7,
+            "fte_at_launch": 2,
+            "fte_at_maturity": 8,
+            "hubs_operating_target_by_year_10": 5,
+            "states_with_active_fab_target": 50,
+            "hub_coverage_radius_miles": 500,
+            "hub_capex_per_hub_M": 15
+          },
+          "instructions": "Strategic real-estate function — selects new hub locations as the network scales, negotiates leases, manages CAPEX on hub buildout. Hub coverage radius is 500 miles; today (Year 1) only Corona CA is operational. By Year 10 all 5 hubs are running (Corona Y1, Dallas Y2, Indianapolis Y3, Hartford Y4, Denver Y5 per existing rollout plan). Coordinates with the Expansion Map team to time hub openings against Fab demand in the territory."
+        }
+      ]
+    }
+  ]
+}

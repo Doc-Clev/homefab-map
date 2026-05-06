@@ -581,11 +581,11 @@
   "24-reference": {
     "eyebrow.left": "FBX · HOMEFAB",
     "eyebrow.right": "24 · Backup · Operating System Reference",
-    "kicker": "Live Reference",
+    "kicker": "Operating System Reference",
     "headline.a": "The operating system,",
     "headline.b": "card by card.",
-    "status.line1": "<strong>LIVE</strong> — JSON-driven content",
-    "status.line2": "Click any card · drawer reveals the readme",
+    "status.line1": "<strong>43 cards</strong> · 6 pillars · click to drill in",
+    "status.line2": "FBX Core projections · org sizing · operating playbook",
     "live.cta": "Open in a new tab",
     "footer.left": "Source: <code style=\"font-family: var(--mono); font-size: 11px;\">/tools/reference.html</code> + <code style=\"font-family: var(--mono); font-size: 11px;\">/reference-content.json</code>"
   }
