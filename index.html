@@ -189,6 +189,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-seri
   .dot.p1 { fill: var(--p1); }
   .dot.p2 { fill: var(--p2); }
   .dot.p3 { fill: var(--p3); }
+  .dot.cost-under { fill: var(--p1); }
+  .dot.cost-on    { fill: var(--p2); }
+  .dot.cost-over  { fill: var(--p3); }
+  .dot.cost-na    { fill: #888780; }
   .dot.dim { opacity: 0.15; }
   .dot.hl { stroke: var(--text-primary); stroke-width: 2; r: 8; }
   .tip {
@@ -582,6 +586,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-seri
         <input type=&quot;range&quot; id=&quot;yr&quot; min=&quot;1&quot; max=&quot;10&quot; value=&quot;10&quot; step=&quot;1&quot;>
         <button onclick=&quot;play()&quot; id=&quot;play-btn&quot;>▶ Animate</button>
         <label class=&quot;toggle-lbl&quot;><input type=&quot;checkbox&quot; id=&quot;show-routes&quot; onchange=&quot;updateMap()&quot;> Show hub→Fab routes</label>
+        <label class=&quot;toggle-lbl&quot; title=&quot;Color dots by cost band: green &lt; target, amber within 10%, red &gt; 10% over&quot;><input type=&quot;checkbox&quot; id=&quot;color-by-cost&quot; onchange=&quot;updateMap()&quot;> Color by $/door</label>
       </div>
       <div class=&quot;map&quot;>
         <div class=&quot;tip&quot; id=&quot;tip&quot;></div>
@@ -2100,9 +2105,27 @@ function updateMap() {
   if (g.empty()) g = svg.append('g').attr('class', 'dots-layer');
   const join = g.selectAll('circle').data(sites, d => d._id);
   join.exit().remove();
-  const enter = join.enter().append('circle').attr('r', 4.5).attr('class', d => 'dot p' + d.phase);
+  const colorByCost = document.getElementById('color-by-cost') &amp;&amp; document.getElementById('color-by-cost').checked;
+  function dotClassFor(d) {
+    let base = 'dot ';
+    if (colorByCost &amp;&amp; typeof costStackForSite === 'function') {
+      const cs = costStackForSite(d);
+      if (!cs) base += 'cost-na';
+      else {
+        const tgt = (assumptions &amp;&amp; assumptions.rev_per_home_K) ? assumptions.rev_per_home_K * 1000 : 165000;
+        const ratio = cs.factory / tgt;
+        if (ratio < 0.95) base += 'cost-under';
+        else if (ratio <= 1.10) base += 'cost-on';
+        else base += 'cost-over';
+      }
+    } else {
+      base += 'p' + d.phase;
+    }
+    return base + (d.yr > currentYear ? ' dim' : '') + (d._id === hoveredRowId ? ' hl' : '');
+  }
+  const enter = join.enter().append('circle').attr('r', 4.5).attr('class', dotClassFor);
   enter.merge(join)
-    .attr('class', d => 'dot p' + d.phase + (d.yr > currentYear ? ' dim' : '') + (d._id === hoveredRowId ? ' hl' : ''))
+    .attr('class', dotClassFor)
     .attr('cx', d => { const p = mapProjection([d.lon, d.lat]); return p ? p[0] : -100; })
     .attr('cy', d => { const p = mapProjection([d.lon, d.lat]); return p ? p[1] : -100; });
 
@@ -4210,9 +4233,27 @@ function updateMap() {
   if (g.empty()) g = svg.append('g').attr('class', 'dots-layer');
   const join = g.selectAll('circle').data(sites, d => d._id);
   join.exit().remove();
-  const enter = join.enter().append('circle').attr('r', 4.5).attr('class', d => 'dot p' + d.phase);
+  const colorByCost = document.getElementById('color-by-cost') &amp;&amp; document.getElementById('color-by-cost').checked;
+  function dotClassFor(d) {
+    let base = 'dot ';
+    if (colorByCost &amp;&amp; typeof costStackForSite === 'function') {
+      const cs = costStackForSite(d);
+      if (!cs) base += 'cost-na';
+      else {
+        const tgt = (assumptions &amp;&amp; assumptions.rev_per_home_K) ? assumptions.rev_per_home_K * 1000 : 165000;
+        const ratio = cs.factory / tgt;
+        if (ratio < 0.95) base += 'cost-under';
+        else if (ratio <= 1.10) base += 'cost-on';
+        else base += 'cost-over';
+      }
+    } else {
+      base += 'p' + d.phase;
+    }
+    return base + (d.yr > currentYear ? ' dim' : '') + (d._id === hoveredRowId ? ' hl' : '');
+  }
+  const enter = join.enter().append('circle').attr('r', 4.5).attr('class', dotClassFor);
   enter.merge(join)
-    .attr('class', d => 'dot p' + d.phase + (d.yr > currentYear ? ' dim' : '') + (d._id === hoveredRowId ? ' hl' : ''))
+    .attr('class', dotClassFor)
     .attr('cx', d => { const p = mapProjection([d.lon, d.lat]); return p ? p[0] : -100; })
     .attr('cy', d => { const p = mapProjection([d.lon, d.lat]); return p ? p[1] : -100; });
 
@@ -5167,6 +5208,10 @@ window.addEventListener('message', function(e) {
   .dot.p1 { fill: var(--p1); }
   .dot.p2 { fill: var(--p2); }
   .dot.p3 { fill: var(--p3); }
+  .dot.cost-under { fill: var(--p1); }
+  .dot.cost-on    { fill: var(--p2); }
+  .dot.cost-over  { fill: var(--p3); }
+  .dot.cost-na    { fill: #888780; }
   .dot.dim { opacity: 0.15; }
   .dot.hl { stroke: var(--text-primary); stroke-width: 2; r: 8; }
   .tip {
@@ -5548,6 +5593,7 @@ window.addEventListener('message', function(e) {
         <input type=&quot;range&quot; id=&quot;yr&quot; min=&quot;1&quot; max=&quot;10&quot; value=&quot;10&quot; step=&quot;1&quot;>
         <button onclick=&quot;play()&quot; id=&quot;play-btn&quot;>▶ Animate</button>
         <label class=&quot;toggle-lbl&quot;><input type=&quot;checkbox&quot; id=&quot;show-routes&quot; onchange=&quot;updateMap()&quot;> Show hub→Fab routes</label>
+        <label class=&quot;toggle-lbl&quot; title=&quot;Color dots by cost band: green &lt; target, amber within 10%, red &gt; 10% over&quot;><input type=&quot;checkbox&quot; id=&quot;color-by-cost&quot; onchange=&quot;updateMap()&quot;> Color by $/door</label>
       </div>
       <div class=&quot;map&quot;>
         <div class=&quot;tip&quot; id=&quot;tip&quot;></div>
@@ -7050,9 +7096,27 @@ function updateMap() {
   if (g.empty()) g = svg.append('g').attr('class', 'dots-layer');
   const join = g.selectAll('circle').data(sites, d => d._id);
   join.exit().remove();
-  const enter = join.enter().append('circle').attr('r', 4.5).attr('class', d => 'dot p' + d.phase);
+  const colorByCost = document.getElementById('color-by-cost') &amp;&amp; document.getElementById('color-by-cost').checked;
+  function dotClassFor(d) {
+    let base = 'dot ';
+    if (colorByCost &amp;&amp; typeof costStackForSite === 'function') {
+      const cs = costStackForSite(d);
+      if (!cs) base += 'cost-na';
+      else {
+        const tgt = (assumptions &amp;&amp; assumptions.rev_per_home_K) ? assumptions.rev_per_home_K * 1000 : 165000;
+        const ratio = cs.factory / tgt;
+        if (ratio < 0.95) base += 'cost-under';
+        else if (ratio <= 1.10) base += 'cost-on';
+        else base += 'cost-over';
+      }
+    } else {
+      base += 'p' + d.phase;
+    }
+    return base + (d.yr > currentYear ? ' dim' : '') + (d._id === hoveredRowId ? ' hl' : '');
+  }
+  const enter = join.enter().append('circle').attr('r', 4.5).attr('class', dotClassFor);
   enter.merge(join)
-    .attr('class', d => 'dot p' + d.phase + (d.yr > currentYear ? ' dim' : '') + (d._id === hoveredRowId ? ' hl' : ''))
+    .attr('class', dotClassFor)
     .attr('cx', d => { const p = mapProjection([d.lon, d.lat]); return p ? p[0] : -100; })
     .attr('cy', d => { const p = mapProjection([d.lon, d.lat]); return p ? p[1] : -100; });
 
@@ -9003,9 +9067,27 @@ function updateMap() {
   if (g.empty()) g = svg.append('g').attr('class', 'dots-layer');
   const join = g.selectAll('circle').data(sites, d => d._id);
   join.exit().remove();
-  const enter = join.enter().append('circle').attr('r', 4.5).attr('class', d => 'dot p' + d.phase);
+  const colorByCost = document.getElementById('color-by-cost') &amp;&amp; document.getElementById('color-by-cost').checked;
+  function dotClassFor(d) {
+    let base = 'dot ';
+    if (colorByCost &amp;&amp; typeof costStackForSite === 'function') {
+      const cs = costStackForSite(d);
+      if (!cs) base += 'cost-na';
+      else {
+        const tgt = (assumptions &amp;&amp; assumptions.rev_per_home_K) ? assumptions.rev_per_home_K * 1000 : 165000;
+        const ratio = cs.factory / tgt;
+        if (ratio < 0.95) base += 'cost-under';
+        else if (ratio <= 1.10) base += 'cost-on';
+        else base += 'cost-over';
+      }
+    } else {
+      base += 'p' + d.phase;
+    }
+    return base + (d.yr > currentYear ? ' dim' : '') + (d._id === hoveredRowId ? ' hl' : '');
+  }
+  const enter = join.enter().append('circle').attr('r', 4.5).attr('class', dotClassFor);
   enter.merge(join)
-    .attr('class', d => 'dot p' + d.phase + (d.yr > currentYear ? ' dim' : '') + (d._id === hoveredRowId ? ' hl' : ''))
+    .attr('class', dotClassFor)
     .attr('cx', d => { const p = mapProjection([d.lon, d.lat]); return p ? p[0] : -100; })
     .attr('cy', d => { const p = mapProjection([d.lon, d.lat]); return p ? p[1] : -100; });
 
