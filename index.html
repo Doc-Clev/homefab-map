@@ -462,7 +462,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-seri
       <div class=&quot;asm-group&quot;>
         <div class=&quot;asm-group-title&quot;>FBX Fab-Home defaults</div>
         <div class=&quot;asm-row&quot;><label>Fab CAPEX ($M)</label><input type=&quot;number&quot; step=&quot;0.1&quot; id=&quot;asm-fab-capex&quot; value=&quot;3.0&quot; onchange=&quot;updateAssumptions()&quot;></div>
-        <div class=&quot;asm-row&quot; title=&quot;Set in the 💰 Cost Calibrator tab&quot;><label>Home revenue ($K) <em style=&quot;font-weight:400;font-size:10px;color:var(--text-tertiary);font-style:normal;margin-left:4px;&quot;>· from 💰 Calibrator</em></label><input type=&quot;number&quot; step=&quot;1&quot; id=&quot;asm-rev&quot; value=&quot;180&quot; readonly disabled style=&quot;opacity:0.55;cursor:not-allowed;background:transparent;&quot;></div>
+        <div class=&quot;asm-row&quot; title=&quot;Set in the 💰 Cost Calibrator tab&quot;><label>Home revenue ($K) <em style=&quot;font-weight:400;font-size:10px;color:var(--text-tertiary);font-style:normal;margin-left:4px;&quot;>· national avg, from 💰 Calibrator</em><div style=&quot;font-size:9.5px;color:var(--text-tertiary);margin-top:3px;font-family:ui-monospace,'SF Mono',Menlo,monospace;line-height:1.4;&quot;>= avg(city: $/sf × (1−strip%) × Σ(p.sf×mod×units)/599) <br>weighted by demand_velocity · 137 cities</div></label><input type=&quot;number&quot; step=&quot;1&quot; id=&quot;asm-rev&quot; value=&quot;180&quot; readonly disabled style=&quot;opacity:0.55;cursor:not-allowed;background:transparent;&quot;></div>
         <div class=&quot;asm-row&quot;><label>Fab net margin (%)</label><input type=&quot;number&quot; step=&quot;0.1&quot; id=&quot;asm-margin&quot; value=&quot;22&quot; onchange=&quot;updateAssumptions()&quot;></div>
       </div>
       <div class=&quot;asm-group&quot;>
@@ -883,27 +883,54 @@ function assignHub(site, activeHubs) {
 
 /* ============== Per-site effective values (override or default) ============== */
 function fabCapex(s)    { return (s.capex != null &amp;&amp; s.capex !== '') ? +s.capex : assumptions.fab_capex_M; }
-// Per-state cost mirrors the calibrator's compute: psf × sf_mod × sf × (1-strip) × units, weighted across the product mix
-function costPerDoorForState(stateCode) {
+// v2 cascade: city.psf_override > city.cci × baseline > state_defaults[s.state] > national_baseline_psf
+// Reads either the v2 schema (state_defaults, products, national_baseline_psf) or v1 (state_cost_psf, state_tier, product_mix).
+function costPerDoorForSite(site) {
   const ca = window._COST_ASSUMPTIONS;
-  if (!ca || !ca.state_cost_psf || !ca.state_tier || !ca.tier_strip_pct || !ca.product_mix) return null;
-  const psf = ca.state_cost_psf[stateCode];
-  const tier = ca.state_tier[stateCode];
-  if (psf == null || tier == null) return null;
-  const stripPct = ca.tier_strip_pct[tier];
+  if (!ca) return null;
+  const products = ca.products || ca.product_mix;
+  if (!products || !ca.tier_strip_pct) return null;
+
+  const sd = ca.state_defaults || {};
+  const baselinePsf = ca.national_baseline_psf || 162;
+  const co = (site &amp;&amp; site.cost) || {};
+  const sc = site &amp;&amp; site.state;
+
+  // PSF cascade
+  let psf;
+  if (co.psf_override != null) {
+    psf = +co.psf_override;
+  } else if (co.cci != null) {
+    psf = baselinePsf * +co.cci;
+  } else if (sd[sc] &amp;&amp; sd[sc].cost_psf != null) {
+    psf = sd[sc].cost_psf;
+  } else if (ca.state_cost_psf &amp;&amp; ca.state_cost_psf[sc] != null) {
+    psf = ca.state_cost_psf[sc];
+  } else {
+    psf = baselinePsf;
+  }
+
+  // Tier (only used to look up strip%)
+  const tier = (sd[sc] &amp;&amp; sd[sc].tier) || (ca.state_tier &amp;&amp; ca.state_tier[sc]) || 'C';
+  const stripPct = (co.strip_pct_override != null) ? +co.strip_pct_override : ca.tier_strip_pct[tier];
   if (stripPct == null) return null;
   const strip = stripPct / 100;
+
   let totalCost = 0, totalUnits = 0;
-  for (const k in ca.product_mix) {
-    const p = ca.product_mix[k];
+  for (const k in products) {
+    const p = products[k];
     if (!p || !p.sf || !p.units || p.sf_mod == null) continue;
     totalCost += psf * p.sf_mod * p.sf * (1 - strip) * p.units;
     totalUnits += p.units;
   }
   return totalUnits ? totalCost / totalUnits : null;
 }
+// Backward-compat shim — some legacy callers still pass just a state code
+function costPerDoorForState(stateCode) {
+  return costPerDoorForSite({ state: stateCode, cost: {} });
+}
 function defaultRevPerK(s) {
-  const v = costPerDoorForState(s.state);
+  const v = costPerDoorForSite(s);
   return (v != null) ? Math.round(v / 1000) : assumptions.rev_per_home_K;
 }
 function fabRevPer(s)   { return (s.rev_per_home != null &amp;&amp; s.rev_per_home !== '') ? +s.rev_per_home : defaultRevPerK(s); }
@@ -2833,27 +2860,54 @@ function assignHub(site, activeHubs) {
 
 /* ============== Per-site effective values (override or default) ============== */
 function fabCapex(s)    { return (s.capex != null &amp;&amp; s.capex !== '') ? +s.capex : assumptions.fab_capex_M; }
-// Per-state cost mirrors the calibrator's compute: psf × sf_mod × sf × (1-strip) × units, weighted across the product mix
-function costPerDoorForState(stateCode) {
+// v2 cascade: city.psf_override > city.cci × baseline > state_defaults[s.state] > national_baseline_psf
+// Reads either the v2 schema (state_defaults, products, national_baseline_psf) or v1 (state_cost_psf, state_tier, product_mix).
+function costPerDoorForSite(site) {
   const ca = window._COST_ASSUMPTIONS;
-  if (!ca || !ca.state_cost_psf || !ca.state_tier || !ca.tier_strip_pct || !ca.product_mix) return null;
-  const psf = ca.state_cost_psf[stateCode];
-  const tier = ca.state_tier[stateCode];
-  if (psf == null || tier == null) return null;
-  const stripPct = ca.tier_strip_pct[tier];
+  if (!ca) return null;
+  const products = ca.products || ca.product_mix;
+  if (!products || !ca.tier_strip_pct) return null;
+
+  const sd = ca.state_defaults || {};
+  const baselinePsf = ca.national_baseline_psf || 162;
+  const co = (site &amp;&amp; site.cost) || {};
+  const sc = site &amp;&amp; site.state;
+
+  // PSF cascade
+  let psf;
+  if (co.psf_override != null) {
+    psf = +co.psf_override;
+  } else if (co.cci != null) {
+    psf = baselinePsf * +co.cci;
+  } else if (sd[sc] &amp;&amp; sd[sc].cost_psf != null) {
+    psf = sd[sc].cost_psf;
+  } else if (ca.state_cost_psf &amp;&amp; ca.state_cost_psf[sc] != null) {
+    psf = ca.state_cost_psf[sc];
+  } else {
+    psf = baselinePsf;
+  }
+
+  // Tier (only used to look up strip%)
+  const tier = (sd[sc] &amp;&amp; sd[sc].tier) || (ca.state_tier &amp;&amp; ca.state_tier[sc]) || 'C';
+  const stripPct = (co.strip_pct_override != null) ? +co.strip_pct_override : ca.tier_strip_pct[tier];
   if (stripPct == null) return null;
   const strip = stripPct / 100;
+
   let totalCost = 0, totalUnits = 0;
-  for (const k in ca.product_mix) {
-    const p = ca.product_mix[k];
+  for (const k in products) {
+    const p = products[k];
     if (!p || !p.sf || !p.units || p.sf_mod == null) continue;
     totalCost += psf * p.sf_mod * p.sf * (1 - strip) * p.units;
     totalUnits += p.units;
   }
   return totalUnits ? totalCost / totalUnits : null;
 }
+// Backward-compat shim — some legacy callers still pass just a state code
+function costPerDoorForState(stateCode) {
+  return costPerDoorForSite({ state: stateCode, cost: {} });
+}
 function defaultRevPerK(s) {
-  const v = costPerDoorForState(s.state);
+  const v = costPerDoorForSite(s);
   return (v != null) ? Math.round(v / 1000) : assumptions.rev_per_home_K;
 }
 function fabRevPer(s)   { return (s.rev_per_home != null &amp;&amp; s.rev_per_home !== '') ? +s.rev_per_home : defaultRevPerK(s); }
@@ -5097,7 +5151,7 @@ window.addEventListener('message', function(e) {
       <div class=&quot;asm-group&quot;>
         <div class=&quot;asm-group-title&quot;>FBX Fab-Home defaults</div>
         <div class=&quot;asm-row&quot;><label>Fab CAPEX ($M)</label><input type=&quot;number&quot; step=&quot;0.1&quot; id=&quot;asm-fab-capex&quot; value=&quot;3.0&quot; onchange=&quot;updateAssumptions()&quot;></div>
-        <div class=&quot;asm-row&quot; title=&quot;Set in the 💰 Cost Calibrator tab&quot;><label>Home revenue ($K) <em style=&quot;font-weight:400;font-size:10px;color:var(--text-tertiary);font-style:normal;margin-left:4px;&quot;>· from 💰 Calibrator</em></label><input type=&quot;number&quot; step=&quot;1&quot; id=&quot;asm-rev&quot; value=&quot;180&quot; readonly disabled style=&quot;opacity:0.55;cursor:not-allowed;background:transparent;&quot;></div>
+        <div class=&quot;asm-row&quot; title=&quot;Set in the 💰 Cost Calibrator tab&quot;><label>Home revenue ($K) <em style=&quot;font-weight:400;font-size:10px;color:var(--text-tertiary);font-style:normal;margin-left:4px;&quot;>· national avg, from 💰 Calibrator</em><div style=&quot;font-size:9.5px;color:var(--text-tertiary);margin-top:3px;font-family:ui-monospace,'SF Mono',Menlo,monospace;line-height:1.4;&quot;>= avg(city: $/sf × (1−strip%) × Σ(p.sf×mod×units)/599) <br>weighted by demand_velocity · 137 cities</div></label><input type=&quot;number&quot; step=&quot;1&quot; id=&quot;asm-rev&quot; value=&quot;180&quot; readonly disabled style=&quot;opacity:0.55;cursor:not-allowed;background:transparent;&quot;></div>
         <div class=&quot;asm-row&quot;><label>Fab net margin (%)</label><input type=&quot;number&quot; step=&quot;0.1&quot; id=&quot;asm-margin&quot; value=&quot;22&quot; onchange=&quot;updateAssumptions()&quot;></div>
       </div>
       <div class=&quot;asm-group&quot;>
@@ -5507,27 +5561,54 @@ function assignHub(site, activeHubs) {
 
 /* ============== Per-site effective values (override or default) ============== */
 function fabCapex(s)    { return (s.capex != null &amp;&amp; s.capex !== '') ? +s.capex : assumptions.fab_capex_M; }
-// Per-state cost mirrors the calibrator's compute: psf × sf_mod × sf × (1-strip) × units, weighted across the product mix
-function costPerDoorForState(stateCode) {
+// v2 cascade: city.psf_override > city.cci × baseline > state_defaults[s.state] > national_baseline_psf
+// Reads either the v2 schema (state_defaults, products, national_baseline_psf) or v1 (state_cost_psf, state_tier, product_mix).
+function costPerDoorForSite(site) {
   const ca = window._COST_ASSUMPTIONS;
-  if (!ca || !ca.state_cost_psf || !ca.state_tier || !ca.tier_strip_pct || !ca.product_mix) return null;
-  const psf = ca.state_cost_psf[stateCode];
-  const tier = ca.state_tier[stateCode];
-  if (psf == null || tier == null) return null;
-  const stripPct = ca.tier_strip_pct[tier];
+  if (!ca) return null;
+  const products = ca.products || ca.product_mix;
+  if (!products || !ca.tier_strip_pct) return null;
+
+  const sd = ca.state_defaults || {};
+  const baselinePsf = ca.national_baseline_psf || 162;
+  const co = (site &amp;&amp; site.cost) || {};
+  const sc = site &amp;&amp; site.state;
+
+  // PSF cascade
+  let psf;
+  if (co.psf_override != null) {
+    psf = +co.psf_override;
+  } else if (co.cci != null) {
+    psf = baselinePsf * +co.cci;
+  } else if (sd[sc] &amp;&amp; sd[sc].cost_psf != null) {
+    psf = sd[sc].cost_psf;
+  } else if (ca.state_cost_psf &amp;&amp; ca.state_cost_psf[sc] != null) {
+    psf = ca.state_cost_psf[sc];
+  } else {
+    psf = baselinePsf;
+  }
+
+  // Tier (only used to look up strip%)
+  const tier = (sd[sc] &amp;&amp; sd[sc].tier) || (ca.state_tier &amp;&amp; ca.state_tier[sc]) || 'C';
+  const stripPct = (co.strip_pct_override != null) ? +co.strip_pct_override : ca.tier_strip_pct[tier];
   if (stripPct == null) return null;
   const strip = stripPct / 100;
+
   let totalCost = 0, totalUnits = 0;
-  for (const k in ca.product_mix) {
-    const p = ca.product_mix[k];
+  for (const k in products) {
+    const p = products[k];
     if (!p || !p.sf || !p.units || p.sf_mod == null) continue;
     totalCost += psf * p.sf_mod * p.sf * (1 - strip) * p.units;
     totalUnits += p.units;
   }
   return totalUnits ? totalCost / totalUnits : null;
 }
+// Backward-compat shim — some legacy callers still pass just a state code
+function costPerDoorForState(stateCode) {
+  return costPerDoorForSite({ state: stateCode, cost: {} });
+}
 function defaultRevPerK(s) {
-  const v = costPerDoorForState(s.state);
+  const v = costPerDoorForSite(s);
   return (v != null) ? Math.round(v / 1000) : assumptions.rev_per_home_K;
 }
 function fabRevPer(s)   { return (s.rev_per_home != null &amp;&amp; s.rev_per_home !== '') ? +s.rev_per_home : defaultRevPerK(s); }
@@ -7308,27 +7389,54 @@ function assignHub(site, activeHubs) {
 
 /* ============== Per-site effective values (override or default) ============== */
 function fabCapex(s)    { return (s.capex != null &amp;&amp; s.capex !== '') ? +s.capex : assumptions.fab_capex_M; }
-// Per-state cost mirrors the calibrator's compute: psf × sf_mod × sf × (1-strip) × units, weighted across the product mix
-function costPerDoorForState(stateCode) {
+// v2 cascade: city.psf_override > city.cci × baseline > state_defaults[s.state] > national_baseline_psf
+// Reads either the v2 schema (state_defaults, products, national_baseline_psf) or v1 (state_cost_psf, state_tier, product_mix).
+function costPerDoorForSite(site) {
   const ca = window._COST_ASSUMPTIONS;
-  if (!ca || !ca.state_cost_psf || !ca.state_tier || !ca.tier_strip_pct || !ca.product_mix) return null;
-  const psf = ca.state_cost_psf[stateCode];
-  const tier = ca.state_tier[stateCode];
-  if (psf == null || tier == null) return null;
-  const stripPct = ca.tier_strip_pct[tier];
+  if (!ca) return null;
+  const products = ca.products || ca.product_mix;
+  if (!products || !ca.tier_strip_pct) return null;
+
+  const sd = ca.state_defaults || {};
+  const baselinePsf = ca.national_baseline_psf || 162;
+  const co = (site &amp;&amp; site.cost) || {};
+  const sc = site &amp;&amp; site.state;
+
+  // PSF cascade
+  let psf;
+  if (co.psf_override != null) {
+    psf = +co.psf_override;
+  } else if (co.cci != null) {
+    psf = baselinePsf * +co.cci;
+  } else if (sd[sc] &amp;&amp; sd[sc].cost_psf != null) {
+    psf = sd[sc].cost_psf;
+  } else if (ca.state_cost_psf &amp;&amp; ca.state_cost_psf[sc] != null) {
+    psf = ca.state_cost_psf[sc];
+  } else {
+    psf = baselinePsf;
+  }
+
+  // Tier (only used to look up strip%)
+  const tier = (sd[sc] &amp;&amp; sd[sc].tier) || (ca.state_tier &amp;&amp; ca.state_tier[sc]) || 'C';
+  const stripPct = (co.strip_pct_override != null) ? +co.strip_pct_override : ca.tier_strip_pct[tier];
   if (stripPct == null) return null;
   const strip = stripPct / 100;
+
   let totalCost = 0, totalUnits = 0;
-  for (const k in ca.product_mix) {
-    const p = ca.product_mix[k];
+  for (const k in products) {
+    const p = products[k];
     if (!p || !p.sf || !p.units || p.sf_mod == null) continue;
     totalCost += psf * p.sf_mod * p.sf * (1 - strip) * p.units;
     totalUnits += p.units;
   }
   return totalUnits ? totalCost / totalUnits : null;
 }
+// Backward-compat shim — some legacy callers still pass just a state code
+function costPerDoorForState(stateCode) {
+  return costPerDoorForSite({ state: stateCode, cost: {} });
+}
 function defaultRevPerK(s) {
-  const v = costPerDoorForState(s.state);
+  const v = costPerDoorForSite(s);
   return (v != null) ? Math.round(v / 1000) : assumptions.rev_per_home_K;
 }
 function fabRevPer(s)   { return (s.rev_per_home != null &amp;&amp; s.rev_per_home !== '') ? +s.rev_per_home : defaultRevPerK(s); }
@@ -17442,12 +17550,12 @@ function copyJSON() {
         &lt;div class=&quot;delta on&quot; id=&quot;hero-delta&quot;&gt;vs $165K target&lt;/div&gt;
       &lt;/div&gt;
       &lt;div class=&quot;hero-stat&quot;&gt;
-        &lt;div class=&quot;lbl&quot;&gt;Cheapest State&lt;/div&gt;
+        &lt;div class=&quot;lbl&quot;&gt;Cheapest City&lt;/div&gt;
         &lt;div class=&quot;val&quot; id=&quot;hero-min&quot; style=&quot;color: var(--green-soft);&quot;&gt;$—&lt;/div&gt;
         &lt;div class=&quot;delta&quot; id=&quot;hero-min-state&quot;&gt;—&lt;/div&gt;
       &lt;/div&gt;
       &lt;div class=&quot;hero-stat&quot;&gt;
-        &lt;div class=&quot;lbl&quot;&gt;Most Expensive State&lt;/div&gt;
+        &lt;div class=&quot;lbl&quot;&gt;Priciest City&lt;/div&gt;
         &lt;div class=&quot;val&quot; id=&quot;hero-max&quot; style=&quot;color: var(--red-soft);&quot;&gt;$—&lt;/div&gt;
         &lt;div class=&quot;delta&quot; id=&quot;hero-max-state&quot;&gt;—&lt;/div&gt;
       &lt;/div&gt;
@@ -17573,94 +17681,114 @@ function copyJSON() {
 // FBX HOMEFAB — COST-PER-DOOR CALIBRATOR
 // =============================================================================
 
-// State-level new-construction $/sf — blended from NAHB SOC 2024, home-cost.com,
-// bhumicalculator 2026, NAHB regional medians. Conservative midpoints, &quot;all-in
-// turnkey including GC overhead&quot; basis.
-const STATE_COST_PSF = {
-  CA: 225, HI: 230, AK: 228, OR: 200, WA: 200, NV: 175, AZ: 165, ID: 170,
-  UT: 175, MT: 185, WY: 165, CO: 175, NM: 160,
-  ND: 165, SD: 160, NE: 160, KS: 155, MN: 175, IA: 165, MO: 155, WI: 170,
-  IL: 175, IN: 155, MI: 160, OH: 155,
-  TX: 162, OK: 158, AR: 156, LA: 160, MS: 154, AL: 155, TN: 160, KY: 158,
-  WV: 150, FL: 175, GA: 160, SC: 165, NC: 165, VA: 175, MD: 195, DE: 185,
-  PA: 180, NY: 211, NJ: 225, CT: 200, RI: 195, MA: 210, NH: 195, VT: 195, ME: 185,
-};
+// v2 schema: state_defaults instead of separate cost_psf + tier maps; cost_assumptions
+// in sites.json overrides any of these defaults at load time.
+const NATIONAL_BASELINE_PSF = 162;  // NAHB SOC 2024 national avg
 
-// Regional tier assignment — drives the site-work strip %
-const STATE_TIER = {
-  // Tier A: heavy regulation, seismic/coastal, high labor cost
-  CA: &#x27;A&#x27;, HI: &#x27;A&#x27;, AK: &#x27;A&#x27;, NJ: &#x27;A&#x27;, NY: &#x27;A&#x27;, MA: &#x27;A&#x27;,
-  // Tier B: northeast/west coast secondary
-  CT: &#x27;B&#x27;, OR: &#x27;B&#x27;, WA: &#x27;B&#x27;, RI: &#x27;B&#x27;, NH: &#x27;B&#x27;, VT: &#x27;B&#x27;, MD: &#x27;B&#x27;, DE: &#x27;B&#x27;, ME: &#x27;B&#x27;, PA: &#x27;B&#x27;,
-  // Tier C: sun belt, mountain west, mid-Atlantic
-  CO: &#x27;C&#x27;, NV: &#x27;C&#x27;, UT: &#x27;C&#x27;, AZ: &#x27;C&#x27;, ID: &#x27;C&#x27;, MT: &#x27;C&#x27;, WY: &#x27;C&#x27;, NM: &#x27;C&#x27;,
-  FL: &#x27;C&#x27;, VA: &#x27;C&#x27;, NC: &#x27;C&#x27;, SC: &#x27;C&#x27;, GA: &#x27;C&#x27;, TX: &#x27;C&#x27;, IL: &#x27;C&#x27;, MN: &#x27;C&#x27;, WI: &#x27;C&#x27;, MI: &#x27;C&#x27;,
-  // Tier D: south central, deep south, Appalachia, midwest cost-efficient
-  OK: &#x27;D&#x27;, AR: &#x27;D&#x27;, LA: &#x27;D&#x27;, MS: &#x27;D&#x27;, AL: &#x27;D&#x27;, TN: &#x27;D&#x27;, KY: &#x27;D&#x27;, WV: &#x27;D&#x27;,
-  IN: &#x27;D&#x27;, OH: &#x27;D&#x27;, MO: &#x27;D&#x27;, IA: &#x27;D&#x27;, KS: &#x27;D&#x27;, NE: &#x27;D&#x27;, ND: &#x27;D&#x27;, SD: &#x27;D&#x27;,
+const DEFAULT_STATE_DEFAULTS = {
+  CA: {cost_psf:225,tier:&#x27;A&#x27;}, HI: {cost_psf:230,tier:&#x27;A&#x27;}, AK: {cost_psf:228,tier:&#x27;A&#x27;},
+  NJ: {cost_psf:225,tier:&#x27;A&#x27;}, NY: {cost_psf:211,tier:&#x27;A&#x27;}, MA: {cost_psf:210,tier:&#x27;A&#x27;},
+  CT: {cost_psf:200,tier:&#x27;B&#x27;}, OR: {cost_psf:200,tier:&#x27;B&#x27;}, WA: {cost_psf:200,tier:&#x27;B&#x27;},
+  RI: {cost_psf:195,tier:&#x27;B&#x27;}, NH: {cost_psf:195,tier:&#x27;B&#x27;}, VT: {cost_psf:195,tier:&#x27;B&#x27;},
+  MD: {cost_psf:195,tier:&#x27;B&#x27;}, DE: {cost_psf:185,tier:&#x27;B&#x27;}, ME: {cost_psf:185,tier:&#x27;B&#x27;},
+  PA: {cost_psf:180,tier:&#x27;B&#x27;},
+  CO: {cost_psf:175,tier:&#x27;C&#x27;}, FL: {cost_psf:175,tier:&#x27;C&#x27;}, MN: {cost_psf:175,tier:&#x27;C&#x27;},
+  IL: {cost_psf:175,tier:&#x27;C&#x27;}, VA: {cost_psf:175,tier:&#x27;C&#x27;}, UT: {cost_psf:175,tier:&#x27;C&#x27;},
+  NV: {cost_psf:175,tier:&#x27;C&#x27;}, WI: {cost_psf:170,tier:&#x27;C&#x27;}, ID: {cost_psf:170,tier:&#x27;C&#x27;},
+  MT: {cost_psf:185,tier:&#x27;C&#x27;}, NC: {cost_psf:165,tier:&#x27;C&#x27;}, SC: {cost_psf:165,tier:&#x27;C&#x27;},
+  AZ: {cost_psf:165,tier:&#x27;C&#x27;}, WY: {cost_psf:165,tier:&#x27;C&#x27;}, ND: {cost_psf:165,tier:&#x27;C&#x27;},
+  IA: {cost_psf:165,tier:&#x27;C&#x27;}, TX: {cost_psf:162,tier:&#x27;C&#x27;}, GA: {cost_psf:160,tier:&#x27;C&#x27;},
+  NM: {cost_psf:160,tier:&#x27;C&#x27;},
+  TN: {cost_psf:160,tier:&#x27;D&#x27;}, LA: {cost_psf:160,tier:&#x27;D&#x27;}, MI: {cost_psf:160,tier:&#x27;D&#x27;},
+  SD: {cost_psf:160,tier:&#x27;D&#x27;}, NE: {cost_psf:160,tier:&#x27;D&#x27;}, OK: {cost_psf:158,tier:&#x27;D&#x27;},
+  KY: {cost_psf:158,tier:&#x27;D&#x27;}, AR: {cost_psf:156,tier:&#x27;D&#x27;}, KS: {cost_psf:155,tier:&#x27;D&#x27;},
+  MO: {cost_psf:155,tier:&#x27;D&#x27;}, AL: {cost_psf:155,tier:&#x27;D&#x27;}, IN: {cost_psf:155,tier:&#x27;D&#x27;},
+  OH: {cost_psf:155,tier:&#x27;D&#x27;}, MS: {cost_psf:154,tier:&#x27;D&#x27;}, WV: {cost_psf:150,tier:&#x27;D&#x27;},
 };
 
 const TIER_INFO = {
-  A: { name: &#x27;Tier A&#x27;, desc: &#x27;CA · HI · AK · NJ · NY · MA&#x27; },
-  B: { name: &#x27;Tier B&#x27;, desc: &#x27;CT · OR · WA · MD · RI · NH · VT · ME · DE · PA&#x27; },
-  C: { name: &#x27;Tier C&#x27;, desc: &#x27;CO · NV · UT · AZ · FL · TX · VA · NC · IL · MN · WI · MI · GA · SC · MT · WY · ID · NM&#x27; },
-  D: { name: &#x27;Tier D&#x27;, desc: &#x27;OK · AR · LA · MS · AL · TN · KY · WV · IN · OH · MO · IA · KS · NE · ND · SD&#x27; },
+  A: { name: &#x27;Tier A&#x27;, desc: &#x27;Heavy regulation, seismic/coastal, high labor cost&#x27; },
+  B: { name: &#x27;Tier B&#x27;, desc: &#x27;Northeast/west coast secondary&#x27; },
+  C: { name: &#x27;Tier C&#x27;, desc: &#x27;Sun belt, mountain west, mid-Atlantic&#x27; },
+  D: { name: &#x27;Tier D&#x27;, desc: &#x27;South central, deep south, Appalachia, midwest&#x27; },
 };
 
-// PRODUCT TYPES — reflect Doc&#x27;s actual pipeline mix
-// $/sf adjustments vs single-family detached baseline from NAHB SOC 2024 ($162 nat&#x27;l avg)
-// - Townhome: shared walls cut framing/siding/roofing materials by ~20-25%, but
-//   smaller size eliminates economy-of-scale. Net: ~90% of SFD $/sf.
-// - Duplex: same sharing logic as townhome but typically larger units. ~88% of SFD $/sf.
-// - ADU: small-project premium offsets simpler design. ~115% of SFD $/sf.
-// - SFR: full SFD baseline = 100%.
-const PRODUCTS = {
+// $/sf modifier vs single-family detached baseline (NAHB SOC 2024 $162 nat&#x27;l avg)
+// Townhome ~90% (shared walls), Duplex ~88%, ADU ~115% (small-job premium), SFR 100%
+const DEFAULT_PRODUCTS = {
   townhome: { name: &#x27;Townhome&#x27;, sf: 1450, units: 214, sf_mod: 0.90, color: &#x27;townhome&#x27; },
   adu:      { name: &#x27;ADU&#x27;,      sf: 750,  units: 211, sf_mod: 1.15, color: &#x27;adu&#x27; },
   duplex:   { name: &#x27;Duplex&#x27;,   sf: 1850, units: 160, sf_mod: 0.88, color: &#x27;duplex&#x27; },
   sfr:      { name: &#x27;SFR&#x27;,      sf: 1800, units: 14,  sf_mod: 1.00, color: &#x27;sfr&#x27; },
 };
 
-// Default tier strip %
 const DEFAULT_TIER_STRIP = { A: 35, B: 32, C: 28, D: 22 };
+const DEFAULT_DEMAND_PER_FAB = 180;  // homes/yr per fab — Doc&#x27;s planning constant
 
 // =============================================================================
 // STATE
 // =============================================================================
 const state = {
-  products: JSON.parse(JSON.stringify(PRODUCTS)),
+  baselinePsf: NATIONAL_BASELINE_PSF,
+  products: JSON.parse(JSON.stringify(DEFAULT_PRODUCTS)),
   tierStrip: { ...DEFAULT_TIER_STRIP },
+  stateDefaults: JSON.parse(JSON.stringify(DEFAULT_STATE_DEFAULTS)),
   target: 165000,
   sortKey: &#x27;cost&#x27;,
   sortDir: &#x27;desc&#x27;,
-  sites: [],
-  sitesByState: {},
+  sites: [],            // full site objects, each with optional cost{} block
   fullSitesDoc: null,
   loadedFromSites: false,
 };
 
+// v2 cost_assumptions written back to sites.json on Save
 function buildCostAssumptions() {
   const r = compute();
+  const tierAvg = Object.fromEntries(
+    Object.entries(r.tierAvg).map(([t, v]) =&gt; [t, Math.round(v)])
+  );
   return {
-    version: 1,
-    last_updated: new Date().toISOString(),
+    version: 2,
+    last_updated: new Date().toISOString().slice(0, 10),
+    national_baseline_psf: state.baselinePsf,
     target_per_door: state.target,
     blended_per_door: Math.round(r.blended),
-    tier_avg_per_door: Object.fromEntries(
-      Object.entries(r.tierAvg).map(([t, v]) =&gt; [t, Math.round(v)])
-    ),
-    product_mix: state.products,
+    tier_avg_per_door: tierAvg,
+    products: state.products,
     tier_strip_pct: state.tierStrip,
-    state_cost_psf: STATE_COST_PSF,
-    state_tier: STATE_TIER,
+    state_defaults: state.stateDefaults,
+    tier_info: TIER_INFO,
   };
+}
+
+// ── Cascade: city.psf_override &gt; city.cci × baseline &gt; state_default &gt; baseline ──
+function effectivePsf(site) {
+  const co = site.cost || {};
+  if (co.psf_override != null) return +co.psf_override;
+  if (co.cci != null) return state.baselinePsf * +co.cci;
+  const sd = state.stateDefaults[site.state];
+  return sd ? sd.cost_psf : state.baselinePsf;
+}
+function effectiveTier(site) {
+  const sd = state.stateDefaults[site.state];
+  return sd ? sd.tier : &#x27;C&#x27;;
+}
+function effectiveStripPct(site) {
+  const co = site.cost || {};
+  if (co.strip_pct_override != null) return +co.strip_pct_override;
+  return state.tierStrip[effectiveTier(site)] ?? 28;
+}
+function demandFor(site) {
+  const co = site.cost || {};
+  return (co.demand_velocity != null &amp;&amp; +co.demand_velocity &gt; 0) ? +co.demand_velocity : DEFAULT_DEMAND_PER_FAB;
 }
 
 // =============================================================================
 // EMBEDDED SITES DATA (fallback if sites.json fetch fails — e.g., file:// or sandbox)
 // =============================================================================
-const EMBEDDED_SITES = [
-  // Counted from Doc&#x27;s full sites.json (132 sites total)
+// Fallback used only when sites.json fetch fails (file:// or strict sandbox).
+// Synthesizes minimal site objects so the calibrator still renders something.
+const EMBEDDED_STATE_COUNTS = [
   [&#x27;CA&#x27;,7],[&#x27;HI&#x27;,2],[&#x27;AZ&#x27;,3],[&#x27;CT&#x27;,3],[&#x27;CO&#x27;,4],[&#x27;NV&#x27;,2],[&#x27;TX&#x27;,9],[&#x27;MA&#x27;,2],
   [&#x27;OR&#x27;,3],[&#x27;WA&#x27;,4],[&#x27;UT&#x27;,2],[&#x27;ID&#x27;,3],[&#x27;NC&#x27;,2],[&#x27;RI&#x27;,1],[&#x27;NJ&#x27;,3],[&#x27;MN&#x27;,2],
   [&#x27;GA&#x27;,4],[&#x27;NY&#x27;,4],[&#x27;NH&#x27;,2],[&#x27;ME&#x27;,2],[&#x27;TN&#x27;,5],[&#x27;VA&#x27;,4],[&#x27;NE&#x27;,2],[&#x27;OK&#x27;,2],
@@ -17669,85 +17797,122 @@ const EMBEDDED_SITES = [
   [&#x27;IA&#x27;,1],[&#x27;MT&#x27;,3],[&#x27;ND&#x27;,2],[&#x27;SD&#x27;,2],[&#x27;VT&#x27;,1],[&#x27;WY&#x27;,2],[&#x27;MS&#x27;,1],[&#x27;WV&#x27;,2],
   [&#x27;AK&#x27;,2],[&#x27;KS&#x27;,1]
 ];
+function expandEmbeddedSites() {
+  const out = [];
+  for (const [sc, n] of EMBEDDED_STATE_COUNTS) {
+    for (let i = 0; i &lt; n; i++) {
+      out.push({ name: `${sc}-${i+1}`, state: sc, phase: 1, yr: 1, hub: &#x27;&#x27;, cost: {} });
+    }
+  }
+  return out;
+}
 
 // =============================================================================
 // CORE COMPUTATION
 // =============================================================================
-function computeCostPerDoor(stateCode) {
-  const psf = STATE_COST_PSF[stateCode];
-  const tier = STATE_TIER[stateCode];
-  const strip = state.tierStrip[tier] / 100;
-
-  let totalCost = 0;
-  let totalUnits = 0;
-
-  for (const key in state.products) {
-    const p = state.products[key];
-    const turnkey = psf * p.sf_mod * p.sf;
-    const factoryPortion = turnkey * (1 - strip);
-    totalCost += factoryPortion * p.units;
+// Per-site cost (cascade applied)
+function costPerDoorForSite(site) {
+  const psf = effectivePsf(site);
+  const strip = effectiveStripPct(site) / 100;
+  let totalCost = 0, totalUnits = 0;
+  for (const k in state.products) {
+    const p = state.products[k];
+    if (!p || !p.sf || !p.units || p.sf_mod == null) continue;
+    totalCost += psf * p.sf_mod * p.sf * (1 - strip) * p.units;
     totalUnits += p.units;
   }
-
   return totalUnits &gt; 0 ? totalCost / totalUnits : 0;
 }
 
 function compute() {
-  const sitesByState = state.sitesByState;
-  const totalSites = Object.values(sitesByState).reduce((a,b)=&gt;a+b, 0);
-  const totalPipelineUnits = Object.values(state.products).reduce((a,p)=&gt;a+p.units, 0);
+  const totalPipelineUnits = Object.values(state.products).reduce((a,p)=&gt;a+(p.units||0), 0);
+  const totalSites = state.sites.length;
 
-  // Per-state cost
-  const stateRows = [];
-  let weightedSum = 0;
-  let weightedSites = 0;
-  let pipelineTotalCost = 0;
-
-  for (const sc in sitesByState) {
-    if (!STATE_COST_PSF[sc]) continue;
-    const sites = sitesByState[sc];
-    const cost = computeCostPerDoor(sc);
-    const tier = STATE_TIER[sc];
-    const strip = state.tierStrip[tier];
-    const psf = STATE_COST_PSF[sc];
-    const units = sites * (totalPipelineUnits / totalSites);  // proportional unit allocation
-    const total = cost * units;
-
-    stateRows.push({
-      state: sc, tier, psf, strip, sites,
-      units: Math.round(units),
+  // Per-CITY rows — each row carries its own effective psf, tier, strip, cost
+  const cityRows = state.sites.map(site =&gt; {
+    const cost = costPerDoorForSite(site);
+    const tier = effectiveTier(site);
+    const psf = effectivePsf(site);
+    const strip = effectiveStripPct(site);
+    const demand = demandFor(site);
+    const co = site.cost || {};
+    return {
+      name: site.name,
+      state: site.state,
+      hub: site.hub,
+      yr: site.yr,
+      phase: site.phase,
+      tier,
+      psf: Math.round(psf),
+      strip: Math.round(strip),
       cost: Math.round(cost),
       gap: Math.round(cost - state.target),
-      total: Math.round(total),
-    });
+      demand,
+      cci: co.cci != null ? +co.cci : null,
+      psf_override: co.psf_override,
+      strip_pct_override: co.strip_pct_override,
+      source: co.source || &#x27;&#x27;,
+      overridden: !!(co.psf_override != null || co.strip_pct_override != null || (co.cci != null &amp;&amp; co.source !== &#x27;estimated&#x27;)),
+    };
+  });
 
-    weightedSum += cost * sites;
-    weightedSites += sites;
-    pipelineTotalCost += cost * units;
-  }
+  // Demand-weighted national blended (per spec: weight by homes/yr capacity, not site count)
+  let weightedSum = 0, totalDemand = 0;
+  for (const r of cityRows) { weightedSum += r.cost * r.demand; totalDemand += r.demand; }
+  const blended = totalDemand &gt; 0 ? weightedSum / totalDemand : 0;
 
-  const blended = weightedSites &gt; 0 ? weightedSum / weightedSites : 0;
-
-  // Tier averages
+  // Tier averages — also demand-weighted
   const tierAgg = { A: [0,0], B: [0,0], C: [0,0], D: [0,0] };
-  for (const r of stateRows) {
-    tierAgg[r.tier][0] += r.cost * r.sites;
-    tierAgg[r.tier][1] += r.sites;
+  for (const r of cityRows) {
+    if (!tierAgg[r.tier]) continue;
+    tierAgg[r.tier][0] += r.cost * r.demand;
+    tierAgg[r.tier][1] += r.demand;
   }
   const tierAvg = {};
-  for (const t in tierAgg) {
-    tierAvg[t] = tierAgg[t][1] &gt; 0 ? tierAgg[t][0] / tierAgg[t][1] : 0;
-  }
+  for (const t in tierAgg) tierAvg[t] = tierAgg[t][1] &gt; 0 ? tierAgg[t][0] / tierAgg[t][1] : 0;
 
-  // Min / max / over count
-  const sortedByCost = [...stateRows].sort((a,b)=&gt;a.cost-b.cost);
-  const minRow = sortedByCost[0];
-  const maxRow = sortedByCost[sortedByCost.length - 1];
-  const overSites = stateRows.filter(r =&gt; r.cost &gt; state.target).reduce((a,r)=&gt;a+r.sites, 0);
+  // State rollup — demand-weighted within each state, for the (collapsible) state table
+  const stateAgg = {};
+  for (const r of cityRows) {
+    if (!stateAgg[r.state]) stateAgg[r.state] = { tier: r.tier, sites: 0, demand: 0, costSum: 0, psfSum: 0 };
+    const a = stateAgg[r.state];
+    a.sites++; a.demand += r.demand; a.costSum += r.cost * r.demand; a.psfSum += r.psf;
+  }
+  const stateRows = Object.entries(stateAgg).map(([sc, a]) =&gt; {
+    const cost = a.demand &gt; 0 ? a.costSum / a.demand : 0;
+    const allocatedUnits = totalSites &gt; 0 ? a.sites * (totalPipelineUnits / totalSites) : 0;
+    return {
+      state: sc,
+      tier: a.tier,
+      psf: Math.round(a.psfSum / a.sites),
+      strip: state.tierStrip[a.tier] || 0,
+      sites: a.sites,
+      units: Math.round(allocatedUnits),
+      cost: Math.round(cost),
+      gap: Math.round(cost - state.target),
+      total: Math.round(cost * allocatedUnits),
+    };
+  });
+
+  // Cheapest / priciest CITY (not state) per v2 spec
+  const sortedByCost = [...cityRows].sort((a,b)=&gt;a.cost-b.cost);
+  const minRow = sortedByCost[0] || null;
+  const maxRow = sortedByCost[sortedByCost.length - 1] || null;
+  const overSites = cityRows.filter(r =&gt; r.cost &gt; state.target).length;
+
+  // Total pipeline cost — distribute the 599 buildings across sites by demand share
+  let pipelineTotalCost = 0;
+  if (totalDemand &gt; 0) {
+    for (const r of cityRows) {
+      const share = r.demand / totalDemand;
+      pipelineTotalCost += r.cost * (totalPipelineUnits * share);
+    }
+  }
 
   return {
     blended,
     tierAvg,
+    cityRows,
     stateRows,
     minRow, maxRow,
     overSites,
@@ -17855,10 +18020,14 @@ function renderHero(result) {
   deltaEl.textContent = `${sign}${fmt$k(delta)} (${sign}${pct.toFixed(1)}%) vs ${fmt$k(state.target)} target`;
   deltaEl.className = &#x27;delta &#x27; + (Math.abs(pct) &lt; 5 ? &#x27;on&#x27; : (delta &gt; 0 ? &#x27;over&#x27; : &#x27;under&#x27;));
 
-  document.getElementById(&#x27;hero-min&#x27;).textContent = fmt$k(minRow.cost);
-  document.getElementById(&#x27;hero-min-state&#x27;).textContent = `${minRow.state} · Tier ${minRow.tier}`;
-  document.getElementById(&#x27;hero-max&#x27;).textContent = fmt$k(maxRow.cost);
-  document.getElementById(&#x27;hero-max-state&#x27;).textContent = `${maxRow.state} · Tier ${maxRow.tier}`;
+  if (minRow) {
+    document.getElementById(&#x27;hero-min&#x27;).textContent = fmt$k(minRow.cost);
+    document.getElementById(&#x27;hero-min-state&#x27;).textContent = `${minRow.name}, ${minRow.state} · Tier ${minRow.tier}`;
+  }
+  if (maxRow) {
+    document.getElementById(&#x27;hero-max&#x27;).textContent = fmt$k(maxRow.cost);
+    document.getElementById(&#x27;hero-max-state&#x27;).textContent = `${maxRow.name}, ${maxRow.state} · Tier ${maxRow.tier}`;
+  }
 
   document.getElementById(&#x27;hero-over&#x27;).textContent = `${Math.round(overSites/totalSites*100)}%`;
   document.getElementById(&#x27;hero-over-detail&#x27;).textContent = `${overSites} of ${totalSites} sites`;
@@ -17884,11 +18053,22 @@ function renderTierCards(result) {
   }).join(&#x27;&#x27;);
   document.getElementById(&#x27;tier-cards&#x27;).innerHTML = html;
 
-  // explainer text
+  // explainer text + CCI 1.0 reference (city sitting exactly at national baseline psf)
   const aGap = result.tierAvg.A - result.tierAvg.D;
   const aPct = result.tierAvg.D &gt; 0 ? (aGap / result.tierAvg.D * 100) : 0;
+  const totalUnits = Object.values(state.products).reduce((a,p)=&gt;a+(p.units||0),0);
+  const sfEq = Object.values(state.products).reduce((a,p)=&gt;a+((p.sf||0)*(p.sf_mod||0)*(p.units||0)),0);
+  const cci1 = {};
+  for (const t of order) {
+    const sp = state.tierStrip[t];
+    cci1[t] = (state.baselinePsf * (1 - sp/100) * sfEq) / Math.max(1, totalUnits);
+  }
   document.getElementById(&#x27;tier-explainer&#x27;).innerHTML =
-    `Tier A markets cost &lt;strong style=&quot;color:var(--amber);&quot;&gt;${aPct.toFixed(0)}% more per door&lt;/strong&gt; than Tier D. Use these tier averages — not a single national number — when sizing market-by-market unit economics.`;
+    `Tier A markets cost &lt;strong style=&quot;color:var(--amber);&quot;&gt;${aPct.toFixed(0)}% more per door&lt;/strong&gt; than Tier D. Use tier averages — not a single national number — for market-by-market unit economics.&lt;br&gt;
+     &lt;span style=&quot;display:inline-block;margin-top:6px;padding:6px 10px;background:var(--panel-2);border:1px solid var(--border);border-radius:4px;font-family:var(--mono);font-size:10px;color:var(--text-dim);&quot;&gt;
+       &lt;strong style=&quot;color:var(--text);&quot;&gt;Reference&lt;/strong&gt; — at CCI 1.0 (city = national baseline $${state.baselinePsf}/sf):
+       A ${fmt$k(cci1.A)} · B ${fmt$k(cci1.B)} · C ${fmt$k(cci1.C)} · D ${fmt$k(cci1.D)}
+     &lt;/span&gt;`;
 }
 
 function renderTable(result) {
@@ -18064,32 +18244,38 @@ async function loadSites() {
     const data = await res.json();
     state.fullSitesDoc = data;
     state.loadedFromSites = true;
+    state.sites = data.sites || [];
 
-    const sites = data.sites || data;
-    state.sites = sites;
-    state.sitesByState = {};
-    for (const s of sites) {
-      const sc = s.state;
-      state.sitesByState[sc] = (state.sitesByState[sc] || 0) + 1;
-    }
-
-    // Persisted overrides — keep calibrator and expansion map in lock-step
     const ca = data.cost_assumptions;
     if (ca) {
+      if (typeof ca.national_baseline_psf === &#x27;number&#x27;) state.baselinePsf = ca.national_baseline_psf;
       if (typeof ca.target_per_door === &#x27;number&#x27;) state.target = ca.target_per_door;
-      if (ca.product_mix &amp;&amp; typeof ca.product_mix === &#x27;object&#x27;) {
-        state.products = JSON.parse(JSON.stringify(ca.product_mix));
+      // v2 key: products  (v1 key: product_mix)  — accept either
+      const products = ca.products || ca.product_mix;
+      if (products &amp;&amp; typeof products === &#x27;object&#x27;) {
+        state.products = JSON.parse(JSON.stringify(products));
       }
       if (ca.tier_strip_pct &amp;&amp; typeof ca.tier_strip_pct === &#x27;object&#x27;) {
         state.tierStrip = { ...DEFAULT_TIER_STRIP, ...ca.tier_strip_pct };
       }
-      if (ca.state_cost_psf) Object.assign(STATE_COST_PSF, ca.state_cost_psf);
-      if (ca.state_tier) Object.assign(STATE_TIER, ca.state_tier);
+      // v2 key: state_defaults  (v1 keys: state_cost_psf + state_tier) — accept either
+      if (ca.state_defaults &amp;&amp; typeof ca.state_defaults === &#x27;object&#x27;) {
+        state.stateDefaults = JSON.parse(JSON.stringify(ca.state_defaults));
+      } else if (ca.state_cost_psf || ca.state_tier) {
+        const merged = { ...state.stateDefaults };
+        for (const sc in (ca.state_cost_psf || {})) {
+          merged[sc] = { ...(merged[sc] || {tier:&#x27;C&#x27;}), cost_psf: ca.state_cost_psf[sc] };
+        }
+        for (const sc in (ca.state_tier || {})) {
+          merged[sc] = { ...(merged[sc] || {cost_psf: state.baselinePsf}), tier: ca.state_tier[sc] };
+        }
+        state.stateDefaults = merged;
+      }
     }
     return;
   } catch (e) {
-    state.sitesByState = Object.fromEntries(EMBEDDED_SITES);
-    state.fullSitesDoc = { version: 0, sites: [] };
+    state.sites = expandEmbeddedSites();
+    state.fullSitesDoc = { version: 0, sites: state.sites };
   }
 }
 
@@ -18348,6 +18534,8 @@ document.addEventListener('keydown',function(e){
 document.getElementById('svm-name').addEventListener('keydown',function(e){if(e.key==='Enter')_doSave()});
 document.addEventListener('click',function(e){var p=document.getElementById('ver-panel');if(p.style.display==='block'&&!p.contains(e.target)&&e.target.id!=='nav-ver-btn')p.style.display='none';});
 _switchPage('map');
+
+
 
 
 </script></body></html>

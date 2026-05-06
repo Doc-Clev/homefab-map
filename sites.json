@@ -10,7 +10,16 @@
       "lon": -119.77,
       "hub": "Corona",
       "adu": "Base",
-      "note": "Operational HQ. Central Valley hub, established base, massive inland CA housing demand."
+      "note": "Operational HQ. Central Valley hub, established base, massive inland CA housing demand.",
+      "cost": {
+        "cci": 1.08,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "RSMeans 2025 direct",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 1,
@@ -21,7 +30,16 @@
       "lon": -118.16,
       "hub": "Corona",
       "adu": "Base",
-      "note": "Kern County / Antelope Valley. Inexpensive land, LA Basin overflow buyers, Edwards AFB workforce housing."
+      "note": "Kern County / Antelope Valley. Inexpensive land, LA Basin overflow buyers, Edwards AFB workforce housing.",
+      "cost": {
+        "cci": 1.05,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier A typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 2,
@@ -32,7 +50,16 @@
       "lon": -117.56,
       "hub": "Corona",
       "adu": "Excellent",
-      "note": "SoCal Hub HQ becomes franchise site. Inland Empire is ground zero for CA ADU demand \u2014 by-right state law, severe shortage, anchors West Coast network."
+      "note": "SoCal Hub HQ becomes franchise site. Inland Empire is ground zero for CA ADU demand \u2014 by-right state law, severe shortage, anchors West Coast network.",
+      "cost": {
+        "cci": 1.05,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier A typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 2,
@@ -43,7 +70,16 @@
       "lon": -117.16,
       "hub": "Corona",
       "adu": "Excellent",
-      "note": "One of the highest ADU permit rates in the nation. Streamlined permitting, military workforce housing, strong homeowner ROI story, short haul from Corona."
+      "note": "One of the highest ADU permit rates in the nation. Streamlined permitting, military workforce housing, strong homeowner ROI story, short haul from Corona.",
+      "cost": {
+        "cci": 1.1,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "RSMeans 2025 direct",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 2,
@@ -54,7 +90,16 @@
       "lon": -121.29,
       "hub": "Corona",
       "adu": "Strong",
-      "note": "Bay Area price refugee corridor. CA ADU law fully applies, large multigenerational homeowner base, extends Fresno coverage north through San Joaquin Valley."
+      "note": "Bay Area price refugee corridor. CA ADU law fully applies, large multigenerational homeowner base, extends Fresno coverage north through San Joaquin Valley.",
+      "cost": {
+        "cci": 1.05,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier A typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 2,
@@ -65,7 +110,16 @@
       "lon": -157.86,
       "hub": "Corona",
       "adu": "Excellent",
-      "note": "HI ADU law among the most aggressive in the US. Extreme land scarcity, highest housing costs nationally, modular ships well to islands \u2014 unique captive market."
+      "note": "HI ADU law among the most aggressive in the US. Extreme land scarcity, highest housing costs nationally, modular ships well to islands \u2014 unique captive market.",
+      "cost": {
+        "cci": 1.21,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "RSMeans 2025 direct",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 2,
@@ -76,7 +130,16 @@
       "lon": -112.07,
       "hub": "Corona",
       "adu": "Moderate",
-      "note": "Largest Sun Belt growth market. Massive population influx, tech/finance relocations, gateway to AZ franchise network. City-level ADU rules permissive despite mixed state legislature."
+      "note": "Largest Sun Belt growth market. Massive population influx, tech/finance relocations, gateway to AZ franchise network. City-level ADU rules permissive despite mixed state legislature.",
+      "cost": {
+        "cci": 0.93,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "RSMeans 2025 direct",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 2,
@@ -87,7 +150,16 @@
       "lon": -72.68,
       "hub": "Hartford",
       "adu": "Strong",
-      "note": "Northeast Hub launch. CT ADU legislation 2021 \u2014 statewide by-right. Anchors MA, RI, NY network. Insurance/finance workforce, high homeowner equity."
+      "note": "Northeast Hub launch. CT ADU legislation 2021 \u2014 statewide by-right. Anchors MA, RI, NY network. Insurance/finance workforce, high homeowner equity.",
+      "cost": {
+        "cci": 1.04,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "RSMeans 2025 direct",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 3,
@@ -98,7 +170,16 @@
       "lon": -104.98,
       "hub": "Denver",
       "adu": "Excellent",
-      "note": "CO statewide ADU law 2024 \u2014 strongest in Mountain West. By-right ADU required in all cities. Rapid growth, tech culture buyer, anchors CO hub for Fort Collins and Colorado Springs."
+      "note": "CO statewide ADU law 2024 \u2014 strongest in Mountain West. By-right ADU required in all cities. Rapid growth, tech culture buyer, anchors CO hub for Fort Collins and Colorado Springs.",
+      "cost": {
+        "cci": 1.04,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "RSMeans 2025 direct",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 3,
@@ -109,7 +190,16 @@
       "lon": -115.14,
       "hub": "Corona",
       "adu": "Strong",
-      "note": "NV ADU reform + massive CA overflow demand. Tens of thousands of LA/OC price refugees \u2014 exact modular buyer. Workforce housing shortage severe. Short haul from Corona hub."
+      "note": "NV ADU reform + massive CA overflow demand. Tens of thousands of LA/OC price refugees \u2014 exact modular buyer. Workforce housing shortage severe. Short haul from Corona hub.",
+      "cost": {
+        "cci": 0.92,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier C typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 3,
@@ -120,7 +210,16 @@
       "lon": -97.74,
       "hub": "Dallas",
       "adu": "Excellent",
-      "note": "Eliminated single-family zoning citywide 2023. ADU permitting streamlined city-wide. Tech boom workforce housing gap. Pulled from Yr 4 \u2014 first-mover opportunity now."
+      "note": "Eliminated single-family zoning citywide 2023. ADU permitting streamlined city-wide. Tech boom workforce housing gap. Pulled from Yr 4 \u2014 first-mover opportunity now.",
+      "cost": {
+        "cci": 0.89,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier C typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 3,
@@ -131,7 +230,16 @@
       "lon": -71.06,
       "hub": "Hartford",
       "adu": "Excellent",
-      "note": "MA MBTA Communities Act mandates density near transit statewide. Severe housing shortage, high-income educated buyer, strong sustainability ethos. Hartford hub live \u2014 extend north now."
+      "note": "MA MBTA Communities Act mandates density near transit statewide. Severe housing shortage, high-income educated buyer, strong sustainability ethos. Hartford hub live \u2014 extend north now.",
+      "cost": {
+        "cci": 1.18,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "RSMeans 2025 direct",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 3,
@@ -142,7 +250,16 @@
       "lon": -122.68,
       "hub": "Corona",
       "adu": "Excellent",
-      "note": "Oregon pioneered the nation's first statewide ADU legalization. HB 2001 eliminated single-family exclusionary zoning. Highest modular/prefab awareness outside CA. Pulled from Yr 5."
+      "note": "Oregon pioneered the nation's first statewide ADU legalization. HB 2001 eliminated single-family exclusionary zoning. Highest modular/prefab awareness outside CA. Pulled from Yr 5.",
+      "cost": {
+        "cci": 1.06,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "RSMeans 2025 direct",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 3,
@@ -153,7 +270,16 @@
       "lon": -122.33,
       "hub": "Corona",
       "adu": "Excellent",
-      "note": "WA ADU reform + missing middle housing laws statewide. Extreme cost crisis, tech workforce demand. Top-3 national ADU market by permit volume. Pulled from Yr 5."
+      "note": "WA ADU reform + missing middle housing laws statewide. Extreme cost crisis, tech workforce demand. Top-3 national ADU market by permit volume. Pulled from Yr 5.",
+      "cost": {
+        "cci": 1.1,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "RSMeans 2025 direct",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 3,
@@ -164,7 +290,16 @@
       "lon": -111.89,
       "hub": "Denver",
       "adu": "Strong",
-      "note": "UT ADU by-right law 2021 \u2014 statewide. Fastest-growing metro corridor, young family demographic, tech migration from CA. Denver hub covers easily. Pulled from Yr 5."
+      "note": "UT ADU by-right law 2021 \u2014 statewide. Fastest-growing metro corridor, young family demographic, tech migration from CA. Denver hub covers easily. Pulled from Yr 5.",
+      "cost": {
+        "cci": 0.89,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier C typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 3,
@@ -175,7 +310,16 @@
       "lon": -116.2,
       "hub": "Denver",
       "adu": "Excellent",
-      "note": "One of the most acute housing cost explosions in the US 2019-2024. CA refugee buyers, affordability crisis, ID ADU-permissive. Demand is now. Pulled from Yr 5."
+      "note": "One of the most acute housing cost explosions in the US 2019-2024. CA refugee buyers, affordability crisis, ID ADU-permissive. Demand is now. Pulled from Yr 5.",
+      "cost": {
+        "cci": 0.89,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier C typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 3,
@@ -186,7 +330,16 @@
       "lon": -80.84,
       "hub": "Dallas",
       "adu": "Strong",
-      "note": "Charlotte UDO upzoning 2022 \u2014 most progressive zoning overhaul in the Southeast. Rapid population growth, finance/tech hub. Zoning reform window is now. Pulled from Yr 5."
+      "note": "Charlotte UDO upzoning 2022 \u2014 most progressive zoning overhaul in the Southeast. Rapid population growth, finance/tech hub. Zoning reform window is now. Pulled from Yr 5.",
+      "cost": {
+        "cci": 0.89,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier C typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 4,
@@ -197,7 +350,16 @@
       "lon": -78.64,
       "hub": "Dallas",
       "adu": "Strong",
-      "note": "Research Triangle tech/biotech workforce housing demand. By-right ADU reform active. Charlotte + Raleigh together justify a Southeast hub. Pulled from Yr 5."
+      "note": "Research Triangle tech/biotech workforce housing demand. By-right ADU reform active. Charlotte + Raleigh together justify a Southeast hub. Pulled from Yr 5.",
+      "cost": {
+        "cci": 0.89,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier C typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 4,
@@ -208,7 +370,16 @@
       "lon": -105.08,
       "hub": "Denver",
       "adu": "Excellent",
-      "note": "CO ADU law applies. CSU university market drives year-round rental ADU demand. Sustainability-oriented buyers. Short haul from Denver hub \u2014 low incremental cost."
+      "note": "CO ADU law applies. CSU university market drives year-round rental ADU demand. Sustainability-oriented buyers. Short haul from Denver hub \u2014 low incremental cost.",
+      "cost": {
+        "cci": 0.89,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier C typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 4,
@@ -219,7 +390,16 @@
       "lon": -72.92,
       "hub": "Hartford",
       "adu": "Strong",
-      "note": "CT ADU legislation 2021 \u2014 statewide by-right. Yale institutional market, high homeowner equity, urban infill demand. Pairs with Bridgeport to cover CT shoreline."
+      "note": "CT ADU legislation 2021 \u2014 statewide by-right. Yale institutional market, high homeowner equity, urban infill demand. Pairs with Bridgeport to cover CT shoreline.",
+      "cost": {
+        "cci": 0.95,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier B typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 4,
@@ -230,7 +410,16 @@
       "lon": -73.19,
       "hub": "Hartford",
       "adu": "Strong",
-      "note": "CT legislation + NYC commuter overflow. Fairfield County ADU demand from homeowners offsetting high property costs. Strong rental ADU ROI. Pairs with New Haven as CT push."
+      "note": "CT legislation + NYC commuter overflow. Fairfield County ADU demand from homeowners offsetting high property costs. Strong rental ADU ROI. Pairs with New Haven as CT push.",
+      "cost": {
+        "cci": 0.95,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier B typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 4,
@@ -241,7 +430,16 @@
       "lon": -71.42,
       "hub": "Hartford",
       "adu": "Strong",
-      "note": "RI ADU reform active. RISD/Brown buyer culture leans modular. Boston overflow demand. Hartford hub proximity makes this low-cost to add. Early mover advantage."
+      "note": "RI ADU reform active. RISD/Brown buyer culture leans modular. Boston overflow demand. Hartford hub proximity makes this low-cost to add. Early mover advantage.",
+      "cost": {
+        "cci": 0.95,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier B typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 4,
@@ -252,7 +450,16 @@
       "lon": -74.08,
       "hub": "Hartford",
       "adu": "Moderate",
-      "note": "NJ ADU law passed 2024. NYC overflow \u2014 homeowners with massive equity seeking income-generating ADUs. High demand volume compensates for higher land cost."
+      "note": "NJ ADU law passed 2024. NYC overflow \u2014 homeowners with massive equity seeking income-generating ADUs. High demand volume compensates for higher land cost.",
+      "cost": {
+        "cci": 1.02,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier A typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 4,
@@ -263,7 +470,16 @@
       "lon": -96.8,
       "hub": "Dallas",
       "adu": "Moderate",
-      "note": "Largest TX metro, anchors Dallas distribution hub serving Austin, Houston, SA cluster. ADU awareness growing. Sheer market size demands presence even with car-centric sprawl culture."
+      "note": "Largest TX metro, anchors Dallas distribution hub serving Austin, Houston, SA cluster. ADU awareness growing. Sheer market size demands presence even with car-centric sprawl culture.",
+      "cost": {
+        "cci": 0.9,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "RSMeans 2025 direct",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 4,
@@ -274,7 +490,16 @@
       "lon": -104.82,
       "hub": "Denver",
       "adu": "Excellent",
-      "note": "CO ADU law applies. Large military workforce \u2014 Peterson, Schriever, Fort Carson. Military ADU demand is financeable (VA-compatible). Constrained footprint drives ADU appeal."
+      "note": "CO ADU law applies. Large military workforce \u2014 Peterson, Schriever, Fort Carson. Military ADU demand is financeable (VA-compatible). Constrained footprint drives ADU appeal.",
+      "cost": {
+        "cci": 0.89,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier C typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 4,
@@ -285,7 +510,16 @@
       "lon": -119.81,
       "hub": "Corona",
       "adu": "Strong",
-      "note": "NV ADU reform + Bay Area/Tesla Gigafactory workforce overflow. Massive housing cost gap vs SF. Tech manufacturing workforce needs affordable options."
+      "note": "NV ADU reform + Bay Area/Tesla Gigafactory workforce overflow. Massive housing cost gap vs SF. Tech manufacturing workforce needs affordable options.",
+      "cost": {
+        "cci": 0.89,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier C typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 4,
@@ -296,7 +530,16 @@
       "lon": -93.27,
       "hub": "Indianapolis",
       "adu": "Strong",
-      "note": "Minneapolis eliminated single-family zoning \u2014 first major US city to do so. Strong modular awareness, sustainability culture. Landmark reform market pulled from Yr 8."
+      "note": "Minneapolis eliminated single-family zoning \u2014 first major US city to do so. Strong modular awareness, sustainability culture. Landmark reform market pulled from Yr 8.",
+      "cost": {
+        "cci": 1.04,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "RSMeans 2025 direct",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 4,
@@ -307,7 +550,16 @@
       "lon": -84.39,
       "hub": "Dallas",
       "adu": "Strong",
-      "note": "Intown ADU reform active. Film/tech hub workforce housing need. Largest SE metro \u2014 justifies standalone coverage. ADU adoption growing among Beltline corridor homeowners."
+      "note": "Intown ADU reform active. Film/tech hub workforce housing need. Largest SE metro \u2014 justifies standalone coverage. ADU adoption growing among Beltline corridor homeowners.",
+      "cost": {
+        "cci": 0.89,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "RSMeans 2025 direct",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 4,
@@ -318,7 +570,16 @@
       "lon": -110.97,
       "hub": "Corona",
       "adu": "Moderate",
-      "note": "AZ city-level ADU rules permissive despite state legislature friction. University of Arizona market, retiree casita demand, Phoenix-overflow affordability seekers."
+      "note": "AZ city-level ADU rules permissive despite state legislature friction. University of Arizona market, retiree casita demand, Phoenix-overflow affordability seekers.",
+      "cost": {
+        "cci": 0.89,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier C typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 5,
@@ -329,7 +590,16 @@
       "lon": -95.37,
       "hub": "Dallas",
       "adu": "Moderate",
-      "note": "No zoning = permissive by default. Sheer market size necessary. Energy sector workforce, large lot inventory for ADU placement. Sprawl culture is a headwind but volume compensates."
+      "note": "No zoning = permissive by default. Sheer market size necessary. Energy sector workforce, large lot inventory for ADU placement. Sprawl culture is a headwind but volume compensates.",
+      "cost": {
+        "cci": 0.85,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "RSMeans 2025 direct",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 5,
@@ -340,7 +610,16 @@
       "lon": -73.75,
       "hub": "Hartford",
       "adu": "Moderate",
-      "note": "NY ADU reform active statewide. State capital \u2014 stable government/healthcare employment. Hartford hub proximity makes this low-cost. Anchors upstate NY corridor."
+      "note": "NY ADU reform active statewide. State capital \u2014 stable government/healthcare employment. Hartford hub proximity makes this low-cost. Anchors upstate NY corridor.",
+      "cost": {
+        "cci": 1.02,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier A typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 5,
@@ -351,7 +630,16 @@
       "lon": -78.88,
       "hub": "Hartford",
       "adu": "Moderate",
-      "note": "NY reform + rust belt revival. Affordability crisis severe. Legacy housing stock generates strong ADU-as-income-property demand. Low land cost = strong modular ROI."
+      "note": "NY reform + rust belt revival. Affordability crisis severe. Legacy housing stock generates strong ADU-as-income-property demand. Low land cost = strong modular ROI.",
+      "cost": {
+        "cci": 1.02,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier A typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 5,
@@ -362,7 +650,16 @@
       "lon": -76.15,
       "hub": "Hartford",
       "adu": "Moderate",
-      "note": "NY reform. Syracuse University rental ADU demand. Micron chip factory creating new workforce housing need \u2014 major tailwind. Affordable land makes modular ROI compelling for investors."
+      "note": "NY reform. Syracuse University rental ADU demand. Micron chip factory creating new workforce housing need \u2014 major tailwind. Affordable land makes modular ROI compelling for investors.",
+      "cost": {
+        "cci": 1.02,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier A typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 5,
@@ -373,7 +670,16 @@
       "lon": -71.46,
       "hub": "Hartford",
       "adu": "Moderate",
-      "note": "NH ADU legislation 2017. Boston overflow market. No state income tax draws remote workers creating demand spike. Small but consistent."
+      "note": "NH ADU legislation 2017. Boston overflow market. No state income tax draws remote workers creating demand spike. Small but consistent.",
+      "cost": {
+        "cci": 0.95,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier B typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 5,
@@ -384,7 +690,16 @@
       "lon": -70.26,
       "hub": "Hartford",
       "adu": "Moderate",
-      "note": "ME ADU reform active. Remote worker boom drove housing costs sharply up. Density-aware sustainability buyer. Low competition \u2014 early mover captures the whole market."
+      "note": "ME ADU reform active. Remote worker boom drove housing costs sharply up. Density-aware sustainability buyer. Low competition \u2014 early mover captures the whole market.",
+      "cost": {
+        "cci": 0.95,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier B typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 5,
@@ -395,7 +710,16 @@
       "lon": -74.76,
       "hub": "Hartford",
       "adu": "Moderate",
-      "note": "NJ ADU law 2024. More affordable land than Jersey City while inside NYC commuter shed. Urban renewal opportunity. Completes NJ market alongside Jersey City."
+      "note": "NJ ADU law 2024. More affordable land than Jersey City while inside NYC commuter shed. Urban renewal opportunity. Completes NJ market alongside Jersey City.",
+      "cost": {
+        "cci": 1.02,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier A typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 5,
@@ -406,7 +730,16 @@
       "lon": -71.8,
       "hub": "Hartford",
       "adu": "Moderate",
-      "note": "MA policy excellent but secondary to Boston. Establish Boston Yr 3, expand west Yr 5. WPI/Clark University ADU rental demand. Better modular ROI than Boston. Pushed from Yr 3."
+      "note": "MA policy excellent but secondary to Boston. Establish Boston Yr 3, expand west Yr 5. WPI/Clark University ADU rental demand. Better modular ROI than Boston. Pushed from Yr 3.",
+      "cost": {
+        "cci": 1.05,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier A typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 5,
@@ -417,7 +750,16 @@
       "lon": -74.17,
       "hub": "Hartford",
       "adu": "Moderate",
-      "note": "NJ ADU law applies. Let Jersey City establish NJ brand first. Newark has real demand \u2014 strong long-term pipeline. Pushed from Yr 3."
+      "note": "NJ ADU law applies. Let Jersey City establish NJ brand first. Newark has real demand \u2014 strong long-term pipeline. Pushed from Yr 3.",
+      "cost": {
+        "cci": 1.05,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier A typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 5,
@@ -428,7 +770,16 @@
       "lon": -77.61,
       "hub": "Hartford",
       "adu": "Moderate",
-      "note": "NY reform. Kodak/Paychex/U of R workforce stable. Flat population = lower demand velocity. Enter after NY reform matures and upstate market is primed. Pushed from Yr 3."
+      "note": "NY reform. Kodak/Paychex/U of R workforce stable. Flat population = lower demand velocity. Enter after NY reform matures and upstate market is primed. Pushed from Yr 3.",
+      "cost": {
+        "cci": 1.05,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier A typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 5,
@@ -439,7 +790,16 @@
       "lon": -86.78,
       "hub": "Indianapolis",
       "adu": "Moderate",
-      "note": "Fastest-growing TN city. Healthcare/tech hub, ADU reform accelerating. Moved to Yr 5 from Yr 7 \u2014 TN legislation moving faster than expected."
+      "note": "Fastest-growing TN city. Healthcare/tech hub, ADU reform accelerating. Moved to Yr 5 from Yr 7 \u2014 TN legislation moving faster than expected.",
+      "cost": {
+        "cci": 0.83,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier D typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 5,
@@ -450,7 +810,16 @@
       "lon": -98.49,
       "hub": "Dallas",
       "adu": "Moderate",
-      "note": "Large military market \u2014 Fort Sam Houston, Lackland, Randolph AFB. VA-financeable ADU demand is consistent and countercyclical. Completes TX triangle."
+      "note": "Large military market \u2014 Fort Sam Houston, Lackland, Randolph AFB. VA-financeable ADU demand is consistent and countercyclical. Completes TX triangle.",
+      "cost": {
+        "cci": 0.89,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier C typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 5,
@@ -461,7 +830,16 @@
       "lon": -77.44,
       "hub": "Hartford",
       "adu": "Moderate",
-      "note": "VA ADU reform advancing. State capital stability. Growing tech sector, Amazon HQ2 spillover. Bridges DC Suburbs to the Carolinas."
+      "note": "VA ADU reform advancing. State capital stability. Growing tech sector, Amazon HQ2 spillover. Bridges DC Suburbs to the Carolinas.",
+      "cost": {
+        "cci": 0.89,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier C typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 5,
@@ -472,7 +850,16 @@
       "lon": -95.94,
       "hub": "Indianapolis",
       "adu": "Moderate",
-      "note": "Berkshire/finance hub, stable employment base, affordable land. NE ADU environment improving. Midwest market proving ground."
+      "note": "Berkshire/finance hub, stable employment base, affordable land. NE ADU environment improving. Midwest market proving ground.",
+      "cost": {
+        "cci": 0.83,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier D typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 5,
@@ -483,7 +870,16 @@
       "lon": -97.52,
       "hub": "Dallas",
       "adu": "Moderate",
-      "note": "OK ADU environment slowly improving. Energy sector workforce. Affordable land = compelling modular ROI for investors. Dallas hub efficient."
+      "note": "OK ADU environment slowly improving. Energy sector workforce. Affordable land = compelling modular ROI for investors. Dallas hub efficient.",
+      "cost": {
+        "cci": 0.83,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier D typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 5,
@@ -494,7 +890,16 @@
       "lon": -106.65,
       "hub": "Denver",
       "adu": "Moderate",
-      "note": "NM ADU-permissive environment. Growing tech/gov sector, Kirtland AFB workforce housing. Affordable land, constrained supply. Denver hub covers geographically."
+      "note": "NM ADU-permissive environment. Growing tech/gov sector, Kirtland AFB workforce housing. Affordable land, constrained supply. Denver hub covers geographically.",
+      "cost": {
+        "cci": 0.89,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier C typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 5,
@@ -505,7 +910,16 @@
       "lon": -81.1,
       "hub": "Indianapolis",
       "adu": "Moderate",
-      "note": "SCAD arts/design culture = modular-receptive buyer. Port of Savannah workforce housing demand growing rapidly. Bridges Atlanta and FL coastal coverage."
+      "note": "SCAD arts/design culture = modular-receptive buyer. Port of Savannah workforce housing demand growing rapidly. Bridges Atlanta and FL coastal coverage.",
+      "cost": {
+        "cci": 0.89,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier C typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 5,
@@ -516,7 +930,16 @@
       "lon": -91.19,
       "hub": "Dallas",
       "adu": "Moderate",
-      "note": "LA ADU environment improving. LSU university, petrochemical industry workforce housing. Dallas hub covers efficiently."
+      "note": "LA ADU environment improving. LSU university, petrochemical industry workforce housing. Dallas hub covers efficiently.",
+      "cost": {
+        "cci": 0.83,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier D typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 6,
@@ -527,7 +950,16 @@
       "lon": -80.19,
       "hub": "Indianapolis",
       "adu": "Moderate",
-      "note": "FL ADU rules \u2014 Miami permissive. Extreme housing cost pressure, international buyer base, investor-oriented ADU demand. Anchor for FL franchise network."
+      "note": "FL ADU rules \u2014 Miami permissive. Extreme housing cost pressure, international buyer base, investor-oriented ADU demand. Anchor for FL franchise network.",
+      "cost": {
+        "cci": 0.93,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "RSMeans 2025 direct",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 6,
@@ -538,7 +970,16 @@
       "lon": -81.38,
       "hub": "Indianapolis",
       "adu": "Moderate",
-      "note": "Tourism/hospitality workforce housing need. Rapid population growth. Disney/Universal workforce creates consistent rental ADU demand."
+      "note": "Tourism/hospitality workforce housing need. Rapid population growth. Disney/Universal workforce creates consistent rental ADU demand.",
+      "cost": {
+        "cci": 0.86,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier C typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 6,
@@ -549,7 +990,16 @@
       "lon": -82.46,
       "hub": "Indianapolis",
       "adu": "Moderate",
-      "note": "FL Gulf Coast growth corridor. Remote worker influx drove housing costs sharply. Finance/tech relocation hub."
+      "note": "FL Gulf Coast growth corridor. Remote worker influx drove housing costs sharply. Finance/tech relocation hub.",
+      "cost": {
+        "cci": 0.86,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier C typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 6,
@@ -560,7 +1010,16 @@
       "lon": -81.66,
       "hub": "Indianapolis",
       "adu": "Moderate",
-      "note": "FL, large military presence \u2014 NAS Jax, Mayport. Military ADU demand steady and VA-financeable. Largest land-area US city \u2014 huge lot inventory for ADU infill."
+      "note": "FL, large military presence \u2014 NAS Jax, Mayport. Military ADU demand steady and VA-financeable. Largest land-area US city \u2014 huge lot inventory for ADU infill.",
+      "cost": {
+        "cci": 0.86,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier C typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 6,
@@ -571,7 +1030,16 @@
       "lon": -87.63,
       "hub": "Indianapolis",
       "adu": "Moderate",
-      "note": "Chicago ADU pilot expanded citywide 2023. Deep two-flat/three-flat housing culture aligns with ADU concept. High homeowner equity in established neighborhoods."
+      "note": "Chicago ADU pilot expanded citywide 2023. Deep two-flat/three-flat housing culture aligns with ADU concept. High homeowner equity in established neighborhoods.",
+      "cost": {
+        "cci": 1.13,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "RSMeans 2025 direct",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 6,
@@ -582,7 +1050,16 @@
       "lon": -86.16,
       "hub": "Indianapolis",
       "adu": "Moderate",
-      "note": "Midwest hub city \u2014 hub becomes a franchise site. Affordable land, steady workforce growth. Lowest incremental cost market to launch given hub operations already in place."
+      "note": "Midwest hub city \u2014 hub becomes a franchise site. Affordable land, steady workforce growth. Lowest incremental cost market to launch given hub operations already in place.",
+      "cost": {
+        "cci": 0.93,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "RSMeans 2025 direct",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 6,
@@ -593,7 +1070,16 @@
       "lon": -76.61,
       "hub": "Hartford",
       "adu": "Moderate",
-      "note": "MD ADU legislation advancing. DC metro overflow, large rowhouse inventory ideal for ADU. Healthcare/government workforce stability."
+      "note": "MD ADU legislation advancing. DC metro overflow, large rowhouse inventory ideal for ADU. Healthcare/government workforce stability.",
+      "cost": {
+        "cci": 0.91,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier B typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 6,
@@ -604,7 +1090,16 @@
       "lon": -77.03,
       "hub": "Hartford",
       "adu": "Moderate",
-      "note": "MD/VA ADU-friendly jurisdictions, federal workforce stability. Montgomery County strong ADU permitting. High homeowner equity drives income-generating ADU demand."
+      "note": "MD/VA ADU-friendly jurisdictions, federal workforce stability. Montgomery County strong ADU permitting. High homeowner equity drives income-generating ADU demand.",
+      "cost": {
+        "cci": 0.91,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier B typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 6,
@@ -615,7 +1110,16 @@
       "lon": -82.99,
       "hub": "Indianapolis",
       "adu": "Moderate",
-      "note": "Fastest-growing OH city. Intel fab investment creating new workforce housing demand. Ohio State market. Anchors OH cluster."
+      "note": "Fastest-growing OH city. Intel fab investment creating new workforce housing demand. Ohio State market. Anchors OH cluster.",
+      "cost": {
+        "cci": 0.8,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier D typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 6,
@@ -626,7 +1130,16 @@
       "lon": -81.69,
       "hub": "Indianapolis",
       "adu": "Lower",
-      "note": "OH market. Healthcare/Case Western anchor. Rust belt revival creates ADU-as-investment demand. Affordable land = strong modular ROI."
+      "note": "OH market. Healthcare/Case Western anchor. Rust belt revival creates ADU-as-investment demand. Affordable land = strong modular ROI.",
+      "cost": {
+        "cci": 0.8,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier D typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 6,
@@ -637,7 +1150,16 @@
       "lon": -84.51,
       "hub": "Indianapolis",
       "adu": "Lower",
-      "note": "OH/KY market. P&G/finance workforce stability. Growing tech sector. Completes Indianapolis hub OH coverage."
+      "note": "OH/KY market. P&G/finance workforce stability. Growing tech sector. Completes Indianapolis hub OH coverage.",
+      "cost": {
+        "cci": 0.8,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier D typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 6,
@@ -648,7 +1170,16 @@
       "lon": -75.16,
       "hub": "Hartford",
       "adu": "Moderate",
-      "note": "PA ADU rules locally variable \u2014 Philly moving toward reform. Large rowhouse stock, high homeowner equity, major university market."
+      "note": "PA ADU rules locally variable \u2014 Philly moving toward reform. Large rowhouse stock, high homeowner equity, major university market.",
+      "cost": {
+        "cci": 0.91,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier B typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 6,
@@ -659,7 +1190,16 @@
       "lon": -79.99,
       "hub": "Indianapolis",
       "adu": "Lower",
-      "note": "PA tech revival \u2014 CMU/Pitt robotics hub. Google, Uber, Duolingo workforce creates housing demand. Affordable land = strong modular ROI."
+      "note": "PA tech revival \u2014 CMU/Pitt robotics hub. Google, Uber, Duolingo workforce creates housing demand. Affordable land = strong modular ROI.",
+      "cost": {
+        "cci": 0.91,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier B typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 6,
@@ -670,7 +1210,16 @@
       "lon": -76.88,
       "hub": "Hartford",
       "adu": "Lower",
-      "note": "PA state capital \u2014 government workforce stability. Bridges coverage between Philly and Pittsburgh markets."
+      "note": "PA state capital \u2014 government workforce stability. Bridges coverage between Philly and Pittsburgh markets.",
+      "cost": {
+        "cci": 0.91,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier B typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 6,
@@ -681,7 +1230,16 @@
       "lon": -85.76,
       "hub": "Indianapolis",
       "adu": "Lower",
-      "note": "KY ADU environment improving. Healthcare/UofL anchor market. Close Indianapolis hub proximity keeps costs low."
+      "note": "KY ADU environment improving. Healthcare/UofL anchor market. Close Indianapolis hub proximity keeps costs low.",
+      "cost": {
+        "cci": 0.8,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier D typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 6,
@@ -692,7 +1250,16 @@
       "lon": -94.58,
       "hub": "Indianapolis",
       "adu": "Moderate",
-      "note": "MO market improving. Tech hub growth, affordable land. Animal health/veterinary sector unique workforce demand."
+      "note": "MO market improving. Tech hub growth, affordable land. Animal health/veterinary sector unique workforce demand.",
+      "cost": {
+        "cci": 0.8,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier D typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 6,
@@ -703,7 +1270,16 @@
       "lon": -90.2,
       "hub": "Indianapolis",
       "adu": "Lower",
-      "note": "Population stabilizing. Healthcare/Wash U anchor. Enter once KC franchise proves the MO model."
+      "note": "Population stabilizing. Healthcare/Wash U anchor. Enter once KC franchise proves the MO model.",
+      "cost": {
+        "cci": 0.8,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier D typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 6,
@@ -714,7 +1290,16 @@
       "lon": -90.07,
       "hub": "Dallas",
       "adu": "Moderate",
-      "note": "LA ADU improving, historic shotgun house culture already primes the ADU concept culturally. Tourism/port workforce. Unique architectural market."
+      "note": "LA ADU improving, historic shotgun house culture already primes the ADU concept culturally. Tourism/port workforce. Unique architectural market.",
+      "cost": {
+        "cci": 0.8,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier D typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 7,
@@ -725,7 +1310,16 @@
       "lon": -86.8,
       "hub": "Indianapolis",
       "adu": "Lower",
-      "note": "AL market maturing slowly. UAB anchor. Enter when Indianapolis hub reaches full capacity and SE coverage gap needs closing."
+      "note": "AL market maturing slowly. UAB anchor. Enter when Indianapolis hub reaches full capacity and SE coverage gap needs closing.",
+      "cost": {
+        "cci": 0.8,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier D typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 7,
@@ -736,7 +1330,16 @@
       "lon": -86.59,
       "hub": "Indianapolis",
       "adu": "Moderate",
-      "note": "Rocket/defense tech workforce \u2014 NASA, Redstone Arsenal, Boeing. Stable high-income housing demand. Innovation-receptive buyer strongly suited to modular."
+      "note": "Rocket/defense tech workforce \u2014 NASA, Redstone Arsenal, Boeing. Stable high-income housing demand. Innovation-receptive buyer strongly suited to modular.",
+      "cost": {
+        "cci": 0.8,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier D typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 7,
@@ -747,7 +1350,16 @@
       "lon": -75.55,
       "hub": "Hartford",
       "adu": "Moderate",
-      "note": "DE ADU-friendly environment, corporate/legal industry workforce. Proximity to Philly and DC extends Northeast coverage efficiently."
+      "note": "DE ADU-friendly environment, corporate/legal industry workforce. Proximity to Philly and DC extends Northeast coverage efficiently.",
+      "cost": {
+        "cci": 0.91,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier B typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 7,
@@ -758,7 +1370,16 @@
       "lon": -80.14,
       "hub": "Indianapolis",
       "adu": "Moderate",
-      "note": "FL South corridor. Extends Miami coverage north. High homeowner equity in established beach communities."
+      "note": "FL South corridor. Extends Miami coverage north. High homeowner equity in established beach communities.",
+      "cost": {
+        "cci": 0.86,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier C typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 7,
@@ -769,7 +1390,16 @@
       "lon": -83.05,
       "hub": "Indianapolis",
       "adu": "Lower",
-      "note": "MI ADU reform active. EV manufacturing revival (Ford, GM, Rivian) creating new workforce housing demand. Enter if MI legislation moves by 2027."
+      "note": "MI ADU reform active. EV manufacturing revival (Ford, GM, Rivian) creating new workforce housing demand. Enter if MI legislation moves by 2027.",
+      "cost": {
+        "cci": 0.8,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier D typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 7,
@@ -780,7 +1410,16 @@
       "lon": -85.67,
       "hub": "Indianapolis",
       "adu": "Moderate",
-      "note": "West MI furniture/manufacturing hub. Conservative homeowner base responds to property-investment ADU framing. Growing healthcare sector."
+      "note": "West MI furniture/manufacturing hub. Conservative homeowner base responds to property-investment ADU framing. Growing healthcare sector.",
+      "cost": {
+        "cci": 0.8,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier D typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 7,
@@ -791,7 +1430,16 @@
       "lon": -79.93,
       "hub": "Indianapolis",
       "adu": "Moderate",
-      "note": "SC growth corridor, Joint Base Charleston military presence. High average home value = compelling ADU ROI story."
+      "note": "SC growth corridor, Joint Base Charleston military presence. High average home value = compelling ADU ROI story.",
+      "cost": {
+        "cci": 0.86,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier C typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 7,
@@ -802,7 +1450,16 @@
       "lon": -82.4,
       "hub": "Indianapolis",
       "adu": "Moderate",
-      "note": "Fastest-growing SC city. BMW/Michelin/tech manufacturing workforce housing demand. Upstate SC corridor pairs with Charlotte."
+      "note": "Fastest-growing SC city. BMW/Michelin/tech manufacturing workforce housing demand. Upstate SC corridor pairs with Charlotte.",
+      "cost": {
+        "cci": 0.86,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier C typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 7,
@@ -813,7 +1470,16 @@
       "lon": -90.05,
       "hub": "Dallas",
       "adu": "Lower",
-      "note": "TN market. FedEx logistics hub, large workforce. Affordable land = strong modular ROI for investors. Pairs with Nashville to complete TN coverage."
+      "note": "TN market. FedEx logistics hub, large workforce. Affordable land = strong modular ROI for investors. Pairs with Nashville to complete TN coverage.",
+      "cost": {
+        "cci": 0.8,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier D typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 7,
@@ -824,7 +1490,16 @@
       "lon": -83.92,
       "hub": "Indianapolis",
       "adu": "Lower",
-      "note": "UT Knoxville university market. Oak Ridge National Lab workforce creates stable high-income demand."
+      "note": "UT Knoxville university market. Oak Ridge National Lab workforce creates stable high-income demand.",
+      "cost": {
+        "cci": 0.8,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier D typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 7,
@@ -835,7 +1510,16 @@
       "lon": -76.29,
       "hub": "Hartford",
       "adu": "Moderate",
-      "note": "Largest naval base in the world \u2014 massive military workforce housing demand. VA loan-compatible modular is a natural fit."
+      "note": "Largest naval base in the world \u2014 massive military workforce housing demand. VA loan-compatible modular is a natural fit.",
+      "cost": {
+        "cci": 0.86,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier C typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 7,
@@ -846,7 +1530,16 @@
       "lon": -87.91,
       "hub": "Indianapolis",
       "adu": "Moderate",
-      "note": "WI ADU reform active. Affordable land, rust belt revival, strong union homeowner base responds to ADU-as-income framing."
+      "note": "WI ADU reform active. Affordable land, rust belt revival, strong union homeowner base responds to ADU-as-income framing.",
+      "cost": {
+        "cci": 0.86,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier C typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 7,
@@ -857,7 +1550,16 @@
       "lon": -92.29,
       "hub": "Dallas",
       "adu": "Lower",
-      "note": "AR state capital, stable government workforce. Affordable land, low competition. Establishes AR footprint."
+      "note": "AR state capital, stable government workforce. Affordable land, low competition. Establishes AR footprint.",
+      "cost": {
+        "cci": 0.8,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier D typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 7,
@@ -868,7 +1570,16 @@
       "lon": -93.62,
       "hub": "Indianapolis",
       "adu": "Moderate",
-      "note": "IA ADU environment improving. Insurance/finance hub, stable employment base. Affordable land = compelling modular ROI."
+      "note": "IA ADU environment improving. Insurance/finance hub, stable employment base. Affordable land = compelling modular ROI.",
+      "cost": {
+        "cci": 0.86,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier C typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 7,
@@ -879,7 +1590,16 @@
       "lon": -95.99,
       "hub": "Dallas",
       "adu": "Moderate",
-      "note": "OK energy/aerospace workforce. Artist District revitalization driving ADU-receptive urban buyer base. Pairs with OKC."
+      "note": "OK energy/aerospace workforce. Artist District revitalization driving ADU-receptive urban buyer base. Pairs with OKC.",
+      "cost": {
+        "cci": 0.8,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier D typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 7,
@@ -890,7 +1610,16 @@
       "lon": -106.49,
       "hub": "Denver",
       "adu": "Moderate",
-      "note": "Large military presence \u2014 Fort Bliss. TX ADU environment positive, border market creates unique workforce housing demand. Bridges TX and NM coverage."
+      "note": "Large military presence \u2014 Fort Bliss. TX ADU environment positive, border market creates unique workforce housing demand. Bridges TX and NM coverage.",
+      "cost": {
+        "cci": 0.86,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier C typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 7,
@@ -901,7 +1630,16 @@
       "lon": -89.4,
       "hub": "Indianapolis",
       "adu": "Moderate",
-      "note": "UW-Madison university market, state capital stability. Progressive buyer base strongly aligned with modular/ADU values."
+      "note": "UW-Madison university market, state capital stability. Progressive buyer base strongly aligned with modular/ADU values.",
+      "cost": {
+        "cci": 0.86,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier C typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 7,
@@ -912,7 +1650,16 @@
       "lon": -85.31,
       "hub": "Indianapolis",
       "adu": "Moderate",
-      "note": "Fast-growing manufacturing/tech hub. Volkswagen EV plant workforce, outdoor recreation culture drives innovation-receptive buyer. Completes TN quad."
+      "note": "Fast-growing manufacturing/tech hub. Volkswagen EV plant workforce, outdoor recreation culture drives innovation-receptive buyer. Completes TN quad.",
+      "cost": {
+        "cci": 0.8,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier D typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 8,
@@ -923,7 +1670,16 @@
       "lon": -84.5,
       "hub": "Indianapolis",
       "adu": "Moderate",
-      "note": "UK Lexington university market, horse farm wealth = high homeowner equity for ADU investment. Completes KY coverage."
+      "note": "UK Lexington university market, horse farm wealth = high homeowner equity for ADU investment. Completes KY coverage.",
+      "cost": {
+        "cci": 0.8,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier D typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 8,
@@ -934,7 +1690,16 @@
       "lon": -68.78,
       "hub": "Hartford",
       "adu": "Moderate",
-      "note": "ME ADU reform, rural coverage extension. University of Maine market. Establishes northern New England presence. Low competition."
+      "note": "ME ADU reform, rural coverage extension. University of Maine market. Establishes northern New England presence. Low competition.",
+      "cost": {
+        "cci": 0.91,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier B typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 8,
@@ -945,7 +1710,16 @@
       "lon": -108.5,
       "hub": "Denver",
       "adu": "Moderate",
-      "note": "MT ADU environment improving. Energy sector workforce, gateway to Northern Plains markets. Largest MT city."
+      "note": "MT ADU environment improving. Energy sector workforce, gateway to Northern Plains markets. Largest MT city.",
+      "cost": {
+        "cci": 0.86,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier C typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 8,
@@ -956,7 +1730,16 @@
       "lon": -111.04,
       "hub": "Denver",
       "adu": "Strong",
-      "note": "Fastest-growing MT city. MSU university, tech/outdoor industry migration from CA. Extreme housing cost spike \u2014 modular is natural solution."
+      "note": "Fastest-growing MT city. MSU university, tech/outdoor industry migration from CA. Extreme housing cost spike \u2014 modular is natural solution.",
+      "cost": {
+        "cci": 0.86,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier C typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 8,
@@ -967,7 +1750,16 @@
       "lon": -96.79,
       "hub": "Denver",
       "adu": "Moderate",
-      "note": "ND ADU environment improving. NDSU university, growing tech sector. Affordable land = strong modular ROI. Northern Plains presence."
+      "note": "ND ADU environment improving. NDSU university, growing tech sector. Affordable land = strong modular ROI. Northern Plains presence.",
+      "cost": {
+        "cci": 0.86,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier C typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 8,
@@ -978,7 +1770,16 @@
       "lon": -96.68,
       "hub": "Indianapolis",
       "adu": "Moderate",
-      "note": "UN-Lincoln university market, state capital stability. Pairs with Omaha to complete NE coverage."
+      "note": "UN-Lincoln university market, state capital stability. Pairs with Omaha to complete NE coverage.",
+      "cost": {
+        "cci": 0.8,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier D typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 8,
@@ -989,7 +1790,16 @@
       "lon": -83.56,
       "hub": "Indianapolis",
       "adu": "Moderate",
-      "note": "OH market, Jeep manufacturing workforce housing. UT Toledo university. Completes OH coverage."
+      "note": "OH market, Jeep manufacturing workforce housing. UT Toledo university. Completes OH coverage.",
+      "cost": {
+        "cci": 0.8,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier D typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 8,
@@ -1000,7 +1810,16 @@
       "lon": -123.09,
       "hub": "Corona",
       "adu": "Excellent",
-      "note": "OR ADU law applies statewide. UO Eugene university, strong environmental buyer values. Extends Portland coverage south through the Willamette Valley."
+      "note": "OR ADU law applies statewide. UO Eugene university, strong environmental buyer values. Extends Portland coverage south through the Willamette Valley.",
+      "cost": {
+        "cci": 0.91,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier B typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 8,
@@ -1011,7 +1830,16 @@
       "lon": -121.31,
       "hub": "Corona",
       "adu": "Excellent",
-      "note": "OR ADU law applies. Fastest-growing OR city. Outdoor tech/remote worker migration driving extreme housing cost spike. Small market, capturable quickly."
+      "note": "OR ADU law applies. Fastest-growing OR city. Outdoor tech/remote worker migration driving extreme housing cost spike. Small market, capturable quickly.",
+      "cost": {
+        "cci": 0.91,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier B typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 8,
@@ -1022,7 +1850,16 @@
       "lon": -96.73,
       "hub": "Indianapolis",
       "adu": "Moderate",
-      "note": "SD ADU environment improving. No state income tax draws remote workers. Growing financial services sector."
+      "note": "SD ADU environment improving. No state income tax draws remote workers. Growing financial services sector.",
+      "cost": {
+        "cci": 0.8,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier D typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 8,
@@ -1033,7 +1870,16 @@
       "lon": -111.66,
       "hub": "Denver",
       "adu": "Strong",
-      "note": "UT ADU by-right law applies. BYU university market, high multigenerational household demand \u2014 natural ADU buyers. Young family demographic suited to modular."
+      "note": "UT ADU by-right law applies. BYU university market, high multigenerational household demand \u2014 natural ADU buyers. Young family demographic suited to modular.",
+      "cost": {
+        "cci": 0.86,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier C typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 8,
@@ -1044,7 +1890,16 @@
       "lon": -73.21,
       "hub": "Hartford",
       "adu": "Strong",
-      "note": "VT ADU legislation 2018 \u2014 statewide by-right. UVM university market, high environmental consciousness buyer. Small but high-value with strong ADU adoption culture."
+      "note": "VT ADU legislation 2018 \u2014 statewide by-right. UVM university market, high environmental consciousness buyer. Small but high-value with strong ADU adoption culture.",
+      "cost": {
+        "cci": 0.91,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier B typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 8,
@@ -1055,7 +1910,16 @@
       "lon": -117.43,
       "hub": "Denver",
       "adu": "Strong",
-      "note": "WA ADU reform applies statewide. Eastern WA gateway, affordable land vs Seattle, growing remote worker market."
+      "note": "WA ADU reform applies statewide. Eastern WA gateway, affordable land vs Seattle, growing remote worker market.",
+      "cost": {
+        "cci": 0.91,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier B typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 8,
@@ -1066,7 +1930,16 @@
       "lon": -104.82,
       "hub": "Denver",
       "adu": "Moderate",
-      "note": "WY state capital, F.E. Warren AFB military presence. No state income tax attracting remote workers. Denver hub covers efficiently."
+      "note": "WY state capital, F.E. Warren AFB military presence. No state income tax attracting remote workers. Denver hub covers efficiently.",
+      "cost": {
+        "cci": 0.86,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier C typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 8,
@@ -1077,7 +1950,16 @@
       "lon": -90.18,
       "hub": "Dallas",
       "adu": "Lower",
-      "note": "MS state capital, water infrastructure investment creating construction activity. Affordable land, consistent government workforce."
+      "note": "MS state capital, water infrastructure investment creating construction activity. Affordable land, consistent government workforce.",
+      "cost": {
+        "cci": 0.8,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier D typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 8,
@@ -1088,7 +1970,16 @@
       "lon": -93.75,
       "hub": "Dallas",
       "adu": "Lower",
-      "note": "LA north corridor, Barksdale AFB military workforce housing demand. Completes LA coverage with Baton Rouge and New Orleans."
+      "note": "LA north corridor, Barksdale AFB military workforce housing demand. Completes LA coverage with Baton Rouge and New Orleans.",
+      "cost": {
+        "cci": 0.8,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier D typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 8,
@@ -1099,7 +1990,16 @@
       "lon": -81.63,
       "hub": "Indianapolis",
       "adu": "Lower",
-      "note": "WV state capital, federal infrastructure investment driving new construction. Affordable land = strong modular economics. Appalachian market entry."
+      "note": "WV state capital, federal infrastructure investment driving new construction. Affordable land = strong modular economics. Appalachian market entry.",
+      "cost": {
+        "cci": 0.8,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier D typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 8,
@@ -1110,7 +2010,16 @@
       "lon": -79.96,
       "hub": "Indianapolis",
       "adu": "Lower",
-      "note": "WVU university market, federal research workforce. Pairs with Charleston WV to complete Appalachian coverage."
+      "note": "WVU university market, federal research workforce. Pairs with Charleston WV to complete Appalachian coverage.",
+      "cost": {
+        "cci": 0.8,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier D typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 9,
@@ -1121,7 +2030,16 @@
       "lon": -149.9,
       "hub": "Corona",
       "adu": "Moderate",
-      "note": "Modular is essentially the only practical build method in AK. Extreme construction cost and logistics constraints make factory-built the obvious solution. Captive market. Pulled from Yr 10."
+      "note": "Modular is essentially the only practical build method in AK. Extreme construction cost and logistics constraints make factory-built the obvious solution. Captive market. Pulled from Yr 10.",
+      "cost": {
+        "cci": 1.22,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "RSMeans 2025 direct",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 9,
@@ -1132,7 +2050,16 @@
       "lon": -88.04,
       "hub": "Dallas",
       "adu": "Lower",
-      "note": "AL Gulf Coast, Airbus manufacturing workforce housing demand. Port/aerospace industry. Completes AL coverage."
+      "note": "AL Gulf Coast, Airbus manufacturing workforce housing demand. Port/aerospace industry. Completes AL coverage.",
+      "cost": {
+        "cci": 0.8,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier D typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 9,
@@ -1143,7 +2070,16 @@
       "lon": -84.28,
       "hub": "Indianapolis",
       "adu": "Moderate",
-      "note": "FL state capital, FSU/FAMU university market. State government workforce stability. Completes FL coverage."
+      "note": "FL state capital, FSU/FAMU university market. State government workforce stability. Completes FL coverage.",
+      "cost": {
+        "cci": 0.86,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier C typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 9,
@@ -1154,7 +2090,16 @@
       "lon": -87.22,
       "hub": "Dallas",
       "adu": "Moderate",
-      "note": "FL Panhandle, NAS Pensacola \u2014 enormous military workforce housing demand. VA-financeable modular natural fit."
+      "note": "FL Panhandle, NAS Pensacola \u2014 enormous military workforce housing demand. VA-financeable modular natural fit.",
+      "cost": {
+        "cci": 0.86,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier C typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 9,
@@ -1165,7 +2110,16 @@
       "lon": -155.09,
       "hub": "Corona",
       "adu": "Excellent",
-      "note": "HI ADU law applies statewide. Big Island workforce housing demand. More affordable than Honolulu but same excellent policy environment."
+      "note": "HI ADU law applies statewide. Big Island workforce housing demand. More affordable than Honolulu but same excellent policy environment.",
+      "cost": {
+        "cci": 0.98,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier A typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 9,
@@ -1176,7 +2130,16 @@
       "lon": -85.14,
       "hub": "Indianapolis",
       "adu": "Moderate",
-      "note": "IN manufacturing workforce housing. Second-largest IN city. Short haul from Indianapolis hub."
+      "note": "IN manufacturing workforce housing. Second-largest IN city. Short haul from Indianapolis hub.",
+      "cost": {
+        "cci": 0.8,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier D typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 9,
@@ -1187,7 +2150,16 @@
       "lon": -100.78,
       "hub": "Denver",
       "adu": "Moderate",
-      "note": "ND state capital, energy sector workforce. Pairs with Fargo to complete ND coverage."
+      "note": "ND state capital, energy sector workforce. Pairs with Fargo to complete ND coverage.",
+      "cost": {
+        "cci": 0.86,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier C typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 9,
@@ -1198,7 +2170,16 @@
       "lon": -71.54,
       "hub": "Hartford",
       "adu": "Moderate",
-      "note": "NH state capital, NH ADU law applies. Completes NH coverage with Manchester."
+      "note": "NH state capital, NH ADU law applies. Completes NH coverage with Manchester.",
+      "cost": {
+        "cci": 0.91,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier B typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 9,
@@ -1209,7 +2190,16 @@
       "lon": -75.49,
       "hub": "Hartford",
       "adu": "Moderate",
-      "note": "PA Lehigh Valley, manufacturing/warehouse workforce. Amazon/distribution center demand for worker housing."
+      "note": "PA Lehigh Valley, manufacturing/warehouse workforce. Amazon/distribution center demand for worker housing.",
+      "cost": {
+        "cci": 0.91,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier B typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 9,
@@ -1220,7 +2210,16 @@
       "lon": -103.23,
       "hub": "Denver",
       "adu": "Moderate",
-      "note": "SD Black Hills gateway, Ellsworth AFB military workforce housing. Pairs with Sioux Falls to complete SD."
+      "note": "SD Black Hills gateway, Ellsworth AFB military workforce housing. Pairs with Sioux Falls to complete SD.",
+      "cost": {
+        "cci": 0.8,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier D typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 9,
@@ -1231,7 +2230,16 @@
       "lon": -99.51,
       "hub": "Dallas",
       "adu": "Moderate",
-      "note": "TX border market, international trade workforce housing demand. US-Mexico port of entry creates consistent housing need."
+      "note": "TX border market, international trade workforce housing demand. US-Mexico port of entry creates consistent housing need.",
+      "cost": {
+        "cci": 0.86,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier C typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 9,
@@ -1242,7 +2250,16 @@
       "lon": -78.48,
       "hub": "Hartford",
       "adu": "Moderate",
-      "note": "UVA university market, high homeowner equity, educated buyer aligned with modular/ADU values. Completes VA coverage."
+      "note": "UVA university market, high homeowner equity, educated buyer aligned with modular/ADU values. Completes VA coverage.",
+      "cost": {
+        "cci": 0.86,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier C typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 9,
@@ -1253,7 +2270,16 @@
       "lon": -122.48,
       "hub": "Corona",
       "adu": "Strong",
-      "note": "WA ADU reform applies. Canadian border market, WWU university, outdoor/tech culture. Extends WA coverage north from Seattle."
+      "note": "WA ADU reform applies. Canadian border market, WWU university, outdoor/tech culture. Extends WA coverage north from Seattle.",
+      "cost": {
+        "cci": 0.91,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier B typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 9,
@@ -1264,7 +2290,16 @@
       "lon": -106.31,
       "hub": "Denver",
       "adu": "Moderate",
-      "note": "WY energy sector workforce housing demand. Completes WY coverage with Cheyenne."
+      "note": "WY energy sector workforce housing demand. Completes WY coverage with Cheyenne.",
+      "cost": {
+        "cci": 0.86,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier C typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 9,
@@ -1275,7 +2310,16 @@
       "lon": -113.99,
       "hub": "Denver",
       "adu": "Strong",
-      "note": "UM Missoula university, outdoor recreation culture = innovation-receptive buyer. Completes MT coverage with Billings and Bozeman."
+      "note": "UM Missoula university, outdoor recreation culture = innovation-receptive buyer. Completes MT coverage with Billings and Bozeman.",
+      "cost": {
+        "cci": 0.86,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier C typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 9,
@@ -1286,7 +2330,16 @@
       "lon": -97.4,
       "hub": "Dallas",
       "adu": "Moderate",
-      "note": "TX Gulf Coast, NAS Corpus Christi military workforce, petrochemical industry. Completes TX coastal coverage."
+      "note": "TX Gulf Coast, NAS Corpus Christi military workforce, petrochemical industry. Completes TX coastal coverage.",
+      "cost": {
+        "cci": 0.86,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier C typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 9,
@@ -1297,7 +2350,16 @@
       "lon": -82.32,
       "hub": "Indianapolis",
       "adu": "Moderate",
-      "note": "UF Gainesville university market, consistent rental ADU demand. Completes FL interior coverage."
+      "note": "UF Gainesville university market, consistent rental ADU demand. Completes FL interior coverage.",
+      "cost": {
+        "cci": 0.86,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier C typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 10,
@@ -1308,7 +2370,16 @@
       "lon": -119.02,
       "hub": "Corona",
       "adu": "Strong",
-      "note": "CA ADU law applies. Oil/agriculture workforce, affordable Central Valley land. Bridges Fresno and LA Basin coverage. Large underserved housing market."
+      "note": "CA ADU law applies. Oil/agriculture workforce, affordable Central Valley land. Bridges Fresno and LA Basin coverage. Large underserved housing market.",
+      "cost": {
+        "cci": 0.98,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier A typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 10,
@@ -1319,7 +2390,16 @@
       "lon": -124.16,
       "hub": "Corona",
       "adu": "Strong",
-      "note": "CA ADU law applies. North Coast market, timber/fishing workforce, extremely limited housing supply. Completes CA coastal coverage north of Bay Area."
+      "note": "CA ADU law applies. North Coast market, timber/fishing workforce, extremely limited housing supply. Completes CA coastal coverage north of Bay Area.",
+      "cost": {
+        "cci": 0.98,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier A typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 10,
@@ -1330,7 +2410,16 @@
       "lon": -147.72,
       "hub": "Corona",
       "adu": "Moderate",
-      "note": "AK modular essential for climate/logistics. UAF university, military (Eielson, Fort Wainwright). Completes AK coverage with Anchorage."
+      "note": "AK modular essential for climate/logistics. UAF university, military (Eielson, Fort Wainwright). Completes AK coverage with Anchorage.",
+      "cost": {
+        "cci": 0.98,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier A typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 10,
@@ -1341,7 +2430,16 @@
       "lon": -111.65,
       "hub": "Corona",
       "adu": "Moderate",
-      "note": "AZ university market (NAU), mountain gateway, tourism workforce housing. Completes AZ triangle with Phoenix and Tucson."
+      "note": "AZ university market (NAU), mountain gateway, tourism workforce housing. Completes AZ triangle with Phoenix and Tucson.",
+      "cost": {
+        "cci": 0.86,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier C typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 10,
@@ -1352,7 +2450,16 @@
       "lon": -116.39,
       "hub": "Denver",
       "adu": "Excellent",
-      "note": "ID ADU-permissive. Boise suburb with fastest growth rate \u2014 modular infill is natural solution. Same excellent demand dynamics as Boise."
+      "note": "ID ADU-permissive. Boise suburb with fastest growth rate \u2014 modular infill is natural solution. Same excellent demand dynamics as Boise.",
+      "cost": {
+        "cci": 0.86,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier C typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 10,
@@ -1363,7 +2470,16 @@
       "lon": -97.34,
       "hub": "Indianapolis",
       "adu": "Moderate",
-      "note": "KS aerospace manufacturing workforce (Boeing, Spirit AeroSystems). Stable, affordable market. Establishes KS presence."
+      "note": "KS aerospace manufacturing workforce (Boeing, Spirit AeroSystems). Stable, affordable market. Establishes KS presence.",
+      "cost": {
+        "cci": 0.8,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier D typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 10,
@@ -1374,7 +2490,16 @@
       "lon": -92.11,
       "hub": "Indianapolis",
       "adu": "Moderate",
-      "note": "MN ADU reform applies. Port/manufacturing workforce, UMD university. Completes MN coverage with Minneapolis."
+      "note": "MN ADU reform applies. Port/manufacturing workforce, UMD university. Completes MN coverage with Minneapolis.",
+      "cost": {
+        "cci": 0.86,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier C typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 10,
@@ -1385,7 +2510,16 @@
       "lon": -93.29,
       "hub": "Dallas",
       "adu": "Moderate",
-      "note": "MO Ozarks gateway, MSU Springfield university. Completes MO coverage with KC and St. Louis."
+      "note": "MO Ozarks gateway, MSU Springfield university. Completes MO coverage with KC and St. Louis.",
+      "cost": {
+        "cci": 0.8,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier D typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 10,
@@ -1396,7 +2530,16 @@
       "lon": -85.39,
       "hub": "Dallas",
       "adu": "Lower",
-      "note": "AL SE corner, Wiregrass region military (Fort Rucker). Completes AL full coverage."
+      "note": "AL SE corner, Wiregrass region military (Fort Rucker). Completes AL full coverage.",
+      "cost": {
+        "cci": 0.8,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier D typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 10,
@@ -1407,7 +2550,16 @@
       "lon": -88.81,
       "hub": "Dallas",
       "adu": "Lower",
-      "note": "TN west corridor, manufacturing workforce. Completes TN statewide coverage."
+      "note": "TN west corridor, manufacturing workforce. Completes TN statewide coverage.",
+      "cost": {
+        "cci": 0.8,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier D typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 10,
@@ -1418,7 +2570,16 @@
       "lon": -101.86,
       "hub": "Dallas",
       "adu": "Moderate",
-      "note": "TX Tech university market, West TX gateway. Completes TX statewide coverage."
+      "note": "TX Tech university market, West TX gateway. Completes TX statewide coverage.",
+      "cost": {
+        "cci": 0.86,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier C typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 10,
@@ -1429,7 +2590,16 @@
       "lon": -75.98,
       "hub": "Hartford",
       "adu": "Moderate",
-      "note": "Largest VA city by population. Massive military complex (NAS Oceana, Joint Expeditionary Base). VA-financeable modular natural fit."
+      "note": "Largest VA city by population. Massive military complex (NAS Oceana, Joint Expeditionary Base). VA-financeable modular natural fit.",
+      "cost": {
+        "cci": 0.86,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier C typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 10,
@@ -1440,7 +2610,16 @@
       "lon": -117.23,
       "hub": "Denver",
       "adu": "Strong",
-      "note": "WA ADU reform applies. Pairs with Spokane for full inland WA coverage."
+      "note": "WA ADU reform applies. Pairs with Spokane for full inland WA coverage.",
+      "cost": {
+        "cci": 0.91,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier B typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 10,
@@ -1451,7 +2630,16 @@
       "lon": -88.02,
       "hub": "Indianapolis",
       "adu": "Moderate",
-      "note": "WI ADU reform. Manufacturing/paper industry workforce. Completes WI coverage with Milwaukee and Madison."
+      "note": "WI ADU reform. Manufacturing/paper industry workforce. Completes WI coverage with Milwaukee and Madison.",
+      "cost": {
+        "cci": 0.86,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier C typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 10,
@@ -1462,7 +2650,16 @@
       "lon": -83.63,
       "hub": "Indianapolis",
       "adu": "Lower",
-      "note": "GA middle corridor, Robins AFB military workforce. Completes GA coverage with Atlanta and Savannah."
+      "note": "GA middle corridor, Robins AFB military workforce. Completes GA coverage with Atlanta and Savannah.",
+      "cost": {
+        "cci": 0.86,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier C typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 10,
@@ -1473,7 +2670,16 @@
       "lon": -81.63,
       "hub": "Indianapolis",
       "adu": "Lower",
-      "note": "WV state capital, federal infrastructure investment driving new construction."
+      "note": "WV state capital, federal infrastructure investment driving new construction.",
+      "cost": {
+        "cci": 0.8,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier D typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 9,
@@ -1484,7 +2690,16 @@
       "lon": -97.15,
       "hub": "Dallas",
       "adu": "Moderate",
-      "note": "TX mid-corridor, Baylor University market, chip manufacturing (Samsung Taylor nearby) creating workforce housing demand. Bridges Dallas and Austin coverage."
+      "note": "TX mid-corridor, Baylor University market, chip manufacturing (Samsung Taylor nearby) creating workforce housing demand. Bridges Dallas and Austin coverage.",
+      "cost": {
+        "cci": 0.86,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier C typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 10,
@@ -1495,7 +2710,16 @@
       "lon": -81.1,
       "hub": "Indianapolis",
       "adu": "Moderate",
-      "note": "GA coastal coverage extension, Hyundai EV plant workforce housing demand. Completes coastal GA corridor."
+      "note": "GA coastal coverage extension, Hyundai EV plant workforce housing demand. Completes coastal GA corridor.",
+      "cost": {
+        "cci": 0.86,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier C typical)",
+        "last_updated": "2026-05-06"
+      }
     },
     {
       "yr": 10,
@@ -1506,48 +2730,51 @@
       "lon": -112.45,
       "hub": "Denver",
       "adu": "Moderate",
-      "note": "ISU Pocatello university market, ID ADU-permissive. Completes ID coverage from Boise to southeast corridor."
+      "note": "ISU Pocatello university market, ID ADU-permissive. Completes ID coverage from Boise to southeast corridor.",
+      "cost": {
+        "cci": 0.86,
+        "psf_override": null,
+        "strip_pct_override": null,
+        "demand_velocity": 180,
+        "notes": "",
+        "source": "estimated (Tier C typical)",
+        "last_updated": "2026-05-06"
+      }
     }
   ],
   "cost_assumptions": {
-    "version": 1,
-    "last_updated": "2026-05-06T15:24:48+00:00",
+    "version": 2,
+    "last_updated": "2026-05-06",
+    "national_baseline_psf": 162,
     "target_per_door": 165000,
-    "blended_per_door": 158334,
-    "tier_avg_per_door": {
-      "A": 179533,
-      "B": 163874,
-      "C": 152117,
-      "D": 152986
-    },
-    "product_mix": {
+    "products": {
       "townhome": {
         "name": "Townhome",
         "sf": 1450,
         "units": 214,
         "sf_mod": 0.9,
-        "color": "townhome"
+        "color": "#d97a3c"
       },
       "adu": {
         "name": "ADU",
         "sf": 750,
         "units": 211,
         "sf_mod": 1.15,
-        "color": "adu"
+        "color": "#e74c5c"
       },
       "duplex": {
         "name": "Duplex",
         "sf": 1850,
         "units": 160,
         "sf_mod": 0.88,
-        "color": "duplex"
+        "color": "#1a2c4d"
       },
       "sfr": {
         "name": "SFR",
         "sf": 1800,
         "units": 14,
         "sf_mod": 1.0,
-        "color": "sfr"
+        "color": "#94a3b8"
       }
     },
     "tier_strip_pct": {
@@ -1556,109 +2783,239 @@
       "C": 28,
       "D": 22
     },
-    "state_cost_psf": {
-      "AK": 228,
-      "AL": 155,
-      "AR": 156,
-      "AZ": 165,
-      "CA": 225,
-      "CO": 175,
-      "CT": 200,
-      "DE": 185,
-      "FL": 175,
-      "GA": 160,
-      "HI": 230,
-      "IA": 165,
-      "ID": 170,
-      "IL": 175,
-      "IN": 155,
-      "KS": 155,
-      "KY": 158,
-      "LA": 160,
-      "MA": 210,
-      "MD": 195,
-      "ME": 185,
-      "MI": 160,
-      "MN": 175,
-      "MO": 155,
-      "MS": 154,
-      "MT": 185,
-      "NC": 165,
-      "ND": 165,
-      "NE": 160,
-      "NH": 195,
-      "NJ": 225,
-      "NM": 160,
-      "NV": 175,
-      "NY": 211,
-      "OH": 155,
-      "OK": 158,
-      "OR": 200,
-      "PA": 180,
-      "RI": 195,
-      "SC": 165,
-      "SD": 160,
-      "TN": 160,
-      "TX": 162,
-      "UT": 175,
-      "VA": 175,
-      "VT": 195,
-      "WA": 200,
-      "WI": 170,
-      "WV": 150,
-      "WY": 165
+    "state_defaults": {
+      "AK": {
+        "cost_psf": 228,
+        "tier": "A"
+      },
+      "AL": {
+        "cost_psf": 155,
+        "tier": "D"
+      },
+      "AR": {
+        "cost_psf": 156,
+        "tier": "D"
+      },
+      "AZ": {
+        "cost_psf": 165,
+        "tier": "C"
+      },
+      "CA": {
+        "cost_psf": 225,
+        "tier": "A"
+      },
+      "CO": {
+        "cost_psf": 175,
+        "tier": "C"
+      },
+      "CT": {
+        "cost_psf": 200,
+        "tier": "B"
+      },
+      "DE": {
+        "cost_psf": 185,
+        "tier": "B"
+      },
+      "FL": {
+        "cost_psf": 175,
+        "tier": "C"
+      },
+      "GA": {
+        "cost_psf": 160,
+        "tier": "C"
+      },
+      "HI": {
+        "cost_psf": 230,
+        "tier": "A"
+      },
+      "IA": {
+        "cost_psf": 165,
+        "tier": "C"
+      },
+      "ID": {
+        "cost_psf": 170,
+        "tier": "C"
+      },
+      "IL": {
+        "cost_psf": 175,
+        "tier": "C"
+      },
+      "IN": {
+        "cost_psf": 155,
+        "tier": "D"
+      },
+      "KS": {
+        "cost_psf": 155,
+        "tier": "D"
+      },
+      "KY": {
+        "cost_psf": 158,
+        "tier": "D"
+      },
+      "LA": {
+        "cost_psf": 160,
+        "tier": "D"
+      },
+      "MA": {
+        "cost_psf": 210,
+        "tier": "A"
+      },
+      "MD": {
+        "cost_psf": 195,
+        "tier": "B"
+      },
+      "ME": {
+        "cost_psf": 185,
+        "tier": "B"
+      },
+      "MI": {
+        "cost_psf": 160,
+        "tier": "D"
+      },
+      "MN": {
+        "cost_psf": 175,
+        "tier": "C"
+      },
+      "MO": {
+        "cost_psf": 155,
+        "tier": "D"
+      },
+      "MS": {
+        "cost_psf": 154,
+        "tier": "D"
+      },
+      "MT": {
+        "cost_psf": 185,
+        "tier": "C"
+      },
+      "NC": {
+        "cost_psf": 165,
+        "tier": "C"
+      },
+      "ND": {
+        "cost_psf": 165,
+        "tier": "C"
+      },
+      "NE": {
+        "cost_psf": 160,
+        "tier": "D"
+      },
+      "NH": {
+        "cost_psf": 195,
+        "tier": "B"
+      },
+      "NJ": {
+        "cost_psf": 225,
+        "tier": "A"
+      },
+      "NM": {
+        "cost_psf": 160,
+        "tier": "C"
+      },
+      "NV": {
+        "cost_psf": 175,
+        "tier": "C"
+      },
+      "NY": {
+        "cost_psf": 211,
+        "tier": "A"
+      },
+      "OH": {
+        "cost_psf": 155,
+        "tier": "D"
+      },
+      "OK": {
+        "cost_psf": 158,
+        "tier": "D"
+      },
+      "OR": {
+        "cost_psf": 200,
+        "tier": "B"
+      },
+      "PA": {
+        "cost_psf": 180,
+        "tier": "B"
+      },
+      "RI": {
+        "cost_psf": 195,
+        "tier": "B"
+      },
+      "SC": {
+        "cost_psf": 165,
+        "tier": "C"
+      },
+      "SD": {
+        "cost_psf": 160,
+        "tier": "D"
+      },
+      "TN": {
+        "cost_psf": 160,
+        "tier": "D"
+      },
+      "TX": {
+        "cost_psf": 162,
+        "tier": "C"
+      },
+      "UT": {
+        "cost_psf": 175,
+        "tier": "C"
+      },
+      "VA": {
+        "cost_psf": 175,
+        "tier": "C"
+      },
+      "VT": {
+        "cost_psf": 195,
+        "tier": "B"
+      },
+      "WA": {
+        "cost_psf": 200,
+        "tier": "B"
+      },
+      "WI": {
+        "cost_psf": 170,
+        "tier": "C"
+      },
+      "WV": {
+        "cost_psf": 150,
+        "tier": "D"
+      },
+      "WY": {
+        "cost_psf": 165,
+        "tier": "C"
+      }
     },
-    "state_tier": {
-      "AK": "A",
-      "AL": "D",
-      "AR": "D",
-      "AZ": "C",
-      "CA": "A",
-      "CO": "C",
-      "CT": "B",
-      "DE": "B",
-      "FL": "C",
-      "GA": "C",
-      "HI": "A",
-      "IA": "D",
-      "ID": "C",
-      "IL": "C",
-      "IN": "D",
-      "KS": "D",
-      "KY": "D",
-      "LA": "D",
-      "MA": "A",
-      "MD": "B",
-      "ME": "B",
-      "MI": "C",
-      "MN": "C",
-      "MO": "D",
-      "MS": "D",
-      "MT": "C",
-      "NC": "C",
-      "ND": "D",
-      "NE": "D",
-      "NH": "B",
-      "NJ": "A",
-      "NM": "C",
-      "NV": "C",
-      "NY": "A",
-      "OH": "D",
-      "OK": "D",
-      "OR": "B",
-      "PA": "B",
-      "RI": "B",
-      "SC": "C",
-      "SD": "D",
-      "TN": "D",
-      "TX": "C",
-      "UT": "C",
-      "VA": "C",
-      "VT": "B",
-      "WA": "B",
-      "WI": "C",
-      "WV": "D",
-      "WY": "C"
+    "tier_info": {
+      "A": {
+        "name": "Tier A",
+        "desc": "Heavy regulation, seismic/coastal, high labor cost"
+      },
+      "B": {
+        "name": "Tier B",
+        "desc": "Northeast/west coast secondary"
+      },
+      "C": {
+        "name": "Tier C",
+        "desc": "Sun belt, mountain west, mid-Atlantic"
+      },
+      "D": {
+        "name": "Tier D",
+        "desc": "South central, deep south, Appalachia, midwest cost-efficient"
+      }
+    },
+    "_documentation": "Cost cascade: city.cost.psf_override > city.cost.cci * national_baseline_psf > state_defaults[state].cost_psf > national_baseline_psf. blended_per_door is computed by the calibrator at render time, demand-weighted by city.cost.demand_velocity (homes/yr per fab; default 180).",
+    "blended_per_door": 129623,
+    "tier_avg_per_door": {
+      "A": 138594,
+      "B": 129005,
+      "C": 128351,
+      "D": 127119
+    },
+    "cci1_per_door": {
+      "A": 131306,
+      "B": 137367,
+      "C": 145447,
+      "D": 157568
     }
   }
 }
