@@ -462,7 +462,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-seri
       <div class=&quot;asm-group&quot;>
         <div class=&quot;asm-group-title&quot;>FBX Fab-Home defaults</div>
         <div class=&quot;asm-row&quot;><label>Fab CAPEX ($M)</label><input type=&quot;number&quot; step=&quot;0.1&quot; id=&quot;asm-fab-capex&quot; value=&quot;3.0&quot; onchange=&quot;updateAssumptions()&quot;></div>
-        <div class=&quot;asm-row&quot; title=&quot;Set in the 💰 Cost Calibrator tab&quot;><label>Home revenue ($K) <em style=&quot;font-weight:400;font-size:10px;color:var(--text-tertiary);font-style:normal;margin-left:4px;&quot;>· national avg, from 💰 Calibrator</em><div style=&quot;font-size:9.5px;color:var(--text-tertiary);margin-top:3px;font-family:ui-monospace,'SF Mono',Menlo,monospace;line-height:1.4;&quot;>= avg(city: $/sf × (1−strip%) × Σ(p.sf×mod×units)/599) <br>weighted by demand_velocity · 137 cities</div></label><input type=&quot;number&quot; step=&quot;1&quot; id=&quot;asm-rev&quot; value=&quot;180&quot; readonly disabled style=&quot;opacity:0.55;cursor:not-allowed;background:transparent;&quot;></div>
+        <div class=&quot;asm-row&quot; title=&quot;Set in the 💰 Cost Calibrator tab&quot;><label>Home revenue ($K) <em style=&quot;font-weight:400;font-size:10px;color:var(--text-tertiary);font-style:normal;margin-left:4px;&quot;>· factory only, from 💰 Calibrator</em><div style=&quot;font-size:9.5px;color:var(--text-tertiary);margin-top:3px;font-family:ui-monospace,'SF Mono',Menlo,monospace;line-height:1.4;&quot;>= avg(city: $/sf × (1−strip%) × Σ(p.sf×mod×units)/599) <br>weighted by demand_velocity · 137 cities</div></label><input type=&quot;number&quot; step=&quot;1&quot; id=&quot;asm-rev&quot; value=&quot;180&quot; readonly disabled style=&quot;opacity:0.55;cursor:not-allowed;background:transparent;&quot;></div>
+        <div class=&quot;asm-row&quot; title=&quot;GC site-work portion = psf × strip% × product mix&quot;><label>+ Site work ($K) <em style=&quot;font-weight:400;font-size:10px;color:var(--text-tertiary);font-style:normal;margin-left:4px;&quot;>· strip portion, GC charge</em></label><input type=&quot;number&quot; id=&quot;asm-sitework&quot; value=&quot;0&quot; readonly disabled style=&quot;opacity:0.55;cursor:not-allowed;background:transparent;&quot;></div>
+        <div class=&quot;asm-row&quot; title=&quot;Land + soft costs + permits, per the calibrator's entitlement settings&quot;><label>+ Entitlement ($K) <em style=&quot;font-weight:400;font-size:10px;color:var(--text-tertiary);font-style:normal;margin-left:4px;&quot;>· land + soft + permits</em></label><input type=&quot;number&quot; id=&quot;asm-entitlement&quot; value=&quot;0&quot; readonly disabled style=&quot;opacity:0.55;cursor:not-allowed;background:transparent;&quot;></div>
+        <div class=&quot;asm-row&quot; title=&quot;True total cost per door — comparable to NAHB national turnkey ($269K SFD avg)&quot; style=&quot;border-top:1px solid rgba(0,0,0,0.08);margin-top:4px;padding-top:6px;&quot;><label style=&quot;font-weight:600;color:#185FA5;&quot;>= True total / door ($K) <em style=&quot;font-weight:400;font-size:10px;color:var(--text-tertiary);font-style:normal;margin-left:4px;&quot;>· vs $269K NAHB SFD avg</em></label><input type=&quot;number&quot; id=&quot;asm-truetotal&quot; value=&quot;0&quot; readonly disabled style=&quot;opacity:0.85;cursor:not-allowed;background:transparent;font-weight:600;color:#185FA5;&quot;></div>
         <div class=&quot;asm-row&quot;><label>Fab net margin (%)</label><input type=&quot;number&quot; step=&quot;0.1&quot; id=&quot;asm-margin&quot; value=&quot;22&quot; onchange=&quot;updateAssumptions()&quot;></div>
       </div>
       <div class=&quot;asm-group&quot;>
@@ -1151,11 +1154,18 @@ async function fetchCanonical() {
       }
       if (data.cost_assumptions &amp;&amp; typeof data.cost_assumptions === 'object') {
         window._COST_ASSUMPTIONS = data.cost_assumptions;
-        if (typeof data.cost_assumptions.blended_per_door === 'number') {
-          assumptions.rev_per_home_K = Math.round(data.cost_assumptions.blended_per_door / 1000);
+        const ca = data.cost_assumptions;
+        if (typeof ca.blended_per_door === 'number') {
+          assumptions.rev_per_home_K = Math.round(ca.blended_per_door / 1000);
           applyAssumptionsToUI();
           saveAssumptions();
         }
+        const sw = document.getElementById('asm-sitework');
+        const en = document.getElementById('asm-entitlement');
+        const tt = document.getElementById('asm-truetotal');
+        if (sw &amp;&amp; typeof ca.blended_site_work_per_door === 'number') sw.value = Math.round(ca.blended_site_work_per_door / 1000);
+        if (en &amp;&amp; typeof ca.blended_entitlement_per_door === 'number') en.value = Math.round(ca.blended_entitlement_per_door / 1000);
+        if (tt &amp;&amp; typeof ca.blended_total_per_door === 'number') tt.value = Math.round(ca.blended_total_per_door / 1000);
       }
       return data.sites.length > 0 ? data.sites : null;
     }
@@ -2676,10 +2686,18 @@ function viewerApplyPayload(payload) {
   }
   if (payload.cost_assumptions &amp;&amp; typeof payload.cost_assumptions === 'object') {
     window._COST_ASSUMPTIONS = payload.cost_assumptions;
-    if (typeof payload.cost_assumptions.blended_per_door === 'number') {
-      assumptions.rev_per_home_K = Math.round(payload.cost_assumptions.blended_per_door / 1000);
+    const ca = payload.cost_assumptions;
+    if (typeof ca.blended_per_door === 'number') {
+      assumptions.rev_per_home_K = Math.round(ca.blended_per_door / 1000);
       applyAssumptionsToUI();
     }
+    // Populate the derived cost-stack rows in the Global Assumptions panel
+    const sw = document.getElementById('asm-sitework');
+    const en = document.getElementById('asm-entitlement');
+    const tt = document.getElementById('asm-truetotal');
+    if (sw &amp;&amp; typeof ca.blended_site_work_per_door === 'number') sw.value = Math.round(ca.blended_site_work_per_door / 1000);
+    if (en &amp;&amp; typeof ca.blended_entitlement_per_door === 'number') en.value = Math.round(ca.blended_entitlement_per_door / 1000);
+    if (tt &amp;&amp; typeof ca.blended_total_per_door === 'number') tt.value = Math.round(ca.blended_total_per_door / 1000);
   }
   dataSource = 'synced';
   updateSourceIndicator();
@@ -3128,11 +3146,18 @@ async function fetchCanonical() {
       }
       if (data.cost_assumptions &amp;&amp; typeof data.cost_assumptions === 'object') {
         window._COST_ASSUMPTIONS = data.cost_assumptions;
-        if (typeof data.cost_assumptions.blended_per_door === 'number') {
-          assumptions.rev_per_home_K = Math.round(data.cost_assumptions.blended_per_door / 1000);
+        const ca = data.cost_assumptions;
+        if (typeof ca.blended_per_door === 'number') {
+          assumptions.rev_per_home_K = Math.round(ca.blended_per_door / 1000);
           applyAssumptionsToUI();
           saveAssumptions();
         }
+        const sw = document.getElementById('asm-sitework');
+        const en = document.getElementById('asm-entitlement');
+        const tt = document.getElementById('asm-truetotal');
+        if (sw &amp;&amp; typeof ca.blended_site_work_per_door === 'number') sw.value = Math.round(ca.blended_site_work_per_door / 1000);
+        if (en &amp;&amp; typeof ca.blended_entitlement_per_door === 'number') en.value = Math.round(ca.blended_entitlement_per_door / 1000);
+        if (tt &amp;&amp; typeof ca.blended_total_per_door === 'number') tt.value = Math.round(ca.blended_total_per_door / 1000);
       }
       return data.sites.length > 0 ? data.sites : null;
     }
@@ -4653,10 +4678,18 @@ function viewerApplyPayload(payload) {
   }
   if (payload.cost_assumptions &amp;&amp; typeof payload.cost_assumptions === 'object') {
     window._COST_ASSUMPTIONS = payload.cost_assumptions;
-    if (typeof payload.cost_assumptions.blended_per_door === 'number') {
-      assumptions.rev_per_home_K = Math.round(payload.cost_assumptions.blended_per_door / 1000);
+    const ca = payload.cost_assumptions;
+    if (typeof ca.blended_per_door === 'number') {
+      assumptions.rev_per_home_K = Math.round(ca.blended_per_door / 1000);
       applyAssumptionsToUI();
     }
+    // Populate the derived cost-stack rows in the Global Assumptions panel
+    const sw = document.getElementById('asm-sitework');
+    const en = document.getElementById('asm-entitlement');
+    const tt = document.getElementById('asm-truetotal');
+    if (sw &amp;&amp; typeof ca.blended_site_work_per_door === 'number') sw.value = Math.round(ca.blended_site_work_per_door / 1000);
+    if (en &amp;&amp; typeof ca.blended_entitlement_per_door === 'number') en.value = Math.round(ca.blended_entitlement_per_door / 1000);
+    if (tt &amp;&amp; typeof ca.blended_total_per_door === 'number') tt.value = Math.round(ca.blended_total_per_door / 1000);
   }
   dataSource = 'synced';
   updateSourceIndicator();
@@ -5151,7 +5184,10 @@ window.addEventListener('message', function(e) {
       <div class=&quot;asm-group&quot;>
         <div class=&quot;asm-group-title&quot;>FBX Fab-Home defaults</div>
         <div class=&quot;asm-row&quot;><label>Fab CAPEX ($M)</label><input type=&quot;number&quot; step=&quot;0.1&quot; id=&quot;asm-fab-capex&quot; value=&quot;3.0&quot; onchange=&quot;updateAssumptions()&quot;></div>
-        <div class=&quot;asm-row&quot; title=&quot;Set in the 💰 Cost Calibrator tab&quot;><label>Home revenue ($K) <em style=&quot;font-weight:400;font-size:10px;color:var(--text-tertiary);font-style:normal;margin-left:4px;&quot;>· national avg, from 💰 Calibrator</em><div style=&quot;font-size:9.5px;color:var(--text-tertiary);margin-top:3px;font-family:ui-monospace,'SF Mono',Menlo,monospace;line-height:1.4;&quot;>= avg(city: $/sf × (1−strip%) × Σ(p.sf×mod×units)/599) <br>weighted by demand_velocity · 137 cities</div></label><input type=&quot;number&quot; step=&quot;1&quot; id=&quot;asm-rev&quot; value=&quot;180&quot; readonly disabled style=&quot;opacity:0.55;cursor:not-allowed;background:transparent;&quot;></div>
+        <div class=&quot;asm-row&quot; title=&quot;Set in the 💰 Cost Calibrator tab&quot;><label>Home revenue ($K) <em style=&quot;font-weight:400;font-size:10px;color:var(--text-tertiary);font-style:normal;margin-left:4px;&quot;>· factory only, from 💰 Calibrator</em><div style=&quot;font-size:9.5px;color:var(--text-tertiary);margin-top:3px;font-family:ui-monospace,'SF Mono',Menlo,monospace;line-height:1.4;&quot;>= avg(city: $/sf × (1−strip%) × Σ(p.sf×mod×units)/599) <br>weighted by demand_velocity · 137 cities</div></label><input type=&quot;number&quot; step=&quot;1&quot; id=&quot;asm-rev&quot; value=&quot;180&quot; readonly disabled style=&quot;opacity:0.55;cursor:not-allowed;background:transparent;&quot;></div>
+        <div class=&quot;asm-row&quot; title=&quot;GC site-work portion = psf × strip% × product mix&quot;><label>+ Site work ($K) <em style=&quot;font-weight:400;font-size:10px;color:var(--text-tertiary);font-style:normal;margin-left:4px;&quot;>· strip portion, GC charge</em></label><input type=&quot;number&quot; id=&quot;asm-sitework&quot; value=&quot;0&quot; readonly disabled style=&quot;opacity:0.55;cursor:not-allowed;background:transparent;&quot;></div>
+        <div class=&quot;asm-row&quot; title=&quot;Land + soft costs + permits, per the calibrator's entitlement settings&quot;><label>+ Entitlement ($K) <em style=&quot;font-weight:400;font-size:10px;color:var(--text-tertiary);font-style:normal;margin-left:4px;&quot;>· land + soft + permits</em></label><input type=&quot;number&quot; id=&quot;asm-entitlement&quot; value=&quot;0&quot; readonly disabled style=&quot;opacity:0.55;cursor:not-allowed;background:transparent;&quot;></div>
+        <div class=&quot;asm-row&quot; title=&quot;True total cost per door — comparable to NAHB national turnkey ($269K SFD avg)&quot; style=&quot;border-top:1px solid rgba(0,0,0,0.08);margin-top:4px;padding-top:6px;&quot;><label style=&quot;font-weight:600;color:#185FA5;&quot;>= True total / door ($K) <em style=&quot;font-weight:400;font-size:10px;color:var(--text-tertiary);font-style:normal;margin-left:4px;&quot;>· vs $269K NAHB SFD avg</em></label><input type=&quot;number&quot; id=&quot;asm-truetotal&quot; value=&quot;0&quot; readonly disabled style=&quot;opacity:0.85;cursor:not-allowed;background:transparent;font-weight:600;color:#185FA5;&quot;></div>
         <div class=&quot;asm-row&quot;><label>Fab net margin (%)</label><input type=&quot;number&quot; step=&quot;0.1&quot; id=&quot;asm-margin&quot; value=&quot;22&quot; onchange=&quot;updateAssumptions()&quot;></div>
       </div>
       <div class=&quot;asm-group&quot;>
@@ -5822,11 +5858,18 @@ async function fetchCanonical() {
       }
       if (data.cost_assumptions &amp;&amp; typeof data.cost_assumptions === 'object') {
         window._COST_ASSUMPTIONS = data.cost_assumptions;
-        if (typeof data.cost_assumptions.blended_per_door === 'number') {
-          assumptions.rev_per_home_K = Math.round(data.cost_assumptions.blended_per_door / 1000);
+        const ca = data.cost_assumptions;
+        if (typeof ca.blended_per_door === 'number') {
+          assumptions.rev_per_home_K = Math.round(ca.blended_per_door / 1000);
           applyAssumptionsToUI();
           saveAssumptions();
         }
+        const sw = document.getElementById('asm-sitework');
+        const en = document.getElementById('asm-entitlement');
+        const tt = document.getElementById('asm-truetotal');
+        if (sw &amp;&amp; typeof ca.blended_site_work_per_door === 'number') sw.value = Math.round(ca.blended_site_work_per_door / 1000);
+        if (en &amp;&amp; typeof ca.blended_entitlement_per_door === 'number') en.value = Math.round(ca.blended_entitlement_per_door / 1000);
+        if (tt &amp;&amp; typeof ca.blended_total_per_door === 'number') tt.value = Math.round(ca.blended_total_per_door / 1000);
       }
       return data.sites.length > 0 ? data.sites : null;
     }
@@ -7650,11 +7693,18 @@ async function fetchCanonical() {
       }
       if (data.cost_assumptions &amp;&amp; typeof data.cost_assumptions === 'object') {
         window._COST_ASSUMPTIONS = data.cost_assumptions;
-        if (typeof data.cost_assumptions.blended_per_door === 'number') {
-          assumptions.rev_per_home_K = Math.round(data.cost_assumptions.blended_per_door / 1000);
+        const ca = data.cost_assumptions;
+        if (typeof ca.blended_per_door === 'number') {
+          assumptions.rev_per_home_K = Math.round(ca.blended_per_door / 1000);
           applyAssumptionsToUI();
           saveAssumptions();
         }
+        const sw = document.getElementById('asm-sitework');
+        const en = document.getElementById('asm-entitlement');
+        const tt = document.getElementById('asm-truetotal');
+        if (sw &amp;&amp; typeof ca.blended_site_work_per_door === 'number') sw.value = Math.round(ca.blended_site_work_per_door / 1000);
+        if (en &amp;&amp; typeof ca.blended_entitlement_per_door === 'number') en.value = Math.round(ca.blended_entitlement_per_door / 1000);
+        if (tt &amp;&amp; typeof ca.blended_total_per_door === 'number') tt.value = Math.round(ca.blended_total_per_door / 1000);
       }
       return data.sites.length > 0 ? data.sites : null;
     }
