@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>FBX Deck — Print View</title>
+  <link rel="stylesheet" href="css/core.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      background: #1a1a1a;
+      color: #f5f1e8;
+      font-family: var(--mono);
+      min-height: 100vh;
+    }
+
+    /* ── Toolbar (sticky on screen, hidden on print) ────────── */
+    #print-toolbar {
+      position: sticky;
+      top: 0;
+      background: #0a1628;
+      border-bottom: 1px solid rgba(245,241,232,0.15);
+      padding: 16px 24px;
+      z-index: 100;
+      display: grid;
+      grid-template-columns: auto 1px auto auto 1fr auto;
+      align-items: center;
+      gap: 18px;
+    }
+    #print-toolbar h1 {
+      font-family: var(--display);
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      color: #f5f1e8;
+    }
+    #print-toolbar .sep {
+      width: 1px;
+      height: 22px;
+      background: rgba(245,241,232,0.18);
+    }
+    #print-toolbar #print-btn {
+      background: var(--signal);
+      color: white;
+      border: 1px solid var(--signal);
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 8px 18px;
+      cursor: pointer;
+      border-radius: 2px;
+      font-weight: 600;
+      transition: background 150ms, border-color 150ms;
+    }
+    #print-toolbar #print-btn:hover:not(:disabled) {
+      background: #a30b24;
+      border-color: #a30b24;
+    }
+    #print-toolbar #print-btn:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+    #print-toolbar a {
+      color: rgba(245,241,232,0.7);
+      text-decoration: none;
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      border-bottom: 1px solid rgba(245,241,232,0.3);
+      padding-bottom: 1px;
+      transition: color 150ms, border-color 150ms;
+    }
+    #print-toolbar a:hover {
+      color: var(--signal);
+      border-color: var(--signal);
+    }
+    #print-toolbar .status {
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      color: rgba(245,241,232,0.5);
+      text-align: right;
+    }
+    #print-toolbar .status.ready { color: #4ade80; }
+    #print-toolbar .instructions {
+      grid-column: 1 / -1;
+      margin-top: 10px;
+      font-family: var(--mono);
+      font-size: 11px;
+      color: rgba(245,241,232,0.5);
+      line-height: 1.7;
+      letter-spacing: 0.04em;
+    }
+    #print-toolbar .instructions strong {
+      color: #f5f1e8;
+      font-weight: 600;
+    }
+    #print-toolbar .instructions code {
+      font-family: var(--mono);
+      background: rgba(245,241,232,0.08);
+      padding: 1px 6px;
+      border-radius: 2px;
+      color: #f5f1e8;
+      font-size: 10px;
+    }
+
+    /* ── Slide stack (screen view) ──────────────────────────── */
+    #slides {
+      padding: 32px 24px 64px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      align-items: center;
+    }
+    .slide-page {
+      width: 100%;
+      max-width: 1600px;
+      aspect-ratio: 16 / 9;
+      background: white;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+      position: relative;
+      overflow: hidden;
+    }
+    .slide-num-overlay {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      background: rgba(10, 22, 40, 0.78);
+      color: white;
+      font-family: var(--mono);
+      font-size: 10px;
+      padding: 3px 9px;
+      border-radius: 2px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      z-index: 10;
+      pointer-events: none;
+    }
+    .slide-page iframe {
+      width: 1600px;
+      height: 900px;
+      border: 0;
+      display: block;
+      transform-origin: top left;
+      /* JS sets transform: scale(N) to fit container */
+    }
+
+    /* ── Print-time layout ──────────────────────────────────── */
+    @page {
+      size: 1600px 900px;
+      margin: 0;
+    }
+    @media print {
+      html, body {
+        background: white;
+        color: black;
+      }
+      #print-toolbar {
+        display: none !important;
+      }
+      #slides {
+        padding: 0;
+        gap: 0;
+        display: block;
+      }
+      .slide-page {
+        width: 1600px;
+        height: 900px;
+        max-width: none;
+        box-shadow: none;
+        page-break-after: always;
+        break-after: page;
+        overflow: hidden;
+        aspect-ratio: auto;
+      }
+      .slide-page:last-child {
+        page-break-after: auto;
+        break-after: auto;
+      }
+      .slide-page iframe {
+        transform: none !important;
+        width: 1600px;
+        height: 900px;
+      }
+      .slide-num-overlay {
+        display: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header id="print-toolbar">
+    <h1>FBX Deck — Print Preview</h1>
+    <div class="sep"></div>
+    <button id="print-btn" type="button" disabled>Loading…</button>
+    <a href="index.html" title="Back to deck">← Back to deck</a>
+    <span></span>
+    <span class="status" id="status">— / —</span>
+
+    <p class="instructions">
+      <strong>To save as PDF:</strong> click <em>Print to PDF</em>, then in the
+      browser print dialog choose <code>Save as PDF</code> as the destination.
+      Layout will auto-set to <strong>landscape</strong>; set margins to
+      <code>None</code>. Each slide prints as one 16:9 page (1600 × 900 px).
+    </p>
+  </header>
+
+  <div id="slides"></div>
+
+  <script src="js/manifest.js"></script>
+  <script>
+  (() => {
+    'use strict';
+
+    const slidesContainer = document.getElementById('slides');
+    const printBtn        = document.getElementById('print-btn');
+    const statusEl        = document.getElementById('status');
+
+    const total      = DECK.slides.length;
+    const pages      = [];
+    const readyFlags = new Array(total).fill(false);
+    let   readyCount = 0;
+
+    // ── Build slide pages ──
+    DECK.slides.forEach((slide, i) => {
+      const page = document.createElement('div');
+      page.className    = 'slide-page';
+      page.dataset.idx  = i;
+      page.dataset.id   = slide.id;
+
+      const numLabel = document.createElement('div');
+      numLabel.className   = 'slide-num-overlay';
+      numLabel.textContent = `${String(i + 1).padStart(2, '0')} · ${slide.title}`;
+      page.appendChild(numLabel);
+
+      const iframe = document.createElement('iframe');
+      iframe.src     = slide.file;
+      iframe.title   = slide.title;
+      iframe.loading = 'eager';
+
+      iframe.addEventListener('load', () => {
+        let settled = false;
+        const settle = () => {
+          if (settled) return;
+          settled = true;
+          markReady(i);
+        };
+        try {
+          const doc = iframe.contentDocument;
+          if (doc) {
+            // content-loader.js fires this when content.json is applied
+            doc.addEventListener('fbx:content-applied', settle, { once: true });
+          }
+        } catch (e) { /* ignore cross-origin */ }
+        // Fallback if the slide doesn't use content-loader (or it's slow)
+        setTimeout(settle, 800);
+      });
+
+      page.appendChild(iframe);
+      slidesContainer.appendChild(page);
+      pages.push({ page, iframe });
+    });
+
+    function markReady(i) {
+      if (readyFlags[i]) return;
+      readyFlags[i] = true;
+      readyCount++;
+      updateStatus();
+      // Re-scale on each load in case layout shifts
+      rescale();
+    }
+
+    function updateStatus() {
+      if (readyCount < total) {
+        statusEl.textContent = `${readyCount} / ${total} loaded`;
+        statusEl.classList.remove('ready');
+      } else {
+        statusEl.textContent = `Ready · ${total} slides`;
+        statusEl.classList.add('ready');
+        printBtn.disabled = false;
+        printBtn.textContent = 'Print to PDF';
+      }
+    }
+
+    // ── Responsive scaling for screen view ──
+    // Iframe is fixed at 1600×900 (slide canvas). Scale to fit the page width.
+    function rescale() {
+      pages.forEach(({ page, iframe }) => {
+        const w = page.clientWidth;
+        if (!w) return;
+        const scale = w / 1600;
+        iframe.style.transform = `scale(${scale})`;
+      });
+    }
+    window.addEventListener('resize', rescale);
+    // Initial scale (also re-runs when iframes load via markReady)
+    setTimeout(rescale, 50);
+
+    // ── Print trigger ──
+    printBtn.addEventListener('click', () => {
+      // The @media print rules reset transforms to scale(1), but force it
+      // here for safety in case any browser quirks linger.
+      pages.forEach(({ iframe }) => { iframe.style.transform = ''; });
+      window.print();
+      // Restore screen scaling after the dialog closes
+      setTimeout(rescale, 250);
+    });
+
+    // ── Keyboard shortcut: Ctrl/Cmd+P just calls our handler ──
+    window.addEventListener('keydown', (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.key === 'p' && !printBtn.disabled) {
+        e.preventDefault();
+        printBtn.click();
+      }
+    });
+  })();
+  </script>
+</body>
+</html>
